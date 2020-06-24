@@ -1,0 +1,21 @@
+repos:
+  - repo: https://github.com/psf/black
+    rev: stable
+    hooks:
+    - id: black
+      language_version: python3.7
+      args: [--line-length=90]
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v2.3.0
+    hooks:
+      - id: check-ast
+      - id: check-yaml
+      - id: check-toml
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+  - repo: https://gitlab.com/pycqa/flake8
+    rev: 3.7.9
+    hooks:
+    - id: flake8
+      language_version: python3.7
+      exclude: __init__.py, _version.py, versioneer.py
