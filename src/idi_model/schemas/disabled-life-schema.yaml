@@ -1,0 +1,77 @@
+
+
+name: Disabled Life Extract Schema
+enfore_strict: True
+nullable: False
+columns:
+  - name: POLICY_ID
+    dtype: str
+    description: The policy ID of the disabled claimant.
+
+  - name: BIRTH_DT
+    dtype: date
+    description: The birth date of the disabled claimant.
+
+  - name: GENDER
+    dtype: str
+    description: The gender of the disabled claimant.
+    allowed: [M, F]
+
+  - name: TOBACCO_USAGE
+    dtype: bool
+    description: The tabacco usage of the disabled claimant.
+
+  - name: CLAIM_ID
+    dtype: str
+    description: The claim ID of the disabled claimant.
+
+  - name: COVERAGE_ID
+    dtype: str
+    description: The coverage ID of the disabled claimant.
+    allowed: [BASE, RIDER]
+
+  - name: INCURRED_DT
+    dtype: date
+    description: The date of incurral of the disabled claimant (i.e., the disablement date).
+
+  - name: TERMINATION_DT
+    dtype: date
+    description: The termination date of the disabled claimant (i.e., the date benefits will stop being paid).
+
+  - name: ELIMINATION_PERIOD
+    dtype: int
+    description: The elimination days before benefits are paid for the disabled claimant.
+    allowed: [0, 7, 14, 30, 60, 90, 180, 360, 720]
+
+  - name: BENEFIT_AMOUNT
+    dtype: float
+    description: The benefit amount for the disabled claimant.
+
+  - name: IDI_OCCUPATION_CLASS
+    dtype: str
+    description: The IDI occupation class of the disabled claimant.
+    allowed: [1, 2, 3, 4, M]
+
+  - name: IDI_CONTRACT
+    dtype: str
+    description: The IDI contract type of the disabled claimant.
+    allowed: [AS, AO, SO, OE, KP]
+
+  - name: IDI_BENEFIT_PERIOD
+    dtype: str
+    description: The IDI benefit period for the disabled claimant.
+    allowed: [TO65, TO67, TO70, LIFE, 6M, 12M, 18M, 24M, 30M, 60M]
+
+  - name: IDI_MARKET
+    dtype: str
+    description: The IDI market for the disabled claimant.
+    allowed: [INDV, ES_IU, ES_VGSI, ES_MGSI]
+
+  - name: IDI_DIAGNOSIS_GRP
+    dtype: str
+    description: The IDI diagnsis group of the disabled claimant.
+    allowed: [VERY_LOW, LOW, MID, HIGH, VERY_HGIH, AG]
+
+  - name: COLA_PERCENT
+    dtype: float
+    description: The COLA percent for the disabled claimant (0 if no COLA provided).

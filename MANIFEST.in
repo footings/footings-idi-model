@@ -1,2 +1,10 @@
+global-exclude *.pyc
+
+include LICENSE *.rst *.toml *.yml *.yaml *.ini *.md *.py
+graft .github
+
+recursive-include src/idi_model/* *.csv *.json *.yaml
+recursive-include idi_model/tests/data *
+
 include versioneer.py
 include src/idi_model/_version.py

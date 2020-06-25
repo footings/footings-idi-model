@@ -1,0 +1,69 @@
+
+
+name: Active Life Extract Schema
+enfore_strict: True
+nullable: False
+columns:
+  - name: POLICY_ID
+    dtype: str
+    description: The policy ID of the policy holder.
+
+  - name: BIRTH_DT
+    dtype: date
+    description: The birth date of the policy holder.
+
+  - name: GENDER
+    dtype: str
+    description: The gender of the policy holder.
+    allowed: [M, F]
+
+  - name: TOBACCO_USAGE
+    dtype: str
+    description: The tabacco usage of the policy holder.
+    allowed: [Y, N]
+
+  - name: COVERAGE_ID
+    dtype: str
+    description: The coverage ID of the policy holder.
+    allowed: [BASE, RIDER]
+
+  - name: ISSUE_DT
+    dtype: date
+    description: The start date of the policy issued to the policy holder.
+
+  - name: TERMINATION_DT
+    dtype: date
+    description: The termination date of the policy issued to the policy holder.
+
+  - name: ELIMINATION_PERIOD
+    dtype: int
+    description: The elimination days before benefits are paid for the policy holder.
+    allowed: [0, 7, 14, 30, 60, 90, 180, 360, 720]
+
+  - name: BENEFIT_AMOUNT
+    dtype: float
+    description: The benefit amount for the policy holder.
+
+  - name: IDI_OCCUPATION_CLASS
+    dtype: str
+    description: The IDI occupation class of the policy holder.
+    allowed: [1, 2, 3, 4, M]
+
+  - name: IDI_CONTRACT
+    dtype: str
+    description: The IDI contract type of the policy holder.
+    allowed: [AS, AO, SO, OE, KP]
+
+  - name: IDI_BENEFIT_PERIOD
+    dtype: str
+    description: The IDI benefit period for the policy holder.
+    allowed: [TO65, TO67, TO70, LIFE, 6M, 12M, 18M, 24M, 30M, 60M]
+
+  - name: IDI_MARKET
+    dtype: str
+    description: The IDI market for the policy holder.
+    allowed: [INDV, ES_IU, ES_VGSI, ES_MGSI]
+
+  - name: COLA_PERCENT
+    dtype: float
+    description: The COLA percent for the policy holder (0 if no COLA provided).
