@@ -2,7 +2,7 @@ import os
 
 import pandas as pd
 
-from idi_model.utils import extract_generator_model
+from footings_idi_model.utils import extract_generator_model
 
 volume_tbl = pd.read_csv(os.path.join("tests", "data", "volume-tbl.csv"))
 

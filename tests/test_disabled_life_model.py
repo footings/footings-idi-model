@@ -1,6 +1,6 @@
 import pandas as pd
 
-from idi_model.policy_models import dlr_deterministic_model
+from footings_idi_model.policy_models import dlr_deterministic_model
 
 
 def test_create_dlr_frame():

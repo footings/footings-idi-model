@@ -1,6 +1,6 @@
 import pandas as pd
 
-from idi_model.policy_models.alr_deterministic import alr_deterministic_model
+from footings_idi_model.policy_models.alr_deterministic import alr_deterministic_model
 
 
 def test_create_alr_frame():
