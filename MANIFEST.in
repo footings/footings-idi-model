@@ -4,7 +4,12 @@ include LICENSE *.rst *.toml *.yml *.yaml *.ini *.md *.py
 graft .github
 
 recursive-include src/footings_idi_model/* *.csv *.json *.yaml
-recursive-include tests/data *
+graft tests
 
 include versioneer.py
 include src/footings_idi_model/_version.py
+
+# Documentation
+include docs/Makefile
+graft docs
+prune docs/_build
