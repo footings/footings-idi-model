@@ -32,13 +32,13 @@ arg_valuation_dt = create_argument(
 )
 arg_assumption_set = create_argument(
     name="assumption_set",
-    description="The assumption set to use for running the model.",
+    description="The assumption set to use for running the model. Use one of stat, gaap, or best-estimate.",
     dtype=str,
     allowed=["stat", "gaap", "best-estimate"],
 )
 arg_net_benefit_method = create_argument(
     name="net_benefit_method",
-    description="The net benefit method.",
+    description="The net benefit method. Use one of NLP, PT1, or PT2.",
     dtype=str,
     allowed=["NLP", "PT1", "PT2"],
 )

@@ -1,4 +1,10 @@
+import sys
+from traceback import extract_tb, format_list
+from inspect import getfullargspec
+
 import pandas as pd
+from dask import compute
+from dask.delayed import delayed
 
 from footings import create_argument, use, create_model
 
@@ -8,7 +14,6 @@ from ..policy_models.alr_deterministic import (
     arg_assumption_set,
     arg_net_benefit_method,
 )
-from .utils import find_extract_issues, dispatch_model_per_record
 
 #########################################################################################
 # arguments
@@ -30,27 +35,58 @@ arg_policy_model = create_argument(
 )
 
 
-arg_backend = create_argument(
-    name="backend", dtype=str, default="base", allowed=["base", "dask", "ray"]
-)
-
 #########################################################################################
 # functions
 #########################################################################################
 
 
+def find_extract_issues(
+    extract: pd.DataFrame,  # , valuation_dt: pd.Timestamp, schema: pd.DataFrame
+):
+    """Find extract issues"""
+    return extract
+
+
+def _dispatch_model_per_record(
+    policy_model, record_keys: list, extract: pd.DataFrame, **kwargs
+):
+    @delayed
+    def run_model(**kwargs):
+        try:
+            ret = policy_model(**kwargs).run()
+        except:
+            ex_type, ex_value, ex_trace = sys.exc_info()
+            ret = {
+                **{key: kwargs.get(key.lower()) for key in record_keys},
+                "ERROR_TYPE": ex_type,
+                "ERROR_VALUE": ex_value,
+                "ERROR_STACKTRACE": format_list(extract_tb(ex_trace)),
+            }
+        return ret
+
+    extract = extract.copy()
+    extract.columns = [col.lower() for col in extract.columns]
+    params = set(getfullargspec(policy_model).kwonlyargs)
+    extract_params = params.intersection(set(extract.columns))
+    records = extract[extract_params].to_dict(orient="records")
+    output = [run_model(**record, **kwargs) for record in records]
+    successes, errors = [], []
+    for result in compute(output)[0]:
+        (successes if isinstance(result, pd.DataFrame) else errors).append(result)
+    return (successes, errors)
+
+
 def run_policy_model_per_record(
-    extract, valuation_dt, assumption_set, net_benefit_method, policy_model, backend
+    extract, valuation_dt, assumption_set, net_benefit_method, policy_model
 ):
     if policy_model == "deterministic":
-        return dispatch_model_per_record(
+        return _dispatch_model_per_record(
             policy_model=alr_deterministic_model,
             record_keys=["POLICY_ID"],
             extract=extract,
             valuation_dt=valuation_dt,
             assumption_set=assumption_set,
             net_benefit_method=net_benefit_method,
-            backend=backend,
         )
     elif policy_model == "stochastic":
         raise NotImplementedError("Stochastic capabilities not implemented yet.")
@@ -88,7 +124,6 @@ steps = [
             "assumption_set": arg_assumption_set,
             "net_benefit_method": arg_net_benefit_method,
             "policy_model": arg_policy_model,
-            "backend": arg_backend,
         },
     },
     {

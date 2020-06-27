@@ -26,7 +26,7 @@ arg_valuation_dt = create_argument(
 )
 arg_assumption_set = create_argument(
     name="assumption_set",
-    description="The assumption set to use for running the model.",
+    description="The assumption set to use for running the model. Use one of stat, gaap, or best-estimate.",
     dtype=str,
     allowed=["stat", "gaap", "best-estimate"],
 )
