@@ -11,14 +11,14 @@
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 import os
 import sys
-from idi_model import __version__ as version
+from footings_idi_model import __version__ as version
 
 sys.path.insert(0, os.path.abspath("./.."))
 
 
 # -- Project information -----------------------------------------------------
 
-project = "IDI Model"
+project = "Footings IDI Model"
 copyright = "2020, Dustin Tindall"
 author = "Dustin Tindall"
 

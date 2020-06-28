@@ -6,7 +6,7 @@ API
 Policy Models
 -------------
 
-.. currentmodule:: idi_model.policy_models
+.. currentmodule:: footings_idi_model.policy_models
 
 .. autosummary::
    :nosignatures:
@@ -24,7 +24,7 @@ Policy Models
 Population Models
 -----------------
 
-.. currentmodule:: idi_model.population_models
+.. currentmodule:: footings_idi_model.population_models
 
 .. autosummary::
    :nosignatures:
@@ -42,7 +42,7 @@ Population Models
 Utilities
 ---------
 
-.. currentmodule:: idi_model.utils
+.. currentmodule:: footings_idi_model.utils
 
 .. autosummary::
    :nosignatures:

@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 
 from footings import create_dispatch_function
-from footings.library import create_frame, post_drop_columns, calculate_age
+from footings.tools import create_frame, post_drop_columns, calculate_age
 
 from ..assumptions.stat_gaap.incidence import (
     contract_file,
