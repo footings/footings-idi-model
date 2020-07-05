@@ -4,7 +4,7 @@ import pandas as pd
 from dask import compute
 from dask.delayed import delayed
 
-from footings import create_argument, use, create_model
+from footings import create_parameter, use, create_model
 
 from ..policy_models.dlr_deterministic import (
     dlr_deterministic_model,
@@ -21,13 +21,13 @@ __all__ = ["check_extract", "create_output", "run_policy_model_per_record"]
 
 # valuation_dt and assumption_set are imported from policy_models
 
-arg_extract = create_argument(
+arg_extract = create_parameter(
     name="extract",
     description="The disabled life extract to use. See idi_model/schema/disabled_life_schema.yaml for specification.",
     dtype=pd.DataFrame,
 )
 
-arg_policy_model = create_argument(
+arg_policy_model = create_parameter(
     name="policy_model",
     description="""The policy model to deploy. Options are :
 

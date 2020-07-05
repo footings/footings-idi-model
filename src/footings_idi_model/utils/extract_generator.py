@@ -1,6 +1,6 @@
 import pandas as pd
 
-from footings import create_argument, use, create_model
+from footings import create_parameter, use, create_model
 from ..functions.generate_policies import (
     create_frame,
     sample_from_volume_tbl,
@@ -14,27 +14,27 @@ from ..functions.generate_policies import (
 # arguments
 #########################################################################################
 
-arg_extract_type = create_argument(
+arg_extract_type = create_parameter(
     name="extract_type",
     description="The type of extract to create.",
     dtype=str,
     allowed=["disabled-lives", "active-lives"],
 )
-arg_n = create_argument(
+arg_n = create_parameter(
     name="n", description="The number of simulated policies to create.", dtype=int
 )
-arg_volume_tbl = create_argument(
+arg_volume_tbl = create_parameter(
     name="volume_tbl",
     description="""The volume table to use with refence to the distribution of policies \n
     by attributes.""",
     dtype=pd.DataFrame,
 )
-arg_as_of_dt = create_argument(
+arg_as_of_dt = create_parameter(
     name="as_of_dt",
     description="The as of date which birth date will be based.",
     dtype=pd.Timestamp,
 )
-arg_seed = create_argument(
+arg_seed = create_parameter(
     name="seed", description="The seed value to pass to numpy.random.", dtype=int
 )
 

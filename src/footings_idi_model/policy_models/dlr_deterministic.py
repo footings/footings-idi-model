@@ -1,6 +1,6 @@
 import pandas as pd
 
-from footings import create_argument, use, create_model
+from footings import create_parameter, use, create_model
 
 from ..functions.dlr import (
     create_dlr_frame,
@@ -31,12 +31,12 @@ __all__ = [
 # arguments
 #########################################################################################
 
-arg_valuation_dt = create_argument(
+arg_valuation_dt = create_parameter(
     name="valuation_dt",
     description="The valuation date which reserves are based.",
     dtype=pd.Timestamp,
 )
-arg_assumption_set = create_argument(
+arg_assumption_set = create_parameter(
     name="assumption_set",
     description="""The assumption set to use for running the model. Options are :
     
@@ -60,19 +60,19 @@ for col, val in zip(disabled_life_columns, disabled_life_schema["columns"]):
     }
     dl_attributes.update(record)
 
-arg_policy_id = create_argument(**dl_attributes["policy_id"])
-arg_claim_id = create_argument(**dl_attributes["claim_id"])
-arg_gender = create_argument(**dl_attributes["gender"])
-arg_birth_dt = create_argument(**dl_attributes["birth_dt"])
-arg_incurred_dt = create_argument(**dl_attributes["incurred_dt"])
-arg_termination_dt = create_argument(**dl_attributes["termination_dt"])
-arg_elimination_period = create_argument(**dl_attributes["elimination_period"])
-arg_idi_contract = create_argument(**dl_attributes["idi_contract"])
-arg_idi_benefit_period = create_argument(**dl_attributes["idi_benefit_period"])
-arg_idi_diagnosis_grp = create_argument(**dl_attributes["idi_diagnosis_grp"])
-arg_idi_occupation_class = create_argument(**dl_attributes["idi_occupation_class"])
-arg_cola_percent = create_argument(**dl_attributes["cola_percent"])
-arg_benefit_amount = create_argument(**dl_attributes["benefit_amount"])
+arg_policy_id = create_parameter(**dl_attributes["policy_id"])
+arg_claim_id = create_parameter(**dl_attributes["claim_id"])
+arg_gender = create_parameter(**dl_attributes["gender"])
+arg_birth_dt = create_parameter(**dl_attributes["birth_dt"])
+arg_incurred_dt = create_parameter(**dl_attributes["incurred_dt"])
+arg_termination_dt = create_parameter(**dl_attributes["termination_dt"])
+arg_elimination_period = create_parameter(**dl_attributes["elimination_period"])
+arg_idi_contract = create_parameter(**dl_attributes["idi_contract"])
+arg_idi_benefit_period = create_parameter(**dl_attributes["idi_benefit_period"])
+arg_idi_diagnosis_grp = create_parameter(**dl_attributes["idi_diagnosis_grp"])
+arg_idi_occupation_class = create_parameter(**dl_attributes["idi_occupation_class"])
+arg_cola_percent = create_parameter(**dl_attributes["cola_percent"])
+arg_benefit_amount = create_parameter(**dl_attributes["benefit_amount"])
 
 #########################################################################################
 # steps
