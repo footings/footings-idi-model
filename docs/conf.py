@@ -15,7 +15,6 @@ from footings_idi_model import __version__ as version
 
 sys.path.insert(0, os.path.abspath("./.."))
 
-
 # -- Project information -----------------------------------------------------
 
 project = "Footings IDI Model"
@@ -25,7 +24,28 @@ author = "Dustin Tindall"
 # The full version, including alpha/beta/rc tags
 release = version
 
+# -- Update NumpyDocString ---------------------------------------------------
+
+# inspiration from
+# https://michaelgoerz.net/notes/extending-sphinx-napoleon-docstring-sections.html
+def _parse_steps_section(section):
+    return ["Steps"]
+
+from sphinx.ext.napoleon.docstring import NumpyDocstring
+
+def parse_steps_section(self, section):
+    return self._format_fields('steps', self._consume_fields())
+NumpyDocstring._parse_steps_section = parse_steps_section
+
+def patched_parse(self):
+    self._sections['steps'] = self._parse_steps_section
+    self._unpatched_parse()
+NumpyDocstring._unpatched_parse = NumpyDocstring._parse
+NumpyDocstring._parse = patched_parse
+
 # -- General configuration ---------------------------------------------------
+
+
 
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named "sphinx.ext.*") or your custom
@@ -33,12 +53,13 @@ release = version
 extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.intersphinx",
+    "sphinx.ext.autosummary",
+    "sphinx.ext.napoleon",
     "nbsphinx",
-    "numpydoc",
     "sphinx_rtd_theme",
 ]
-# autosectionlabel_prefix_document = True
-# autosectionlabel_maxdepth = 2
+napoleon_google_docstring = False
+add_module_names = False
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]
