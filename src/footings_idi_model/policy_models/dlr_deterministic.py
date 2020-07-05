@@ -15,6 +15,18 @@ from ..functions.dlr import (
 )
 from ..schemas import disabled_life_schema, disabled_life_columns
 
+__all__ = [
+    "create_dlr_frame",
+    "calculate_ctr",
+    "calculate_cola_adjustment",
+    "calculate_monthly_benefits",
+    "calculate_lives",
+    "calculate_discount",
+    "calculate_pvfb",
+    "calculate_dlr",
+    "to_output_format",
+]
+
 #########################################################################################
 # arguments
 #########################################################################################
@@ -26,7 +38,12 @@ arg_valuation_dt = create_argument(
 )
 arg_assumption_set = create_argument(
     name="assumption_set",
-    description="The assumption set to use for running the model. Use one of stat, gaap, or best-estimate.",
+    description="""The assumption set to use for running the model. Options are :
+    
+        * `stat`
+        * `gaap`
+        * `best-estimate`
+    """,
     dtype=str,
     allowed=["stat", "gaap", "best-estimate"],
 )

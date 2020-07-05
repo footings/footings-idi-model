@@ -21,6 +21,21 @@ from ..functions.alr import (
 
 from ..schemas import active_life_schema, active_life_columns
 
+__all__ = [
+    "create_alr_frame",
+    "calculate_lives",
+    "calculate_discount",
+    "calculate_cola_adjustment",
+    "calculate_benefit_amount",
+    "calculate_incidence_rate",
+    "calculate_claim_cost",
+    "calculate_pvfb",
+    "calculate_pvnfb",
+    "calculate_alr_from_issue",
+    "calculate_alr_from_valuation_date",
+    "to_output_format",
+]
+
 #########################################################################################
 # arguments
 #########################################################################################
@@ -32,13 +47,23 @@ arg_valuation_dt = create_argument(
 )
 arg_assumption_set = create_argument(
     name="assumption_set",
-    description="The assumption set to use for running the model. Use one of stat, gaap, or best-estimate.",
+    description="""The assumption set to use for running the model. Options are :
+    
+        * `stat`
+        * `gaap`
+        * `best-estimate`
+    """,
     dtype=str,
     allowed=["stat", "gaap", "best-estimate"],
 )
 arg_net_benefit_method = create_argument(
     name="net_benefit_method",
-    description="The net benefit method. Use one of NLP, PT1, or PT2.",
+    description="""The net benefit method. Options are :
+
+        * `NLP` = Net level premium
+        * `PT1` = 1 year preliminary term
+        * `PT2` = 2 year preliminary term
+    """,
     dtype=str,
     allowed=["NLP", "PT1", "PT2"],
 )

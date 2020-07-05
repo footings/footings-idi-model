@@ -14,6 +14,7 @@ from ..policy_models.alr_deterministic import (
     arg_assumption_set,
     arg_net_benefit_method,
 )
+from ..functions.shared import dispatch_model_per_record
 
 #########################################################################################
 # arguments
@@ -29,7 +30,11 @@ arg_extract = create_argument(
 
 arg_policy_model = create_argument(
     name="policy_model",
-    description="The policy model to deploy either determinstic or stochastic",
+    description="""The policy model to deploy. Options are :
+
+        * `determinstic`
+        * `stochastic`
+    """,
     dtype=str,
     allowed=["deterministic", "stochastic"],
 )
@@ -40,47 +45,61 @@ arg_policy_model = create_argument(
 #########################################################################################
 
 
-def find_extract_issues(
+def check_extract(
     extract: pd.DataFrame,  # , valuation_dt: pd.Timestamp, schema: pd.DataFrame
 ):
-    """Find extract issues"""
+    """Check extract against required schema.
+    
+    Parameters
+    ----------
+    extract : pd.DataFrame
+        The extract to check.
+    valuation_dt : pd.Timestamp
+        The valuation date to be modeled.
+    schema : 
+        The required schema.
+    
+    Returns
+    -------
+    pd.DataFrame
+        The extract.
+    """
     return extract
 
 
-def _dispatch_model_per_record(
-    policy_model, record_keys: list, extract: pd.DataFrame, **kwargs
-):
-    @delayed
-    def run_model(**kwargs):
-        try:
-            ret = policy_model(**kwargs).run()
-        except:
-            ex_type, ex_value, ex_trace = sys.exc_info()
-            ret = {
-                **{key: kwargs.get(key.lower()) for key in record_keys},
-                "ERROR_TYPE": ex_type,
-                "ERROR_VALUE": ex_value,
-                "ERROR_STACKTRACE": format_list(extract_tb(ex_trace)),
-            }
-        return ret
-
-    extract = extract.copy()
-    extract.columns = [col.lower() for col in extract.columns]
-    params = set(getfullargspec(policy_model).kwonlyargs)
-    extract_params = params.intersection(set(extract.columns))
-    records = extract[extract_params].to_dict(orient="records")
-    output = [run_model(**record, **kwargs) for record in records]
-    successes, errors = [], []
-    for result in compute(output)[0]:
-        (successes if isinstance(result, pd.DataFrame) else errors).append(result)
-    return (successes, errors)
-
-
 def run_policy_model_per_record(
-    extract, valuation_dt, assumption_set, net_benefit_method, policy_model
-):
+    extract: pd.DataFrame,
+    valuation_dt: pd.Timestamp,
+    assumption_set: str,
+    policy_model: str,
+) -> list:
+    """Run each policy in extract through specified policy model.
+
+    Parameters
+    ----------
+    extract : pd.DataFrame
+        The extract to run.
+    valuation_dt : pd.Timestamp
+        The valuation date to be modeled.
+    assumption_set : str
+        The assumptions set to model.
+    net_benefit_method : str
+        The net benefit method to use.
+    policy_model : callable
+        The policy model to run for each policy in extract.
+
+    Raises
+    ------
+    NotImplementedError
+        When specifying policy_model = stochastic
+
+    Returns
+    -------
+    list
+        A list of all policies that have been ran through the policy model.
+    """
     if policy_model == "deterministic":
-        return _dispatch_model_per_record(
+        return dispatch_model_per_record(
             policy_model=alr_deterministic_model,
             record_keys=["POLICY_ID"],
             extract=extract,
@@ -93,7 +112,18 @@ def run_policy_model_per_record(
 
 
 def create_output(results):
-    """Create output"""
+    """
+    Creates model output.
+
+    Returns
+    -------
+    Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]
+        A tuple with three DataFrames : 
+        
+        * `[0]` = Time 0 reserve values
+        * `[1]` = Projected reserve values
+        * `[2]` = Any errors produced
+    """
     successes = results[0]
     errors = results[1]
     time_0 = pd.concat([success.head(1) for success in successes]).reset_index(drop=True)
@@ -107,8 +137,8 @@ def create_output(results):
 
 steps = [
     {
-        "name": "find-extract-issues",
-        "function": find_extract_issues,
+        "name": "check-extract",
+        "function": check_extract,
         "args": {
             "extract": arg_extract,
             # "valuation_dt": arg_valuation_dt,
@@ -119,7 +149,7 @@ steps = [
         "name": "run-policy-model-per-record",
         "function": run_policy_model_per_record,
         "args": {
-            "extract": use("find-extract-issues"),
+            "extract": use("check-extract"),
             "valuation_dt": arg_valuation_dt,
             "assumption_set": arg_assumption_set,
             "net_benefit_method": arg_net_benefit_method,
@@ -137,7 +167,17 @@ steps = [
 # models
 #########################################################################################
 
-DESCRIPTION = "Model IDI active lives."
+DESCRIPTION = """Model to calculate active life reserves (ALRs) using the 2013 individual
+disability insurance (IDI) valuation standard.
+
+The model is configured to use different assumptions sets - stat, gaap, or best-estimate.
+
+The key assumptions underlying the model are -
+
+* `Incidence Rates` - The probablility of an individual becoming disabled.
+* `Termination Rates` - Given an an individual is disabled, the probability of an individual going off claim.
+
+"""
 active_lives_model = create_model(
     name="ActiveLivesModel", description=DESCRIPTION, steps=steps
 )
