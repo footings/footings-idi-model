@@ -25,7 +25,7 @@ from ..assumptions.stat_gaap.termination import (
 from ..assumptions.stat_gaap.interest import get_interest_rate
 
 
-def sumprod_present_value(frame, columns):
+def _sumprod_present_value(frame, columns):
     """Calculate the sumproduct present value of a list of columns in a frame."""
     return frame[columns].prod(axis=1).iloc[::-1].cumsum()
 
@@ -81,6 +81,7 @@ def create_dlr_frame(
     idi_occupation_class,
     cola_percent,
 ):
+    """Create DLR Frame"""
     # build table
     fixed = {
         "frequency": "M",
@@ -297,7 +298,7 @@ def calculate_discount(frame, incurred_dt):
 def calculate_pvfb(frame):
     """Calculate present value future benefits."""
     prod_columns = ["BENEFIT_AMOUNT", "LIVES_MD", "DISCOUNT_MD"]
-    frame["PVFB_BD"] = sumprod_present_value(frame, prod_columns).round(2)
+    frame["PVFB_BD"] = _sumprod_present_value(frame, prod_columns).round(2)
     frame["PVFB_ED"] = frame["PVFB_BD"].shift(-1, fill_value=0)
     return frame
 
