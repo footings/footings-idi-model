@@ -156,5 +156,14 @@ steps = [
 #########################################################################################
 
 NAME = "DLRDeterminsticPolicyModel"
-DESCRIPTION = "Calculate 2013 Valuation Standard DLR for a policy."
+DESCRIPTION = """A policy model to calculate disabled life reserves (DLRs) using the 2013 individual
+disability insurance (IDI) valuation standard.
+
+The model is configured to use different assumptions sets - stat, gaap, or best-estimate.
+
+The key assumption underlying the model is -
+
+* `Termination Rates` - the probability of an individual going off claim.
+
+"""
 dlr_deterministic_model = create_model(name=NAME, description=DESCRIPTION, steps=steps)

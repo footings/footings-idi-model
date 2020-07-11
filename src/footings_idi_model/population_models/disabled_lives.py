@@ -163,14 +163,14 @@ steps = [
 # models
 #########################################################################################
 
-DESCRIPTION = """Model to calculate disabled life reserves (DLRs) using the 2013 individual
+DESCRIPTION = """A population model to calculate disabled life reserves (DLRs) using the 2013 individual
 disability insurance (IDI) valuation standard.
 
 The model is configured to use different assumptions sets - stat, gaap, or best-estimate.
 
 The key assumption underlying the model is -
 
-* `Termination Rates` - Given an an individual is disabled, the probability of an individual going off claim.
+* `Termination Rates` - the probability of an individual going off claim.
 
 """
 disabled_lives_model = create_model(

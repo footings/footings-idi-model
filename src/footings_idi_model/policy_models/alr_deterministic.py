@@ -1,4 +1,3 @@
-
 import pandas as pd
 
 from footings import create_parameter, use, create_model

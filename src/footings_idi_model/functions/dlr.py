@@ -67,21 +67,23 @@ def _filter_frame(frame, valuation_dt):
 
 
 def create_dlr_frame(
-    valuation_dt,
-    policy_id,
-    claim_id,
-    gender,
-    birth_dt,
-    incurred_dt,
-    termination_dt,
-    elimination_period,
-    idi_contract,
-    idi_benefit_period,
-    idi_diagnosis_grp,
-    idi_occupation_class,
-    cola_percent,
+    valuation_dt: pd.Timestamp,
+    policy_id: str,
+    claim_id: str,
+    gender: str,
+    birth_dt: pd.Timestamp,
+    incurred_dt: pd.Timestamp,
+    termination_dt: pd.Timestamp,
+    elimination_period: int,
+    idi_contract: str,
+    idi_benefit_period: str,
+    idi_diagnosis_grp: str,
+    idi_occupation_class: str,
+    cola_percent: float,
 ):
-    """Create DLR Frame"""
+    """Create disabled life frame with a range from the incurred date to termination date using 
+    a monthly frequency."""
+
     # build table
     fixed = {
         "frequency": "M",
@@ -218,32 +220,36 @@ _BASE_DROP_COLUMNS = [
 _DIAGNOSIS = ["DIAGNOSIS_MODIFIER"]
 _MARGIN = ["MARGIN_ADJUSTMENT"]
 
+_DOCSTRING = """Calculate claim termination rate (CTR) which varies by assumption_set (e.g., GAAP) 
+and mode (i.e., ALR vs DLR).
+"""
+
 calculate_ctr = create_dispatch_function(
-    name="calculate_ctr", parameters=("assumption_set", "mode")
+    name="calculate_ctr", parameters=("assumption_set", "mode"), docstring=_DOCSTRING
 )
 
 
 @calculate_ctr.register(assumption_set="gaap", mode="ALR")
 @post_drop_columns(columns=_BASE_DROP_COLUMNS)
-def _(frame):
+def _(frame: pd.DataFrame):
     return _calculate_ctr_stat_gaap(frame, mode="ALR", apply_margin=False)
 
 
 @calculate_ctr.register(assumption_set="gaap", mode="DLR")
 @post_drop_columns(columns=_BASE_DROP_COLUMNS + _DIAGNOSIS)
-def _(frame):
+def _(frame: pd.DataFrame):
     return _calculate_ctr_stat_gaap(frame, mode="DLR", apply_margin=False)
 
 
 @calculate_ctr.register(assumption_set="stat", mode="ALR")
 @post_drop_columns(columns=_BASE_DROP_COLUMNS + _MARGIN)
-def _(frame):
+def _(frame: pd.DataFrame):
     return _calculate_ctr_stat_gaap(frame, mode="ALR", apply_margin=True)
 
 
 @calculate_ctr.register(assumption_set="stat", mode="DLR")
 @post_drop_columns(columns=_BASE_DROP_COLUMNS + _MARGIN + _DIAGNOSIS)
-def _(frame):
+def _(frame: pd.DataFrame):
     return _calculate_ctr_stat_gaap(frame, mode="DLR", apply_margin=True)
 
 
@@ -257,8 +263,10 @@ def _(frame):
 #     pass
 
 
-def calculate_cola_adjustment(frame, cola_percent, incurred_dt):
-    """Calculate cola adjustment"""
+def calculate_cola_adjustment(
+    frame: pd.DataFrame, cola_percent: float, incurred_dt: pd.Timestamp
+):
+    """Calculate cost of living adjustment adjustment."""
     frame.loc[frame["DATE_BD"].dt.month == incurred_dt.month, "COLA_ADJUSTMENT"] = (
         1 + cola_percent
     )
@@ -267,15 +275,15 @@ def calculate_cola_adjustment(frame, cola_percent, incurred_dt):
 
 
 @post_drop_columns(columns=["COLA_ADJUSTMENT", "BENEFIT_FACTOR"])
-def calculate_monthly_benefits(frame, benefit_amount):
-    """Calculate monthly benefits"""
+def calculate_monthly_benefits(frame: pd.DataFrame, benefit_amount: float):
+    """Calculate the monthly benefit amount for each duration."""
     prod_cols = ["BENEFIT_FACTOR", "COLA_ADJUSTMENT"]
     frame["BENEFIT_AMOUNT"] = frame[prod_cols].prod(axis=1).mul(benefit_amount).round(2)
     return frame
 
 
-def calculate_lives(frame):
-    """Calculate continuance"""
+def calculate_lives(frame: pd.DataFrame):
+    """Calculate the begining, middle, and ending lives for each duration."""
     frame["LIVES_ED"] = (1 - frame["CTR"]).cumprod()
     frame["LIVES_BD"] = frame["LIVES_ED"].shift(1, fill_value=1)
     frame["LIVES_MD"] = frame[["LIVES_BD", "LIVES_ED"]].mean(axis=1)
@@ -283,8 +291,8 @@ def calculate_lives(frame):
 
 
 @post_drop_columns(columns=["DAYS_TO_MD", "DAYS_TO_ED"])
-def calculate_discount(frame, incurred_dt):
-    """Calculate discount"""
+def calculate_discount(frame: pd.DataFrame, incurred_dt: pd.Timestamp):
+    """Calculate begining, middle, and ending discount factor for each duration."""
     interest_rate = get_interest_rate(incurred_dt)
     min_duration = frame["DURATION_MONTH"].min()
     frame["DAYS_TO_ED"] = (frame["DURATION_MONTH"] - min_duration + 1) * 30
@@ -295,8 +303,8 @@ def calculate_discount(frame, incurred_dt):
     return frame
 
 
-def calculate_pvfb(frame):
-    """Calculate present value future benefits."""
+def calculate_pvfb(frame: pd.DataFrame):
+    """Calculate present value of future benefits."""
     prod_columns = ["BENEFIT_AMOUNT", "LIVES_MD", "DISCOUNT_MD"]
     frame["PVFB_BD"] = _sumprod_present_value(frame, prod_columns).round(2)
     frame["PVFB_ED"] = frame["PVFB_BD"].shift(-1, fill_value=0)
@@ -307,8 +315,21 @@ _DLR_DROP_COLUMNS = ["WT_BD", "WT_ED", "PVFB_VD", "DISCOUNT_VD_ADJ", "LIVES_VD_A
 
 
 @post_drop_columns(columns=_DLR_DROP_COLUMNS)
-def calculate_dlr(frame, valuation_dt):
-    """Calculate DLR"""
+def calculate_dlr(frame: pd.DataFrame, valuation_dt: pd.Timestamp):
+    """Calculate disabled life reserves (DLR).
+    
+    Parameters
+    ----------
+    frame : pd.DataFrame
+        The modeled frame.
+    valuation_dt : pd.Timestamp
+        The valuation date.
+
+    Returns
+    -------
+    pd.DataFrame
+        The frame with additional columns DLR and DATE_CLR.
+    """
     dur_n_days = (frame["DATE_ED"].iat[0] - frame["DATE_BD"].iat[0]).days
     frame["WT_BD"] = (frame["DATE_ED"].iat[0] - valuation_dt).days / dur_n_days
     frame["WT_ED"] = 1 - frame["WT_BD"]
@@ -331,8 +352,18 @@ def calculate_dlr(frame, valuation_dt):
     return frame
 
 
-def to_output_format(frame):
-    """To output format"""
+def to_output_format(frame: pd.DataFrame):
+    """Return the calculated table with attributes covering the policy, duration, and DLR.
+
+    Parameters
+    ----------
+    frame : pd.DataFrame
+
+    Returns
+    -------
+    pd.DataFrame
+        A DataFrame for a single policy with key columns covering the calculation of the DLR. 
+    """
     cols_select = [
         "POLICY_ID",
         "DATE_BD",
