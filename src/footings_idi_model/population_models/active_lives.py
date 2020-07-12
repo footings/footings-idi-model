@@ -6,7 +6,7 @@ import pandas as pd
 from dask import compute
 from dask.delayed import delayed
 
-from footings import create_parameter, use, create_model
+from footings import define_parameter, use, build_model
 
 from ..policy_models.alr_deterministic import (
     alr_deterministic_model,
@@ -22,13 +22,13 @@ from ..functions.shared import dispatch_model_per_record
 
 # valuation_dt and assumption_set are imported from policy_models
 
-arg_extract = create_parameter(
+arg_extract = define_parameter(
     name="extract",
     description="""The active life extract to use. See idi_model/schema/active_life_schema.yaml for specification.""",
     dtype=pd.DataFrame,
 )
 
-arg_policy_model = create_parameter(
+arg_policy_model = define_parameter(
     name="policy_model",
     description="""The policy model to deploy. Options are :
 
@@ -178,6 +178,6 @@ The key assumptions underlying the model are -
 * `Termination Rates` - Given an an individual is disabled, the probability of an individual going off claim.
 
 """
-active_lives_model = create_model(
+active_lives_model = build_model(
     name="ActiveLivesModel", description=DESCRIPTION, steps=steps
 )

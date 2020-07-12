@@ -1,7 +1,9 @@
+import datetime
+
 import numpy as np
 import pandas as pd
 
-from footings import create_dispatch_function
+from footings import dispatch_function
 
 from ..schemas import disabled_life_columns, active_life_columns
 
@@ -9,11 +11,28 @@ from ..schemas import disabled_life_columns, active_life_columns
 # functions
 #########################################################################################
 
-create_frame = create_dispatch_function("create_frame", parameters=("extract_type",))
+
+@dispatch_function(key_parameters=("extract_type",))
+def create_frame(extract_type: str, n: int):
+    """Create active or disabled life extract.
+    
+    Parameters
+    ----------
+    extract_type : str
+    n : int
+    
+    Returns
+    -------
+    pd.DataFrame
+        If extract type is "disabled-lives" a DataFrame with columns POLICY_ID and CLAIM_ID. \n
+        If extract type is "active-lives" a DataFrame with columns POLICY_ID.    
+    """
+    msg = "No registered function based on passed paramters and no default function."
+    raise NotImplementedError(msg)
 
 
 @create_frame.register(extract_type="disabled-lives")
-def _(n):
+def _(n: int):
     policy_ids = [f"M{i}" for i in range(1, n + 1)]
     claim_ids = [f"{p}C1" for p in policy_ids]
     frame = pd.DataFrame({"POLICY_ID": policy_ids, "CLAIM_ID": claim_ids})
@@ -22,15 +41,27 @@ def _(n):
 
 
 @create_frame.register(extract_type="active-lives")
-def _(n):
+def _(n: int):
     policy_ids = [f"M{i}" for i in range(1, n + 1)]
     frame = pd.DataFrame({"POLICY_ID": policy_ids})
     frame["COVERAGE_ID"] = "base"
     return frame
 
 
-def sample_from_volume_tbl(frame, volume_tbl, seed):
-    """Sample from volume table"""
+def sample_from_volume_tbl(frame: pd.DataFrame, volume_tbl: pd.DataFrame, seed: int):
+    """Sample from volume table.
+
+    Parameters
+    ----------
+    frame : pd.DataFrame
+    volume_tbl : pd.DataFrame
+    seed : int
+
+    Returns
+    -------
+    pd.DataFrame
+        A DataFrame with columns joined from volume_tbl.
+    """
     np.random.seed(seed)
     frame = frame.copy()
     volume_tbl = volume_tbl.copy()
@@ -46,16 +77,26 @@ def sample_from_volume_tbl(frame, volume_tbl, seed):
     return frame.drop(list(cols_added), axis=1).reset_index(drop=True)
 
 
-def add_benefit_amount(frame):
-    "Add benefit amount" ""
+def add_benefit_amount(frame: pd.DataFrame):
+    """Add benefit amount to generated frame.
+    
+    Parameters
+    ----------
+    frame : pd.DataFrame
+
+    Returns
+    -------
+    pd.DataFrame
+        The generated frame with an added column - BENEFIT_AMOUNT
+    """
     return frame.assign(BENEFIT_AMOUNT=100.0)
 
 
-def _calculate_age(frame, low, high):
+def _calculate_age(frame: pd.DataFrame, low: float, high: float):
     return np.random.uniform(low=low, high=high, size=frame.shape[0])
 
 
-def _calculate_termination_age(frame, base_age):
+def _calculate_termination_age(frame: pd.DataFrame, base_age: int):
     # calculate termination age
     benefit_period = frame["IDI_BENEFIT_PERIOD"].values.astype(str)
     cond_list_1 = [np.char.endswith(benefit_period, "M")]
@@ -74,11 +115,28 @@ def _calculate_termination_age(frame, base_age):
     return np.select(cond_list_3, choice_list_3)
 
 
-calculate_ages = create_dispatch_function("calculate-ages", parameters=("extract_type",))
+@dispatch_function(key_parameters=("extract_type",))
+def calculate_ages(extract_type: str, frame: pd.DataFrame, seed: int):
+    """Calculate ages
+    
+    Parameters
+    ----------
+    extract_type : str
+    frame : pd.DataFrame
+    seed : int
+
+    Returns
+    -------
+    pd.DataFrame
+        If extract type is "disabled-lives" a DataFrame with columns CURRENT_AGE, INCURRED_AGE, and TERMINATION_AGE. \n
+        If extract type is "active-lives"  a DataFrame with columns CURRENT_AGE and ISSUE_AGE.
+    """
+    msg = "No registered function based on passed paramters and no default function."
+    raise NotImplementedError(msg)
 
 
 @calculate_ages.register(extract_type="disabled-lives")
-def _(frame, seed):
+def _(frame: pd.DataFrame, seed: int):
     np.random.seed(seed)
 
     incurred_age = _calculate_age(frame, 0.25, 0.6)
@@ -93,7 +151,7 @@ def _(frame, seed):
 
 
 @calculate_ages.register(extract_type="active-lives")
-def _(frame, seed):
+def _(frame: pd.DataFrame, seed: int):
     np.random.seed(seed)
     issue_age = _calculate_age(frame, 0.25, 0.6)
     frame["ISSUE_AGE"] = issue_age * 100
@@ -101,7 +159,7 @@ def _(frame, seed):
     return frame
 
 
-def _birth_date_add_years(birth_dt, years):
+def _birth_date_add_years(birth_dt: datetime.date, years: int):
     """Add years to birth date"""
     return pd.to_datetime(
         {
@@ -112,7 +170,7 @@ def _birth_date_add_years(birth_dt, years):
     )
 
 
-def _incurred_date_add_months(incurred_dt, months):
+def _incurred_date_add_months(incurred_dt: datetime.date, months: int):
     """Add months to incurred date"""
     whole_years = months // 12
     months_remaining = months % 12
@@ -140,13 +198,29 @@ def _incurred_date_add_months(incurred_dt, months):
     return pd.to_datetime(df)
 
 
-calculate_dates = create_dispatch_function(
-    "calculate_dates", parameters=("extract_type",)
-)
+@dispatch_function(key_parameters=("extract_type",))
+def calculate_dates(extract_type: str, frame: pd.DataFrame, as_of_dt: datetime.date):
+    """Calculate dates
+    
+    Parameters
+    ----------
+    extract_type : str
+    frame : pd.DataFrame
+    as_of_dt : datetime.date
+
+    Returns
+    -------
+    pd.DataFrame
+        If extract type is "disabled-lives" a DataFrame with columns BIRTH_DT, INCURRED_DT, and TERMINATION_DT. \n
+        If extract type is "active-lives"  a DataFrame with columns BIRTH_DT and ISSUE_DT.
+ 
+    """
+    msg = "No registered function based on passed paramters and no default function."
+    raise NotImplementedError(msg)
 
 
 @calculate_dates.register(extract_type="disabled-lives")
-def _(frame, as_of_dt):
+def _(frame: pd.DataFrame, as_of_dt: datetime.date):
 
     # calculate birth date
     days_from_birth = frame["CURRENT_AGE"].values * 365.25
@@ -180,7 +254,7 @@ def _(frame, as_of_dt):
 
 
 @calculate_dates.register(extract_type="active-lives")
-def _(frame, as_of_dt):
+def _(frame: pd.DataFrame, as_of_dt: datetime.date):
     # calculate birth date
     days_from_birth = frame["CURRENT_AGE"].values * 365.25
     frame["BIRTH_DT"] = as_of_dt - pd.to_timedelta(days_from_birth, unit="D").round("D")
@@ -213,17 +287,30 @@ def _(frame, as_of_dt):
     return frame.drop(["CURRENT_AGE"], axis=1)
 
 
-finalize_extract = create_dispatch_function(
-    "finalize_extract", parameters=("extract_type",)
-)
+@dispatch_function(key_parameters=("extract_type",))
+def finalize_extract(extract_type: str, frame: pd.DataFrame):
+    """Finalize extract
+    
+    Parameters
+    ----------
+    extract_type : str
+    frame : pd.DataFrame
+
+    Returns
+    -------
+    pd.DataFrame
+        The final extract.
+    """
+    msg = "No registered function based on passed paramters and no default function."
+    raise NotImplementedError(msg)
 
 
 @finalize_extract.register(extract_type="disabled-lives")
-def _(frame):
+def _(frame: pd.DataFrame):
     frame["PAID_TO_DT"] = pd.NA
     return frame[disabled_life_columns]
 
 
 @finalize_extract.register(extract_type="active-lives")
-def _(frame):
+def _(frame: pd.DataFrame):
     return frame[active_life_columns]

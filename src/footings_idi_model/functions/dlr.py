@@ -3,7 +3,7 @@ from dateutil.relativedelta import relativedelta
 import numpy as np
 import pandas as pd
 
-from footings import create_dispatch_function
+from footings import dispatch_function
 from footings.tools import create_frame, post_drop_columns, calculate_age
 
 from ..assumptions.stat_gaap.termination import (
@@ -82,7 +82,33 @@ def create_dlr_frame(
     cola_percent: float,
 ):
     """Create disabled life frame with a range from the incurred date to termination date using 
-    a monthly frequency."""
+    a monthly frequency.
+    
+    Parameters
+    ----------
+    valuation_dt : pd.Timestamp
+    policy_id : str
+    claim_id : str
+    gender : str
+    birth_dt : pd.Timestamp
+    incurred_dt : pd.Timestamp
+    termination_dt : pd.Timestamp
+    elimination_period : int
+    idi_contract : str
+    idi_benefit_period : str
+    idi_diagnosis_grp : str
+    idi_occupation_class : str
+    cola_percent : float 
+    
+    Returns
+    -------
+    pd.DataFrame
+        The DataFrame with the above Parameters as well as -
+        - BEGIN_DT - the begining date for a row
+        - END_DT - the ending date for a row
+        - DURATION_YEAR - the duration year for a row
+        - DURATION_MONTH - the duratino month for a row
+    """
 
     # build table
     fixed = {
@@ -220,13 +246,29 @@ _BASE_DROP_COLUMNS = [
 _DIAGNOSIS = ["DIAGNOSIS_MODIFIER"]
 _MARGIN = ["MARGIN_ADJUSTMENT"]
 
-_DOCSTRING = """Calculate claim termination rate (CTR) which varies by assumption_set (e.g., GAAP) 
-and mode (i.e., ALR vs DLR).
-"""
 
-calculate_ctr = create_dispatch_function(
-    name="calculate_ctr", parameters=("assumption_set", "mode"), docstring=_DOCSTRING
-)
+@dispatch_function(key_parameters=("assumption_set", "mode",))
+def calculate_ctr(assumption_set: str, mode: str, frame: pd.DataFrame):
+    """Calculate claim termination rate (CTR) which varies by assumption_set (e.g., GAAP) 
+    and mode (i.e., ALR vs DLR).
+
+    The CTR utilizes the select and ultimate tables required by the 2013 IDI Valuation Standard,
+    as well as the required modifiers. The difference between running STAT vs GAAP is the use of
+    margin. STAT includes it and GAAP does not.
+
+    Parameters
+    ----------
+    assumption_set : str
+    mode : str
+    frame : pd.DataFrame
+    
+    Returns
+    -------
+    pd.DataFrame
+        The passed DataFrame with an extra column for CTR.
+    """
+    msg = "No registered function based on passed paramters and no default function."
+    raise NotImplementedError(msg)
 
 
 @calculate_ctr.register(assumption_set="gaap", mode="ALR")
@@ -266,7 +308,19 @@ def _(frame: pd.DataFrame):
 def calculate_cola_adjustment(
     frame: pd.DataFrame, cola_percent: float, incurred_dt: pd.Timestamp
 ):
-    """Calculate cost of living adjustment adjustment."""
+    """Calculate cost of living adjustment adjustment.
+    
+    Parameters
+    ----------
+    frame : pd.DataFrame
+    cola_percent : float
+    incurred_dt : pd.Timestamp
+
+    Returns
+    -------
+    pd.DataFrame
+        The passed DataFrame with an additional column called COLA_ADJUSTMENT.
+    """
     frame.loc[frame["DATE_BD"].dt.month == incurred_dt.month, "COLA_ADJUSTMENT"] = (
         1 + cola_percent
     )
@@ -276,14 +330,35 @@ def calculate_cola_adjustment(
 
 @post_drop_columns(columns=["COLA_ADJUSTMENT", "BENEFIT_FACTOR"])
 def calculate_monthly_benefits(frame: pd.DataFrame, benefit_amount: float):
-    """Calculate the monthly benefit amount for each duration."""
+    """Calculate the monthly benefit amount for each duration.
+    
+    Parameters
+    ----------
+    frame : pd.DataFrame
+    benefit_amount : float
+
+    Returns
+    -------
+    pd.DataFrame
+        The passed DataFrame with an additional column called BENEFIT_AMOUNT.        
+    """
     prod_cols = ["BENEFIT_FACTOR", "COLA_ADJUSTMENT"]
     frame["BENEFIT_AMOUNT"] = frame[prod_cols].prod(axis=1).mul(benefit_amount).round(2)
     return frame
 
 
 def calculate_lives(frame: pd.DataFrame):
-    """Calculate the begining, middle, and ending lives for each duration."""
+    """Calculate the begining, middle, and ending lives for each duration.
+    
+    Parameters
+    ----------
+    frame : pd.DataFrame
+
+    Returns
+    -------
+    pd.DataFrame
+        The passed DataFrame with additional columns LIVES_BD, LIVES_MD, and LIVES_ED.
+    """
     frame["LIVES_ED"] = (1 - frame["CTR"]).cumprod()
     frame["LIVES_BD"] = frame["LIVES_ED"].shift(1, fill_value=1)
     frame["LIVES_MD"] = frame[["LIVES_BD", "LIVES_ED"]].mean(axis=1)
@@ -292,7 +367,18 @@ def calculate_lives(frame: pd.DataFrame):
 
 @post_drop_columns(columns=["DAYS_TO_MD", "DAYS_TO_ED"])
 def calculate_discount(frame: pd.DataFrame, incurred_dt: pd.Timestamp):
-    """Calculate begining, middle, and ending discount factor for each duration."""
+    """Calculate begining, middle, and ending discount factor for each duration.
+    
+    Parameters
+    ----------
+    frame : pd.DataFrame
+    incurred_dt : pd.Timestamp
+
+    Returns
+    -------
+    pd.DataFrame
+        The passed DataFrame with additional columns DISCOUNT_BD, DISCOUNT_MD, and DISCOUNT_ED.        
+    """
     interest_rate = get_interest_rate(incurred_dt)
     min_duration = frame["DURATION_MONTH"].min()
     frame["DAYS_TO_ED"] = (frame["DURATION_MONTH"] - min_duration + 1) * 30
@@ -304,7 +390,17 @@ def calculate_discount(frame: pd.DataFrame, incurred_dt: pd.Timestamp):
 
 
 def calculate_pvfb(frame: pd.DataFrame):
-    """Calculate present value of future benefits."""
+    """Calculate present value of future benefits.
+    
+    Parameters
+    ----------
+    frame : pd.DataFrame
+
+    Returns
+    -------
+    pd.DataFrame
+        The passed DataFrame with additional columns PVFB_BD and PVFB_ED.
+    """
     prod_columns = ["BENEFIT_AMOUNT", "LIVES_MD", "DISCOUNT_MD"]
     frame["PVFB_BD"] = _sumprod_present_value(frame, prod_columns).round(2)
     frame["PVFB_ED"] = frame["PVFB_BD"].shift(-1, fill_value=0)
@@ -321,9 +417,7 @@ def calculate_dlr(frame: pd.DataFrame, valuation_dt: pd.Timestamp):
     Parameters
     ----------
     frame : pd.DataFrame
-        The modeled frame.
     valuation_dt : pd.Timestamp
-        The valuation date.
 
     Returns
     -------
@@ -353,7 +447,7 @@ def calculate_dlr(frame: pd.DataFrame, valuation_dt: pd.Timestamp):
 
 
 def to_output_format(frame: pd.DataFrame):
-    """Return the calculated table with attributes covering the policy, duration, and DLR.
+    """Return the calculated frame with attributes covering the policy, duration, and DLR.
 
     Parameters
     ----------
@@ -362,7 +456,7 @@ def to_output_format(frame: pd.DataFrame):
     Returns
     -------
     pd.DataFrame
-        A DataFrame for a single policy with key columns covering the calculation of the DLR. 
+        The final DataFrame.
     """
     cols_select = [
         "POLICY_ID",

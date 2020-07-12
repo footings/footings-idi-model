@@ -1,6 +1,6 @@
 import pandas as pd
 
-from footings import create_parameter, use, create_model
+from footings import define_parameter, use, build_model
 
 from ..functions.alr import (
     create_alr_frame,
@@ -38,12 +38,12 @@ __all__ = [
 # arguments
 #########################################################################################
 
-arg_valuation_dt = create_parameter(
+arg_valuation_dt = define_parameter(
     name="valuation_dt",
     description="The valuation date which reserves are based.",
     dtype=pd.Timestamp,
 )
-arg_assumption_set = create_parameter(
+arg_assumption_set = define_parameter(
     name="assumption_set",
     description="""The assumption set to use for running the model. Options are :
     
@@ -54,7 +54,7 @@ arg_assumption_set = create_parameter(
     dtype=str,
     allowed=["stat", "gaap", "best-estimate"],
 )
-arg_net_benefit_method = create_parameter(
+arg_net_benefit_method = define_parameter(
     name="net_benefit_method",
     description="""The net benefit method. Options are :
 
@@ -78,19 +78,19 @@ for col, val in zip(active_life_columns, active_life_schema["columns"]):
     }
     al_attributes.update(record)
 
-arg_policy_id = create_parameter(**al_attributes["policy_id"])
-arg_gender = create_parameter(**al_attributes["gender"])
-arg_birth_dt = create_parameter(**al_attributes["birth_dt"])
-arg_tobacco_usage = create_parameter(**al_attributes["tobacco_usage"])
-arg_issue_dt = create_parameter(**al_attributes["issue_dt"])
-arg_termination_dt = create_parameter(**al_attributes["termination_dt"])
-arg_elimination_period = create_parameter(**al_attributes["elimination_period"])
-arg_idi_market = create_parameter(**al_attributes["idi_market"])
-arg_idi_contract = create_parameter(**al_attributes["idi_contract"])
-arg_idi_benefit_period = create_parameter(**al_attributes["idi_benefit_period"])
-arg_idi_occupation_class = create_parameter(**al_attributes["idi_occupation_class"])
-arg_cola_percent = create_parameter(**al_attributes["cola_percent"])
-arg_benefit_amount = create_parameter(**al_attributes["benefit_amount"])
+arg_policy_id = define_parameter(**al_attributes["policy_id"])
+arg_gender = define_parameter(**al_attributes["gender"])
+arg_birth_dt = define_parameter(**al_attributes["birth_dt"])
+arg_tobacco_usage = define_parameter(**al_attributes["tobacco_usage"])
+arg_issue_dt = define_parameter(**al_attributes["issue_dt"])
+arg_termination_dt = define_parameter(**al_attributes["termination_dt"])
+arg_elimination_period = define_parameter(**al_attributes["elimination_period"])
+arg_idi_market = define_parameter(**al_attributes["idi_market"])
+arg_idi_contract = define_parameter(**al_attributes["idi_contract"])
+arg_idi_benefit_period = define_parameter(**al_attributes["idi_benefit_period"])
+arg_idi_occupation_class = define_parameter(**al_attributes["idi_occupation_class"])
+arg_cola_percent = define_parameter(**al_attributes["cola_percent"])
+arg_benefit_amount = define_parameter(**al_attributes["benefit_amount"])
 
 
 #########################################################################################
@@ -193,5 +193,15 @@ steps = [
 #########################################################################################
 
 NAME = "ALRDeterministicPolicyModel"
-DESCRIPTION = "Calculate 2013 Valuation Standard ALR for a policy."
-alr_deterministic_model = create_model(name=NAME, description=DESCRIPTION, steps=steps)
+DESCRIPTION = """ A policy model to calculate active life reserves (ALRs) using the 2013 individual
+disability insurance (IDI) valuation standard.
+
+The model is configured to use different assumptions sets - stat, gaap, or best-estimate.
+
+The key assumptions underlying the model are -
+
+* `Incidence Rates` - The probablility of an individual becoming disabled.
+* `Termination Rates` - Given an an individual is disabled, the probability of an individual going off claim.
+
+"""
+alr_deterministic_model = build_model(name=NAME, description=DESCRIPTION, steps=steps)

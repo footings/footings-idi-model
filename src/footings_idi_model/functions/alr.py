@@ -4,7 +4,7 @@ from inspect import getfullargspec
 import numpy as np
 import pandas as pd
 
-from footings import create_dispatch_function
+from footings import dispatch_function
 from footings.tools import create_frame, post_drop_columns, calculate_age
 
 from ..assumptions.stat_gaap.incidence import (
@@ -33,19 +33,45 @@ def _assign_end_date(frame):
 
 
 def create_alr_frame(
-    valuation_dt,
-    policy_id,
-    gender,
-    tobacco_usage,
-    birth_dt,
-    issue_dt,
-    termination_dt,
-    elimination_period,
-    idi_market,
-    idi_contract,
-    idi_benefit_period,
-    idi_occupation_class,
+    valuation_dt: pd.Timestamp,
+    policy_id: str,
+    gender: str,
+    tobacco_usage: str,
+    birth_dt: pd.Timestamp,
+    issue_dt: pd.Timestamp,
+    termination_dt: pd.Timestamp,
+    elimination_period: int,
+    idi_market: str,
+    idi_contract: str,
+    idi_benefit_period: str,
+    idi_occupation_class: str,
 ):
+    """Create active life frame with a range from the policy issue date to termination date using 
+    a yearly frequency.
+    
+    Parameters
+    ----------
+    valuation_dt: pd.Timestamp
+    policy_id: str
+    gender: str
+    tobacco_usage: str
+    birth_dt: pd.Timestamp
+    issue_dt: pd.Timestamp
+    termination_dt: pd.Timestamp
+    elimination_period: int
+    idi_market: str
+    idi_contract: str
+    idi_benefit_period: str
+    idi_occupation_class: str
+    
+    Returns
+    -------
+    pd.DataFrame
+        The DataFrame with the above Parameters as well as -
+        - BEGIN_DT - the begining date for a row
+        - END_DT - the ending date for a row
+        - DURATION_YEAR - the duration year for a row
+    """
     # build table
     fixed = {
         "frequency": "Y",
@@ -80,8 +106,6 @@ def create_alr_frame(
 
 
 def _calculate_lives(frame: pd.DataFrame, persistency_src: str):
-    """Calculate lives."""
-
     if persistency_src in ["01CSO", "17CSO", "58CSO", "80CSO"]:
         pers_rate = get_mortality(persistency_src).drop(["BASIS"], axis=1)
         frame = frame.merge(pers_rate, on=["GENDER", "AGE_ATTAINED"], how="left")
@@ -100,9 +124,22 @@ def _calculate_lives(frame: pd.DataFrame, persistency_src: str):
     return frame
 
 
-calculate_lives = create_dispatch_function(
-    name="calculate_lives", parameters=("assumption_set",)
-)
+@dispatch_function(key_parameters=("assumption_set",))
+def calculate_lives(assumption_set: str, frame: pd.DataFrame):
+    """Calculate lives for each duration.
+
+    Parameters
+    ----------
+    assumption_set : str
+    frame : pd.DataFrame
+    
+    Returns
+    -------
+    pd.DataFrame
+        The passed DataFrame with additional columns LIVES_BD, LIVES_MD, and LIVES_ED.
+    """
+    msg = "No registered function based on passed paramters and no default function."
+    raise NotImplementedError(msg)
 
 
 @calculate_lives.register(assumption_set="stat")
@@ -116,8 +153,19 @@ def _(frame):
     return _calculate_lives(frame, persistency_src="gr")
 
 
-def calculate_discount(frame, issue_dt):
-    """Calculate discount."""
+def calculate_discount(frame: pd.DataFrame, issue_dt: pd.Timestamp):
+    """Calculate begining, middle, and ending discount factor for each duration.
+    
+    Parameters
+    ----------
+    frame : pd.DataFrame
+    incurred_dt : pd.Timestamp
+
+    Returns
+    -------
+    pd.DataFrame
+        The passed DataFrame with additional columns DISCOUNT_BD, DISCOUNT_MD, and DISCOUNT_ED.        
+    """
     interest_rate = get_interest_rate(issue_dt)
     frame["DISCOUNT_BD"] = 1 / (1 + interest_rate) ** (frame["DURATION_YEAR"] - 1)
     frame["DISCOUNT_MD"] = 1 / (1 + interest_rate) ** (frame["DURATION_YEAR"] - 0.5)
@@ -125,7 +173,19 @@ def calculate_discount(frame, issue_dt):
     return frame
 
 
-def calculate_cola_adjustment(frame, cola_percent):
+def calculate_cola_adjustment(frame: pd.DataFrame, cola_percent: float):
+    """Calculate cost of living adjustment adjustment.
+    
+    Parameters
+    ----------
+    frame : pd.DataFrame
+    cola_percent : float
+
+    Returns
+    -------
+    pd.DataFrame
+        The passed DataFrame with an additional column called COLA_ADJUSTMENT.
+    """
     frame["COLA_PERCENT"] = cola_percent
     frame.loc[frame["DURATION_YEAR"] > 1, "COLA_ADJUSTMENT"] = 1 + cola_percent
     frame["COLA_ADJUSTMENT"] = frame["COLA_ADJUSTMENT"].fillna(1).cumprod()
@@ -133,7 +193,7 @@ def calculate_cola_adjustment(frame, cola_percent):
 
 
 @post_drop_columns(columns=["COLA_ADJUSTMENT"])
-def calculate_benefit_amount(frame, benefit_amount):
+def calculate_benefit_amount(frame: pd.DataFrame, benefit_amount: float):
     frame["BENEFIT_AMOUNT"] = (frame["COLA_ADJUSTMENT"] * benefit_amount).round(2)
     return frame
 
@@ -150,8 +210,20 @@ _INCIDENCE_DROP_COLUMNS = [
 
 
 @post_drop_columns(columns=_INCIDENCE_DROP_COLUMNS)
-def calculate_incidence_rate(frame, cause):
-    """Calculate indcidence rate."""
+def calculate_incidence_rate(frame: pd.DataFrame, cause: str):
+    """Calculate indcidence rate for each duration.
+    
+    Parameters
+    ----------
+    frame : pd.DataFrame
+    cause : str
+
+    Returns
+    -------
+    pd.DataFrame
+        The passed DataFrame with an additional column called INCIDENCE_RATE.        
+    
+    """
     base_incidence = get_base_incidence(incidence_file, cause)
     base_join_cols = [
         "IDI_OCCUPATION_CLASS",
@@ -199,7 +271,10 @@ def calculate_incidence_rate(frame, cause):
 
 
 def _calculate_termination_date(
-    incurred_dt, coverage_to_dt, birth_dt, idi_benefit_period
+    incurred_dt: pd.Timestamp,
+    coverage_to_dt: pd.Timestamp,
+    birth_dt: pd.Timestamp,
+    idi_benefit_period: str,
 ):
     if idi_benefit_period[-1] == "M":
         months = int(idi_benefit_period[:-1])
@@ -229,8 +304,26 @@ _CLAIM_COST_DROP_COLUMNS = [
 
 
 @post_drop_columns(columns=_CLAIM_COST_DROP_COLUMNS)
-def calculate_claim_cost(frame, assumption_set, birth_dt, idi_benefit_period):
-    """Calculate claim cost."""
+def calculate_claim_cost(
+    frame: pd.DataFrame,
+    assumption_set: str,
+    birth_dt: pd.Timestamp,
+    idi_benefit_period: str,
+):
+    """Calculate claim cost for each duration.
+    
+    Parameters
+    ----------
+    frame : pd.DataFrame
+    assumption_set : pd.DataFrame
+    birth_dt : pd.Timestamp
+    idi_benefit_period : str
+
+    Returns
+    -------
+    pd.DataFrame
+        The passed DataFrame with an additional columns called DLR and CLAIM_COST.
+    """
     frame_use = frame.copy()
     frame_use.columns = [col.lower() for col in frame_use.columns]
     frame_use = frame_use.assign(
@@ -259,8 +352,17 @@ def calculate_claim_cost(frame, assumption_set, birth_dt, idi_benefit_period):
 
 
 @post_drop_columns(columns=["PVFB_PROD"])
-def calculate_pvfb(frame):
-    """Calculate present value future benefits (PVFB)."""
+def calculate_pvfb(frame: pd.DataFrame):
+    """Calculate present value future benefits (PVFB).
+    
+    Parameters
+    ----------
+    frame : pd.DataFrame
+
+    Returns
+    -------
+        The passed DataFrame with an additional columns called PVFB.
+    """
     pvfb_colums = ["LIVES_MD", "DISCOUNT_MD", "CLAIM_COST"]
     frame["PVFB_PROD"] = frame[pvfb_colums].prod(axis=1)
     frame["PVFB"] = frame["PVFB_PROD"].iloc[::-1].cumsum().round(2)
@@ -268,8 +370,18 @@ def calculate_pvfb(frame):
 
 
 @post_drop_columns(columns=["PAY_FLAG"])
-def calculate_pvnfb(frame, net_benefit_method):  # , premium_pay_to_age
-    """Calculate present value net future benefits (PVNFB)."""
+def calculate_pvnfb(frame: pd.DataFrame, net_benefit_method: str):  # premium_pay_to_age
+    """Calculate present value net future benefits (PVNFB).
+    
+    Parameters
+    ----------
+    frame : pd.DataFrame
+    net_benefit_method : str
+
+    Returns
+    -------
+        The passed DataFrame with an additional columns called PVNFB.
+    """
     frame["PAY_FLAG"] = 1
     pvp_cols = ["PAY_FLAG", "LIVES_BD", "DISCOUNT_BD"]
     frame["PVP"] = frame[pvp_cols].prod(axis=1).iloc[::-1].cumsum()
@@ -302,7 +414,16 @@ def calculate_pvnfb(frame, net_benefit_method):  # , premium_pay_to_age
 
 
 def calculate_alr_from_issue(frame: pd.DataFrame):
-    """Calculate active life reserves (ALR) from issue."""
+    """Calculate active life reserves (ALR) from issue.
+    
+    Parameters
+    ----------
+    frame : pd.DataFrame
+
+    Returns
+    -------
+        The passed DataFrame with additional columns called ALR_BD and ALR_ED.
+    """
     frame["ALR_BD"] = (
         (frame["PVFB"] - frame["PVFNB"]).div(frame["DISCOUNT_BD"]).clip(lower=0)
     ).round(2)
@@ -311,7 +432,16 @@ def calculate_alr_from_issue(frame: pd.DataFrame):
 
 
 def calculate_alr_from_valuation_date(frame: pd.DataFrame, valuation_dt: pd.Timestamp):
-    """Normalize ALR as of valuation date."""
+    """Normalize ALR as of valuation date.
+    
+    Parameters
+    ----------
+    frame : pd.DataFrame
+
+    Returns
+    -------
+        The passed DataFrame with an additional column called ALR.
+    """
     frame = frame[frame["DATE_BD"] >= valuation_dt].copy()
     frame["DATE_ALR"] = pd.to_datetime(
         [
@@ -343,7 +473,17 @@ def calculate_alr_from_valuation_date(frame: pd.DataFrame, valuation_dt: pd.Time
 
 
 def to_output_format(frame: pd.DataFrame):
-    """To output format."""
+    """Return the calculated frame with attributes covering the policy, duration, and ALR.
+
+    Parameters
+    ----------
+    frame : pd.DataFrame
+
+    Returns
+    -------
+    pd.DataFrame
+        The final DataFrame. 
+    """
     cols_order = [
         "POLICY_ID",
         "DATE_BD",

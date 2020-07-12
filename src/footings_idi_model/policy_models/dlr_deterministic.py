@@ -1,6 +1,6 @@
 import pandas as pd
 
-from footings import create_parameter, use, create_model
+from footings import define_parameter, use, build_model
 
 from ..functions.dlr import (
     create_dlr_frame,
@@ -31,12 +31,12 @@ __all__ = [
 # arguments
 #########################################################################################
 
-arg_valuation_dt = create_parameter(
+arg_valuation_dt = define_parameter(
     name="valuation_dt",
     description="The valuation date which reserves are based.",
     dtype=pd.Timestamp,
 )
-arg_assumption_set = create_parameter(
+arg_assumption_set = define_parameter(
     name="assumption_set",
     description="""The assumption set to use for running the model. Options are :
     
@@ -60,19 +60,19 @@ for col, val in zip(disabled_life_columns, disabled_life_schema["columns"]):
     }
     dl_attributes.update(record)
 
-arg_policy_id = create_parameter(**dl_attributes["policy_id"])
-arg_claim_id = create_parameter(**dl_attributes["claim_id"])
-arg_gender = create_parameter(**dl_attributes["gender"])
-arg_birth_dt = create_parameter(**dl_attributes["birth_dt"])
-arg_incurred_dt = create_parameter(**dl_attributes["incurred_dt"])
-arg_termination_dt = create_parameter(**dl_attributes["termination_dt"])
-arg_elimination_period = create_parameter(**dl_attributes["elimination_period"])
-arg_idi_contract = create_parameter(**dl_attributes["idi_contract"])
-arg_idi_benefit_period = create_parameter(**dl_attributes["idi_benefit_period"])
-arg_idi_diagnosis_grp = create_parameter(**dl_attributes["idi_diagnosis_grp"])
-arg_idi_occupation_class = create_parameter(**dl_attributes["idi_occupation_class"])
-arg_cola_percent = create_parameter(**dl_attributes["cola_percent"])
-arg_benefit_amount = create_parameter(**dl_attributes["benefit_amount"])
+arg_policy_id = define_parameter(**dl_attributes["policy_id"])
+arg_claim_id = define_parameter(**dl_attributes["claim_id"])
+arg_gender = define_parameter(**dl_attributes["gender"])
+arg_birth_dt = define_parameter(**dl_attributes["birth_dt"])
+arg_incurred_dt = define_parameter(**dl_attributes["incurred_dt"])
+arg_termination_dt = define_parameter(**dl_attributes["termination_dt"])
+arg_elimination_period = define_parameter(**dl_attributes["elimination_period"])
+arg_idi_contract = define_parameter(**dl_attributes["idi_contract"])
+arg_idi_benefit_period = define_parameter(**dl_attributes["idi_benefit_period"])
+arg_idi_diagnosis_grp = define_parameter(**dl_attributes["idi_diagnosis_grp"])
+arg_idi_occupation_class = define_parameter(**dl_attributes["idi_occupation_class"])
+arg_cola_percent = define_parameter(**dl_attributes["cola_percent"])
+arg_benefit_amount = define_parameter(**dl_attributes["benefit_amount"])
 
 #########################################################################################
 # steps
@@ -166,4 +166,4 @@ The key assumption underlying the model is -
 * `Termination Rates` - the probability of an individual going off claim.
 
 """
-dlr_deterministic_model = create_model(name=NAME, description=DESCRIPTION, steps=steps)
+dlr_deterministic_model = build_model(name=NAME, description=DESCRIPTION, steps=steps)
