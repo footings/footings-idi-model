@@ -31,20 +31,42 @@ release = version
 def _parse_steps_section(section):
     return ["Steps"]
 
+
 from sphinx.ext.napoleon.docstring import NumpyDocstring
 
+
 def parse_steps_section(self, section):
-    return self._format_fields('steps', self._consume_fields())
+    return self._format_fields("steps", self._consume_fields())
+
+
 NumpyDocstring._parse_steps_section = parse_steps_section
 
+
+# def parse_dispatch_section(self, section):
+#     return self._format_fields("dispatch", self._consume_fields())
+#
+#
+# NumpyDocstring._parse_dispatch_section = parse_dispatch_section
+#
+#
+# def parse_loaded_section(self, section):
+#     return self._format_fields("loaded", self._consume_fields())
+#
+#
+# NumpyDocstring._parse_loaded_section = parse_loaded_section
+
+
 def patched_parse(self):
-    self._sections['steps'] = self._parse_steps_section
+    self._sections["steps"] = self._parse_steps_section
+    # self._sections["dispatch"] = self._parse_dispatch_section
+    # self._sections["loaded"] = self._parse_loaded_section
     self._unpatched_parse()
+
+
 NumpyDocstring._unpatched_parse = NumpyDocstring._parse
 NumpyDocstring._parse = patched_parse
 
 # -- General configuration ---------------------------------------------------
-
 
 
 # Add any Sphinx extension module names here, as strings. They can be
@@ -55,9 +77,11 @@ extensions = [
     "sphinx.ext.intersphinx",
     "sphinx.ext.autosummary",
     "sphinx.ext.napoleon",
+    "sphinx.ext.viewcode",
     "nbsphinx",
     "sphinx_rtd_theme",
 ]
+napoleon_use_param = True
 napoleon_google_docstring = False
 add_module_names = False
 
