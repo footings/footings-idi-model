@@ -48,7 +48,7 @@ param_net_benefit_method = define_parameter(
         * `NLP` = Net level premium
     """,
     dtype=str,
-    allowed=["PT1", "PT2", "NLP"]
+    allowed=["PT1", "PT2", "NLP"],
 )
 
 #########################################################################################

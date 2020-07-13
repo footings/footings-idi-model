@@ -119,7 +119,10 @@ steps = [
     {
         "name": "calculate-lives",
         "function": calculate_lives,
-        "args": {"frame": use("create-alr-frame"), "assumption_set": param_assumption_set,},
+        "args": {
+            "frame": use("create-alr-frame"),
+            "assumption_set": param_assumption_set,
+        },
     },
     {
         "name": "calculate-discount",
