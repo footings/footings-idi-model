@@ -265,7 +265,7 @@ def _(frame: pd.DataFrame, as_of_dt: datetime.date):
 
     # calculate issue date
     days_from_issue = frame["ISSUE_AGE"].values * 365.25
-    frame["ISSUE_DT"] = as_of_dt - pd.to_timedelta(days_from_issue, unit="D").round("D")
+    frame["ISSUE_DT"] = frame["BIRTH_DT"] + pd.to_timedelta(days_from_issue, unit="D").round("D")
 
     # calculate termination date for benefits with monthly benefit period
     cond_list = [
