@@ -117,7 +117,11 @@ def create_dlr_frame(
         "duration_year": "DURATION_YEAR",
         "duration_month": "DURATION_MONTH",
     }
-    start_pay_dt = incurred_dt + relativedelta(months=elimination_period / 30)
+    if elimination_period < 30:
+        start_pay_dt = incurred_dt + relativedelta(days=elimination_period)
+    else:
+        start_pay_dt = incurred_dt + relativedelta(months=elimination_period / 30)
+
     frame = (
         create_frame(start_dt=incurred_dt, end_dt=termination_dt, **fixed)
         .pipe(_assign_end_date)
