@@ -23,6 +23,4 @@ def tests(session):
 @nox.session(python="3.7", venv_backend="none")
 def docs(session):
     session.install(".")
-    # session.install(".[docs]")
-    session.run("rm", "-rf", "./docs/_build/*", external=True)
-    session.run("sphinx-build", "-b", "html", "docs", "docs/_build")
+    session.run("sphinx-build", "-E", "-b", "html", "docs", "docs/_build")
