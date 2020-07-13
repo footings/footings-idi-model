@@ -8,8 +8,8 @@ from footings import define_parameter, use, build_model
 
 from ..policy_models.dlr_deterministic import (
     dlr_deterministic_model,
-    arg_valuation_dt,
-    arg_assumption_set,
+    param_valuation_dt,
+    param_assumption_set,
 )
 from ..functions.shared import dispatch_model_per_record
 
@@ -21,13 +21,13 @@ __all__ = ["check_extract", "create_output", "run_policy_model_per_record"]
 
 # valuation_dt and assumption_set are imported from policy_models
 
-arg_extract = define_parameter(
+param_extract = define_parameter(
     name="extract",
     description="The disabled life extract to use. See idi_model/schema/disabled_life_schema.yaml for specification.",
     dtype=pd.DataFrame,
 )
 
-arg_policy_model = define_parameter(
+param_policy_model = define_parameter(
     name="policy_model",
     description="""The policy model to deploy. Options are :
 
@@ -137,8 +137,8 @@ steps = [
         "name": "check-extract",
         "function": check_extract,
         "args": {
-            "extract": arg_extract,
-            # "valuation_dt": arg_valuation_dt,
+            "extract": param_extract,
+            # "valuation_dt": param_valuation_dt,
             # "schema": "123",
         },
     },
@@ -147,9 +147,9 @@ steps = [
         "function": run_policy_model_per_record,
         "args": {
             "extract": use("check-extract"),
-            "valuation_dt": arg_valuation_dt,
-            "assumption_set": arg_assumption_set,
-            "policy_model": arg_policy_model,
+            "valuation_dt": param_valuation_dt,
+            "assumption_set": param_assumption_set,
+            "policy_model": param_policy_model,
         },
     },
     {

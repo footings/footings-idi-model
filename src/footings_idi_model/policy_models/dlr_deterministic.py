@@ -31,12 +31,12 @@ __all__ = [
 # arguments
 #########################################################################################
 
-arg_valuation_dt = define_parameter(
+param_valuation_dt = define_parameter(
     name="valuation_dt",
     description="The valuation date which reserves are based.",
     dtype=pd.Timestamp,
 )
-arg_assumption_set = define_parameter(
+param_assumption_set = define_parameter(
     name="assumption_set",
     description="""The assumption set to use for running the model. Options are :
     
@@ -60,19 +60,19 @@ for col, val in zip(disabled_life_columns, disabled_life_schema["columns"]):
     }
     dl_attributes.update(record)
 
-arg_policy_id = define_parameter(**dl_attributes["policy_id"])
-arg_claim_id = define_parameter(**dl_attributes["claim_id"])
-arg_gender = define_parameter(**dl_attributes["gender"])
-arg_birth_dt = define_parameter(**dl_attributes["birth_dt"])
-arg_incurred_dt = define_parameter(**dl_attributes["incurred_dt"])
-arg_termination_dt = define_parameter(**dl_attributes["termination_dt"])
-arg_elimination_period = define_parameter(**dl_attributes["elimination_period"])
-arg_idi_contract = define_parameter(**dl_attributes["idi_contract"])
-arg_idi_benefit_period = define_parameter(**dl_attributes["idi_benefit_period"])
-arg_idi_diagnosis_grp = define_parameter(**dl_attributes["idi_diagnosis_grp"])
-arg_idi_occupation_class = define_parameter(**dl_attributes["idi_occupation_class"])
-arg_cola_percent = define_parameter(**dl_attributes["cola_percent"])
-arg_benefit_amount = define_parameter(**dl_attributes["benefit_amount"])
+param_policy_id = define_parameter(**dl_attributes["policy_id"])
+param_claim_id = define_parameter(**dl_attributes["claim_id"])
+param_gender = define_parameter(**dl_attributes["gender"])
+param_birth_dt = define_parameter(**dl_attributes["birth_dt"])
+param_incurred_dt = define_parameter(**dl_attributes["incurred_dt"])
+param_termination_dt = define_parameter(**dl_attributes["termination_dt"])
+param_elimination_period = define_parameter(**dl_attributes["elimination_period"])
+param_idi_contract = define_parameter(**dl_attributes["idi_contract"])
+param_idi_benefit_period = define_parameter(**dl_attributes["idi_benefit_period"])
+param_idi_diagnosis_grp = define_parameter(**dl_attributes["idi_diagnosis_grp"])
+param_idi_occupation_class = define_parameter(**dl_attributes["idi_occupation_class"])
+param_cola_percent = define_parameter(**dl_attributes["cola_percent"])
+param_benefit_amount = define_parameter(**dl_attributes["benefit_amount"])
 
 #########################################################################################
 # steps
@@ -83,19 +83,19 @@ steps = [
         "name": "create-dlr-frame",
         "function": create_dlr_frame,
         "args": {
-            "valuation_dt": arg_valuation_dt,
-            "policy_id": arg_policy_id,
-            "claim_id": arg_claim_id,
-            "gender": arg_gender,
-            "birth_dt": arg_birth_dt,
-            "incurred_dt": arg_incurred_dt,
-            "termination_dt": arg_termination_dt,
-            "elimination_period": arg_elimination_period,
-            "idi_contract": arg_idi_contract,
-            "idi_benefit_period": arg_idi_benefit_period,
-            "idi_diagnosis_grp": arg_idi_diagnosis_grp,
-            "idi_occupation_class": arg_idi_occupation_class,
-            "cola_percent": arg_cola_percent,
+            "valuation_dt": param_valuation_dt,
+            "policy_id": param_policy_id,
+            "claim_id": param_claim_id,
+            "gender": param_gender,
+            "birth_dt": param_birth_dt,
+            "incurred_dt": param_incurred_dt,
+            "termination_dt": param_termination_dt,
+            "elimination_period": param_elimination_period,
+            "idi_contract": param_idi_contract,
+            "idi_benefit_period": param_idi_benefit_period,
+            "idi_diagnosis_grp": param_idi_diagnosis_grp,
+            "idi_occupation_class": param_idi_occupation_class,
+            "cola_percent": param_cola_percent,
         },
     },
     {
@@ -103,7 +103,7 @@ steps = [
         "function": calculate_ctr,
         "args": {
             "frame": use("create-dlr-frame"),
-            "assumption_set": arg_assumption_set,
+            "assumption_set": param_assumption_set,
             "mode": "DLR",
         },
     },
@@ -112,8 +112,8 @@ steps = [
         "function": calculate_cola_adjustment,
         "args": {
             "frame": use("calculate-ctr"),
-            "cola_percent": arg_cola_percent,
-            "incurred_dt": arg_incurred_dt,
+            "cola_percent": param_cola_percent,
+            "incurred_dt": param_incurred_dt,
         },
     },
     {
@@ -121,7 +121,7 @@ steps = [
         "function": calculate_monthly_benefits,
         "args": {
             "frame": use("calculate-cola-adjustment"),
-            "benefit_amount": arg_benefit_amount,
+            "benefit_amount": param_benefit_amount,
         },
     },
     {
@@ -132,7 +132,7 @@ steps = [
     {
         "name": "calculate-discount",
         "function": calculate_discount,
-        "args": {"frame": use("calculate-lives"), "incurred_dt": arg_incurred_dt,},
+        "args": {"frame": use("calculate-lives"), "incurred_dt": param_incurred_dt,},
     },
     {
         "name": "calculate-pvfb",
@@ -142,7 +142,7 @@ steps = [
     {
         "name": "calculate-dlr",
         "function": calculate_dlr,
-        "args": {"frame": use("calculate-pvfb"), "valuation_dt": arg_valuation_dt},
+        "args": {"frame": use("calculate-pvfb"), "valuation_dt": param_valuation_dt},
     },
     {
         "name": "to-output-format",

@@ -10,9 +10,9 @@ from footings import define_parameter, use, build_model
 
 from ..policy_models.alr_deterministic import (
     alr_deterministic_model,
-    arg_valuation_dt,
-    arg_assumption_set,
-    arg_net_benefit_method,
+    param_valuation_dt,
+    param_assumption_set,
+    param_net_benefit_method,
 )
 from ..functions.shared import dispatch_model_per_record
 
@@ -22,13 +22,13 @@ from ..functions.shared import dispatch_model_per_record
 
 # valuation_dt and assumption_set are imported from policy_models
 
-arg_extract = define_parameter(
+param_extract = define_parameter(
     name="extract",
     description="""The active life extract to use. See idi_model/schema/active_life_schema.yaml for specification.""",
     dtype=pd.DataFrame,
 )
 
-arg_policy_model = define_parameter(
+param_policy_model = define_parameter(
     name="policy_model",
     description="""The policy model to deploy. Options are :
 
@@ -39,6 +39,17 @@ arg_policy_model = define_parameter(
     allowed=["deterministic", "stochastic"],
 )
 
+param_net_benefit_method = define_parameter(
+    name="net_benefit_method",
+    description="""The net benefit method to choose. Options are :
+
+        * `PT1` = 1 year preliminary term
+        * `PT2` = 2 year preliminary term
+        * `NLP` = Net level premium
+    """,
+    dtype=str,
+    allowed=["PT1", "PT2", "NLP"]
+)
 
 #########################################################################################
 # functions
@@ -71,6 +82,7 @@ def run_policy_model_per_record(
     extract: pd.DataFrame,
     valuation_dt: pd.Timestamp,
     assumption_set: str,
+    net_benefit_method: str,
     policy_model: str,
 ) -> list:
     """Run each policy in extract through specified policy model.
@@ -140,8 +152,8 @@ steps = [
         "name": "check-extract",
         "function": check_extract,
         "args": {
-            "extract": arg_extract,
-            # "valuation_dt": arg_valuation_dt,
+            "extract": param_extract,
+            # "valuation_dt": param_valuation_dt,
             # "schema": "123",
         },
     },
@@ -150,10 +162,10 @@ steps = [
         "function": run_policy_model_per_record,
         "args": {
             "extract": use("check-extract"),
-            "valuation_dt": arg_valuation_dt,
-            "assumption_set": arg_assumption_set,
-            "net_benefit_method": arg_net_benefit_method,
-            "policy_model": arg_policy_model,
+            "valuation_dt": param_valuation_dt,
+            "assumption_set": param_assumption_set,
+            "net_benefit_method": param_net_benefit_method,
+            "policy_model": param_policy_model,
         },
     },
     {

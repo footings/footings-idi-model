@@ -38,12 +38,12 @@ __all__ = [
 # arguments
 #########################################################################################
 
-arg_valuation_dt = define_parameter(
+param_valuation_dt = define_parameter(
     name="valuation_dt",
     description="The valuation date which reserves are based.",
     dtype=pd.Timestamp,
 )
-arg_assumption_set = define_parameter(
+param_assumption_set = define_parameter(
     name="assumption_set",
     description="""The assumption set to use for running the model. Options are :
     
@@ -54,7 +54,7 @@ arg_assumption_set = define_parameter(
     dtype=str,
     allowed=["stat", "gaap", "best-estimate"],
 )
-arg_net_benefit_method = define_parameter(
+param_net_benefit_method = define_parameter(
     name="net_benefit_method",
     description="""The net benefit method. Options are :
 
@@ -78,19 +78,19 @@ for col, val in zip(active_life_columns, active_life_schema["columns"]):
     }
     al_attributes.update(record)
 
-arg_policy_id = define_parameter(**al_attributes["policy_id"])
-arg_gender = define_parameter(**al_attributes["gender"])
-arg_birth_dt = define_parameter(**al_attributes["birth_dt"])
-arg_tobacco_usage = define_parameter(**al_attributes["tobacco_usage"])
-arg_issue_dt = define_parameter(**al_attributes["issue_dt"])
-arg_termination_dt = define_parameter(**al_attributes["termination_dt"])
-arg_elimination_period = define_parameter(**al_attributes["elimination_period"])
-arg_idi_market = define_parameter(**al_attributes["idi_market"])
-arg_idi_contract = define_parameter(**al_attributes["idi_contract"])
-arg_idi_benefit_period = define_parameter(**al_attributes["idi_benefit_period"])
-arg_idi_occupation_class = define_parameter(**al_attributes["idi_occupation_class"])
-arg_cola_percent = define_parameter(**al_attributes["cola_percent"])
-arg_benefit_amount = define_parameter(**al_attributes["benefit_amount"])
+param_policy_id = define_parameter(**al_attributes["policy_id"])
+param_gender = define_parameter(**al_attributes["gender"])
+param_birth_dt = define_parameter(**al_attributes["birth_dt"])
+param_tobacco_usage = define_parameter(**al_attributes["tobacco_usage"])
+param_issue_dt = define_parameter(**al_attributes["issue_dt"])
+param_termination_dt = define_parameter(**al_attributes["termination_dt"])
+param_elimination_period = define_parameter(**al_attributes["elimination_period"])
+param_idi_market = define_parameter(**al_attributes["idi_market"])
+param_idi_contract = define_parameter(**al_attributes["idi_contract"])
+param_idi_benefit_period = define_parameter(**al_attributes["idi_benefit_period"])
+param_idi_occupation_class = define_parameter(**al_attributes["idi_occupation_class"])
+param_cola_percent = define_parameter(**al_attributes["cola_percent"])
+param_benefit_amount = define_parameter(**al_attributes["benefit_amount"])
 
 
 #########################################################################################
@@ -102,41 +102,41 @@ steps = [
         "name": "create-alr-frame",
         "function": create_alr_frame,
         "args": {
-            "valuation_dt": arg_valuation_dt,
-            "policy_id": arg_policy_id,
-            "gender": arg_gender,
-            "birth_dt": arg_birth_dt,
-            "tobacco_usage": arg_tobacco_usage,
-            "issue_dt": arg_issue_dt,
-            "termination_dt": arg_termination_dt,
-            "elimination_period": arg_elimination_period,
-            "idi_market": arg_idi_market,
-            "idi_contract": arg_idi_contract,
-            "idi_benefit_period": arg_idi_benefit_period,
-            "idi_occupation_class": arg_idi_occupation_class,
+            "valuation_dt": param_valuation_dt,
+            "policy_id": param_policy_id,
+            "gender": param_gender,
+            "birth_dt": param_birth_dt,
+            "tobacco_usage": param_tobacco_usage,
+            "issue_dt": param_issue_dt,
+            "termination_dt": param_termination_dt,
+            "elimination_period": param_elimination_period,
+            "idi_market": param_idi_market,
+            "idi_contract": param_idi_contract,
+            "idi_benefit_period": param_idi_benefit_period,
+            "idi_occupation_class": param_idi_occupation_class,
         },
     },
     {
         "name": "calculate-lives",
         "function": calculate_lives,
-        "args": {"frame": use("create-alr-frame"), "assumption_set": arg_assumption_set,},
+        "args": {"frame": use("create-alr-frame"), "assumption_set": param_assumption_set,},
     },
     {
         "name": "calculate-discount",
         "function": calculate_discount,
-        "args": {"frame": use("calculate-lives"), "issue_dt": arg_issue_dt,},
+        "args": {"frame": use("calculate-lives"), "issue_dt": param_issue_dt,},
     },
     {
         "name": "calculate-cola-adjustment",
         "function": calculate_cola_adjustment,
-        "args": {"frame": use("calculate-discount"), "cola_percent": arg_cola_percent},
+        "args": {"frame": use("calculate-discount"), "cola_percent": param_cola_percent},
     },
     {
         "name": "calculate-benefit-amount",
         "function": calculate_benefit_amount,
         "args": {
             "frame": use("calculate-cola-adjustment"),
-            "benefit_amount": arg_benefit_amount,
+            "benefit_amount": param_benefit_amount,
         },
     },
     {
@@ -149,9 +149,9 @@ steps = [
         "function": calculate_claim_cost,
         "args": {
             "frame": use("calculate-incidence-rate"),
-            "assumption_set": arg_assumption_set,
-            "birth_dt": arg_birth_dt,
-            "idi_benefit_period": arg_idi_benefit_period,
+            "assumption_set": param_assumption_set,
+            "birth_dt": param_birth_dt,
+            "idi_benefit_period": param_idi_benefit_period,
         },
     },
     {
@@ -164,7 +164,7 @@ steps = [
         "function": calculate_pvnfb,
         "args": {
             "frame": use("calculate-pvfb"),
-            "net_benefit_method": arg_net_benefit_method,
+            "net_benefit_method": param_net_benefit_method,
             # "premium_pay_to_age": "",
         },
     },
@@ -178,7 +178,7 @@ steps = [
         "function": calculate_alr_from_valuation_date,
         "args": {
             "frame": use("calculate-alr-from-issue"),
-            "valuation_dt": arg_valuation_dt,
+            "valuation_dt": param_valuation_dt,
         },
     },
     {
