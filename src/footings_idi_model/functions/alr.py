@@ -1,4 +1,5 @@
 from datetime import timedelta, date
+from dateutil.relativedelta import relativedelta
 from inspect import getfullargspec
 
 import numpy as np
@@ -271,19 +272,19 @@ def calculate_incidence_rate(frame: pd.DataFrame, cause: str):
 
 
 def _calculate_termination_date(
-    incurred_dt: pd.Timestamp,
-    coverage_to_dt: pd.Timestamp,
+    incurred_dt: pd.Series,
+    coverage_to_dt: pd.Series,
     birth_dt: pd.Timestamp,
     idi_benefit_period: str,
 ):
     if idi_benefit_period[-1] == "M":
         months = int(idi_benefit_period[:-1])
-        termination_dt = incurred_dt + pd.to_timedelta(months, unit="M")
+        termination_dt = incurred_dt + pd.DateOffset(months=months)
     elif idi_benefit_period[:2] == "TO":
         termination_dt = coverage_to_dt
-    elif idi_benefit_period[:2] == "LIFETIME":
-        termination_dt = date(
-            year=birth_dt.year + 120, month=birth_dt.month, day=birth_dt.day
+    elif idi_benefit_period == "LIFE":
+        termination_dt = pd.to_datetime(
+            date(year=birth_dt.year + 120, month=birth_dt.month, day=birth_dt.day)
         )
     return termination_dt
 
