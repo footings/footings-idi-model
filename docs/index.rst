@@ -46,4 +46,4 @@ This model is a prototype model and is provided "AS IS" with no warranty of any 
    models.rst
    testing.rst
    license.rst
-   changelog.rst
+   changelog.md
