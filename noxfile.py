@@ -28,4 +28,12 @@ def docs(session):
 
 @nox.session(python="3.7", venv_backend="none")
 def changelog(session):
-    session.run("auto-changelog", "--output", "docs/changelog.md", "--unreleased", "true", "--commit-limit", "false")
+    session.run(
+        "auto-changelog",
+        "--output",
+        "docs/changelog.md",
+        "--unreleased",
+        "true",
+        "--commit-limit",
+        "false",
+    )
