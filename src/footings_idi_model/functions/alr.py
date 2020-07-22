@@ -456,20 +456,8 @@ def calculate_alr_from_valuation_date(frame: pd.DataFrame, valuation_dt: pd.Time
     frame["WT_ED"] = 1 - frame["WT_BD"]
 
     alr_bd, alr_ed = ["WT_BD", "ALR_BD"], ["WT_ED", "ALR_ED"]
-    frame["ALR_VD"] = frame[alr_bd].prod(axis=1) + frame[alr_ed].prod(axis=1)
+    frame["ALR"] = (frame[alr_bd].prod(axis=1) + frame[alr_ed].prod(axis=1)).round(2)
 
-    dis_bd, dis_ed = ["WT_BD", "DISCOUNT_BD"], ["WT_ED", "DISCOUNT_ED"]
-    frame["DISCOUNT_VD_ADJ"] = 1 / (
-        frame[dis_bd].prod(axis=1) + frame[dis_ed].prod(axis=1)
-    )
-
-    lives_bd, lives_ed = ["WT_BD", "LIVES_BD"], ["WT_ED", "LIVES_ED"]
-    frame["LIVES_VD_ADJ"] = 1 / (
-        frame[lives_bd].prod(axis=1) + frame[lives_ed].prod(axis=1)
-    )
-
-    prod_cols = ["ALR_VD", "DISCOUNT_VD_ADJ", "LIVES_VD_ADJ"]
-    frame["ALR"] = frame[prod_cols].prod(axis=1).round(2)
     return frame
 
 
