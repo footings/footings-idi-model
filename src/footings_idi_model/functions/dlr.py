@@ -163,6 +163,7 @@ def _apply_modifier(frame, modifier_frame, join_cols, fill=None):
 
 
 def _calculate_select_ctr_stat_gaap(frame, mode, apply_margin):
+    idi_contract = frame["IDI_CONTRACT"].iat[0]
     select_ctr = get_select_ctr(select_file)
     select_join_cols = [
         "IDI_OCCUPATION_CLASS",
@@ -184,7 +185,7 @@ def _calculate_select_ctr_stat_gaap(frame, mode, apply_margin):
         "BENEFIT_PERIOD_MODIFIER",
         "CAUSE_MODIFIER",
     ]
-    if mode == "DLR":
+    if mode == "DLR" and idi_contract != "AO":
         diagnosis_modifier = get_diagnosis_modifier(diagnosis_file)
         diagnosis_join_cols = ["DURATION_YEAR", "IDI_DIAGNOSIS_GRP"]
         prod_cols.append("DIAGNOSIS_MODIFIER")
@@ -197,7 +198,10 @@ def _calculate_select_ctr_stat_gaap(frame, mode, apply_margin):
     )
 
     if mode == "DLR":
-        frame = frame.pipe(_apply_modifier, diagnosis_modifier, diagnosis_join_cols)
+        if idi_contract != "AO":
+            frame = frame.pipe(_apply_modifier, diagnosis_modifier, diagnosis_join_cols)
+        else:
+            frame["DIAGNOSIS_MODIFIER"] = 1.0
 
     if apply_margin is True:
         margin_adjustment = get_margin(margin_file)
@@ -325,9 +329,7 @@ def calculate_cola_adjustment(
     pd.DataFrame
         The passed DataFrame with an additional column called COLA_ADJUSTMENT.
     """
-    frame.loc[frame["DATE_BD"].dt.month == incurred_dt.month, "COLA_ADJUSTMENT"] = (
-        1 + cola_percent
-    )
+    frame.loc[frame["DURATION_MONTH"] > 12, "COLA_ADJUSTMENT"] = 1 + cola_percent
     frame["COLA_ADJUSTMENT"] = frame["COLA_ADJUSTMENT"].fillna(1).cumprod()
     return frame
 
