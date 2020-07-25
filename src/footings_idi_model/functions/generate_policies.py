@@ -170,34 +170,6 @@ def _birth_date_add_years(birth_dt: datetime.date, years: int):
     )
 
 
-def _incurred_date_add_months(incurred_dt: datetime.date, months: int):
-    """Add months to incurred date"""
-    whole_years = months // 12
-    months_remaining = months % 12
-    months = incurred_dt.dt.month + months_remaining
-    cross_year = months // 12
-    months = np.select([months % 12 != 0, months % 12 == 0], [months % 12, 12])
-    days = incurred_dt.dt.day
-    cond_list = [
-        (months == 2) & (days > 28),
-        (months == 4) & (days > 30),
-        (months == 6) & (days > 30),
-        (months == 9) & (days > 30),
-        (months == 11) & (days > 30),
-    ]
-    choice_list = [28, 30, 30, 30, 30]
-    days = np.select(cond_list, choice_list, default=days)
-    df = pd.DataFrame(
-        {
-            "year": incurred_dt.dt.year + whole_years + cross_year,
-            "month": months,
-            "day": days,
-        }
-    )
-
-    return pd.to_datetime(df)
-
-
 @dispatch_function(key_parameters=("extract_type",))
 def calculate_dates(extract_type: str, frame: pd.DataFrame, as_of_dt: datetime.date):
     """Calculate dates
@@ -235,21 +207,23 @@ def _(frame: pd.DataFrame, as_of_dt: datetime.date):
         frame["BIRTH_DT"] + pd.to_timedelta(frame["INCURRED_AGE"] * 365.25, unit="D")
     ).dt.round("D")
 
-    # calculate termination date for benefits with monthly benefit period
-    frame_add_months = frame[frame["IDI_BENEFIT_PERIOD"].str[-1] == "M"]
-    indexes = frame.index & frame_add_months.index
-    frame.loc[indexes, "TERMINATION_DT"] = _incurred_date_add_months(
-        frame_add_months["INCURRED_DT"],
-        frame_add_months["IDI_BENEFIT_PERIOD"].str.replace("M", "").astype(int),
-    )
+    term_dt = []
+    for _, row in frame.iterrows():
+        if row.IDI_BENEFIT_PERIOD[-1] == "M":
+            mnt = int(row.IDI_BENEFIT_PERIOD.replace("M", ""))
+            term_dt.append(
+                row.INCURRED_DT
+                + pd.DateOffset(days=row.ELIMINATION_PERIOD)
+                + pd.DateOffset(months=mnt)
+            )
+        else:
+            if row.IDI_BENEFIT_PERIOD == "LIFE":
+                years = 120
+            else:
+                years = int(row.IDI_BENEFIT_PERIOD.replace("TO", ""))
+            term_dt.append(row.BIRTH_DT + pd.DateOffset(years=years))
 
-    # calculate termination date for toage benefits
-    frame_add_years = frame[frame["IDI_BENEFIT_PERIOD"].str[-1] != "M"]
-    indexes = frame.index & frame_add_years.index
-    frame.loc[indexes, "TERMINATION_DT"] = _birth_date_add_years(
-        frame_add_years["BIRTH_DT"], frame_add_years["TERMINATION_AGE"].astype(int)
-    )
-
+    frame["TERMINATION_DT"] = pd.Series(term_dt)
     return frame.drop(["CURRENT_AGE", "INCURRED_AGE", "TERMINATION_AGE"], axis=1)
 
 

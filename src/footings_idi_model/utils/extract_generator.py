@@ -46,7 +46,7 @@ steps = [
     {
         "name": "create-frame",
         "function": create_frame,
-        "args": {"n": param_n, "extract_type": param_extract_type,},
+        "args": {"n": param_n, "extract_type": param_extract_type},
     },
     {
         "name": "sample-from-volume-tbl",
