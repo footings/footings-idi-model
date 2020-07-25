@@ -144,12 +144,7 @@ def create_dlr_frame(
         COLA_FLAG="N" if cola_percent == 0 else "Y",
     )
 
-    start_columns = [
-        "DATE_BD",
-        "DATE_ED",
-        "DURATION_YEAR",
-        "DURATION_MONTH",
-    ]
+    start_columns = ["DATE_BD", "DATE_ED", "DURATION_YEAR", "DURATION_MONTH"]
     end_columns = set(frame.columns) - set(start_columns)
     return frame[start_columns + list(end_columns)]
 
@@ -158,7 +153,9 @@ def _apply_modifier(frame, modifier_frame, join_cols, fill=None):
     frame = frame.merge(modifier_frame, on=join_cols, how="left")
     if fill is not None:
         col_modifier = modifier_frame.columns[-1]
-        frame.loc[frame["DURATION_YEAR"] < 11, col_modifier] = fill
+        frame.loc[
+            frame["DURATION_YEAR"] < 11 & frame[col_modifier].isna(), col_modifier
+        ] = fill
     return frame
 
 
@@ -184,24 +181,30 @@ def _calculate_select_ctr_stat_gaap(frame, mode, apply_margin):
         "CONTRACT_MODIFIER",
         "BENEFIT_PERIOD_MODIFIER",
         "CAUSE_MODIFIER",
+        "DIAGNOSIS_MODIFIER",
     ]
-    if mode == "DLR" and idi_contract != "AO":
-        diagnosis_modifier = get_diagnosis_modifier(diagnosis_file)
-        diagnosis_join_cols = ["DURATION_YEAR", "IDI_DIAGNOSIS_GRP"]
-        prod_cols.append("DIAGNOSIS_MODIFIER")
 
     frame = (
         frame.merge(select_ctr, on=select_join_cols, how="left")
         .pipe(_apply_modifier, contract_modifier, contract_join_cols)
         .pipe(_apply_modifier, benefit_period_modifier, benefit_period_join_cols)
-        .pipe(_apply_modifier, cause_modifier, cause_join_cols, fill=1)
     )
 
     if mode == "DLR":
-        if idi_contract != "AO":
-            frame = frame.pipe(_apply_modifier, diagnosis_modifier, diagnosis_join_cols)
-        else:
+        diagnosis_modifier = get_diagnosis_modifier(diagnosis_file)
+        diagnosis_join_cols = ["DURATION_YEAR", "IDI_DIAGNOSIS_GRP"]
+        if idi_contract == "AO":
             frame["DIAGNOSIS_MODIFIER"] = 1.0
+            frame = _apply_modifier(frame, cause_modifier, cause_join_cols)
+        else:
+            frame = _apply_modifier(frame, diagnosis_modifier, diagnosis_join_cols)
+            frame["CAUSE_MODIFIER"] = 1.0
+    elif mode == "ALR":
+        frame["DIAGNOSIS_MODIFIER"] = 1.0
+        if idi_contract == "AO" or idi_contract == "SO":
+            frame = _apply_modifier(frame, cause_modifier, cause_join_cols)
+        else:
+            frame["CAUSE_MODIFIER"] = 1.0
 
     if apply_margin is True:
         margin_adjustment = get_margin(margin_file)
@@ -255,7 +258,7 @@ _DIAGNOSIS = ["DIAGNOSIS_MODIFIER"]
 _MARGIN = ["MARGIN_ADJUSTMENT"]
 
 
-@dispatch_function(key_parameters=("assumption_set", "mode",))
+@dispatch_function(key_parameters=("assumption_set", "mode"))
 def calculate_ctr(assumption_set: str, mode: str, frame: pd.DataFrame):
     """Calculate claim termination rate (CTR) which varies by assumption_set (e.g., GAAP) 
     and mode (i.e., ALR vs DLR).
@@ -313,9 +316,7 @@ def _(frame: pd.DataFrame):
 #     pass
 
 
-def calculate_cola_adjustment(
-    frame: pd.DataFrame, cola_percent: float, incurred_dt: pd.Timestamp
-):
+def calculate_cola_adjustment(frame: pd.DataFrame, cola_percent: float):
     """Calculate cost of living adjustment adjustment.
     
     Parameters
@@ -329,8 +330,7 @@ def calculate_cola_adjustment(
     pd.DataFrame
         The passed DataFrame with an additional column called COLA_ADJUSTMENT.
     """
-    frame.loc[frame["DURATION_MONTH"] > 12, "COLA_ADJUSTMENT"] = 1 + cola_percent
-    frame["COLA_ADJUSTMENT"] = frame["COLA_ADJUSTMENT"].fillna(1).cumprod()
+    frame["COLA_ADJUSTMENT"] = (1 + cola_percent) ** (frame["DURATION_YEAR"] - 1)
     return frame
 
 
@@ -346,7 +346,7 @@ def calculate_monthly_benefits(frame: pd.DataFrame, benefit_amount: float):
     Returns
     -------
     pd.DataFrame
-        The passed DataFrame with an additional column called BENEFIT_AMOUNT.        
+        The passed DataFrame with an additional column called BENEFIT_AMOUNT.
     """
     prod_cols = ["BENEFIT_FACTOR", "COLA_ADJUSTMENT"]
     frame["BENEFIT_AMOUNT"] = frame[prod_cols].prod(axis=1).mul(benefit_amount).round(2)

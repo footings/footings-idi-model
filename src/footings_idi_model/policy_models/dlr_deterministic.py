@@ -110,11 +110,7 @@ steps = [
     {
         "name": "calculate-cola-adjustment",
         "function": calculate_cola_adjustment,
-        "args": {
-            "frame": use("calculate-ctr"),
-            "cola_percent": param_cola_percent,
-            "incurred_dt": param_incurred_dt,
-        },
+        "args": {"frame": use("calculate-ctr"), "cola_percent": param_cola_percent},
     },
     {
         "name": "calculate-monthly-benefit",
@@ -132,7 +128,7 @@ steps = [
     {
         "name": "calculate-discount",
         "function": calculate_discount,
-        "args": {"frame": use("calculate-lives"), "incurred_dt": param_incurred_dt,},
+        "args": {"frame": use("calculate-lives"), "incurred_dt": param_incurred_dt},
     },
     {
         "name": "calculate-pvfb",
