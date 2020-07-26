@@ -223,7 +223,7 @@ def _(frame: pd.DataFrame, as_of_dt: datetime.date):
                 years = int(row.IDI_BENEFIT_PERIOD.replace("TO", ""))
             term_dt.append(row.BIRTH_DT + pd.DateOffset(years=years))
 
-    frame["TERMINATION_DT"] = pd.Series(term_dt)
+    frame["TERMINATION_DT"] = pd.Series(term_dt) - pd.DateOffset(days=1)
     return frame.drop(["CURRENT_AGE", "INCURRED_AGE", "TERMINATION_AGE"], axis=1)
 
 
@@ -258,7 +258,9 @@ def _(frame: pd.DataFrame, as_of_dt: datetime.date):
         _birth_date_add_years(frame["BIRTH_DT"], 70).values.astype(str),
     ]
 
-    frame["TERMINATION_DT"] = pd.to_datetime(np.select(cond_list, choice_list))
+    frame["TERMINATION_DT"] = pd.to_datetime(
+        np.select(cond_list, choice_list)
+    ) - pd.DateOffset(days=1)
 
     return frame.drop(["CURRENT_AGE"], axis=1)
 
