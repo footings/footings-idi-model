@@ -46,6 +46,7 @@ def create_alr_frame(
     idi_contract: str,
     idi_benefit_period: str,
     idi_occupation_class: str,
+    benefit_amount: float,
 ):
     """Create active life frame with a range from the policy issue date to termination date using 
     a yearly frequency.
@@ -74,16 +75,12 @@ def create_alr_frame(
         - DURATION_YEAR - the duration year for a row
     """
     # build table
-    fixed = {
-        "frequency": "Y",
-        "col_date_nm": "DATE_BD",
-        "duration_year": "DURATION_YEAR",
-    }
+    fixed = {"frequency": "Y", "col_date_nm": "DATE_BD", "duration_year": "DURATION_YEAR"}
 
     frame = (
         create_frame(start_dt=issue_dt, end_dt=termination_dt, **fixed)
         .pipe(_assign_end_date)
-        .query("DATE_BD < @termination_dt")
+        .query("DATE_BD <= @termination_dt")
     )
 
     # assign main table attributes
@@ -100,6 +97,7 @@ def create_alr_frame(
         IDI_CONTRACT=idi_contract,
         IDI_BENEFIT_PERIOD=idi_benefit_period,
         IDI_OCCUPATION_CLASS=idi_occupation_class,
+        BENEFIT_AMOUNT=benefit_amount,
     )
 
     start_columns = ["DATE_BD", "DATE_ED", "DURATION_YEAR"]
@@ -174,31 +172,6 @@ def calculate_discount(frame: pd.DataFrame, issue_dt: pd.Timestamp):
     return frame
 
 
-def calculate_cola_adjustment(frame: pd.DataFrame, cola_percent: float):
-    """Calculate cost of living adjustment adjustment.
-    
-    Parameters
-    ----------
-    frame : pd.DataFrame
-    cola_percent : float
-
-    Returns
-    -------
-    pd.DataFrame
-        The passed DataFrame with an additional column called COLA_ADJUSTMENT.
-    """
-    frame["COLA_PERCENT"] = cola_percent
-    frame.loc[frame["DURATION_YEAR"] > 1, "COLA_ADJUSTMENT"] = 1 + cola_percent
-    frame["COLA_ADJUSTMENT"] = frame["COLA_ADJUSTMENT"].fillna(1).cumprod()
-    return frame
-
-
-@post_drop_columns(columns=["COLA_ADJUSTMENT"])
-def calculate_benefit_amount(frame: pd.DataFrame, benefit_amount: float):
-    frame["BENEFIT_AMOUNT"] = (frame["COLA_ADJUSTMENT"] * benefit_amount).round(2)
-    return frame
-
-
 _INCIDENCE_DROP_COLUMNS = [
     "INCIDENCES",
     "BENEFIT_PERIOD_MODIFIER",
@@ -211,7 +184,7 @@ _INCIDENCE_DROP_COLUMNS = [
 
 
 @post_drop_columns(columns=_INCIDENCE_DROP_COLUMNS)
-def calculate_incidence_rate(frame: pd.DataFrame, cause: str):
+def calculate_incidence_rate(frame: pd.DataFrame, idi_contract: str):
     """Calculate indcidence rate for each duration.
     
     Parameters
@@ -225,6 +198,12 @@ def calculate_incidence_rate(frame: pd.DataFrame, cause: str):
         The passed DataFrame with an additional column called INCIDENCE_RATE.        
     
     """
+    if idi_contract == "AO":
+        cause = "accident"
+    elif idi_contract == "SO":
+        cause = "sickness"
+    else:
+        cause = "combined"
     base_incidence = get_base_incidence(incidence_file, cause)
     base_join_cols = [
         "IDI_OCCUPATION_CLASS",
@@ -276,10 +255,15 @@ def _calculate_termination_date(
     coverage_to_dt: pd.Series,
     birth_dt: pd.Timestamp,
     idi_benefit_period: str,
+    elimination_period: int,
 ):
     if idi_benefit_period[-1] == "M":
         months = int(idi_benefit_period[:-1])
-        termination_dt = incurred_dt + pd.DateOffset(months=months)
+        termination_dt = (
+            incurred_dt
+            + pd.DateOffset(days=elimination_period)
+            + pd.DateOffset(months=months)
+        )
     elif idi_benefit_period[:2] == "TO":
         termination_dt = coverage_to_dt
     elif idi_benefit_period == "LIFE":
@@ -295,7 +279,6 @@ _CLAIM_COST_DROP_COLUMNS = [
     "GENDER",
     "AGE_ATTAINED",
     "AGE_ISSUED",
-    "COLA_PERCENT",
     "ELIMINATION_PERIOD",
     "IDI_OCCUPATION_CLASS",
     "IDI_BENEFIT_PERIOD",
@@ -309,7 +292,9 @@ def calculate_claim_cost(
     frame: pd.DataFrame,
     assumption_set: str,
     birth_dt: pd.Timestamp,
+    elimination_period: int,
     idi_benefit_period: str,
+    cola_percent: float,
 ):
     """Calculate claim cost for each duration.
     
@@ -331,7 +316,11 @@ def calculate_claim_cost(
         valuation_dt=lambda df: df["date_bd"],
         incurred_dt=lambda df: df["date_bd"],
         termination_dt=lambda df: _calculate_termination_date(
-            df["incurred_dt"], df["termination_dt"], birth_dt, idi_benefit_period
+            df["incurred_dt"],
+            df["termination_dt"],
+            birth_dt,
+            idi_benefit_period,
+            elimination_period,
         ),
     )
     kwargs = set(getfullargspec(dlr_deterministic_model).kwonlyargs)
@@ -344,6 +333,7 @@ def calculate_claim_cost(
             "assumption_set": assumption_set,
             "claim_id": "NA",
             "idi_diagnosis_grp": "AG",
+            "cola_percent": cola_percent,
             **record,
         }
         claim_list.append(dlr_deterministic_model(**model_kwargs).run()["DLR"].iat[0])
@@ -404,10 +394,7 @@ def calculate_pvnfb(frame: pd.DataFrame, net_benefit_method: str):  # premium_pa
         np.array((net_benefit_method == "PT1") & (duration <= 1), dtype=bool),
         np.array((net_benefit_method == "PT2") & (duration <= 2), dtype=bool),
     ]
-    choice_list = [
-        frame["PVFB"].values,
-        frame["PVFB"].values,
-    ]
+    choice_list = [frame["PVFB"].values, frame["PVFB"].values]
     frame["PVFNB"] = np.select(
         cond_list, choice_list, default=(frame["PVP"].values * nlp)
     ).round(2)
@@ -489,7 +476,7 @@ def to_output_format(frame: pd.DataFrame):
         "DLR",
         "CLAIM_COST",
         "PVFB",
-        "PVP",
+        "PVFNB",
         "ALR_BD",
         "ALR_ED",
         "DATE_ALR",

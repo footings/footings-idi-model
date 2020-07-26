@@ -6,8 +6,6 @@ from ..functions.alr import (
     create_alr_frame,
     calculate_lives,
     calculate_discount,
-    calculate_cola_adjustment,
-    calculate_benefit_amount,
     calculate_incidence_rate,
     calculate_claim_cost,
     calculate_pvfb,
@@ -23,8 +21,6 @@ __all__ = [
     "create_alr_frame",
     "calculate_lives",
     "calculate_discount",
-    "calculate_cola_adjustment",
-    "calculate_benefit_amount",
     "calculate_incidence_rate",
     "calculate_claim_cost",
     "calculate_pvfb",
@@ -114,6 +110,7 @@ steps = [
             "idi_contract": param_idi_contract,
             "idi_benefit_period": param_idi_benefit_period,
             "idi_occupation_class": param_idi_occupation_class,
+            "benefit_amount": param_benefit_amount,
         },
     },
     {
@@ -127,25 +124,12 @@ steps = [
     {
         "name": "calculate-discount",
         "function": calculate_discount,
-        "args": {"frame": use("calculate-lives"), "issue_dt": param_issue_dt,},
-    },
-    {
-        "name": "calculate-cola-adjustment",
-        "function": calculate_cola_adjustment,
-        "args": {"frame": use("calculate-discount"), "cola_percent": param_cola_percent},
-    },
-    {
-        "name": "calculate-benefit-amount",
-        "function": calculate_benefit_amount,
-        "args": {
-            "frame": use("calculate-cola-adjustment"),
-            "benefit_amount": param_benefit_amount,
-        },
+        "args": {"frame": use("calculate-lives"), "issue_dt": param_issue_dt},
     },
     {
         "name": "calculate-incidence-rate",
         "function": calculate_incidence_rate,
-        "args": {"frame": use("calculate-benefit-amount"), "cause": "combined"},
+        "args": {"frame": use("calculate-discount"), "idi_contract": param_idi_contract},
     },
     {
         "name": "calculate-claim-cost",
@@ -154,7 +138,9 @@ steps = [
             "frame": use("calculate-incidence-rate"),
             "assumption_set": param_assumption_set,
             "birth_dt": param_birth_dt,
+            "elimination_period": param_elimination_period,
             "idi_benefit_period": param_idi_benefit_period,
+            "cola_percent": param_cola_percent,
         },
     },
     {
