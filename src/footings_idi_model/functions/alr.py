@@ -26,6 +26,8 @@ from ..assumptions.stat_gaap.interest import get_interest_rate
 from ..assumptions.stat_gaap.lapse import get_lapses, get_age_band
 from ..assumptions.mortality import get_mortality
 from ..policy_models import dlr_deterministic_model
+from ..__init__ import __version__ as MOD_VERSION
+from ..__init__ import __git_revision__ as GIT_REVISION
 
 
 def _assign_end_date(frame):
@@ -85,6 +87,9 @@ def create_alr_frame(
 
     # assign main table attributes
     frame = frame.assign(
+        MODEL_VERSION=MOD_VERSION,
+        LAST_COMMIT=GIT_REVISION,
+        RUN_DATE_TIME=pd.to_datetime("now"),
         POLICY_ID=policy_id,
         GENDER=gender,
         TOBACCO_USAGE=tobacco_usage,
@@ -461,6 +466,9 @@ def to_output_format(frame: pd.DataFrame):
         The final DataFrame. 
     """
     cols_order = [
+        "MODEL_VERSION",
+        "LAST_COMMIT",
+        "RUN_DATE_TIME",
         "POLICY_ID",
         "DATE_BD",
         "DATE_ED",

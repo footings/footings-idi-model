@@ -23,6 +23,8 @@ from ..assumptions.stat_gaap.termination import (
     get_margin,
 )
 from ..assumptions.stat_gaap.interest import get_interest_rate
+from ..__init__ import __version__ as MOD_VERSION
+from ..__init__ import __git_revision__ as GIT_REVISION
 
 
 def _sumprod_present_value(frame, columns):
@@ -131,6 +133,9 @@ def create_dlr_frame(
 
     # assign main table attirbutes
     frame = frame.assign(
+        MODEL_VERSION=MOD_VERSION,
+        LAST_COMMIT=GIT_REVISION,
+        RUN_DATE_TIME=pd.to_datetime("now"),
         POLICY_ID=policy_id,
         CLAIM_ID=claim_id,
         GENDER=gender,
@@ -465,6 +470,9 @@ def to_output_format(frame: pd.DataFrame):
         The final DataFrame.
     """
     cols_select = [
+        "MODEL_VERSION",
+        "LAST_COMMIT",
+        "RUN_DATE_TIME",
         "POLICY_ID",
         "DATE_BD",
         "DATE_ED",

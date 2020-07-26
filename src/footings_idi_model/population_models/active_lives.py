@@ -140,7 +140,14 @@ def create_output(results):
     errors = results[1]
     time_0 = pd.concat([success.head(1) for success in successes]).reset_index(drop=True)
     projected = pd.concat(successes)
-    return time_0[["POLICY_ID", "ALR"]], projected, errors
+    time_0_cols = [
+        "MODEL_VERSION",
+        "LAST_COMMIT",
+        "RUN_DATE_TIME",
+        "POLICY_ID",
+        "ALR",
+    ]
+    return time_0[time_0_cols], projected, errors
 
 
 #########################################################################################
