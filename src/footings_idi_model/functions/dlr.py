@@ -322,7 +322,9 @@ def _(frame: pd.DataFrame):
 
 
 def calculate_cola_adjustment(frame: pd.DataFrame, cola_percent: float):
-    """Calculate cost of living adjustment adjustment.
+    """Calculate cost of living adjustment adjustment (COLA).
+
+    The COLA stops compounding at an attained age of 65.
     
     Parameters
     ----------
@@ -335,7 +337,13 @@ def calculate_cola_adjustment(frame: pd.DataFrame, cola_percent: float):
     pd.DataFrame
         The passed DataFrame with an additional column called COLA_ADJUSTMENT.
     """
-    frame["COLA_ADJUSTMENT"] = (1 + cola_percent) ** (frame["DURATION_YEAR"] - 1)
+    max_duration = frame[frame["AGE_ATTAINED"] == 65]["DURATION_YEAR"]
+    if max_duration.size > 0:
+        upper = max_duration.iat[0]
+        power = frame["DURATION_YEAR"].clip(upper=upper)
+    else:
+        power = frame["DURATION_YEAR"]
+    frame["COLA_ADJUSTMENT"] = (1 + cola_percent) ** (power - 1)
     return frame
 
 
