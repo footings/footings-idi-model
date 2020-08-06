@@ -77,6 +77,36 @@ def sample_from_volume_tbl(frame: pd.DataFrame, volume_tbl: pd.DataFrame, seed: 
     return frame.drop(list(cols_added), axis=1).reset_index(drop=True)
 
 
+def add_benefit_end_id(frame: pd.DataFrame):
+    """Add benefit end id.
+
+    Parameters
+    ----------
+    frame : pd.DataFrame
+
+    Returns
+    -------
+    pd.DataFrame
+        The generated frame with an added column - GROSS_PREMIUM
+    """
+    return frame.assign(BENEFIT_END_ID=pd.NA)
+
+
+def add_gross_premium(frame: pd.DataFrame):
+    """Add gross premium to generated frame.
+
+    Parameters
+    ----------
+    frame : pd.DataFrame
+
+    Returns
+    -------
+    pd.DataFrame
+        The generated frame with an added column - GROSS_PREMIUM
+    """
+    return frame.assign(BENEFIT_AMOUNT=100.0)
+
+
 def add_benefit_amount(frame: pd.DataFrame):
     """Add benefit amount to generated frame.
     
@@ -90,6 +120,36 @@ def add_benefit_amount(frame: pd.DataFrame):
         The generated frame with an added column - BENEFIT_AMOUNT
     """
     return frame.assign(BENEFIT_AMOUNT=100.0)
+
+
+@dispatch_function(key_parameters=("extract_type",))
+def add_premium_and_benefits(frame: pd.DataFrame):
+    """Add premium and benefit amount to generated frame.
+    
+    Parameters
+    ----------
+    frame : pd.DataFrame
+
+
+    Returns
+    -------
+    pd.DataFrame
+        If extract type is "disabled-lives" a DataFrame with column BENEFIT_AMOUNT. \n
+        If extract type is "active-lives"  a DataFrame with columns BENEFIT_END_ID, GROSS_PREMIUM, and BENEFIT_AMOUNT.
+ 
+    """
+    msg = "No registered function based on passed paramters and no default function."
+    raise NotImplementedError(msg)
+
+
+@add_premium_and_benefits.register(extract_type="disabled-lives")
+def _(frame):
+    return frame.assign(BENEFIT_AMOUNT=100)
+
+
+@add_premium_and_benefits.register(extract_type="active-lives")
+def _(frame):
+    return frame.assign(BENEFIT_END_ID=pd.NA, GROSS_PREMIUM=150, BENEFIT_AMOUNT=100)
 
 
 def _calculate_age(frame: pd.DataFrame, low: float, high: float):
@@ -293,6 +353,4 @@ def _(frame: pd.DataFrame):
 
 @finalize_extract.register(extract_type="active-lives")
 def _(frame: pd.DataFrame):
-    frame["BENEFIT_END_ID"] = pd.NA
-    frame["GROSS_PREMIUM"] = 150
     return frame[active_life_columns]

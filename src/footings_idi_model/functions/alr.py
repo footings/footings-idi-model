@@ -48,6 +48,8 @@ def create_alr_frame(
     idi_contract: str,
     idi_benefit_period: str,
     idi_occupation_class: str,
+    benefit_end_id: str,
+    gross_premium: float,
     benefit_amount: float,
 ):
     """Create active life frame with a range from the policy issue date to termination date using 
@@ -55,18 +57,21 @@ def create_alr_frame(
     
     Parameters
     ----------
-    valuation_dt: pd.Timestamp
-    policy_id: str
-    gender: str
-    tobacco_usage: str
-    birth_dt: pd.Timestamp
-    policy_start_dt: pd.Timestamp
-    policy_end_dt: pd.Timestamp
-    elimination_period: int
-    idi_market: str
-    idi_contract: str
-    idi_benefit_period: str
-    idi_occupation_class: str
+    valuation_dt : pd.Timestamp
+    policy_id : str
+    gender : str
+    tobacco_usage : str
+    birth_dt : pd.Timestamp
+    policy_start_dt : pd.Timestamp
+    policy_end_dt : pd.Timestamp
+    elimination_period : int
+    idi_market : str
+    idi_contract : str
+    idi_benefit_period : str
+    idi_occupation_class : str
+    benefit_end_id : str
+    gross_premium : float
+    benefit_amount : float
     
     Returns
     -------
@@ -102,6 +107,8 @@ def create_alr_frame(
         IDI_CONTRACT=idi_contract,
         IDI_BENEFIT_PERIOD=idi_benefit_period,
         IDI_OCCUPATION_CLASS=idi_occupation_class,
+        BENEFIT_END_ID=benefit_end_id,
+        GROSS_PREMIUM=gross_premium,
         BENEFIT_AMOUNT=benefit_amount,
     )
 

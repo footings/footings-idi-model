@@ -3,7 +3,7 @@ import pandas as pd
 from footings_idi_model.policy_models.alr_deterministic import alr_deterministic_model
 
 
-def test_create_alr_frame():
+def test_run_alr_deterministic():
     kwargs = {
         "valuation_dt": pd.Timestamp("2005-02-10"),
         "policy_id": "M1",
@@ -19,6 +19,8 @@ def test_create_alr_frame():
         "idi_occupation_class": "M",
         "cola_percent": 0.0,
         "assumption_set": "stat",
+        "benefit_end_id": "",
+        "gross_premium": 150.0,
         "benefit_amount": 100.0,
         "net_benefit_method": "PT2",
     }

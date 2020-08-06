@@ -86,6 +86,7 @@ param_idi_contract = define_parameter(**al_attributes["idi_contract"])
 param_idi_benefit_period = define_parameter(**al_attributes["idi_benefit_period"])
 param_idi_occupation_class = define_parameter(**al_attributes["idi_occupation_class"])
 param_cola_percent = define_parameter(**al_attributes["cola_percent"])
+param_benefit_end_id = define_parameter(**al_attributes["benefit_end_id"])
 param_gross_premium = define_parameter(**al_attributes["gross_premium"])
 param_benefit_amount = define_parameter(**al_attributes["benefit_amount"])
 
@@ -111,6 +112,8 @@ steps = [
             "idi_contract": param_idi_contract,
             "idi_benefit_period": param_idi_benefit_period,
             "idi_occupation_class": param_idi_occupation_class,
+            "benefit_end_id": param_benefit_end_id,
+            "gross_premium": param_gross_premium,
             "benefit_amount": param_benefit_amount,
         },
     },
@@ -125,7 +128,10 @@ steps = [
     {
         "name": "calculate-discount",
         "function": calculate_discount,
-        "args": {"frame": use("calculate-lives"), "policy_start_dt": param_policy_start_dt},
+        "args": {
+            "frame": use("calculate-lives"),
+            "policy_start_dt": param_policy_start_dt,
+        },
     },
     {
         "name": "calculate-incidence-rate",

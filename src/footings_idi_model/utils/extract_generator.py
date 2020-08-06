@@ -4,7 +4,7 @@ from footings import define_parameter, use, build_model
 from ..functions.generate_policies import (
     create_frame,
     sample_from_volume_tbl,
-    add_benefit_amount,
+    add_premium_and_benefits,
     calculate_ages,
     calculate_dates,
     finalize_extract,
@@ -58,15 +58,18 @@ steps = [
         },
     },
     {
-        "name": "add-benefit-amount",
-        "function": add_benefit_amount,
-        "args": {"frame": use("sample-from-volume-tbl")},
+        "name": "add-premium-and-benefits",
+        "function": add_premium_and_benefits,
+        "args": {
+            "frame": use("sample-from-volume-tbl"),
+            "extract_type": param_extract_type,
+        },
     },
     {
         "name": "calculate-ages",
         "function": calculate_ages,
         "args": {
-            "frame": use("add-benefit-amount"),
+            "frame": use("add-premium-and-benefits"),
             "extract_type": param_extract_type,
             "seed": param_seed,
         },
