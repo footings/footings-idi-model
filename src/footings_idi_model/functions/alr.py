@@ -41,8 +41,8 @@ def create_alr_frame(
     gender: str,
     tobacco_usage: str,
     birth_dt: pd.Timestamp,
-    issue_dt: pd.Timestamp,
-    termination_dt: pd.Timestamp,
+    policy_start_dt: pd.Timestamp,
+    policy_end_dt: pd.Timestamp,
     elimination_period: int,
     idi_market: str,
     idi_contract: str,
@@ -60,8 +60,8 @@ def create_alr_frame(
     gender: str
     tobacco_usage: str
     birth_dt: pd.Timestamp
-    issue_dt: pd.Timestamp
-    termination_dt: pd.Timestamp
+    policy_start_dt: pd.Timestamp
+    policy_end_dt: pd.Timestamp
     elimination_period: int
     idi_market: str
     idi_contract: str
@@ -80,9 +80,9 @@ def create_alr_frame(
     fixed = {"frequency": "Y", "col_date_nm": "DATE_BD", "duration_year": "DURATION_YEAR"}
 
     frame = (
-        create_frame(start_dt=issue_dt, end_dt=termination_dt, **fixed)
+        create_frame(start_dt=policy_start_dt, end_dt=policy_end_dt, **fixed)
         .pipe(_assign_end_date)
-        .query("DATE_BD <= @termination_dt")
+        .query("DATE_BD <= @policy_end_dt")
     )
 
     # assign main table attributes
@@ -95,9 +95,9 @@ def create_alr_frame(
         TOBACCO_USAGE=tobacco_usage,
         BIRTH_DT=birth_dt,
         AGE_ATTAINED=lambda df: calculate_age(birth_dt, df["DATE_BD"], method="ALB"),
-        AGE_ISSUED=lambda df: calculate_age(birth_dt, issue_dt, method="ALB"),
+        AGE_ISSUED=lambda df: calculate_age(birth_dt, policy_start_dt, method="ALB"),
         ELIMINATION_PERIOD=elimination_period,
-        TERMINATION_DT=termination_dt,
+        POLICY_END_DT=policy_end_dt,
         IDI_MARKET=idi_market,
         IDI_CONTRACT=idi_contract,
         IDI_BENEFIT_PERIOD=idi_benefit_period,
@@ -157,7 +157,7 @@ def _(frame):
     return _calculate_lives(frame, persistency_src="gr")
 
 
-def calculate_discount(frame: pd.DataFrame, issue_dt: pd.Timestamp):
+def calculate_discount(frame: pd.DataFrame, policy_start_dt: pd.Timestamp):
     """Calculate begining, middle, and ending discount factor for each duration.
     
     Parameters
@@ -170,7 +170,7 @@ def calculate_discount(frame: pd.DataFrame, issue_dt: pd.Timestamp):
     pd.DataFrame
         The passed DataFrame with additional columns DISCOUNT_BD, DISCOUNT_MD, and DISCOUNT_ED.        
     """
-    interest_rate = get_interest_rate(issue_dt)
+    interest_rate = get_interest_rate(policy_start_dt)
     frame["DISCOUNT_BD"] = 1 / (1 + interest_rate) ** (frame["DURATION_YEAR"] - 1)
     frame["DISCOUNT_MD"] = 1 / (1 + interest_rate) ** (frame["DURATION_YEAR"] - 0.5)
     frame["DISCOUNT_ED"] = 1 / (1 + interest_rate) ** (frame["DURATION_YEAR"])
@@ -280,7 +280,7 @@ def _calculate_termination_date(
 
 _CLAIM_COST_DROP_COLUMNS = [
     "BIRTH_DT",
-    "TERMINATION_DT",
+    "POLICY_END_DT",
     "GENDER",
     "AGE_ATTAINED",
     "AGE_ISSUED",
@@ -322,7 +322,7 @@ def calculate_claim_cost(
         incurred_dt=lambda df: df["date_bd"],
         termination_dt=lambda df: _calculate_termination_date(
             df["incurred_dt"],
-            df["termination_dt"],
+            df["policy_end_dt"],
             birth_dt,
             idi_benefit_period,
             elimination_period,

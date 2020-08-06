@@ -78,14 +78,15 @@ param_policy_id = define_parameter(**al_attributes["policy_id"])
 param_gender = define_parameter(**al_attributes["gender"])
 param_birth_dt = define_parameter(**al_attributes["birth_dt"])
 param_tobacco_usage = define_parameter(**al_attributes["tobacco_usage"])
-param_issue_dt = define_parameter(**al_attributes["issue_dt"])
-param_termination_dt = define_parameter(**al_attributes["termination_dt"])
+param_policy_start_dt = define_parameter(**al_attributes["policy_start_dt"])
+param_policy_end_dt = define_parameter(**al_attributes["policy_end_dt"])
 param_elimination_period = define_parameter(**al_attributes["elimination_period"])
 param_idi_market = define_parameter(**al_attributes["idi_market"])
 param_idi_contract = define_parameter(**al_attributes["idi_contract"])
 param_idi_benefit_period = define_parameter(**al_attributes["idi_benefit_period"])
 param_idi_occupation_class = define_parameter(**al_attributes["idi_occupation_class"])
 param_cola_percent = define_parameter(**al_attributes["cola_percent"])
+param_gross_premium = define_parameter(**al_attributes["gross_premium"])
 param_benefit_amount = define_parameter(**al_attributes["benefit_amount"])
 
 
@@ -103,8 +104,8 @@ steps = [
             "gender": param_gender,
             "birth_dt": param_birth_dt,
             "tobacco_usage": param_tobacco_usage,
-            "issue_dt": param_issue_dt,
-            "termination_dt": param_termination_dt,
+            "policy_start_dt": param_policy_start_dt,
+            "policy_end_dt": param_policy_end_dt,
             "elimination_period": param_elimination_period,
             "idi_market": param_idi_market,
             "idi_contract": param_idi_contract,
@@ -124,7 +125,7 @@ steps = [
     {
         "name": "calculate-discount",
         "function": calculate_discount,
-        "args": {"frame": use("calculate-lives"), "issue_dt": param_issue_dt},
+        "args": {"frame": use("calculate-lives"), "policy_start_dt": param_policy_start_dt},
     },
     {
         "name": "calculate-incidence-rate",

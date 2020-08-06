@@ -184,7 +184,7 @@ def calculate_dates(extract_type: str, frame: pd.DataFrame, as_of_dt: datetime.d
     -------
     pd.DataFrame
         If extract type is "disabled-lives" a DataFrame with columns BIRTH_DT, INCURRED_DT, and TERMINATION_DT. \n
-        If extract type is "active-lives"  a DataFrame with columns BIRTH_DT and ISSUE_DT.
+        If extract type is "active-lives"  a DataFrame with columns BIRTH_DT and POLICY_START_DT.
  
     """
     msg = "No registered function based on passed paramters and no default function."
@@ -239,7 +239,7 @@ def _(frame: pd.DataFrame, as_of_dt: datetime.date):
 
     # calculate issue date
     days_from_issue = frame["ISSUE_AGE"].values * 365.25
-    frame["ISSUE_DT"] = frame["BIRTH_DT"] + pd.to_timedelta(
+    frame["POLICY_START_DT"] = frame["BIRTH_DT"] + pd.to_timedelta(
         days_from_issue, unit="D"
     ).round("D")
 
@@ -258,9 +258,11 @@ def _(frame: pd.DataFrame, as_of_dt: datetime.date):
         _birth_date_add_years(frame["BIRTH_DT"], 70).values.astype(str),
     ]
 
-    frame["TERMINATION_DT"] = pd.to_datetime(
+    frame["POLICY_END_DT"] = pd.to_datetime(
         np.select(cond_list, choice_list)
     ) - pd.DateOffset(days=1)
+
+    frame["PREMIUM_PAY_TO_DT"] = frame["POLICY_END_DT"]
 
     return frame.drop(["CURRENT_AGE"], axis=1)
 
@@ -291,4 +293,6 @@ def _(frame: pd.DataFrame):
 
 @finalize_extract.register(extract_type="active-lives")
 def _(frame: pd.DataFrame):
+    frame["BENEFIT_END_ID"] = pd.NA
+    frame["GROSS_PREMIUM"] = 150
     return frame[active_life_columns]

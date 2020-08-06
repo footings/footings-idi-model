@@ -27,18 +27,30 @@ columns:
     description: The coverage ID of the policy holder.
     allowed: [BASE, RIDER]
 
-  - name: ISSUE_DT
+  - name: POLICY_START_DT
     dtype: date
-    description: The start date of the policy issued to the policy holder.
+    description: The date coverage starts for the policy issued.
 
-  - name: TERMINATION_DT
+  - name: PREMIUM_PAY_TO_DT
     dtype: date
-    description: The termination date of the policy issued to the policy holder.
+    description: The date premium payments end for the policy issued.
+
+  - name: BENEFIT_END_ID
+    dtype: str
+    description: The id that classifies when the benefits end (i.e., a minimum benefit period). 
+
+  - name: POLICY_END_DT
+    dtype: date
+    description: The date coverage ends for the policy issued.
 
   - name: ELIMINATION_PERIOD
     dtype: int
     description: The elimination days before benefits are paid for the policy holder.
     allowed: [0, 7, 14, 30, 60, 90, 180, 360, 720]
+
+  - name: GROSS_PREMIUM
+    dtype: float
+    description: The policy gross premium amount.
 
   - name: BENEFIT_AMOUNT
     dtype: float
@@ -66,4 +78,4 @@ columns:
 
   - name: COLA_PERCENT
     dtype: float
-    description: The COLA percent for the policy holder (0 if no COLA provided).
+    description: The cost of living (COLA) percent for the policy holder (0 if no COLA provided).
