@@ -2,7 +2,7 @@ import pandas as pd
 
 from footings import define_parameter, use, build_model
 
-from ..functions.dlr import (
+from ..functions.disabled_lives import (
     create_dlr_frame,
     calculate_ctr,
     calculate_cola_adjustment,
