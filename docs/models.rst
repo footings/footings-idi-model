@@ -15,15 +15,15 @@ DLR Deterministic
 
 |
 
-.. autofunction:: footings_idi_model.functions.dlr.create_dlr_frame
-.. autofunction:: footings_idi_model.functions.dlr.calculate_ctr
-.. autofunction:: footings_idi_model.functions.dlr.calculate_cola_adjustment
-.. autofunction:: footings_idi_model.functions.dlr.calculate_monthly_benefits
-.. autofunction:: footings_idi_model.functions.dlr.calculate_lives
-.. autofunction:: footings_idi_model.functions.dlr.calculate_discount
-.. autofunction:: footings_idi_model.functions.dlr.calculate_pvfb
-.. autofunction:: footings_idi_model.functions.dlr.calculate_dlr
-.. autofunction:: footings_idi_model.functions.dlr.to_output_format
+.. autofunction:: footings_idi_model.functions.disabled_lives.create_dlr_frame
+.. autofunction:: footings_idi_model.functions.disabled_lives.calculate_ctr
+.. autofunction:: footings_idi_model.functions.disabled_lives.calculate_cola_adjustment
+.. autofunction:: footings_idi_model.functions.disabled_lives.calculate_monthly_benefits
+.. autofunction:: footings_idi_model.functions.disabled_lives.calculate_lives
+.. autofunction:: footings_idi_model.functions.disabled_lives.calculate_discount
+.. autofunction:: footings_idi_model.functions.disabled_lives.calculate_pvfb
+.. autofunction:: footings_idi_model.functions.disabled_lives.calculate_dlr
+.. autofunction:: footings_idi_model.functions.disabled_lives.to_output_format
 
 |
 
@@ -34,18 +34,41 @@ ALR Deterministic
 
 |
 
-.. autofunction:: footings_idi_model.functions.alr.create_alr_frame
-.. autofunction:: footings_idi_model.functions.alr.calculate_lives
-.. autofunction:: footings_idi_model.functions.alr.calculate_discount
-.. autofunction:: footings_idi_model.functions.alr.calculate_cola_adjustment
-.. autofunction:: footings_idi_model.functions.alr.calculate_benefit_amount
-.. autofunction:: footings_idi_model.functions.alr.calculate_incidence_rate
-.. autofunction:: footings_idi_model.functions.alr.calculate_claim_cost
-.. autofunction:: footings_idi_model.functions.alr.calculate_pvfb
-.. autofunction:: footings_idi_model.functions.alr.calculate_pvnfb
-.. autofunction:: footings_idi_model.functions.alr.calculate_alr_from_issue
-.. autofunction:: footings_idi_model.functions.alr.calculate_alr_from_valuation_date
-.. autofunction:: footings_idi_model.functions.alr.to_output_format
+.. autofunction:: footings_idi_model.functions.active_lives.create_alr_frame
+.. autofunction:: footings_idi_model.functions.active_lives.calculate_lives
+.. autofunction:: footings_idi_model.functions.active_lives.calculate_discount
+.. autofunction:: footings_idi_model.functions.active_lives.calculate_incidence_rate
+.. autofunction:: footings_idi_model.functions.active_lives.model_disabled_lives
+.. autofunction:: footings_idi_model.functions.active_lives.calculate_claim_cost
+.. autofunction:: footings_idi_model.functions.active_lives.calculate_pvfb
+.. autofunction:: footings_idi_model.functions.active_lives.calculate_pvnfb
+.. autofunction:: footings_idi_model.functions.active_lives.calculate_alr_from_issue
+.. autofunction:: footings_idi_model.functions.active_lives.calculate_alr_from_valuation_date
+.. autofunction:: footings_idi_model.functions.active_lives.to_output_format
+
+|
+
+ROP Deterministic
+-----------------
+
+.. autofunction:: footings_idi_model.policy_models.rop_deterministic_model
+
+|
+
+.. autofunction:: footings_idi_model.functions.active_lives.create_alr_frame
+.. autofunction:: footings_idi_model.functions.active_lives.calculate_lives
+.. autofunction:: footings_idi_model.functions.active_lives.calculate_discount
+.. autofunction:: footings_idi_model.functions.active_lives.calculate_incidence_rate
+.. autofunction:: footings_idi_model.functions.active_lives.model_disabled_lives
+.. autofunction:: footings_idi_model.functions.active_lives.calculate_rop_payment_intervals
+.. autofunction:: footings_idi_model.functions.active_lives.calculate_rop_future_claims
+.. autofunction:: footings_idi_model.functions.active_lives.calculate_rop_future_total_claims
+.. autofunction:: footings_idi_model.functions.active_lives.calculate_rop_benefits
+.. autofunction:: footings_idi_model.functions.active_lives.calculate_pvfb
+.. autofunction:: footings_idi_model.functions.active_lives.calculate_pvnfb
+.. autofunction:: footings_idi_model.functions.active_lives.calculate_alr_from_issue
+.. autofunction:: footings_idi_model.functions.active_lives.calculate_alr_from_valuation_date
+.. autofunction:: footings_idi_model.functions.active_lives.to_output_format
 
 |
 
