@@ -1,0 +1,23 @@
+
+
+name: Active Lives Rider Extract Schema
+enfore_strict: True
+nullable: False
+columns:
+  - name: ROP_RETURN_FREQUENCY
+    dtype: int
+    description: The return of premium (ROP) frequency in years.
+    allowed: [5, 7, 10]
+
+  - name: ROP_RETURN_PERCENTAGE
+    dtype: float
+    description: The return of premium (ROP) percentage.
+
+  - name: ROP_CLAIMS_PAID
+    dtype: float
+    description: The return of premium (ROP) benefits paid.
+    min: 0
+  
+  - name: ROP_FUTURE_CLAIMS_START_DT
+    dtype: date
+    description: The return of premium (ROP) benefits paid end date.
