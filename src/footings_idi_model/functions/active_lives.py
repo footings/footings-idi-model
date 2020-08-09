@@ -1,6 +1,7 @@
 from datetime import timedelta, date
 from dateutil.relativedelta import relativedelta
 from inspect import getfullargspec
+from functools import lru_cache
 
 import numpy as np
 import pandas as pd
@@ -30,9 +31,37 @@ from ..__init__ import __version__ as MOD_VERSION
 from ..__init__ import __git_revision__ as GIT_REVISION
 
 
+@lru_cache(maxsize=128)
+def dlr_model_cache(**kwargs):
+    return dlr_deterministic_model(**kwargs).run()
+
+
 def _assign_end_date(frame):
     frame["DATE_ED"] = frame["DATE_BD"].shift(-1, fill_value=frame["DATE_BD"].iat[-1])
     return frame[frame.index != max(frame.index)]
+
+
+def _calculate_termination_date(
+    incurred_dt: pd.Series,
+    coverage_to_dt: pd.Series,
+    birth_dt: pd.Timestamp,
+    idi_benefit_period: str,
+    elimination_period: int,
+):
+    if idi_benefit_period[-1] == "M":
+        months = int(idi_benefit_period[:-1])
+        termination_dt = (
+            incurred_dt
+            + pd.DateOffset(days=elimination_period)
+            + pd.DateOffset(months=months)
+        )
+    elif idi_benefit_period[:2] == "TO":
+        termination_dt = coverage_to_dt
+    elif idi_benefit_period == "LIFE":
+        termination_dt = pd.to_datetime(
+            date(year=birth_dt.year + 120, month=birth_dt.month, day=birth_dt.day)
+        )
+    return termination_dt
 
 
 def create_alr_frame(
@@ -103,6 +132,13 @@ def create_alr_frame(
         AGE_ISSUED=lambda df: calculate_age(birth_dt, policy_start_dt, method="ALB"),
         ELIMINATION_PERIOD=elimination_period,
         POLICY_END_DT=policy_end_dt,
+        TERMINATION_DT=lambda df: _calculate_termination_date(
+            df["DATE_BD"],
+            df["POLICY_END_DT"],
+            birth_dt,
+            idi_benefit_period,
+            elimination_period,
+        ),
         IDI_MARKET=idi_market,
         IDI_CONTRACT=idi_contract,
         IDI_BENEFIT_PERIOD=idi_benefit_period,
@@ -262,95 +298,247 @@ def calculate_incidence_rate(frame: pd.DataFrame, idi_contract: str):
     return frame
 
 
-def _calculate_termination_date(
-    incurred_dt: pd.Series,
-    coverage_to_dt: pd.Series,
-    birth_dt: pd.Timestamp,
-    idi_benefit_period: str,
-    elimination_period: int,
-):
-    if idi_benefit_period[-1] == "M":
-        months = int(idi_benefit_period[:-1])
-        termination_dt = (
-            incurred_dt
-            + pd.DateOffset(days=elimination_period)
-            + pd.DateOffset(months=months)
-        )
-    elif idi_benefit_period[:2] == "TO":
-        termination_dt = coverage_to_dt
-    elif idi_benefit_period == "LIFE":
-        termination_dt = pd.to_datetime(
-            date(year=birth_dt.year + 120, month=birth_dt.month, day=birth_dt.day)
-        )
-    return termination_dt
-
-
-_CLAIM_COST_DROP_COLUMNS = [
-    "BIRTH_DT",
-    "POLICY_END_DT",
-    "GENDER",
-    "AGE_ATTAINED",
-    "AGE_ISSUED",
-    "ELIMINATION_PERIOD",
-    "IDI_OCCUPATION_CLASS",
-    "IDI_BENEFIT_PERIOD",
-    "IDI_CONTRACT",
-    "IDI_MARKET",
-]
-
-
-@post_drop_columns(columns=_CLAIM_COST_DROP_COLUMNS)
-def calculate_claim_cost(
+def model_disabled_lives(
     frame: pd.DataFrame,
     assumption_set: str,
     birth_dt: pd.Timestamp,
     elimination_period: int,
     idi_benefit_period: str,
     cola_percent: float,
+) -> dict:
+    """Model a disabled life for each active duration.
+
+    Parameters
+    ----------
+    assumptions_set : str
+    birth_dt : pd.Timestamp
+    elimination_period : int
+    idi_benefit_period : str
+    cola_percent : float
+    
+    Returns
+    -------
+    dict
+        Key = (DURATION_YEAR, DATE_BD, DATE_ED) \n
+        Value = results of dlr_deterministic_model
+    """
+    frame_use = frame.copy()
+    frame_use.columns = [col.lower() for col in frame_use.columns]
+    frame_use["valuation_dt"] = frame_use["date_bd"]
+    frame_use["incurred_dt"] = frame_use["date_bd"]
+    kwargs = set(getfullargspec(dlr_deterministic_model).kwonlyargs)
+    cols = set(frame_use.columns)
+    keep = kwargs.intersection(cols)
+    records = frame_use[keep].to_dict(orient="records")
+
+    def _run_model(assumption_set, cola_percent, **kwargs):
+        return dlr_model_cache(
+            assumption_set=assumption_set,
+            cola_percent=cola_percent,
+            claim_id="NA",
+            idi_diagnosis_grp="AG",
+            **kwargs,
+        )
+
+    results = (_run_model(assumption_set, cola_percent, **record) for record in records)
+    return {
+        (dur_year, bd, ed): result
+        for dur_year, bd, ed, result in zip(
+            frame["DURATION_YEAR"], frame["DATE_BD"], frame["DATE_ED"], results
+        )
+    }
+
+
+@post_drop_columns(columns=["DLR"])
+def calculate_claim_cost(
+    frame: pd.DataFrame, modeled_disabled_lives: dict,
 ):
     """Calculate claim cost for each duration.
     
     Parameters
     ----------
     frame : pd.DataFrame
-    assumption_set : pd.DataFrame
-    birth_dt : pd.Timestamp
-    idi_benefit_period : str
+    model_disabled_life : dict
 
     Returns
     -------
     pd.DataFrame
-        The passed DataFrame with an additional columns called DLR and CLAIM_COST.
+        The passed DataFrame with an additional column called BENEFIT_COST.
     """
-    frame_use = frame.copy()
-    frame_use.columns = [col.lower() for col in frame_use.columns]
-    frame_use = frame_use.assign(
-        valuation_dt=lambda df: df["date_bd"],
-        incurred_dt=lambda df: df["date_bd"],
-        termination_dt=lambda df: _calculate_termination_date(
-            df["incurred_dt"],
-            df["policy_end_dt"],
-            birth_dt,
-            idi_benefit_period,
-            elimination_period,
-        ),
+    dlrs = {k[0]: v["DLR"].iat[0] for k, v in modeled_disabled_lives.items()}
+    frame["DLR"] = frame["DURATION_YEAR"].map(dlrs)
+    frame["BENEFIT_COST"] = (frame["DLR"] * frame["INCIDENCE_RATE"]).round(2)
+    return frame
+
+
+def calculate_rop_payment_intervals(frame: pd.DataFrame, rop_return_frequency: int):
+    """Calculate return of premium (ROP) payment intervals.
+
+    Parameters
+    ----------
+    frame : pd.DataFrame
+    rop_return_frequency : int
+
+    Returns
+    -------
+    pd.DataFrame
+        The passed DataFrame with an additional column called PAYMENT_INTERVAL.    
+    """
+    frame["PAYMENT_INTERVAL"] = (
+        frame["DURATION_YEAR"].subtract(1).div(rop_return_frequency).astype(int)
     )
-    kwargs = set(getfullargspec(dlr_deterministic_model).kwonlyargs)
-    cols = set(frame_use.columns)
-    keep = kwargs.intersection(cols)
-    records = frame_use[keep].to_dict(orient="records")
-    claim_list = []
-    for record in records:
-        model_kwargs = {
-            "assumption_set": assumption_set,
-            "claim_id": "NA",
-            "idi_diagnosis_grp": "AG",
-            "cola_percent": cola_percent,
-            **record,
-        }
-        claim_list.append(dlr_deterministic_model(**model_kwargs).run()["DLR"].iat[0])
-    frame["DLR"] = claim_list
-    frame["CLAIM_COST"] = (frame["DLR"] * frame["INCIDENCE_RATE"]).round(2)
+    return frame
+
+
+def calculate_rop_future_claims(
+    frame: pd.DataFrame,
+    modeled_disabled_lives: dict,
+    rop_return_frequency: int,
+    rop_future_benefit_start_dt: pd.Timestamp,
+):
+    """Calculate future claims for return of premium (ROP).
+    
+    Parameters
+    ----------
+    modeled_disabled_lives : dict
+    rop_return_frequency : int
+    rop_future_benefit_start_dt : pd.Timestamp
+
+    Returns
+    -------
+    generator
+        A DataFrame with the future claims from modeled_disabled_lives.
+    """
+    max_payment_dates = (
+        frame[["DURATION_YEAR", "PAYMENT_INTERVAL", "DATE_ED"]]
+        .groupby(["PAYMENT_INTERVAL"], as_index=False)
+        .transform(max)["DATE_ED"]
+    )
+
+    cols = ["DATE_BD", "DATE_ED", "LIVES_MD", "BENEFIT_AMOUNT"]
+
+    def model_payments(dur_year, dur_start_dt, dur_end_dt, frame):
+        if dur_end_dt >= rop_future_benefit_start_dt:
+            if dur_start_dt >= rop_future_benefit_start_dt:
+                dt_adj = 1.0
+            else:
+                dt_adj = (rop_future_benefit_start_dt - dur_start_dt) / (
+                    dur_end_dt - dur_start_dt
+                )
+        else:
+            dt_adj = 0
+        return frame[frame.DATE_ED <= max_payment_dates.get(dur_year - 1)][cols].assign(
+            DURATION_YEAR=dur_year,
+            DT_ADJ=dt_adj,
+            PAYMENT_INTERVAL=int(dur_year / rop_return_frequency),
+        )
+
+    return (
+        model_payments(k[0], k[1], k[2], v) for k, v in modeled_disabled_lives.items()
+    )
+
+
+def calculate_rop_future_total_claims(
+    frame: pd.DataFrame, rop_future_claim_payments: dict
+) -> dict:
+    """Calculate total future claims for return of premium (ROP) for each payment interval.
+    
+    Parameters
+    ----------
+    frame : pd.DataFrame
+    rop_future_claim_payments : dict
+
+    Returns
+    -------
+    dict
+        Key = Payment interval \n
+        Value = Total future claims
+    """
+    incidences = frame[["DURATION_YEAR", "INCIDENCE_RATE"]]
+    claim_payments = (
+        pd.concat(list(rop_future_claim_payments))
+        .merge(incidences, how="left", on="DURATION_YEAR")
+        .assign(
+            FUTURE_BENEFIT_PAYMENTS=lambda df: df["INCIDENCE_RATE"]
+            * df["LIVES_MD"]
+            * df["DT_ADJ"]
+            * df["BENEFIT_AMOUNT"],
+        )
+        .groupby(["PAYMENT_INTERVAL"], as_index=False)["FUTURE_BENEFIT_PAYMENTS"]
+        .sum()
+        .set_index(["PAYMENT_INTERVAL"])["FUTURE_BENEFIT_PAYMENTS"]
+        .to_dict()
+    )
+
+    return claim_payments
+
+
+_ROP_DROP_COLS = [
+    "PAYMENT_INTERVAL",
+    "FUTURE_CLAIM_PAYMENTS",
+    "CLAIMS_PAID",
+    "TOTAL_PREMIUM",
+    "RETURN_PERCENTAGE",
+]
+
+
+@post_drop_columns(columns=_ROP_DROP_COLS)
+def calculate_rop_benefits(
+    frame: pd.DataFrame,
+    rop_claims_paid: float,
+    rop_return_percentage: float,
+    rop_future_total_claims: dict,
+    rop_future_benefit_start_dt: pd.Timestamp,
+):
+    """Calculate claim cost for each duration.
+    
+    Parameters
+    ----------
+    frame : pd.DataFrame
+    rop_claims_paid : float
+    rop_return_percentage : float
+    rop_future_total_claims : float
+    rop_future_benefit_start_dt : pd.Timestamp
+
+    Returns
+    -------
+    pd.DataFrame
+        The passed DataFrame with an additional columns called Benefit_COST.
+    """
+    max_int_rows = (
+        frame.groupby(["PAYMENT_INTERVAL"])["DURATION_YEAR"].last().sub(1).astype(int)
+    )
+
+    frame["FUTURE_CLAIM_PAYMENTS"] = 0
+    frame.loc[max_int_rows, "FUTURE_CLAIM_PAYMENTS"] = frame.loc[max_int_rows][
+        "PAYMENT_INTERVAL"
+    ].map(rop_future_total_claims)
+
+    criteria = (frame["DATE_BD"] <= rop_future_benefit_start_dt) & (
+        rop_future_benefit_start_dt <= frame["DATE_ED"]
+    )
+    claim_row = frame[criteria]["PAYMENT_INTERVAL"]
+
+    frame["CLAIMS_PAID"] = 0
+    frame.loc[claim_row, "CLAIMS_PAID"] = rop_claims_paid
+
+    total_premium = frame.groupby(["PAYMENT_INTERVAL"])["GROSS_PREMIUM"].sum().to_dict()
+    frame["TOTAL_PREMIUM"] = 0
+    frame.loc[max_int_rows, "TOTAL_PREMIUM"] = frame.loc[max_int_rows][
+        "PAYMENT_INTERVAL"
+    ].map(total_premium)
+
+    frame["RETURN_PERCENTAGE"] = rop_return_percentage
+
+    frame["BENEFIT_COST"] = (
+        (
+            frame["TOTAL_PREMIUM"] * frame["RETURN_PERCENTAGE"]
+            - frame["FUTURE_CLAIM_PAYMENTS"]
+            - frame["CLAIMS_PAID"]
+        )
+        .clip(lower=0)
+        .round(2)
+    )
     return frame
 
 
@@ -366,7 +554,7 @@ def calculate_pvfb(frame: pd.DataFrame):
     -------
         The passed DataFrame with an additional columns called PVFB.
     """
-    pvfb_colums = ["LIVES_MD", "DISCOUNT_MD", "CLAIM_COST"]
+    pvfb_colums = ["LIVES_MD", "DISCOUNT_MD", "BENEFIT_COST"]
     frame["PVFB_PROD"] = frame[pvfb_colums].prod(axis=1)
     frame["PVFB"] = frame["PVFB_PROD"].iloc[::-1].cumsum().round(2)
     return frame
@@ -488,8 +676,7 @@ def to_output_format(frame: pd.DataFrame):
         "DISCOUNT_ED",
         "BENEFIT_AMOUNT",
         "INCIDENCE_RATE",
-        "DLR",
-        "CLAIM_COST",
+        "BENEFIT_COST",
         "PVFB",
         "PVFNB",
         "ALR_BD",
