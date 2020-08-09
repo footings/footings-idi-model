@@ -5,7 +5,7 @@ import pandas as pd
 
 from footings import dispatch_function
 
-from ..schemas import disabled_life_columns, active_life_columns
+from ..schemas import disabled_life_columns, active_lives_base_columns
 
 #########################################################################################
 # functions
@@ -353,4 +353,4 @@ def _(frame: pd.DataFrame):
 
 @finalize_extract.register(extract_type="active-lives")
 def _(frame: pd.DataFrame):
-    return frame[active_life_columns]
+    return frame[active_lives_base_columns]
