@@ -1,0 +1,13 @@
+
+name: footings-idi-model
+channels:
+  - conda-forge
+dependencies:
+  - attrs
+  - numpy
+  - pandas
+  - dask
+  - pyyaml
+  - numpydoc
+  - openpyxl
+  - pytest

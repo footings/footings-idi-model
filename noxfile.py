@@ -16,7 +16,8 @@ def tests(session):
         # options
         silent=False,
     )
-    session.install(".[testing]")
+    session.install("--no-deps", "footings")
+    session.install("-e", ".", "--no-deps")
     session.run("pytest")
 
 
