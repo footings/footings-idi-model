@@ -11,7 +11,8 @@ from ..policy_models.dlr_deterministic import (
     param_valuation_dt,
     param_assumption_set,
 )
-from ..functions.shared import dispatch_model_per_record
+from ..functions.disabled_lives import OUTPUT_COLS
+from .dispatch_model import dispatch_model_per_record
 
 __all__ = ["check_extract", "create_output", "run_policy_model_per_record"]
 
@@ -27,8 +28,8 @@ param_extract = define_parameter(
     dtype=pd.DataFrame,
 )
 
-param_policy_model = define_parameter(
-    name="policy_model",
+param_model_type = define_parameter(
+    name="model_type",
     description="""The policy model to deploy. Options are :
 
         * `determinstic`
@@ -69,7 +70,7 @@ def run_policy_model_per_record(
     extract: pd.DataFrame,
     valuation_dt: pd.Timestamp,
     assumption_set: str,
-    policy_model: str,
+    model_type: str,
 ) -> list:
     """Run each policy in extract through specified policy model.
 
@@ -81,9 +82,7 @@ def run_policy_model_per_record(
         The valuation date to be modeled.
     assumption_set : str
         The assumptions set to model.
-    net_benefit_method : str
-        The net benefit method to use.
-    policy_model : callable
+    model_type : str
         The policy model to run for each policy in extract.
 
     Raises
@@ -96,16 +95,13 @@ def run_policy_model_per_record(
     list
         A list of all policies that have been ran through the policy model.
     """
-    if policy_model == "deterministic":
-        return dispatch_model_per_record(
-            policy_model=dlr_deterministic_model,
-            record_keys=["POLICY_ID", "CLAIM_ID"],
-            extract=extract,
-            valuation_dt=valuation_dt,
-            assumption_set=assumption_set,
-        )
-    elif policy_model == "stochastic":
-        raise NotImplementedError("Stochastic capabilities not implemented yet.")
+    return dispatch_model_per_record(
+        extract=extract,
+        policy_type="disabled",
+        model_type=model_type,
+        valuation_dt=valuation_dt,
+        assumption_set=assumption_set,
+    )
 
 
 def create_output(results: list) -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
@@ -123,8 +119,6 @@ def create_output(results: list) -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFra
     """
     successes = results[0]
     errors = results[1]
-    time_0 = pd.concat([success.head(1) for success in successes]).reset_index(drop=True)
-    projected = pd.concat(successes)
     time_0_cols = [
         "MODEL_VERSION",
         "LAST_COMMIT",
@@ -132,6 +126,17 @@ def create_output(results: list) -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFra
         "POLICY_ID",
         "DLR",
     ]
+    try:
+        time_0 = pd.concat([success.head(1) for success in successes]).reset_index(
+            drop=True
+        )
+    except ValueError:
+        time_0 = pd.DataFrame(columns=time_0_cols)
+    try:
+        projected = pd.concat(successes)
+    except ValueError:
+        projected = pd.DataFrame(columns=OUTPUT_COLS)
+
     return time_0[time_0_cols], projected, errors
 
 
@@ -156,7 +161,7 @@ steps = [
             "extract": use("check-extract"),
             "valuation_dt": param_valuation_dt,
             "assumption_set": param_assumption_set,
-            "policy_model": param_policy_model,
+            "model_type": param_model_type,
         },
     },
     {

@@ -465,6 +465,31 @@ def calculate_dlr(frame: pd.DataFrame, valuation_dt: pd.Timestamp):
     return frame
 
 
+OUTPUT_COLS = [
+    "MODEL_VERSION",
+    "LAST_COMMIT",
+    "RUN_DATE_TIME",
+    "POLICY_ID",
+    "DATE_BD",
+    "DATE_ED",
+    "DURATION_YEAR",
+    "DURATION_MONTH",
+    "EXPOSURE_FACTOR",
+    "BENEFIT_AMOUNT",
+    "CTR",
+    "LIVES_BD",
+    "LIVES_MD",
+    "LIVES_ED",
+    "DISCOUNT_BD",
+    "DISCOUNT_MD",
+    "DISCOUNT_ED",
+    "PVFB_BD",
+    "PVFB_ED",
+    "DATE_DLR",
+    "DLR",
+]
+
+
 def to_output_format(frame: pd.DataFrame):
     """Return the calculated frame with attributes covering the policy, duration, and DLR.
 
@@ -477,27 +502,5 @@ def to_output_format(frame: pd.DataFrame):
     pd.DataFrame
         The final DataFrame.
     """
-    cols_select = [
-        "MODEL_VERSION",
-        "LAST_COMMIT",
-        "RUN_DATE_TIME",
-        "POLICY_ID",
-        "DATE_BD",
-        "DATE_ED",
-        "DURATION_YEAR",
-        "DURATION_MONTH",
-        "EXPOSURE_FACTOR",
-        "BENEFIT_AMOUNT",
-        "CTR",
-        "LIVES_BD",
-        "LIVES_MD",
-        "LIVES_ED",
-        "DISCOUNT_BD",
-        "DISCOUNT_MD",
-        "DISCOUNT_ED",
-        "PVFB_BD",
-        "PVFB_ED",
-        "DATE_DLR",
-        "DLR",
-    ]
-    return frame[cols_select]
+
+    return frame[OUTPUT_COLS]

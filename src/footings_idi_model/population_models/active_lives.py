@@ -14,7 +14,8 @@ from ..policy_models.alr_deterministic import (
     param_assumption_set,
     param_net_benefit_method,
 )
-from ..functions.shared import dispatch_model_per_record
+from ..functions.active_lives import OUTPUT_COLS
+from .dispatch_model import dispatch_model_per_record
 
 #########################################################################################
 # arguments
@@ -28,9 +29,9 @@ param_extract = define_parameter(
     dtype=pd.DataFrame,
 )
 
-param_policy_model = define_parameter(
-    name="policy_model",
-    description="""The policy model to deploy. Options are :
+param_model_type = define_parameter(
+    name="model_type",
+    description="""The policy model type to deploy. Options are :
 
         * `determinstic`
         * `stochastic`
@@ -83,7 +84,7 @@ def run_policy_model_per_record(
     valuation_dt: pd.Timestamp,
     assumption_set: str,
     net_benefit_method: str,
-    policy_model: str,
+    model_type: str,
 ) -> list:
     """Run each policy in extract through specified policy model.
 
@@ -97,7 +98,7 @@ def run_policy_model_per_record(
         The assumptions set to model.
     net_benefit_method : str
         The net benefit method to use.
-    policy_model : callable
+    model_type : callable
         The policy model to run for each policy in extract.
 
     Raises
@@ -110,17 +111,14 @@ def run_policy_model_per_record(
     list
         A list of all policies that have been ran through the policy model.
     """
-    if policy_model == "deterministic":
-        return dispatch_model_per_record(
-            policy_model=alr_deterministic_model,
-            record_keys=["POLICY_ID"],
-            extract=extract,
-            valuation_dt=valuation_dt,
-            assumption_set=assumption_set,
-            net_benefit_method=net_benefit_method,
-        )
-    elif policy_model == "stochastic":
-        raise NotImplementedError("Stochastic capabilities not implemented yet.")
+    return dispatch_model_per_record(
+        extract=extract,
+        policy_type="active",
+        model_type=model_type,
+        valuation_dt=valuation_dt,
+        assumption_set=assumption_set,
+        net_benefit_method=net_benefit_method,
+    )
 
 
 def create_output(results):
@@ -138,8 +136,6 @@ def create_output(results):
     """
     successes = results[0]
     errors = results[1]
-    time_0 = pd.concat([success.head(1) for success in successes]).reset_index(drop=True)
-    projected = pd.concat(successes)
     time_0_cols = [
         "MODEL_VERSION",
         "LAST_COMMIT",
@@ -147,6 +143,17 @@ def create_output(results):
         "POLICY_ID",
         "ALR",
     ]
+    try:
+        time_0 = pd.concat([success.head(1) for success in successes]).reset_index(
+            drop=True
+        )
+    except ValueError:
+        time_0 = pd.DataFrame(columns=time_0_cols)
+    try:
+        projected = pd.concat(successes)
+    except ValueError:
+        projected = pd.DataFrame(columns=OUTPUT_COLS)
+
     return time_0[time_0_cols], projected, errors
 
 
@@ -172,7 +179,7 @@ steps = [
             "valuation_dt": param_valuation_dt,
             "assumption_set": param_assumption_set,
             "net_benefit_method": param_net_benefit_method,
-            "policy_model": param_policy_model,
+            "model_type": param_model_type,
         },
     },
     {

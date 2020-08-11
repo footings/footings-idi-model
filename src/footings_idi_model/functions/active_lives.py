@@ -648,6 +648,32 @@ def calculate_alr_from_valuation_date(frame: pd.DataFrame, valuation_dt: pd.Time
     return frame
 
 
+OUTPUT_COLS = [
+    "MODEL_VERSION",
+    "LAST_COMMIT",
+    "RUN_DATE_TIME",
+    "POLICY_ID",
+    "DATE_BD",
+    "DATE_ED",
+    "DURATION_YEAR",
+    "LIVES_BD",
+    "LIVES_MD",
+    "LIVES_ED",
+    "DISCOUNT_BD",
+    "DISCOUNT_MD",
+    "DISCOUNT_ED",
+    "BENEFIT_AMOUNT",
+    "INCIDENCE_RATE",
+    "BENEFIT_COST",
+    "PVFB",
+    "PVFNB",
+    "ALR_BD",
+    "ALR_ED",
+    "DATE_ALR",
+    "ALR",
+]
+
+
 def to_output_format(frame: pd.DataFrame):
     """Return the calculated frame with attributes covering the policy, duration, and ALR.
 
@@ -660,28 +686,5 @@ def to_output_format(frame: pd.DataFrame):
     pd.DataFrame
         The final DataFrame. 
     """
-    cols_order = [
-        "MODEL_VERSION",
-        "LAST_COMMIT",
-        "RUN_DATE_TIME",
-        "POLICY_ID",
-        "DATE_BD",
-        "DATE_ED",
-        "DURATION_YEAR",
-        "LIVES_BD",
-        "LIVES_MD",
-        "LIVES_ED",
-        "DISCOUNT_BD",
-        "DISCOUNT_MD",
-        "DISCOUNT_ED",
-        "BENEFIT_AMOUNT",
-        "INCIDENCE_RATE",
-        "BENEFIT_COST",
-        "PVFB",
-        "PVFNB",
-        "ALR_BD",
-        "ALR_ED",
-        "DATE_ALR",
-        "ALR",
-    ]
-    return frame[cols_order]
+
+    return frame[OUTPUT_COLS]

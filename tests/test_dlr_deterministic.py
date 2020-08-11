@@ -3,7 +3,7 @@ import pandas as pd
 from footings_idi_model.policy_models import dlr_deterministic_model
 
 
-def test_create_dlr_frame():
+def test_dlr_deterministic():
     kwargs = {
         "valuation_dt": pd.Timestamp("2005-02-10"),
         "policy_id": "M1",
