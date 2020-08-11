@@ -653,6 +653,7 @@ OUTPUT_COLS = [
     "LAST_COMMIT",
     "RUN_DATE_TIME",
     "POLICY_ID",
+    "COVERAGE_ID",
     "DATE_BD",
     "DATE_ED",
     "DURATION_YEAR",
