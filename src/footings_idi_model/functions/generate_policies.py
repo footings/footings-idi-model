@@ -77,51 +77,6 @@ def sample_from_volume_tbl(frame: pd.DataFrame, volume_tbl: pd.DataFrame, seed: 
     return frame.drop(list(cols_added), axis=1).reset_index(drop=True)
 
 
-def add_benefit_end_id(frame: pd.DataFrame):
-    """Add benefit end id.
-
-    Parameters
-    ----------
-    frame : pd.DataFrame
-
-    Returns
-    -------
-    pd.DataFrame
-        The generated frame with an added column - GROSS_PREMIUM
-    """
-    return frame.assign(BENEFIT_END_ID=pd.NA)
-
-
-def add_gross_premium(frame: pd.DataFrame):
-    """Add gross premium to generated frame.
-
-    Parameters
-    ----------
-    frame : pd.DataFrame
-
-    Returns
-    -------
-    pd.DataFrame
-        The generated frame with an added column - GROSS_PREMIUM
-    """
-    return frame.assign(BENEFIT_AMOUNT=100.0)
-
-
-def add_benefit_amount(frame: pd.DataFrame):
-    """Add benefit amount to generated frame.
-    
-    Parameters
-    ----------
-    frame : pd.DataFrame
-
-    Returns
-    -------
-    pd.DataFrame
-        The generated frame with an added column - BENEFIT_AMOUNT
-    """
-    return frame.assign(BENEFIT_AMOUNT=100.0)
-
-
 @dispatch_function(key_parameters=("extract_type",))
 def add_premium_and_benefits(frame: pd.DataFrame):
     """Add premium and benefit amount to generated frame.
@@ -149,7 +104,9 @@ def _(frame):
 
 @add_premium_and_benefits.register(extract_type="active-lives")
 def _(frame):
-    return frame.assign(BENEFIT_END_ID=pd.NA, GROSS_PREMIUM=150, BENEFIT_AMOUNT=100)
+    return frame.assign(
+        BENEFIT_END_ID="POLICY_END_DT", GROSS_PREMIUM=150.0, BENEFIT_AMOUNT=100.0
+    )
 
 
 def _calculate_age(frame: pd.DataFrame, low: float, high: float):
