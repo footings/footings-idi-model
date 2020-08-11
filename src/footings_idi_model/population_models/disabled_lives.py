@@ -95,8 +95,10 @@ def run_policy_model_per_record(
     list
         A list of all policies that have been ran through the policy model.
     """
+    extract.columns = [col.lower() for col in extract.columns]
+    records = extract.to_dict(orient="records")
     return dispatch_model_per_record(
-        extract=extract,
+        records=records,
         policy_type="disabled",
         model_type=model_type,
         valuation_dt=valuation_dt,
@@ -124,6 +126,7 @@ def create_output(results: list) -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFra
         "LAST_COMMIT",
         "RUN_DATE_TIME",
         "POLICY_ID",
+        "COVERAGE_ID",
         "DLR",
     ]
     try:

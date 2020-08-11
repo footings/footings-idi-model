@@ -1,6 +1,7 @@
 import sys
 from traceback import extract_tb, format_list
 from inspect import getfullargspec
+from typing import Tuple
 
 import pandas as pd
 from dask import compute
@@ -23,9 +24,15 @@ from .dispatch_model import dispatch_model_per_record
 
 # valuation_dt and assumption_set are imported from policy_models
 
-param_extract = define_parameter(
-    name="extract",
-    description="""The active life extract to use. See idi_model/schema/active_life_schema.yaml for specification.""",
+param_base_extract = define_parameter(
+    name="base_extract",
+    description="""The active life base extract to use. See idi_model/schema/extract-active-lives-base.yaml for specification.""",
+    dtype=pd.DataFrame,
+)
+
+param_rider_extract = define_parameter(
+    name="rider_extract",
+    description="""The active life rider extract to use. See idi_model/schema/extract-active-lives-riders.yaml for specification.""",
     dtype=pd.DataFrame,
 )
 
@@ -57,8 +64,9 @@ param_net_benefit_method = define_parameter(
 #########################################################################################
 
 
-def check_extract(
-    extract: pd.DataFrame,  # , valuation_dt: pd.Timestamp, schema: pd.DataFrame
+def check_extracts(
+    base_extract: pd.DataFrame,
+    rider_extract: pd.DataFrame,  # , valuation_dt: pd.Timestamp, schema: pd.DataFrame
 ):
     """Check extract against required schema.
     
@@ -76,11 +84,11 @@ def check_extract(
     pd.DataFrame
         The extract.
     """
-    return extract
+    return base_extract, rider_extract
 
 
 def run_policy_model_per_record(
-    extract: pd.DataFrame,
+    extracts: Tuple[pd.DataFrame, pd.DataFrame],
     valuation_dt: pd.Timestamp,
     assumption_set: str,
     net_benefit_method: str,
@@ -90,8 +98,8 @@ def run_policy_model_per_record(
 
     Parameters
     ----------
-    extract : pd.DataFrame
-        The extract to run.
+    extracts : Tuple[pd.DataFrame, pd.DataFrame]
+        The base extract and rider extracts to run.
     valuation_dt : pd.Timestamp
         The valuation date to be modeled.
     assumption_set : str
@@ -111,8 +119,27 @@ def run_policy_model_per_record(
     list
         A list of all policies that have been ran through the policy model.
     """
+
+    base_extract = extracts[0]
+    base_extract.columns = [col.lower() for col in base_extract.columns]
+
+    rider_extract = extracts[1]
+    rider_extract["PARAMETER"] = rider_extract["PARAMETER"].str.lower()
+    rider_extract.set_index(["POLICY_ID", "COVERAGE_ID"], inplace=True)
+
+    records = []
+    for key, record in base_extract.groupby(["policy_id", "coverage_id"]):
+        try:
+            rider_items = rider_extract.loc[key]
+            rider_records = {
+                k: v for k, v in zip(rider_items["PARAMETER"], rider_items["VALUE"])
+            }
+        except KeyError:
+            rider_records = {}
+        records.append({**record.to_dict(orient="records")[0], **rider_records})
+
     return dispatch_model_per_record(
-        extract=extract,
+        records=records,
         policy_type="active",
         model_type=model_type,
         valuation_dt=valuation_dt,
@@ -141,6 +168,7 @@ def create_output(results):
         "LAST_COMMIT",
         "RUN_DATE_TIME",
         "POLICY_ID",
+        "COVERAGE_ID",
         "ALR",
     ]
     try:
@@ -163,10 +191,11 @@ def create_output(results):
 
 steps = [
     {
-        "name": "check-extract",
-        "function": check_extract,
+        "name": "check-extracts",
+        "function": check_extracts,
         "args": {
-            "extract": param_extract,
+            "base_extract": param_base_extract,
+            "rider_extract": param_rider_extract,
             # "valuation_dt": param_valuation_dt,
             # "schema": "123",
         },
@@ -175,7 +204,7 @@ steps = [
         "name": "run-policy-model-per-record",
         "function": run_policy_model_per_record,
         "args": {
-            "extract": use("check-extract"),
+            "extracts": use("check-extracts"),
             "valuation_dt": param_valuation_dt,
             "assumption_set": param_assumption_set,
             "net_benefit_method": param_net_benefit_method,

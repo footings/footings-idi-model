@@ -55,12 +55,8 @@ def _(**kwargs):
     )
 
 
-def dispatch_model_per_record(
-    extract: pd.DataFrame, policy_type: str, model_type: str, **kwargs
-):
-    extract = extract.copy()
-    extract.columns = [col.lower() for col in extract.columns]
-    records = extract.to_dict(orient="records")
+def dispatch_model_per_record(records: list, policy_type: str, model_type: str, **kwargs):
+
     output = [
         run_model(policy_type=policy_type, model_type=model_type, **record, **kwargs)
         for record in records
