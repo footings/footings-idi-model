@@ -61,8 +61,8 @@ ROP Deterministic
 .. autofunction:: footings_idi_model.functions.active_lives.calculate_incidence_rate
 .. autofunction:: footings_idi_model.functions.active_lives.model_disabled_lives
 .. autofunction:: footings_idi_model.functions.active_lives.calculate_rop_payment_intervals
-.. autofunction:: footings_idi_model.functions.active_lives.calculate_rop_future_claims
-.. autofunction:: footings_idi_model.functions.active_lives.calculate_rop_future_total_claims
+.. autofunction:: footings_idi_model.functions.active_lives.calculate_rop_future_disabled_claims
+.. autofunction:: footings_idi_model.functions.active_lives.calculate_rop_expected_claim_payments
 .. autofunction:: footings_idi_model.functions.active_lives.calculate_rop_benefits
 .. autofunction:: footings_idi_model.functions.active_lives.calculate_pvfb
 .. autofunction:: footings_idi_model.functions.active_lives.calculate_pvnfb
@@ -101,7 +101,7 @@ Active Lives Model
 
 |
 
-.. autofunction:: footings_idi_model.population_models.active_lives.check_extract
+.. autofunction:: footings_idi_model.population_models.active_lives.check_extracts
 .. autofunction:: footings_idi_model.population_models.active_lives.run_policy_model_per_record
 .. autofunction:: footings_idi_model.population_models.active_lives.create_output
 
@@ -121,7 +121,7 @@ Extract Generator
 
 .. autofunction:: footings_idi_model.functions.generate_policies.create_frame
 .. autofunction:: footings_idi_model.functions.generate_policies.sample_from_volume_tbl
-.. autofunction:: footings_idi_model.functions.generate_policies.add_benefit_amount
+.. autofunction:: footings_idi_model.functions.generate_policies.add_premium_and_benefits
 .. autofunction:: footings_idi_model.functions.generate_policies.calculate_ages
 .. autofunction:: footings_idi_model.functions.generate_policies.calculate_dates
 .. autofunction:: footings_idi_model.functions.generate_policies.finalize_extract
