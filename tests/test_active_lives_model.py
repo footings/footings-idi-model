@@ -8,9 +8,7 @@ def test_active_lives_model():
         "./tests/data/active-lives-sample-base.csv",
         parse_dates=["BIRTH_DT", "POLICY_START_DT", "PREMIUM_PAY_TO_DT", "POLICY_END_DT"],
     )
-    rider_extract = pd.read_csv(
-        "./tests/data/active-lives-sample-riders.csv",
-    )
+    rider_extract = pd.read_csv("./tests/data/active-lives-sample-riders.csv",)
     time0, projected, errors = active_lives_model(
         base_extract=base_extract,
         rider_extract=rider_extract,
