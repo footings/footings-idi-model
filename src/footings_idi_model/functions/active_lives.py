@@ -67,6 +67,7 @@ def _calculate_termination_date(
 def create_alr_frame(
     valuation_dt: pd.Timestamp,
     policy_id: str,
+    coverage_id: str,
     gender: str,
     tobacco_usage: str,
     birth_dt: pd.Timestamp,
@@ -106,7 +107,7 @@ def create_alr_frame(
     -------
     pd.DataFrame
         The DataFrame with the above Parameters as well as -
-        - BEGIN_DT - the begining date for a row
+        - BEGIN_DT - the beginning date for a row
         - END_DT - the ending date for a row
         - DURATION_YEAR - the duration year for a row
     """
@@ -125,6 +126,7 @@ def create_alr_frame(
         LAST_COMMIT=GIT_REVISION,
         RUN_DATE_TIME=pd.to_datetime("now"),
         POLICY_ID=policy_id,
+        COVERAGE_ID=coverage_id,
         GENDER=gender,
         TOBACCO_USAGE=tobacco_usage,
         BIRTH_DT=birth_dt,
@@ -201,7 +203,7 @@ def _(frame):
 
 
 def calculate_discount(frame: pd.DataFrame, policy_start_dt: pd.Timestamp):
-    """Calculate begining, middle, and ending discount factor for each duration.
+    """Calculate beginning, middle, and ending discount factor for each duration.
     
     Parameters
     ----------
@@ -233,7 +235,7 @@ _INCIDENCE_DROP_COLUMNS = [
 
 @post_drop_columns(columns=_INCIDENCE_DROP_COLUMNS)
 def calculate_incidence_rate(frame: pd.DataFrame, idi_contract: str):
-    """Calculate indcidence rate for each duration.
+    """Calculate incidence rate for each duration.
     
     Parameters
     ----------
@@ -319,7 +321,7 @@ def model_disabled_lives(
     Returns
     -------
     dict
-        Key = (DURATION_YEAR, DATE_BD, DATE_ED) \n
+        Key = (DURATION_YEAR, DATE_BD, DATE_ED)
         Value = results of dlr_deterministic_model
     """
     frame_use = frame.copy()
@@ -390,59 +392,72 @@ def calculate_rop_payment_intervals(frame: pd.DataFrame, rop_return_frequency: i
     return frame
 
 
-def calculate_rop_future_claims(
+def calculate_rop_future_disabled_claims(
     frame: pd.DataFrame,
     modeled_disabled_lives: dict,
-    rop_return_frequency: int,
-    rop_future_benefit_start_dt: pd.Timestamp,
-):
+    rop_future_claims_start_dt: pd.Timestamp,
+) -> pd.DataFrame:
     """Calculate future claims for return of premium (ROP).
     
+    Using the modeled disabled lives, take each active modeled duration and filter the projected
+    payments to be less than or equal to the last date of the ROP payment interval. The data is 
+    than concatenated into a single DataFrame.
+
     Parameters
     ----------
     modeled_disabled_lives : dict
-    rop_return_frequency : int
-    rop_future_benefit_start_dt : pd.Timestamp
+    rop_future_claims_start_dt : pd.Timestamp
 
     Returns
     -------
-    generator
-        A DataFrame with the future claims from modeled_disabled_lives.
+    pd.DataFrame
+        A DataFrame with the expected disabled payment by disabled and active duration.
     """
     max_payment_dates = (
         frame[["DURATION_YEAR", "PAYMENT_INTERVAL", "DATE_ED"]]
         .groupby(["PAYMENT_INTERVAL"], as_index=False)
-        .transform(max)["DATE_ED"]
+        .transform(max)[["DATE_ED"]]
+        .assign(DURATION_YEAR=frame["DURATION_YEAR"])
+        .set_index(["DURATION_YEAR"])
+        .to_dict()
+        .get("DATE_ED")
     )
 
     cols = ["DATE_BD", "DATE_ED", "LIVES_MD", "BENEFIT_AMOUNT"]
 
     def model_payments(dur_year, dur_start_dt, dur_end_dt, frame):
-        if dur_end_dt >= rop_future_benefit_start_dt:
-            if dur_start_dt >= rop_future_benefit_start_dt:
-                dt_adj = 1.0
+        if dur_end_dt >= rop_future_claims_start_dt:
+            if dur_start_dt >= rop_future_claims_start_dt:
+                exp_factor = 1.0
             else:
-                dt_adj = (rop_future_benefit_start_dt - dur_start_dt) / (
+                exp_factor = (rop_future_claims_start_dt - dur_start_dt) / (
                     dur_end_dt - dur_start_dt
                 )
         else:
-            dt_adj = 0
-        return frame[frame.DATE_ED <= max_payment_dates.get(dur_year - 1)][cols].assign(
-            DURATION_YEAR=dur_year,
-            DT_ADJ=dt_adj,
-            PAYMENT_INTERVAL=int(dur_year / rop_return_frequency),
+            exp_factor = 0
+        return (
+            frame[frame.DATE_ED <= max_payment_dates.get(dur_year)][cols]
+            .rename(columns={"LIVES_MD": "DISABLED_LIVES_MD"})
+            .assign(
+                ACTIVE_DURATION_YEAR=dur_year,
+                EXPOSURE_FACTOR=exp_factor,
+                DISABLED_CLAIM_PAYMENTS=lambda df: df["EXPOSURE_FACTOR"]
+                * df["DISABLED_LIVES_MD"]
+                * df["BENEFIT_AMOUNT"],
+            )
         )
 
-    return (
+    results = [
         model_payments(k[0], k[1], k[2], v) for k, v in modeled_disabled_lives.items()
-    )
+    ]
+    return pd.concat(results)
 
 
-def calculate_rop_future_total_claims(
-    frame: pd.DataFrame, rop_future_claim_payments: dict
-) -> dict:
-    """Calculate total future claims for return of premium (ROP) for each payment interval.
-    
+def calculate_rop_expected_claim_payments(
+    frame: pd.DataFrame, rop_future_claims_frame: pd.DataFrame
+) -> pd.DataFrame:
+    """Calculate the expected claim payments for return of premium (ROP) for each active life duration.
+
     Parameters
     ----------
     frame : pd.DataFrame
@@ -450,72 +465,87 @@ def calculate_rop_future_total_claims(
 
     Returns
     -------
-    dict
-        Key = Payment interval \n
-        Value = Total future claims
+    pd.DataFrame
+        A DataFrame with the expected claim payment by active duration.
     """
-    incidences = frame[["DURATION_YEAR", "INCIDENCE_RATE"]]
+    base_cols = ["PAYMENT_INTERVAL", "DURATION_YEAR", "LIVES_MD", "INCIDENCE_RATE"]
+    base_frame = frame[base_cols]
     claim_payments = (
-        pd.concat(list(rop_future_claim_payments))
-        .merge(incidences, how="left", on="DURATION_YEAR")
-        .assign(
-            FUTURE_BENEFIT_PAYMENTS=lambda df: df["INCIDENCE_RATE"]
-            * df["LIVES_MD"]
-            * df["DT_ADJ"]
-            * df["BENEFIT_AMOUNT"],
-        )
-        .groupby(["PAYMENT_INTERVAL"], as_index=False)["FUTURE_BENEFIT_PAYMENTS"]
+        rop_future_claims_frame.groupby(["ACTIVE_DURATION_YEAR"])[
+            ["DISABLED_CLAIM_PAYMENTS"]
+        ]
         .sum()
-        .set_index(["PAYMENT_INTERVAL"])["FUTURE_BENEFIT_PAYMENTS"]
-        .to_dict()
+        .merge(
+            base_frame,
+            how="right",
+            right_on="DURATION_YEAR",
+            left_on="ACTIVE_DURATION_YEAR",
+        )
+        .assign(
+            EXPECTED_CLAIM_PAYMENTS=lambda df: df["INCIDENCE_RATE"]
+            * df["LIVES_MD"]
+            * df["DISABLED_CLAIM_PAYMENTS"],
+        )
     )
 
-    return claim_payments
+    add_cols = [
+        "DISABLED_CLAIM_PAYMENTS",
+        "EXPECTED_CLAIM_PAYMENTS",
+    ]
+    return claim_payments[base_cols + add_cols]
 
 
 _ROP_DROP_COLS = [
     "PAYMENT_INTERVAL",
-    "FUTURE_CLAIM_PAYMENTS",
+    "EXPECTED_CLAIM_PAYMENTS",
     "CLAIMS_PAID",
     "TOTAL_PREMIUM",
     "RETURN_PERCENTAGE",
 ]
 
 
-@post_drop_columns(columns=_ROP_DROP_COLS)
 def calculate_rop_benefits(
     frame: pd.DataFrame,
     rop_claims_paid: float,
     rop_return_percentage: float,
-    rop_future_total_claims: dict,
-    rop_future_benefit_start_dt: pd.Timestamp,
+    rop_expected_claim_payments: pd.DataFrame,
+    rop_future_claims_start_dt: pd.Timestamp,
 ):
-    """Calculate claim cost for each duration.
+    """Calculate benefit cost for each duration.
     
     Parameters
     ----------
     frame : pd.DataFrame
     rop_claims_paid : float
     rop_return_percentage : float
-    rop_future_total_claims : float
-    rop_future_benefit_start_dt : pd.Timestamp
+    rop_expected_claim_payments: pd.DataFrame
+    rop_future_claims_start_dt : pd.Timestamp
 
     Returns
     -------
     pd.DataFrame
         The passed DataFrame with an additional columns called Benefit_COST.
     """
+    expected_claim_payments = (
+        rop_expected_claim_payments.groupby(["PAYMENT_INTERVAL"])[
+            ["EXPECTED_CLAIM_PAYMENTS"]
+        ]
+        .sum()
+        .to_dict()
+        .get("EXPECTED_CLAIM_PAYMENTS")
+    )
+
     max_int_rows = (
         frame.groupby(["PAYMENT_INTERVAL"])["DURATION_YEAR"].last().sub(1).astype(int)
     )
 
-    frame["FUTURE_CLAIM_PAYMENTS"] = 0
-    frame.loc[max_int_rows, "FUTURE_CLAIM_PAYMENTS"] = frame.loc[max_int_rows][
+    frame["EXPECTED_CLAIM_PAYMENTS"] = 0
+    frame.loc[max_int_rows, "EXPECTED_CLAIM_PAYMENTS"] = frame.loc[max_int_rows][
         "PAYMENT_INTERVAL"
-    ].map(rop_future_total_claims)
+    ].map(expected_claim_payments)
 
-    criteria = (frame["DATE_BD"] <= rop_future_benefit_start_dt) & (
-        rop_future_benefit_start_dt <= frame["DATE_ED"]
+    criteria = (frame["DATE_BD"] <= rop_future_claims_start_dt) & (
+        rop_future_claims_start_dt <= frame["DATE_ED"]
     )
     claim_row = frame[criteria]["PAYMENT_INTERVAL"]
 
@@ -533,7 +563,7 @@ def calculate_rop_benefits(
     frame["BENEFIT_COST"] = (
         (
             frame["TOTAL_PREMIUM"] * frame["RETURN_PERCENTAGE"]
-            - frame["FUTURE_CLAIM_PAYMENTS"]
+            - frame["EXPECTED_CLAIM_PAYMENTS"]
             - frame["CLAIMS_PAID"]
         )
         .clip(lower=0)

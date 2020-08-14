@@ -10,8 +10,8 @@ from ..functions.active_lives import (
     model_disabled_lives,
     calculate_claim_cost,
     calculate_rop_payment_intervals,
-    calculate_rop_future_claims,
-    calculate_rop_future_total_claims,
+    calculate_rop_future_disabled_claims,
+    calculate_rop_expected_claim_payments,
     calculate_rop_benefits,
     calculate_pvfb,
     calculate_pvnfb,
@@ -27,18 +27,6 @@ from ..schemas import (
     active_lives_rider_columns,
 )
 
-__all__ = [
-    "create_alr_frame",
-    "calculate_lives",
-    "calculate_discount",
-    "calculate_incidence_rate",
-    "calculate_claim_cost",
-    "calculate_pvfb",
-    "calculate_pvnfb",
-    "calculate_alr_from_issue",
-    "calculate_alr_from_valuation_date",
-    "to_output_format",
-]
 
 #########################################################################################
 # arguments
@@ -97,6 +85,7 @@ for col, val in zip(active_lives_rider_columns, active_lives_rider_schema["colum
 
 # base params
 param_policy_id = define_parameter(**base_attributes["policy_id"])
+param_coverage_id = define_parameter(**base_attributes["coverage_id"])
 param_gender = define_parameter(**base_attributes["gender"])
 param_birth_dt = define_parameter(**base_attributes["birth_dt"])
 param_tobacco_usage = define_parameter(**base_attributes["tobacco_usage"])
@@ -133,6 +122,7 @@ CREATE_FRAME = {
     "args": {
         "valuation_dt": param_valuation_dt,
         "policy_id": param_policy_id,
+        "coverage_id": param_coverage_id,
         "gender": param_gender,
         "birth_dt": param_birth_dt,
         "tobacco_usage": param_tobacco_usage,
@@ -198,23 +188,22 @@ CALCULATE_ROP_PAYMENT_INTERVALS = {
     },
 }
 
-CALCULATE_ROP_FUTURE_CLAIMS = {
-    "name": "calculate-rop-future-claims",
-    "function": calculate_rop_future_claims,
+CALCULATE_ROP_FUTURE_DISABLED_CLAIMS = {
+    "name": "calculate-rop-future-disabled-claims",
+    "function": calculate_rop_future_disabled_claims,
     "args": {
         "frame": use("calculate-rop-payment-intervals"),
         "modeled_disabled_lives": use("modeled-disabled-lives"),
-        "rop_return_frequency": param_rop_return_frequency,
-        "rop_future_benefit_start_dt": param_rop_future_claims_start_dt,
+        "rop_future_claims_start_dt": param_rop_future_claims_start_dt,
     },
 }
 
-CALCULATE_ROP_FUTURE_TOTAL_CLAIMS = {
-    "name": "calculate-rop-future-total-claims",
-    "function": calculate_rop_future_total_claims,
+CALCULATE_ROP_EXPECTED_CLAIM_PAYMENTS = {
+    "name": "calculate-rop-expected-claim-payments",
+    "function": calculate_rop_expected_claim_payments,
     "args": {
         "frame": use("calculate-rop-payment-intervals"),
-        "rop_future_claim_payments": use("calculate-rop-future-claims"),
+        "rop_future_claims_frame": use("calculate-rop-future-disabled-claims"),
     },
 }
 
@@ -225,8 +214,8 @@ CALCULATE_BENEFIT_COST_ROP = {
         "frame": use("calculate-rop-payment-intervals"),
         "rop_claims_paid": param_rop_claims_paid,
         "rop_return_percentage": param_rop_return_percentage,
-        "rop_future_total_claims": use("calculate-rop-future-total-claims"),
-        "rop_future_benefit_start_dt": param_rop_future_claims_start_dt,
+        "rop_expected_claim_payments": use("calculate-rop-expected-claim-payments"),
+        "rop_future_claims_start_dt": param_rop_future_claims_start_dt,
     },
 }
 
@@ -305,8 +294,8 @@ alr_deterministic_model = build_model(
 #########################################################################################
 
 ROP_NAME = "ROPDeterministicPolicyModel"
-ROP_DESCRIPTION = """A policy model to calculate active life reserves (ALRs) using the 2013 individual
-disability insurance (IDI) valuation standard.
+ROP_DESCRIPTION = """A policy model to calculate active life reserves (ALRs) for return-of-premium (ROP) 
+using the 2013 individual disability insurance (IDI) valuation standard.
 
 The model is configured to use different assumptions sets - stat, gaap, or best-estimate.
 
@@ -323,8 +312,8 @@ ROP_STEPS = [
     CALCULATE_INCIDENCE_RATE,
     MODEL_DISABLED_LIVES,
     CALCULATE_ROP_PAYMENT_INTERVALS,
-    CALCULATE_ROP_FUTURE_CLAIMS,
-    CALCULATE_ROP_FUTURE_TOTAL_CLAIMS,
+    CALCULATE_ROP_FUTURE_DISABLED_CLAIMS,
+    CALCULATE_ROP_EXPECTED_CLAIM_PAYMENTS,
     CALCULATE_BENEFIT_COST_ROP,
     CALCULATE_PVFB,
     CALCULATE_PVFNB,
