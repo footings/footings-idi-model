@@ -126,7 +126,6 @@ def create_output(results: list) -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFra
         "LAST_COMMIT",
         "RUN_DATE_TIME",
         "POLICY_ID",
-        "COVERAGE_ID",
         "DLR",
     ]
     try:
