@@ -15,7 +15,8 @@ contract_file = os.path.join(directory, "2013-idi-contract-modifier.csv")
 @lru_cache(maxsize=2)
 def get_contract_modifier(file):
     """Get contract modifier"""
-    return pd.read_csv(file)
+    dtypes = {"IDI_CONTRACT": "category"}
+    return pd.read_csv(file, dtype=dtypes)
 
 
 # benefit period modifier
@@ -25,7 +26,8 @@ benefit_period_file = os.path.join(directory, "2013-idi-benefit-period-modifier.
 @lru_cache(maxsize=2)
 def get_benefit_period_modifier(file):
     """Get benefit period modifier"""
-    return pd.read_csv(file)
+    dtypes = {"IDI_BENEFIT_PERIOD": "category", "COLA_FLAG": "category"}
+    return pd.read_csv(file, dtype=dtypes)
 
 
 # cause modifier
@@ -35,7 +37,8 @@ diagnosis_file = os.path.join(directory, "2013-idi-diagnosis-modifier.csv")
 @lru_cache(maxsize=2)
 def get_diagnosis_modifier(file):
     """Get diagnosis modifier"""
-    return pd.read_csv(file)
+    dtypes = {"IDI_DIAGNOSIS_GRP": "category"}
+    return pd.read_csv(file, dtype=dtypes)
 
 
 # cause modifier
@@ -45,7 +48,8 @@ cause_file = os.path.join(directory, "2013-idi-cause-modifier.csv")
 @lru_cache(maxsize=2)
 def get_cause_modifier(file):
     """Get cause modifier"""
-    return pd.read_csv(file)
+    dtypes = {"IDI_CONTRACT": "category", "GENDER": "category"}
+    return pd.read_csv(file, dtype=dtypes)
 
 
 # select ctr
@@ -55,7 +59,11 @@ select_file = os.path.join(directory, "2013-idi-base-ctr-select.csv")
 @lru_cache(maxsize=2)
 def get_select_ctr(file):
     """Get select CTR"""
-    dtypes = {"IDI_OCCUPATION_CLASS": object}
+    dtypes = {
+        "IDI_OCCUPATION_CLASS": "category",
+        "GENDER": "category",
+        "PERIOD": "category",
+    }
     return pd.read_csv(file, dtype=dtypes)
 
 
@@ -66,7 +74,8 @@ ultimate_file = os.path.join(directory, "2013-idi-base-ctr-ultimate.csv")
 @lru_cache(maxsize=2)
 def get_ultimate_ctr(file):
     """Get ultimate CTR"""
-    return pd.read_csv(file)
+    dtypes = {"IDI_OCCUPATION_CLASS": "category", "GENDER": "category"}
+    return pd.read_csv(file, dtype=dtypes)
 
 
 # margin

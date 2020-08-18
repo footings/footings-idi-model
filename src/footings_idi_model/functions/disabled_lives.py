@@ -23,6 +23,14 @@ from ..assumptions.stat_gaap.termination import (
     get_margin,
 )
 from ..assumptions.stat_gaap.interest import get_interest_rate
+from ..schemas import (
+    CAT_DIS_GENDER,
+    CAT_DIS_IDI_BENEFIT_PERIOD,
+    CAT_DIS_IDI_CONTRACT,
+    CAT_DIS_IDI_DIAGNOSIS_GRP,
+    CAT_DIS_IDI_MARKET,
+    CAT_DIS_IDI_OCCUPATION,
+)
 from ..__init__ import __version__ as MOD_VERSION
 from ..__init__ import __git_revision__ as GIT_REVISION
 
@@ -37,7 +45,7 @@ def _assign_end_date(frame):
     return frame[frame.index != max(frame.index)]
 
 
-def _calculate_exposure_and_benefit_factor(frame, start_pay_dt, termination_dt):
+def _calculate_exposure_factor(frame, start_pay_dt, termination_dt):
 
     dur_n_days = (frame["DATE_ED"] - frame["DATE_BD"]).dt.days
     dur_n_exposure = (termination_dt - frame["DATE_BD"].iat[-1]).days
@@ -57,10 +65,17 @@ def _calculate_exposure_and_benefit_factor(frame, start_pay_dt, termination_dt):
             lower=0.0, upper=1.0
         ),
     ]
-    frame["BENEFIT_FACTOR"] = np.select(
+    frame["EXPOSURE_FACTOR"] = np.select(
         cond_list, choice_list, default=frame["EXPOSURE_FACTOR"].values
     )
 
+    return frame
+
+
+def _calcualte_durations_weights(frame: pd.DataFrame, valuation_dt: pd.Timestamp):
+    dur_n_days = (frame["DATE_ED"].iat[0] - frame["DATE_BD"].iat[0]).days
+    frame["WT_BD"] = (frame["DATE_ED"].iat[0] - valuation_dt).days / dur_n_days
+    frame["WT_ED"] = 1 - frame["WT_BD"]
     return frame
 
 
@@ -128,28 +143,51 @@ def create_dlr_frame(
         create_frame(start_dt=incurred_dt, end_dt=termination_dt, **fixed)
         .pipe(_assign_end_date)
         .pipe(_filter_frame, valuation_dt)
-        .pipe(_calculate_exposure_and_benefit_factor, start_pay_dt, termination_dt)
+        .pipe(_calculate_exposure_factor, start_pay_dt, termination_dt)
+        .pipe(_calcualte_durations_weights, valuation_dt)
     )
+
+    cat_rng = range(0, frame.shape[0])
+    cola_flag = "N" if cola_percent == 0 else "Y"
 
     # assign main table attirbutes
     frame = frame.assign(
-        MODEL_VERSION=MOD_VERSION,
-        LAST_COMMIT=GIT_REVISION,
+        MODEL_VERSION=pd.Categorical(
+            [MOD_VERSION for _ in cat_rng], categories=[MOD_VERSION]
+        ),
+        LAST_COMMIT=pd.Categorical(
+            [GIT_REVISION for _ in cat_rng], categories=[GIT_REVISION]
+        ),
         RUN_DATE_TIME=pd.to_datetime("now"),
-        POLICY_ID=policy_id,
-        CLAIM_ID=claim_id,
-        GENDER=gender,
+        POLICY_ID=pd.Categorical([policy_id for _ in cat_rng], categories=[policy_id]),
+        CLAIM_ID=pd.Categorical([claim_id for _ in cat_rng], categories=[claim_id]),
+        GENDER=pd.Categorical([gender for _ in cat_rng], categories=CAT_DIS_GENDER),
         AGE_ATTAINED=lambda df: calculate_age(birth_dt, df["DATE_BD"], method="ACB"),
         AGE_INCURRED=lambda df: calculate_age(birth_dt, incurred_dt, method="ACB"),
         ELIMINATION_PERIOD=elimination_period,
-        IDI_CONTRACT=idi_contract,
-        IDI_BENEFIT_PERIOD=idi_benefit_period,
-        IDI_DIAGNOSIS_GRP=idi_diagnosis_grp,
-        IDI_OCCUPATION_CLASS=idi_occupation_class,
-        COLA_FLAG="N" if cola_percent == 0 else "Y",
+        IDI_CONTRACT=pd.Categorical(
+            [idi_contract for _ in cat_rng], categories=CAT_DIS_IDI_CONTRACT
+        ),
+        IDI_BENEFIT_PERIOD=pd.Categorical(
+            [idi_benefit_period for _ in cat_rng], categories=CAT_DIS_IDI_BENEFIT_PERIOD
+        ),
+        IDI_DIAGNOSIS_GRP=pd.Categorical(
+            [idi_diagnosis_grp for _ in cat_rng], categories=CAT_DIS_IDI_DIAGNOSIS_GRP
+        ),
+        IDI_OCCUPATION_CLASS=pd.Categorical(
+            [idi_occupation_class for _ in cat_rng], categories=CAT_DIS_IDI_OCCUPATION
+        ),
+        COLA_FLAG=pd.Categorical([cola_flag for _ in cat_rng], categories=["N", "Y"]),
     )
 
-    start_columns = ["DATE_BD", "DATE_ED", "DURATION_YEAR", "DURATION_MONTH"]
+    start_columns = [
+        "DATE_BD",
+        "DATE_ED",
+        "DURATION_YEAR",
+        "DURATION_MONTH",
+        "WT_BD",
+        "WT_ED",
+    ]
     end_columns = set(frame.columns) - set(start_columns)
     return frame[start_columns + list(end_columns)]
 
@@ -246,6 +284,19 @@ def _calculate_ctr_stat_gaap(frame, mode, apply_margin):
     )
     frame["CTR"] = frame["SELECT_MODIFIED_CTR"].combine_first(
         frame["ULTIMATE_MODIFIED_CTR"]
+    )
+    frame["IDI_DIAGNOSIS_GRP"] = pd.Categorical(
+        frame["IDI_DIAGNOSIS_GRP"], categories=CAT_DIS_IDI_DIAGNOSIS_GRP
+    )
+    frame["GENDER"] = pd.Categorical(frame["GENDER"], categories=CAT_DIS_GENDER)
+    frame["IDI_OCCUPATION_CLASS"] = pd.Categorical(
+        frame["IDI_OCCUPATION_CLASS"], categories=CAT_DIS_IDI_OCCUPATION
+    )
+    frame["IDI_BENEFIT_PERIOD"] = pd.Categorical(
+        frame["IDI_BENEFIT_PERIOD"], categories=CAT_DIS_IDI_BENEFIT_PERIOD
+    )
+    frame["IDI_CONTRACT"] = pd.Categorical(
+        frame["IDI_CONTRACT"], categories=CAT_DIS_IDI_CONTRACT
     )
     return frame
 
@@ -347,7 +398,7 @@ def calculate_cola_adjustment(frame: pd.DataFrame, cola_percent: float):
     return frame
 
 
-@post_drop_columns(columns=["COLA_ADJUSTMENT", "BENEFIT_FACTOR"])
+@post_drop_columns(columns=["COLA_ADJUSTMENT", "EXPOSURE_FACTOR"])
 def calculate_monthly_benefits(frame: pd.DataFrame, benefit_amount: float):
     """Calculate the monthly benefit amount for each duration.
     
@@ -361,7 +412,7 @@ def calculate_monthly_benefits(frame: pd.DataFrame, benefit_amount: float):
     pd.DataFrame
         The passed DataFrame with an additional column called BENEFIT_AMOUNT.
     """
-    prod_cols = ["BENEFIT_FACTOR", "COLA_ADJUSTMENT"]
+    prod_cols = ["EXPOSURE_FACTOR", "COLA_ADJUSTMENT"]
     frame["BENEFIT_AMOUNT"] = frame[prod_cols].prod(axis=1).mul(benefit_amount).round(2)
     return frame
 
@@ -426,7 +477,7 @@ def calculate_pvfb(frame: pd.DataFrame):
     return frame
 
 
-_DLR_DROP_COLUMNS = ["WT_BD", "WT_ED", "PVFB_VD", "DISCOUNT_VD_ADJ", "LIVES_VD_ADJ"]
+_DLR_DROP_COLUMNS = ["PVFB_VD", "DISCOUNT_VD_ADJ", "LIVES_VD_ADJ"]
 
 
 @post_drop_columns(columns=_DLR_DROP_COLUMNS)
@@ -443,9 +494,6 @@ def calculate_dlr(frame: pd.DataFrame, valuation_dt: pd.Timestamp):
     pd.DataFrame
         The frame with additional columns DLR and DATE_CLR.
     """
-    dur_n_days = (frame["DATE_ED"].iat[0] - frame["DATE_BD"].iat[0]).days
-    frame["WT_BD"] = (frame["DATE_ED"].iat[0] - valuation_dt).days / dur_n_days
-    frame["WT_ED"] = 1 - frame["WT_BD"]
     frame["PVFB_VD"] = frame[["WT_BD", "PVFB_BD"]].prod(axis=1) + frame[
         ["WT_ED", "PVFB_ED"]
     ].prod(axis=1)
@@ -474,7 +522,6 @@ OUTPUT_COLS = [
     "DATE_ED",
     "DURATION_YEAR",
     "DURATION_MONTH",
-    "EXPOSURE_FACTOR",
     "BENEFIT_AMOUNT",
     "CTR",
     "LIVES_BD",
