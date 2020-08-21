@@ -660,7 +660,7 @@ def calculate_alr_from_valuation_date(frame: pd.DataFrame, valuation_dt: pd.Time
     -------
         The passed DataFrame with an additional column called ALR.
     """
-    frame = frame[frame["DATE_BD"] >= valuation_dt].copy()
+    frame = frame[frame["DATE_ED"] >= valuation_dt].copy()
     frame["DATE_ALR"] = pd.to_datetime(
         [
             valuation_dt + pd.DateOffset(years=period)

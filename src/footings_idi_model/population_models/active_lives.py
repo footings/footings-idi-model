@@ -124,19 +124,20 @@ def run_policy_model_per_record(
     base_extract.columns = [col.lower() for col in base_extract.columns]
 
     rider_extract = extracts[1]
-    rider_extract["PARAMETER"] = rider_extract["PARAMETER"].str.lower()
     rider_extract.set_index(["POLICY_ID", "COVERAGE_ID"], inplace=True)
 
     records = []
-    for key, record in base_extract.groupby(["policy_id", "coverage_id"]):
+    for base_key, base_record in base_extract.groupby(["policy_id", "coverage_id"]):
         try:
-            rider_items = rider_extract.loc[key]
+            rider_items = rider_extract.loc[base_key]
             rider_records = {
                 k: v for k, v in zip(rider_items["PARAMETER"], rider_items["VALUE"])
             }
         except KeyError:
             rider_records = {}
-        records.append({**record.to_dict(orient="records")[0], **rider_records})
+        records.append(
+            {**base_record.to_dict(orient="records")[0], **rider_records,}
+        )
 
     return dispatch_model_per_record(
         records=records,

@@ -39,12 +39,22 @@ def run_model(coverage_id, policy_type, model_type, **kwargs):
 
 @run_model.register(coverage_id="base", policy_type="active", model_type="deterministic")
 def _(**kwargs):
-    return _run_model(model=alr_deterministic_model, record_keys=["POLICY_ID"], **kwargs)
+    return _run_model(
+        model=alr_deterministic_model,
+        record_keys=["POLICY_ID"],
+        coverage_id="base",
+        **kwargs,
+    )
 
 
 @run_model.register(coverage_id="rop", policy_type="active", model_type="deterministic")
 def _(**kwargs):
-    return _run_model(model=rop_deterministic_model, record_keys=["POLICY_ID"], **kwargs)
+    return _run_model(
+        model=rop_deterministic_model,
+        record_keys=["POLICY_ID"],
+        coverage_id="rop",
+        **kwargs,
+    )
 
 
 @run_model.register(

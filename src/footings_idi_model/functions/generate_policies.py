@@ -99,7 +99,7 @@ def add_premium_and_benefits(frame: pd.DataFrame):
 
 @add_premium_and_benefits.register(extract_type="disabled-lives")
 def _(frame):
-    return frame.assign(BENEFIT_AMOUNT=100)
+    return frame.assign(BENEFIT_AMOUNT=100.0)
 
 
 @add_premium_and_benefits.register(extract_type="active-lives")
@@ -310,4 +310,5 @@ def _(frame: pd.DataFrame):
 
 @finalize_extract.register(extract_type="active-lives")
 def _(frame: pd.DataFrame):
+    frame["COVERAGE_ID"] = "base"
     return frame[active_lives_base_columns]

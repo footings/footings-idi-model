@@ -25,7 +25,7 @@ columns:
   - name: COVERAGE_ID
     dtype: str
     description: The coverage ID of the policy holder.
-    allowed: [BASE, ROP]
+    allowed: [base, rop]
 
   - name: POLICY_START_DT
     dtype: date
