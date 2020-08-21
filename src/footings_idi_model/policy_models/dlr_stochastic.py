@@ -141,7 +141,6 @@ def simulate_benefits(frame: pd.DataFrame, n_simulations: int, seed: int):
         df["PVFB_VD"] = df[cols_bd].prod(axis=1) + df[cols_ed].prod(axis=1)
         df["DLR"] = df[["PVFB_VD", "DISCOUNT_VD_ADJ"]].prod(axis=1).round(2)
 
-        df = df[df.INFORCE > 0]
         return df[["RUN"] + cols + cols_add]
 
     frame = pd.concat([simulate(frame, n) for n in range(1, n_simulations + 1)])

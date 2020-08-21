@@ -11,10 +11,11 @@ from ..policy_models.dlr_deterministic import (
     param_valuation_dt,
     param_assumption_set,
 )
-from ..functions.disabled_lives import OUTPUT_COLS
+from ..policy_models.dlr_stochastic import param_n_simulations, param_seed
+from ..functions.disabled_lives import OUTPUT_COLS as DETERMINSTIC_COLS
+from ..policy_models.dlr_stochastic import OUTPUT_COLS as STOCHASTIC_COLS
 from .dispatch_model import dispatch_model_per_record
 
-__all__ = ["check_extract", "create_output", "run_policy_model_per_record"]
 
 #########################################################################################
 # arguments
@@ -71,6 +72,8 @@ def run_policy_model_per_record(
     valuation_dt: pd.Timestamp,
     assumption_set: str,
     model_type: str,
+    n_simulations: int,
+    seed: int,
 ) -> list:
     """Run each policy in extract through specified policy model.
 
@@ -103,12 +106,16 @@ def run_policy_model_per_record(
         model_type=model_type,
         valuation_dt=valuation_dt,
         assumption_set=assumption_set,
+        n_simulations=n_simulations,
+        seed=seed,
     )
 
 
-def create_output(results: list) -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+def create_output(
+    results: list, model_type: str
+) -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
     """
-    Creates model output.
+    Creates output for deterministic model.
 
     Returns
     -------
@@ -121,15 +128,38 @@ def create_output(results: list) -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFra
     """
     successes = results[0]
     errors = results[1]
-    time_0_cols = [
-        "MODEL_VERSION",
-        "LAST_COMMIT",
-        "RUN_DATE_TIME",
-        "POLICY_ID",
-        "DLR",
-    ]
+
+    if model_type == "deterministic":
+        time_0_cols = [
+            "MODEL_VERSION",
+            "LAST_COMMIT",
+            "RUN_DATE_TIME",
+            "POLICY_ID",
+            "DLR",
+        ]
+        OUTPUT_COLS = DETERMINSTIC_COLS
+
+        def prep_time0(df):
+            return df.head(1)
+
+    elif model_type == "stochastic":
+        time_0_cols = [
+            "MODEL_VERSION",
+            "LAST_COMMIT",
+            "RUN_DATE_TIME",
+            "POLICY_ID",
+            "RUN",
+            "DLR",
+        ]
+        OUTPUT_COLS = STOCHASTIC_COLS
+
+        def prep_time0(df):
+            return df.groupby(["RUN"], as_index=False).head(1)
+
+    else:
+        raise ValueError("model_type not recognized.")
     try:
-        time_0 = pd.concat([success.head(1) for success in successes]).reset_index(
+        time_0 = pd.concat([prep_time0(success) for success in successes]).reset_index(
             drop=True
         )
     except ValueError:
@@ -143,10 +173,11 @@ def create_output(results: list) -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFra
 
 
 #########################################################################################
-# steps
+# model
 #########################################################################################
 
-steps = [
+
+STEPS = [
     {
         "name": "check-extract",
         "function": check_extract,
@@ -164,18 +195,20 @@ steps = [
             "valuation_dt": param_valuation_dt,
             "assumption_set": param_assumption_set,
             "model_type": param_model_type,
+            "n_simulations": param_n_simulations,
+            "seed": param_seed,
         },
     },
     {
         "name": "create-output",
         "function": create_output,
-        "args": {"results": use("run-policy-model-per-record")},
+        "args": {
+            "results": use("run-policy-model-per-record"),
+            "model_type": param_model_type,
+        },
     },
 ]
 
-#########################################################################################
-# models
-#########################################################################################
 
 DESCRIPTION = """A population model to calculate disabled life reserves (DLRs) using the 2013 individual
 disability insurance (IDI) valuation standard.
@@ -187,6 +220,8 @@ The key assumption underlying the model is -
 * `Termination Rates` - the probability of an individual going off claim.
 
 """
+
+
 disabled_lives_model = build_model(
-    name="DisabledLivesModel", description=DESCRIPTION, steps=steps
+    name="DisabledLivesModel", description=DESCRIPTION, steps=STEPS,
 )

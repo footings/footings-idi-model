@@ -10,6 +10,7 @@ from footings import dispatch_function
 
 from ..policy_models import (
     dlr_deterministic_model,
+    dlr_stochastic_model,
     alr_deterministic_model,
     rop_deterministic_model,
 )
@@ -52,6 +53,13 @@ def _(**kwargs):
 def _(**kwargs):
     return _run_model(
         model=dlr_deterministic_model, record_keys=["POLICY_ID", "CLAIM_ID"], **kwargs
+    )
+
+
+@run_model.register(coverage_id="base", policy_type="disabled", model_type="stochastic")
+def _(**kwargs):
+    return _run_model(
+        model=dlr_stochastic_model, record_keys=["POLICY_ID", "CLAIM_ID"], **kwargs
     )
 
 

@@ -7,7 +7,8 @@ directory, filename = os.path.split(__file__)
 
 
 def get_categories(df, name):
-    return df[df["name"] == name]["allowed"].explode().to_list()
+    l = df[df["name"] == name]["allowed"].explode().to_list()
+    return [str(x) for x in l]
 
 
 #########################################################################################
