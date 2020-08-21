@@ -27,6 +27,23 @@ DLR Deterministic
 
 |
 
+DLR Stochastic
+-----------------
+
+.. autofunction:: footings_idi_model.policy_models.dlr_stochastic_model
+
+|
+
+.. autofunction:: footings_idi_model.functions.disabled_lives.create_dlr_frame
+.. autofunction:: footings_idi_model.functions.disabled_lives.calculate_ctr
+.. autofunction:: footings_idi_model.functions.disabled_lives.calculate_cola_adjustment
+.. autofunction:: footings_idi_model.functions.disabled_lives.calculate_monthly_benefits
+.. autofunction:: footings_idi_model.policy_models.dlr_stochastic.calculate_val_date_items
+.. autofunction:: footings_idi_model.policy_models.dlr_stochastic.simulate_benefits
+.. autofunction:: footings_idi_model.policy_models.dlr_stochastic.to_output_format
+
+|
+
 ALR Deterministic
 -----------------
 
