@@ -27,8 +27,7 @@ from ..assumptions.stat_gaap.interest import get_interest_rate
 from ..assumptions.stat_gaap.lapse import get_lapses, get_age_band
 from ..assumptions.mortality import get_mortality
 from ..policy_models import dlr_deterministic_model
-from ..__init__ import __version__ as MOD_VERSION
-from ..__init__ import __git_revision__ as GIT_REVISION
+
 
 
 @lru_cache(maxsize=128)
@@ -122,9 +121,6 @@ def create_alr_frame(
 
     # assign main table attributes
     frame = frame.assign(
-        MODEL_VERSION=MOD_VERSION,
-        LAST_COMMIT=GIT_REVISION,
-        RUN_DATE_TIME=pd.to_datetime("now"),
         POLICY_ID=policy_id,
         COVERAGE_ID=coverage_id,
         GENDER=gender,
@@ -631,7 +627,7 @@ def calculate_pvnfb(frame: pd.DataFrame, net_benefit_method: str):  # premium_pa
     return frame
 
 
-def calculate_alr_from_issue(frame: pd.DataFrame):
+def calculate_alr(frame: pd.DataFrame, valuation_dt: pd.Timestamp):
     """Calculate active life reserves (ALR) from issue.
     
     Parameters
@@ -646,20 +642,7 @@ def calculate_alr_from_issue(frame: pd.DataFrame):
         (frame["PVFB"] - frame["PVFNB"]).div(frame["DISCOUNT_BD"]).clip(lower=0)
     ).round(2)
     frame["ALR_ED"] = frame["ALR_BD"].shift(-1, fill_value=0)
-    return frame
 
-
-def calculate_alr_from_valuation_date(frame: pd.DataFrame, valuation_dt: pd.Timestamp):
-    """Normalize ALR as of valuation date.
-    
-    Parameters
-    ----------
-    frame : pd.DataFrame
-
-    Returns
-    -------
-        The passed DataFrame with an additional column called ALR.
-    """
     frame = frame[frame["DATE_ED"] >= valuation_dt].copy()
     frame["DATE_ALR"] = pd.to_datetime(
         [
@@ -676,46 +659,3 @@ def calculate_alr_from_valuation_date(frame: pd.DataFrame, valuation_dt: pd.Time
     frame["ALR"] = (frame[alr_bd].prod(axis=1) + frame[alr_ed].prod(axis=1)).round(2)
 
     return frame
-
-
-OUTPUT_COLS = [
-    "MODEL_VERSION",
-    "LAST_COMMIT",
-    "RUN_DATE_TIME",
-    "POLICY_ID",
-    "COVERAGE_ID",
-    "DATE_BD",
-    "DATE_ED",
-    "DURATION_YEAR",
-    "LIVES_BD",
-    "LIVES_MD",
-    "LIVES_ED",
-    "DISCOUNT_BD",
-    "DISCOUNT_MD",
-    "DISCOUNT_ED",
-    "BENEFIT_AMOUNT",
-    "INCIDENCE_RATE",
-    "BENEFIT_COST",
-    "PVFB",
-    "PVFNB",
-    "ALR_BD",
-    "ALR_ED",
-    "DATE_ALR",
-    "ALR",
-]
-
-
-def to_output_format(frame: pd.DataFrame):
-    """Return the calculated frame with attributes covering the policy, duration, and ALR.
-
-    Parameters
-    ----------
-    frame : pd.DataFrame
-
-    Returns
-    -------
-    pd.DataFrame
-        The final DataFrame. 
-    """
-
-    return frame[OUTPUT_COLS]
