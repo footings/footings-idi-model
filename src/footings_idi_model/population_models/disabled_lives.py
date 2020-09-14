@@ -10,7 +10,7 @@ from footings import (
     define_modifier,
     define_parameter,
     Footing,
-    link,
+    step,
     model,
 )
 
@@ -32,11 +32,10 @@ from .dispatch_model import dispatch_model_per_record
 STEPS = [
     "_check_extract",
     "_run_policy_model_per_record",
-    "_to_output",
 ]
 
 
-@model(steps=STEPS, auto_doc=True)
+@model(steps=STEPS)
 class DisabledLivesModel(Footing):
     """A population model to calculate disabled life reserves (DLRs) using the 2013 individual
     disability insurance (IDI) valuation standard.
@@ -55,16 +54,16 @@ class DisabledLivesModel(Footing):
     valuation_dt = param_valuation_dt
     n_simulations = param_n_simulations
     seed = param_seed
-    ctr_modifier = ""
-    interst_modifier = ""
-    time_0_output = define_asset()
-    projected_output = define_asset()
-    errors = define_asset()
-    model_version = define_meta(MOD_VERSION)
-    last_commit = define_meta(GIT_REVISION)
-    run_date_time = define_meta(pd.to_datetime("now"))
+    ctr_modifier = define_modifier(default=1.0)
+    interst_modifier = define_modifier(default=1.0)
+    time_0_output = define_asset(dtype=pd.DataFrame)
+    projected_output = define_asset(dtype=pd.DataFrame)
+    errors = define_asset(dtype=pd.DataFrame)
+    model_version = define_meta(meta=MOD_VERSION)
+    last_commit = define_meta(meta=GIT_REVISION)
+    run_date_time = define_meta(meta=pd.to_datetime("now"))
 
-    @link(["frame"])
+    @step(uses=["extract"], impacts=[])
     def _check_extract(self):
         """Check extract against required schema.
 
@@ -75,15 +74,16 @@ class DisabledLivesModel(Footing):
         """
         pass
 
-    @link(
-        [
+    @step(
+        uses=[
             "extract",
             "model_type",
             "assumption_set",
             "n_simulations",
             "seed",
             "valuation_dt",
-        ]
+        ],
+        impacts=["time_0_output", "projected_output", "errors"],
     )
     def _run_policy_model_per_record(self):
         """Run each policy in extract through specified policy model.
@@ -165,18 +165,3 @@ class DisabledLivesModel(Footing):
         self.time_0_output = time_0[time_0_cols]
         self.projected_output = projected
         self.errors = errors
-
-    def _to_output(self) -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
-        """
-        Creates output for deterministic model.
-
-        Returns
-        -------
-        Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]
-            A tuple with three DataFrames : 
-
-            * `[0]` = Time 0 reserve values
-            * `[1]` = Projected reserve values
-            * `[2]` = Any errors produced
-        """
-        return self.time_0_output, self.projected_output, self.errors

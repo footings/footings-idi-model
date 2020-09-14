@@ -13,7 +13,7 @@ from footings import (
     define_modifier,
     define_parameter,
     Footing,
-    link,
+    step,
     model,
 )
 
@@ -35,11 +35,10 @@ from .dispatch_model import dispatch_model_per_record
 STEPS = [
     "_check_extract",
     "_run_policy_model_per_record",
-    "_to_output",
 ]
 
 
-@model(stpes=STEPS, auto_doc=True)
+@model(steps=STEPS)
 class ActiveLivesModel(Footings):
     """Model to calculate active life reserves (ALRs) using the 2013 individual
     disability insurance (IDI) valuation standard.
@@ -58,18 +57,17 @@ class ActiveLivesModel(Footings):
     assumption_set = param_assumption_set
     model_type = param_model_type
     valuation_dt = param_valuation_dt
-    time_0_output = define_asset()
-    projected_output = define_asset()
-    errors = define_asset()
-    lapse_modifier = define_modifier()
-    interest_modifier = define_modifier()
-    incidence_modifier = define_modifier()
-    modeled_disabled_lives = define_asset()
-    model_version = define_meta(MOD_VERSION)
-    last_commit = define_meta(GIT_REVISION)
-    run_date_time = define_meta(pd.to_datetime("now"))
+    time_0_output = define_asset(dtype=pd.DataFrame)
+    projected_output = define_asset(dtype=pd.DataFrame)
+    errors = define_asset(dtype=pd.DataFrame)
+    lapse_modifier = define_modifier(default=1.0)
+    interest_modifier = define_modifier(default=1.0)
+    incidence_modifier = define_modifier(default=1.0)
+    model_version = define_meta(meta=MOD_VERSION)
+    last_commit = define_meta(meta=GIT_REVISION)
+    run_date_time = define_meta(meta=pd.to_datetime("now"))
 
-    @link(["base_extract", "rider_extract"])
+    @step(uses=["extract"], impacts=[])
     def check_extracts(self):
         """Check extract against required schema.
 
@@ -80,14 +78,15 @@ class ActiveLivesModel(Footings):
         """
         pass
 
-    @link(
-        [
+    @step(
+        uses=[
             "base_extract",
             "rider_extract",
             "assumption_set",
             "model_type",
             "net_benefit_method",
-        ]
+        ],
+        impacts=["time_0_output", "projected_output", "errors"],
     )
     def run_policy_model_per_record(self):
         """Run each policy in extract through specified policy model.
@@ -166,18 +165,3 @@ class ActiveLivesModel(Footings):
         self.time_0_output = time_0[time_0_cols]
         self.projected = projected
         self.errors = errors
-
-    def _to_output(self) -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
-        """
-        Creates output for deterministic model.
-
-        Returns
-        -------
-        Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]
-            A tuple with three DataFrames : 
-
-            * `[0]` = Time 0 reserve values
-            * `[1]` = Projected reserve values
-            * `[2]` = Any errors produced
-        """
-        return self.time_0_output, self.projected_output, self.errors

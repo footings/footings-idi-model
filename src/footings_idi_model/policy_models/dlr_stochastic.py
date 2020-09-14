@@ -1,23 +1,25 @@
 from attr import attrs, attrib
 import pandas as pd
 import numpy as np
-
 from footings import (
-    define_parameter,
-    define_modifier,
     define_asset,
+    define_meta,
+    define_modifier,
+    define_parameter,
     Footing,
+    step,
     model,
-    link,
-    use_doc,
 )
 from footings.tools import post_drop_columns
 
-from ..parameters import (
+from ..attributes import (
     param_assumption_set,
     param_n_simulations,
     param_seed,
     param_valuation_dt,
+    meta_model_version,
+    meta_last_commit,
+    meta_run_date_time,
 )
 from ..functions.disabled_lives import (
     create_dlr_frame,
@@ -57,6 +59,7 @@ STEPS = [
     "_create_frame",
     "_calculate_ctr",
     "_calculate_cola_adjustment",
+    "_calculate_monthly_benefits",
     "_calculate_discount",
     "_calculate_val_date_items",
     "_simulate_benefits",
@@ -64,7 +67,7 @@ STEPS = [
 ]
 
 
-@model(steps=STEPS, auto_doc=True)
+@model(steps=STEPS)
 class DLRStochasticPolicyModel(Footing):
     """A policy model to calculate disabled life reserves (DLRs) using the 2013 individual
     disability insurance (IDI) valuation standard.
@@ -96,11 +99,31 @@ class DLRStochasticPolicyModel(Footing):
     )
     cola_percent = define_parameter(**disabled_base_schema["cola_percent"])
     benefit_amount = define_parameter(**disabled_base_schema["benefit_amount"])
-    ctr_modifier = define_modifier()
-    interst_modifier = define_modifier()
-    frame = define_asset()
+    ctr_modifier = define_modifier(default=1.0)
+    interst_modifier = define_modifier(default=1.0)
+    frame = define_asset(dtype=pd.DataFrame)
+    model_version = meta_model_version
+    last_commit = meta_last_commit
+    run_date_time = meta_run_date_time
 
-    @use_doc(create_dlr_frame, link=True)
+    @step(
+        uses=[
+            "valuation_dt",
+            "policy_id",
+            "claim_id",
+            "gender",
+            "birth_dt",
+            "incurred_dt",
+            "termination_dt",
+            "elimination_period",
+            "idi_contract",
+            "idi_benefit_period",
+            "idi_diagnosis_grp",
+            "idi_occupation_class",
+            "cola_percent",
+        ],
+        impacts=["frame"],
+    )
     def _create_frame(self):
         self.frame = create_dlr_frame(
             valuation_dt=self.valuation_dt,
@@ -118,29 +141,29 @@ class DLRStochasticPolicyModel(Footing):
             cola_percent=self.cola_percent,
         )
 
-    @use_doc(calculate_ctr, link=True)
+    @step(uses=["frame", "assumption_set"], impacts=["frame"])
     def _calculate_ctr(self):
         self.frame = calculate_ctr(
             frame=self.frame, assumption_set=self.assumption_set, mode="DLR",
         )
 
-    @use_doc(calculate_cola_adjustment, link=True)
+    @step(uses=["frame", "cola_percent"], impacts=["frame"])
     def _calculate_cola_adjustment(self):
         self.frame = calculate_cola_adjustment(
             frame=self.frame, cola_percent=self.cola_percent
         )
 
-    @use_doc(calculate_monthly_benefits, link=True)
+    @step(uses=["frame", "benefit_amount"], impacts=["frame"])
     def _calculate_monthly_benefits(self):
         self.frame = calculate_monthly_benefits(
             frame=self.frame, benefit_amount=self.benefit_amount
         )
 
-    @use_doc(calculate_discount, link=True)
+    @step(uses=["frame", "incurred_dt"], impacts=["frame"])
     def _calculate_discount(self):
         self.frame = calculate_discount(frame=self.frame, incurred_dt=self.incurred_dt)
 
-    @link(["frame"])
+    @step(uses=["frame"], impacts=["frame"])
     def _calculate_val_date_items(self):
         """Calculate benefits paid using simulated inforce.
 
@@ -158,7 +181,7 @@ class DLRStochasticPolicyModel(Footing):
             for period in range(0, self.frame.shape[0])
         ]
 
-    @link(["frame", "n_simulations", "seed"])
+    @step(uses=["frame", "seed", "n_simulations"], impacts=["frame"])
     def _simulate_benefits(self):
         """Simulate benefits paid for each simulation.
 
@@ -197,12 +220,11 @@ class DLRStochasticPolicyModel(Footing):
 
             return df[["RUN"] + cols + cols_add]
 
-        frame = pd.concat(
+        self.frame = pd.concat(
             [simulate(self.frame, n) for n in range(1, self.n_simulations + 1)]
         )
-        return frame
 
-    @link(["frame"])
+    @step(uses=["frame"], impacts=["frame"])
     def _to_output(self):
         """Create model output.
 

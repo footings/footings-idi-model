@@ -6,9 +6,8 @@ from footings import (
     define_modifier,
     define_parameter,
     Footing,
-    link,
+    step,
     model,
-    use_doc,
 )
 
 from ..functions.active_lives import (
@@ -26,14 +25,15 @@ from ..functions.active_lives import (
     calculate_pvnfb,
     calculate_alr,
 )
-from ..parameters import (
+from ..attributes import (
     param_assumption_set,
     param_net_benefit_method,
     param_valuation_dt,
+    meta_model_version,
+    meta_last_commit,
+    meta_run_date_time,
 )
 from ..schemas import active_base_schema, active_rider_schema
-from ..__init__ import __version__ as MOD_VERSION
-from ..__init__ import __git_revision__ as GIT_REVISION
 
 
 OUTPUT_COLS = [
@@ -72,13 +72,12 @@ BASE_STEPS = [
     "_calculate_benefit_cost",
     "_calculate_pvfb",
     "_calculate_pvfnb",
-    "_calculate_reserve_from_issue",
-    "_calculate_reserve_from_valuation_date",
-    "_to_output_format",
+    "_calculate_alr",
+    "_to_output",
 ]
 
 
-@model(steps=BASE_STEPS, auto_doc=True)
+@model(steps=BASE_STEPS)
 class ALRDeterministicPolicyModel(Footing):
     """ A policy model to calculate active life reserves (ALRs) using the 2013 individual
     disability insurance (IDI) valuation standard.
@@ -94,6 +93,7 @@ class ALRDeterministicPolicyModel(Footing):
 
     valuation_dt = param_valuation_dt
     assumption_set = param_assumption_set
+    net_benefit_method = param_net_benefit_method
     policy_id = define_parameter(**active_base_schema["policy_id"])
     coverage_id = define_parameter(**active_base_schema["coverage_id"])
     gender = define_parameter(**active_base_schema["gender"])
@@ -110,16 +110,38 @@ class ALRDeterministicPolicyModel(Footing):
     cola_percent = define_parameter(**active_base_schema["cola_percent"])
     gross_premium = define_parameter(**active_base_schema["gross_premium"])
     benefit_amount = define_parameter(**active_base_schema["benefit_amount"])
-    lapse_modifier = define_modifier()
-    interest_modifier = define_modifier()
-    incidence_modifier = define_modifier()
-    modeled_disabled_lives = define_asset()
-    frame = define_asset()
-    model_version = define_meta(MOD_VERSION)
-    last_commit = define_meta(GIT_REVISION)
-    run_date_time = define_meta(pd.to_datetime("now"))
+    lapse_modifier = define_modifier(default=1.0)
+    interest_modifier = define_modifier(default=1.0)
+    incidence_modifier = define_modifier(default=1.0)
+    modeled_disabled_lives = define_asset(default=1.0)
+    frame = define_asset(dtype=pd.DataFrame)
+    model_version = meta_model_version
+    last_commit = meta_last_commit
+    run_date_time = meta_run_date_time
 
-    @use_doc(create_alr_frame, link=True)
+    @step(
+        uses=[
+            "frame",
+            "assumption_set",
+            "valuation_dt",
+            "policy_id",
+            "coverage_id",
+            "gender",
+            "tobacco_usage",
+            "birth_dt",
+            "policy_start_dt",
+            "policy_end_dt",
+            "elimination_period",
+            "idi_market",
+            "idi_contract",
+            "idi_benefit_period",
+            "idi_occupation_class",
+            "benefit_end_id",
+            "gross_premium",
+            "benefit_amount",
+        ],
+        impacts=["frame"],
+    )
     def _create_frame(self):
         self.frame = create_alr_frame(
             valuation_dt=self.valuation_dt,
@@ -140,23 +162,33 @@ class ALRDeterministicPolicyModel(Footing):
             benefit_amount=self.benefit_amount,
         )
 
-    @use_doc(calculate_lives, link=True)
+    @step(uses=["frame", "assumption_set"], impacts=["frame"])
     def _calculate_lives(self):
         self.frame = calculate_lives(assumption_set=self.assumption_set, frame=self.frame)
 
-    @use_doc(calculate_discount, link=True)
+    @step(uses=["frame", "policy_start_dt"], impacts=["frame"])
     def _calculate_discount(self):
         self.frame = calculate_discount(
             frame=self.frame, policy_start_dt=self.policy_start_dt
         )
 
-    @use_doc(calculate_incidence_rate, link=True)
+    @step(uses=["frame", "idi_contract"], impacts=["frame"])
     def _calculate_incidence_rate(self):
         self.frame = calculate_incidence_rate(
             frame=self.frame, idi_contract=self.idi_contract
         )
 
-    @use_doc(model_disabled_lives, link=True)
+    @step(
+        uses=[
+            "frame",
+            "assumption_set",
+            "birth_dt",
+            "elimination_period",
+            "idi_benefit_period",
+            "cola_percent",
+        ],
+        impacts=["modeled_disabled_lives"],
+    )
     def _model_disabled_lives(self):
         self.modeled_disabled_lives = model_disabled_lives(
             frame=self.frame,
@@ -167,27 +199,27 @@ class ALRDeterministicPolicyModel(Footing):
             cola_percent=self.cola_percent,
         )
 
-    @use_doc(calculate_claim_cost, link=True)
+    @step(uses=["frame", "modeled_disabled_lives"], impacts=["frame"])
     def _calculate_benefit_cost(self):
         self.frame = calculate_claim_cost(
             frame=self.frame, modeled_disabled_lives=self.modeled_disabled_lives
         )
 
-    @use_doc(calculate_pvfb, link=True)
+    @step(uses=["frame"], impacts=["frame"])
     def _calculate_pvfb(self):
         self.frame = calculate_pvfb(self.frame)
 
-    @use_doc(calculate_pvnfb, link=True)
+    @step(uses=["frame", "net_benefit_method"], impacts=["frame"])
     def _calculate_pvfnb(self):
         self.frame = calculate_pvnfb(
             frame=self.frame, net_benefit_method=self.net_benefit_method
         )
 
-    @use_doc(calculate_alr, link=True)
+    @step(uses=["frame", "valuation_dt"], impacts=["frame"])
     def _calculate_alr(self):
         self.frame = calculate_alr(self.frame, valuation_dt=self.valuation_dt)
 
-    @link(["frame"])
+    @step(uses=["frame"], impacts=["frame"])
     def _to_output(self):
         """Return the calculated frame with attributes covering the policy, duration, and ALR.
 
@@ -202,6 +234,9 @@ class ALRDeterministicPolicyModel(Footing):
         """
 
         return self.frame[OUTPUT_COLS]
+
+    def _return(self):
+        return self.frame
 
 
 ROP_STEPS = [
@@ -222,47 +257,56 @@ ROP_STEPS = [
 ]
 
 
-@model(steps=ROP_STEPS, auto_doc=True)
+# @model(steps=ROP_STEPS)
 class ROPDeterministicPolicyModel(ALRDeterministicPolicyModel):
     """[summary]
     """
 
-    rop_retun_frequency = define_parameter(**active_rider_schema["rop_return_frequency"])
+    rop_return_frequency = define_parameter(**active_rider_schema["rop_return_frequency"])
     rop_return_percentage = define_parameter(
         **active_rider_schema["rop_return_percentage"]
     )
     rop_claims_paid = define_parameter(**active_rider_schema["rop_claims_paid"])
-    rop_future_claim_start_dt = define_parameter(
+    rop_future_claims_start_dt = define_parameter(
         **active_rider_schema["rop_future_claims_start_dt"]
     )
     rop_future_claims_frame = define_asset()
 
-    @use_doc(calculate_rop_payment_intervals, link=True)
+    @step(uses=["frame", "rop_return_frequency"], impacts=["frame"])
     def _calculate_rop_payment_intervals(self):
         self.frame = calculate_rop_payment_intervals(
             frame=self.frame, rop_return_frequency=self.rop_return_frequency
         )
 
-    @use_doc(calculate_rop_future_disabled_claims, link=True)
-    def _calculate_rop_future_disabled_claiims(self):
-        self.rop_future_claiims_frame = calculate_rop_future_disabled_claims(
+    @step(uses=["frame", "modeled_disabled_lives"], impacts=["rop_future_claims_frame"])
+    def _calculate_rop_future_disabled_claims(self):
+        self.rop_future_claims_frame = calculate_rop_future_disabled_claims(
             frame=self.frame,
             modeled_disabled_lives=self.modeled_disabled_lives,
-            rop_future_claims_start_dt=self.rop_future_calims_start_dt,
+            rop_future_claims_start_dt=self.rop_future_claims_start_dt,
         )
 
-    @use_doc(calculate_rop_expected_claim_payments, link=True)
+    @step(uses=["frame", "rop_future_claims_frame"], impacts=["frame"])
     def _calculate_rop_expected_claim_payments(self):
         self.frame = calculate_rop_expected_claim_payments(
             frame=self.frame, rop_future_claims_frame=self.rop_future_claims_frame
         )
 
-    @use_doc(calculate_rop_benefits, link=True)
+    @step(
+        uses=[
+            "frame",
+            "rop_claims_paid",
+            "rop_return_percentage",
+            "rop_expected_claim_payments",
+            "rop_future_claims_start_dt",
+        ],
+        impacts=["frame"],
+    )
     def _calculate_benefit_cost(self):
         self.frame = calculate_rop_benefits(
             frame=self.frame,
             rop_claims_paid=self.rop_claims_paid,
             rop_return_percentage=self.rop_return_percentage,
-            rop_expected_claim_payments=self.rop_expected_claim_payments,
+            rop_expected_claim_payments=self.rop_future_claims_frame,
             rop_future_claims_start_dt=self.rop_future_claims_start_dt,
         )

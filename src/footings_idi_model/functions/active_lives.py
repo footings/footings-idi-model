@@ -26,13 +26,14 @@ from ..assumptions.stat_gaap.incidence import (
 from ..assumptions.stat_gaap.interest import get_interest_rate
 from ..assumptions.stat_gaap.lapse import get_lapses, get_age_band
 from ..assumptions.mortality import get_mortality
-from ..policy_models import dlr_deterministic_model
-
+from ..policy_models import DLRDeterministicPolicyModel
+from ..__init__ import __version__ as MOD_VERSION
+from ..__init__ import __git_revision__ as GIT_REVISION
 
 
 @lru_cache(maxsize=128)
 def dlr_model_cache(**kwargs):
-    return dlr_deterministic_model(**kwargs).run()
+    return DLRDeterministicPolicyModel(**kwargs).run()
 
 
 def _assign_end_date(frame):
@@ -121,6 +122,9 @@ def create_alr_frame(
 
     # assign main table attributes
     frame = frame.assign(
+        MODEL_VERSION=MOD_VERSION,
+        LAST_COMMIT=GIT_REVISION,
+        RUN_DATE_TIME=pd.to_datetime("now"),
         POLICY_ID=policy_id,
         COVERAGE_ID=coverage_id,
         GENDER=gender,
@@ -324,7 +328,7 @@ def model_disabled_lives(
     frame_use.columns = [col.lower() for col in frame_use.columns]
     frame_use["valuation_dt"] = frame_use["date_bd"]
     frame_use["incurred_dt"] = frame_use["date_bd"]
-    kwargs = set(getfullargspec(dlr_deterministic_model).kwonlyargs)
+    kwargs = set(getfullargspec(DLRDeterministicPolicyModel).kwonlyargs)
     cols = set(frame_use.columns)
     keep = kwargs.intersection(cols)
     records = frame_use[keep].to_dict(orient="records")
