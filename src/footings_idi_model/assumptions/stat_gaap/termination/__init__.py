@@ -1,64 +1,50 @@
-"""Prepare termination assumptions"""
-
 import os
 import json
 from functools import lru_cache
 
 import pandas as pd
 
+from footings.tools import once
+
 directory, filename = os.path.split(__file__)
 
-# contract modifier
-contract_file = os.path.join(directory, "2013-idi-contract-modifier.csv")
 
-
-@lru_cache(maxsize=2)
-def get_contract_modifier(file):
+@once
+def get_contract_modifier():
+    file = os.path.join(directory, "2013-idi-contract-modifier.csv")
     """Get contract modifier"""
     dtypes = {"IDI_CONTRACT": "category"}
     return pd.read_csv(file, dtype=dtypes)
 
 
-# benefit period modifier
-benefit_period_file = os.path.join(directory, "2013-idi-benefit-period-modifier.csv")
-
-
-@lru_cache(maxsize=2)
-def get_benefit_period_modifier(file):
+@once
+def get_benefit_period_modifier():
     """Get benefit period modifier"""
+    file = os.path.join(directory, "2013-idi-benefit-period-modifier.csv")
     dtypes = {"IDI_BENEFIT_PERIOD": "category", "COLA_FLAG": "category"}
     return pd.read_csv(file, dtype=dtypes)
 
 
-# cause modifier
-diagnosis_file = os.path.join(directory, "2013-idi-diagnosis-modifier.csv")
-
-
-@lru_cache(maxsize=2)
-def get_diagnosis_modifier(file):
+@once
+def get_diagnosis_modifier():
     """Get diagnosis modifier"""
+    file = os.path.join(directory, "2013-idi-diagnosis-modifier.csv")
     dtypes = {"IDI_DIAGNOSIS_GRP": "category"}
     return pd.read_csv(file, dtype=dtypes)
 
 
-# cause modifier
-cause_file = os.path.join(directory, "2013-idi-cause-modifier.csv")
-
-
-@lru_cache(maxsize=2)
-def get_cause_modifier(file):
+@once
+def get_cause_modifier():
     """Get cause modifier"""
+    file = os.path.join(directory, "2013-idi-cause-modifier.csv")
     dtypes = {"IDI_CONTRACT": "category", "GENDER": "category"}
     return pd.read_csv(file, dtype=dtypes)
 
 
-# select ctr
-select_file = os.path.join(directory, "2013-idi-base-ctr-select.csv")
-
-
-@lru_cache(maxsize=2)
-def get_select_ctr(file):
+@once
+def get_select_ctr():
     """Get select CTR"""
+    file = os.path.join(directory, "2013-idi-base-ctr-select.csv")
     dtypes = {
         "IDI_OCCUPATION_CLASS": "category",
         "GENDER": "category",
@@ -67,28 +53,123 @@ def get_select_ctr(file):
     return pd.read_csv(file, dtype=dtypes)
 
 
-# ultimate ctr
-ultimate_file = os.path.join(directory, "2013-idi-base-ctr-ultimate.csv")
-
-
-@lru_cache(maxsize=2)
-def get_ultimate_ctr(file):
+@once
+def get_ultimate_ctr():
     """Get ultimate CTR"""
+    file = os.path.join(directory, "2013-idi-base-ctr-ultimate.csv")
     dtypes = {"IDI_OCCUPATION_CLASS": "category", "GENDER": "category"}
     return pd.read_csv(file, dtype=dtypes)
 
 
-# margin
-margin_file = os.path.join(directory, "margin.json")
-
-
-@lru_cache(maxsize=2)
-def get_margin(file):
+@once
+def get_margin():
     """Get termination margin"""
+    file = os.path.join(directory, "margin.json")
     with open(file, "r") as f:
-        margin_temp = json.load(f)
-    margin = [1 - margin_temp["DURATION_1"]] + [
-        1 - margin_temp["DURATION_2+"] for i in range(1, 100)
+        margin = json.load(f)
+    return margin
+
+
+def margin_to_table_select(margin):
+    """Transform margin to table"""
+    margin = [1 - margin["DURATION_1"]] + [
+        1 - margin["DURATION_2+"] for i in range(1, 100)
     ]
-    tbl = pd.DataFrame({"DURATION_YEAR": range(1, 101), "MARGIN_ADJUSTMENT": margin})
+    tbl = pd.DataFrame({"DURATION_YEAR": range(1, 101), "MARGIN_SELECT": margin})
     return tbl
+
+
+@lru_cache(maxsize=None)
+def make_select_rates(
+    idi_benefit_period,
+    idi_contract,
+    idi_diagnosis_grp,
+    idi_occupation_class,
+    gender,
+    elimination_period,
+    age_incurred,
+    cola_flag,
+    mode,
+):
+    """ """
+
+    def _make_query(*args):
+        return " and ".join(args)
+
+    def _specify_mode(tbl, mode):
+        cols = ["IDI_CONTRACT", "GENDER", "DURATION_YEAR", "CAUSE_MODIFIER"]
+        if mode == "DLR":
+            tbl["CAUSE_MODIFIER"] = tbl["CAUSE_MODIFIER_DLR"]
+            return tbl[cols]
+        elif mode == "ALR":
+            tbl["CAUSE_MODIFIER"] = tbl["CAUSE_MODIFIER_ALR"]
+            return tbl[cols]
+        else:
+            raise ValueError(f"The mode [{mode}] is not recognized.")
+
+    bp_query = "IDI_BENEFIT_PERIOD==@idi_benefit_period"
+    ct_query = "IDI_CONTRACT==@idi_contract"
+    dg_query = "IDI_DIAGNOSIS_GRP==@idi_diagnosis_grp"
+    oc_query = "IDI_OCCUPATION_CLASS==@idi_occupation_class"
+    gd_query = "GENDER==@gender"
+    ep_query = "ELIMINATION_PERIOD==@elimination_period"
+    ai_query = "AGE_INCURRED==@age_incurred"
+    ca_query = "COLA_FLAG==@cola_flag"
+
+    select_tbl = get_select_ctr().query(
+        _make_query(oc_query, gd_query, ep_query, ai_query)
+    )
+    bp_tbl = get_benefit_period_modifier().query(_make_query(bp_query, ca_query))
+    contract_tbl = get_contract_modifier().query(ct_query)
+    cause_tbl = (
+        get_cause_modifier()
+        .query(_make_query(ct_query, gd_query))
+        .pipe(_specify_mode, mode)
+    )
+    diagnosis_tbl = get_diagnosis_modifier().query(dg_query)
+    margin_tbl = margin_to_table_select(get_margin())
+
+    col_order = [
+        "DURATION_YEAR",
+        "DURATION_MONTH",
+        "PERIOD",
+        "SELECT_CTR",
+        "BENEFIT_PERIOD_MODIFIER",
+        "CONTRACT_MODIFIER",
+        "DIAGNOSIS_MODIFIER",
+        "CAUSE_MODIFIER",
+        "MARGIN_SELECT",
+        "FINAL_SELECT_CTR",
+    ]
+
+    rate_tbl = (
+        select_tbl.merge(bp_tbl, how="left", on=["DURATION_YEAR"])
+        .merge(contract_tbl, how="left", on=["DURATION_YEAR"])
+        .merge(diagnosis_tbl, how="left", on=["DURATION_YEAR"])
+        .merge(cause_tbl, how="left", on=["DURATION_YEAR", "GENDER", "IDI_CONTRACT"])
+        .merge(margin_tbl, how="left", on=["DURATION_YEAR"])
+        .assign(
+            FINAL_SELECT_CTR=lambda df: df.SELECT_CTR
+            * df.BENEFIT_PERIOD_MODIFIER
+            * df.CONTRACT_MODIFIER
+            * df.CAUSE_MODIFIER
+            * df.DIAGNOSIS_MODIFIER
+            * df.MARGIN_SELECT,
+        )
+    )[col_order]
+    return rate_tbl
+
+
+@lru_cache(maxsize=None)
+def make_ultimate_rates(idi_occupation_class, gender):
+    """ """
+    query = "IDI_OCCUPATION_CLASS==@idi_occupation_class and GENDER==@gender"
+    ultimate_tbl = get_ultimate_ctr().query(query)
+    margin = get_margin()["DURATION_2+"]
+    rate_tbl = ultimate_tbl.assign(
+        MARGIN_ULTIMATE=1 - margin,
+        FINAL_ULTIMATE_CTR=lambda df: df.ULTIMATE_CTR * df.MARGIN_ULTIMATE,
+    )
+    return rate_tbl[
+        ["AGE_ATTAINED", "ULTIMATE_CTR", "MARGIN_ULTIMATE", "FINAL_ULTIMATE_CTR"]
+    ]
