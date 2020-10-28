@@ -67,6 +67,7 @@ STEPS = [
     "_calculate_age_incurred",
     "_calculate_start_pay_date",
     "_create_frame",
+    "_calculate_vd_weights",
     "_get_ctr_table",
     "_calculate_lives",
     "_calculate_cola_adjustment",
@@ -146,6 +147,7 @@ class DLRDeterministicPolicyModel(Footing):
             "duration_year": "DURATION_YEAR",
             "duration_month": "DURATION_MONTH",
         }
+
         self.frame = (
             create_frame(start_dt=self.incurred_dt, end_dt=self.termination_dt, **fixed)
             .pipe(_assign_end_date)
@@ -153,20 +155,28 @@ class DLRDeterministicPolicyModel(Footing):
             .assign(
                 AGE_ATTAINED=lambda df: calculate_age(
                     self.birth_dt, df["DATE_BD"], method="ACB"
-                )
-            )[["DATE_BD", "DATE_ED", "AGE_ATTAINED", "DURATION_YEAR", "DURATION_MONTH"]]
+                ),
+            )[["DATE_BD", "DATE_ED", "AGE_ATTAINED", "DURATION_YEAR", "DURATION_MONTH",]]
         )
+
+    @step(uses=["frame", "valuation_dt"], impacts=["frame"])
+    def _calculate_vd_weights(self):
+        dur_n_days = (self.frame["DATE_ED"].iat[0] - self.frame["DATE_BD"].iat[0]).days
+        self.frame["WT_BD"] = (
+            self.frame["DATE_ED"].iat[0] - self.valuation_dt
+        ).days / dur_n_days
+        self.frame["WT_ED"] = 1 - self.frame["WT_BD"]
 
     @step(
         uses=[
-            "IDI_BENEFIT_PERIOD",
-            "IDI_CONTRACT",
-            "IDI_DIAGNOSIS_GRP",
-            "IDI_OCCUPATION_CLASS",
-            "GENDER",
-            "ELIMINATION_PERIOD",
-            "AGE_INCURRED",
-            "COLA_FLAG",
+            "idi_benefit_period",
+            "idi_contract",
+            "idi_diagnosis_grp",
+            "idi_occupation_class",
+            "gender",
+            "elimination_period",
+            "age_incurred",
+            "cola_percent",
         ],
         impacts=["ctr_table"],
     )
@@ -185,6 +195,10 @@ class DLRDeterministicPolicyModel(Footing):
         self.frame["LIVES_ED"] = (1 - self.frame["CTR"]).cumprod()
         self.frame["LIVES_BD"] = self.frame["LIVES_ED"].shift(1, fill_value=1)
         self.frame["LIVES_MD"] = self.frame[["LIVES_BD", "LIVES_ED"]].mean(axis=1)
+        bd_cols, ed_cols = ["WT_BD", "LIVES_BD"], ["WT_ED", "LIVES_ED"]
+        self.frame["LIVES_VD_ADJ"] = 1 / (
+            self.frame[bd_cols].prod(axis=1) + self.frame[ed_cols].prod(axis=1)
+        )
 
     @step(uses=["frame", "cola_percent"], impacts=["frame"])
     def _calculate_cola_adjustment(self):
@@ -240,6 +254,10 @@ class DLRDeterministicPolicyModel(Footing):
             self.frame["DAYS_TO_ED"] / 360
         )
         self.frame["DISCOUNT_BD"] = self.frame["DISCOUNT_ED"].shift(1, fill_value=1)
+        bd_cols, ed_cols = ["WT_BD", "DISCOUNT_BD"], ["WT_ED", "DISCOUNT_ED"]
+        self.frame["DISCOUNT_VD_ADJ"] = 1 / (
+            self.frame[bd_cols].prod(axis=1) + self.frame[ed_cols].prod(axis=1)
+        )
 
     @step(uses=["frame"], impacts=["frame"])
     def _calculate_pvfb(self):
@@ -249,35 +267,14 @@ class DLRDeterministicPolicyModel(Footing):
             self.frame[prod_columns].prod(axis=1).iloc[::-1].cumsum().round(2)
         )
         self.frame["PVFB_ED"] = self.frame["PVFB_BD"].shift(-1, fill_value=0)
+        bd_cols, ed_cols = ["WT_BD", "PVFB_BD"], ["WT_ED", "PVFB_ED"]
+        self.frame["PVFB_VD"] = self.frame[bd_cols].prod(axis=1) + self.frame[
+            ed_cols
+        ].prod(axis=1)
 
     @step(uses=["frame", "valuation_dt"], impacts=["frame"])
     def _calculate_dlr(self):
         """Calculate disabled life reserves (DLR)."""
-        # calculate weights
-        dur_n_days = (self.frame["DATE_ED"].iat[0] - self.frame["DATE_BD"].iat[0]).days
-        self.frame["WT_BD"] = (
-            self.frame["DATE_ED"].iat[0] - self.valuation_dt
-        ).days / dur_n_days
-        self.frame["WT_ED"] = 1 - self.frame["WT_BD"]
-
-        # calculate PVFB as of val date
-        self.frame["PVFB_VD"] = self.frame[["WT_BD", "PVFB_BD"]].prod(
-            axis=1
-        ) + self.frame[["WT_ED", "PVFB_ED"]].prod(axis=1)
-
-        # calculate discount as of val date
-        self.frame["DISCOUNT_VD_ADJ"] = 1 / (
-            self.frame[["WT_BD", "DISCOUNT_BD"]].prod(axis=1)
-            + self.frame[["WT_ED", "DISCOUNT_ED"]].prod(axis=1)
-        )
-
-        # calculate lives as of val date
-        self.frame["LIVES_VD_ADJ"] = 1 / (
-            self.frame[["WT_BD", "LIVES_BD"]].prod(axis=1)
-            + self.frame[["WT_ED", "LIVES_ED"]].prod(axis=1)
-        )
-
-        # calculate projected DLR as of val date
         prod_cols = ["PVFB_VD", "DISCOUNT_VD_ADJ", "LIVES_VD_ADJ"]
         self.frame["DLR"] = self.frame[prod_cols].prod(axis=1).round(2)
         self.frame["DATE_DLR"] = [
