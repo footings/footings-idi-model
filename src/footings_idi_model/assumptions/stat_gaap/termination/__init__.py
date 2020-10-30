@@ -11,8 +11,8 @@ directory, filename = os.path.split(__file__)
 
 @once
 def get_contract_modifier():
-    file = os.path.join(directory, "2013-idi-contract-modifier.csv")
     """Get contract modifier"""
+    file = os.path.join(directory, "2013-idi-contract-modifier.csv")
     dtypes = {"IDI_CONTRACT": "category"}
     return pd.read_csv(file, dtype=dtypes)
 
@@ -173,3 +173,49 @@ def make_ultimate_rates(idi_occupation_class, gender):
     return rate_tbl[
         ["AGE_ATTAINED", "ULTIMATE_CTR", "MARGIN_ULTIMATE", "FINAL_ULTIMATE_CTR"]
     ]
+
+
+def _stat_gaap_ctr(
+    frame,
+    idi_benefit_period,
+    idi_contract,
+    idi_diagnosis_grp,
+    idi_occupation_class,
+    gender,
+    elimination_period,
+    age_incurred,
+    cola_percent,
+    mode,
+):
+    cola_flag = "N" if cola_percent == 0 else "Y"
+    select_tbl = make_select_rates(
+        idi_benefit_period=idi_benefit_period,
+        idi_contract=idi_contract,
+        idi_diagnosis_grp=idi_diagnosis_grp,
+        idi_occupation_class=idi_occupation_class,
+        gender=gender,
+        elimination_period=elimination_period,
+        age_incurred=age_incurred,
+        cola_flag=cola_flag,
+        mode=mode,
+    )
+    ultimate_tbl = make_ultimate_rates(
+        idi_occupation_class=idi_occupation_class, gender=gender
+    )
+    tbl = (
+        frame[["AGE_ATTAINED", "DURATION_YEAR", "DURATION_MONTH"]]
+        .merge(select_tbl, how="left", on=["DURATION_YEAR", "DURATION_MONTH"])
+        .merge(ultimate_tbl, how="left", on=["AGE_ATTAINED"])
+    )
+    condlist = [
+        tbl.PERIOD == "M",
+        tbl.PERIOD == "Y",
+        tbl.PERIOD.isna(),
+    ]
+    choicelist = [
+        tbl.FINAL_SELECT_CTR,
+        1 - (1 - tbl.FINAL_SELECT_CTR) ** (1 / 12),
+        1 - (1 - tbl.FINAL_ULTIMATE_CTR) ** (1 / 12),
+    ]
+    tbl["CTR"] = np.select(condlist, choicelist)
+    return tbl

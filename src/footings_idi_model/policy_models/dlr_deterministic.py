@@ -169,6 +169,8 @@ class DLRDeterministicPolicyModel(Footing):
 
     @step(
         uses=[
+            "assumption_set",
+            "mode",
             "idi_benefit_period",
             "idi_contract",
             "idi_diagnosis_grp",
