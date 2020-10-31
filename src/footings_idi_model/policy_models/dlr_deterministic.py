@@ -111,6 +111,9 @@ class DLRDeterministicPolicyModel(Footing):
     ctr_modifier = define_modifier(
         default=1.0, dtype=float, description="Modifier for CTR."
     )
+    interest_modifier = define_modifier(
+        default=1.0, dtype=float, description="Interest rate modifier."
+    )
     age_incurred = define_placeholder(
         dtype=int, description="The age when the claim was incurred for the claimant."
     )
@@ -186,13 +189,17 @@ class DLRDeterministicPolicyModel(Footing):
         """Get claim termination rate (CTR) table."""
         self.ctr_table = get_ctr_table(
             assumption_set=self.assumption_set, mode=self.mode, model_object=self,
+        ).assign(
+            CTR_MODIFIER=self.ctr_modifier, FINAL_CTR=lambda df: df.CTR * df.CTR_MODIFIER
         )
 
     @step(uses=["frame", "ctr_table"], impacts=["frame"])
     def _calculate_lives(self):
         """Calculate the begining, middle, and ending lives for each duration."""
         self.frame = self.frame.merge(
-            self.ctr_table[["DURATION_MONTH", "CTR"]], how="left", on=["DURATION_MONTH"],
+            self.ctr_table[["DURATION_MONTH", "FINAL_CTR"]],
+            how="left",
+            on=["DURATION_MONTH"],
         )
         self.frame["LIVES_ED"] = (1 - self.frame["CTR"]).cumprod()
         self.frame["LIVES_BD"] = self.frame["LIVES_ED"].shift(1, fill_value=1)
@@ -245,7 +252,7 @@ class DLRDeterministicPolicyModel(Footing):
     @step(uses=["frame", "incurred_dt"], impacts=["frame"])
     def _calculate_discount(self):
         """Calculate begining, middle, and ending discount factor for each duration."""
-        interest_rate = get_interest_rate(self.incurred_dt)
+        interest_rate = get_interest_rate(self.incurred_dt) * self.interest_modifier
         min_duration = self.frame["DURATION_MONTH"].min()
         self.frame["DAYS_TO_ED"] = (self.frame["DURATION_MONTH"] - min_duration + 1) * 30
         self.frame["DAYS_TO_MD"] = self.frame["DAYS_TO_ED"] - 15
