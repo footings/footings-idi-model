@@ -2,6 +2,7 @@ import os
 import json
 from functools import lru_cache
 
+import numpy as np
 import pandas as pd
 
 from footings.tools import once
