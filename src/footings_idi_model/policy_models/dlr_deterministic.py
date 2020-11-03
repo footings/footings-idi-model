@@ -11,7 +11,7 @@ from footings import (
     step,
     model,
 )
-from footings.tools import create_frame, calculate_age
+from footings.model_tools import create_frame, calculate_age
 from ..attributes import (
     param_assumption_set,
     param_n_simulations,
@@ -49,7 +49,7 @@ OUTPUT_COLS = [
     "DURATION_YEAR",
     "DURATION_MONTH",
     "BENEFIT_AMOUNT",
-    "CTR",
+    "FINAL_CTR",
     "LIVES_BD",
     "LIVES_MD",
     "LIVES_ED",
@@ -201,7 +201,7 @@ class DLRDeterministicPolicyModel(Footing):
             how="left",
             on=["DURATION_MONTH"],
         )
-        self.frame["LIVES_ED"] = (1 - self.frame["CTR"]).cumprod()
+        self.frame["LIVES_ED"] = (1 - self.frame["FINAL_CTR"]).cumprod()
         self.frame["LIVES_BD"] = self.frame["LIVES_ED"].shift(1, fill_value=1)
         self.frame["LIVES_MD"] = self.frame[["LIVES_BD", "LIVES_ED"]].mean(axis=1)
         bd_cols, ed_cols = ["WT_BD", "LIVES_BD"], ["WT_ED", "LIVES_ED"]
