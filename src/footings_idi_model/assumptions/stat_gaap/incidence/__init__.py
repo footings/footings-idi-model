@@ -4,7 +4,7 @@ import json
 
 import pandas as pd
 
-from footings.tools import once
+from footings.model_tools import once
 
 directory, filename = os.path.split(__file__)
 

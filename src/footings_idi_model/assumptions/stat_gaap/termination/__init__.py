@@ -5,7 +5,7 @@ from functools import lru_cache
 import numpy as np
 import pandas as pd
 
-from footings.tools import once
+from footings.model_tools import once
 
 directory, filename = os.path.split(__file__)
 
@@ -100,10 +100,10 @@ def make_select_rates(
     def _specify_mode(tbl, mode):
         cols = ["IDI_CONTRACT", "GENDER", "DURATION_YEAR", "CAUSE_MODIFIER"]
         if mode == "DLR":
-            tbl["CAUSE_MODIFIER"] = tbl["CAUSE_MODIFIER_DLR"]
+            tbl = tbl.rename(columns={"CAUSE_MODIFIER_DLR": "CAUSE_MODIFIER"})
             return tbl[cols]
         elif mode == "ALR":
-            tbl["CAUSE_MODIFIER"] = tbl["CAUSE_MODIFIER_ALR"]
+            tbl = tbl.rename(columns={"CAUSE_MODIFIER_ALR": "CAUSE_MODIFIER"})
             return tbl[cols]
         else:
             raise ValueError(f"The mode [{mode}] is not recognized.")

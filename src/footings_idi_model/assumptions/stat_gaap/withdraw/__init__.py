@@ -19,4 +19,4 @@ def get_withdraw_table(table_nm):
     file = WITHDRAW_TABLES.get(table_nm, None)
     if file is None:
         raise ValueError(f"The table [{table_nm}] is not known. See documentation.")
-    return pd.read_csv(file)
+    return pd.read_csv(file).rename(columns={"MORTALITY_RATE": "WITHDRAW_RATE"})
