@@ -35,7 +35,7 @@ extensions = [
     "sphinx.ext.intersphinx",
     "sphinx.ext.autosummary",
     "sphinx.ext.viewcode",
-    "footings.doctools",
+    "footings.doc_tools",
     "nbsphinx",
     "recommonmark",
     "sphinx_rtd_theme",
