@@ -13,15 +13,15 @@ def get_withdraw_rates(assumption_set, table_name):
 
 
 @get_withdraw_rates.register(assumption_set="stat")
-def _(mode, table_name):
+def _(table_name):
     return get_withdraw_table(table_name)
 
 
 @get_withdraw_rates.register(assumption_set="gaap")
-def _(mode, table_name):
+def _(table_name):
     return get_withdraw_table(table_name)
 
 
 @get_withdraw_rates.register(assumption_set="best-estimate")
-def _(mode, table_name):
+def _(table_name):
     raise NotImplementedError("Best estimate assumptions are not implemented yet.")
