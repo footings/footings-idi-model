@@ -123,7 +123,12 @@ class ROPDeterministicPolicyModel(ALRDeterministicPolicyModel):
     @step(uses=["frame", "rop_future_claims_frame"], impacts=["frame"])
     def _calculate_rop_expected_claim_payments(self):
         """Calculate the expected claim payments for return of premium (ROP) for each active life duration."""
-        base_cols = ["PAYMENT_INTERVAL", "DURATION_YEAR", "LIVES_MD", "FINAL_INCIDENCE_RATE"]
+        base_cols = [
+            "PAYMENT_INTERVAL",
+            "DURATION_YEAR",
+            "LIVES_MD",
+            "FINAL_INCIDENCE_RATE",
+        ]
         self.rop_expected_claim_payments = (
             self.rop_future_claims_frame.groupby(["ACTIVE_DURATION_YEAR"])
             .sum(["DISABLED_CLAIM_PAYMENTS"])

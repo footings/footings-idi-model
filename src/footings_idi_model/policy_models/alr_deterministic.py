@@ -255,7 +255,7 @@ class ALRDeterministicPolicyModel(Footing):
             how="left",
             on=["AGE_ATTAINED"],
         )
-    
+
     @step(
         uses=[
             "frame",
