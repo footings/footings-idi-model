@@ -1,167 +1,105 @@
-import sys
-from traceback import extract_tb, format_list
-from inspect import getfullargspec
-from typing import Tuple
-
 import pandas as pd
 from dask import compute
 from dask.delayed import delayed
 
 from footings import (
     define_asset,
-    define_meta,
-    define_modifier,
     define_parameter,
+    define_placeholder,
     Footing,
     step,
     model,
 )
+from footings.model_tools import make_foreach_model, convert_to_records
 
-from ..parameters import (
+from ..attributes import (
     param_assumption_set,
-    param_active_base_extract,
-    param_active_rider_extract,
-    param_model_type,
-    param_n_simulations,
-    param_seed,
     param_valuation_dt,
+    param_net_benefit_method,
+    param_withdraw_table,
+    meta_model_version,
+    meta_last_commit,
+    meta_run_date_time,
+    modifier_interest,
+    modifier_incidence,
+    modifier_withdraw,
 )
-from ..policy_models.alr_deterministic import OUTPUT_COLS
+from ..policy_models.alr_deterministic import (
+    ALRDeterministicPolicyModel,
+    OUTPUT_COLS as DETERMINSTIC_COLS,
+)
+from ..policy_models.dlr_stochastic import OUTPUT_COLS as STOCHASTIC_COLS
+from ..schemas import active_lives_base_columns
 from ..__init__ import __version__ as MOD_VERSION
 from ..__init__ import __git_revision__ as GIT_REVISION
-from .dispatch_model import dispatch_model_per_record
 
 
-STEPS = [
-    "_check_extract",
-    "_run_policy_model_per_record",
-]
+foreach_model = make_foreach_model(
+    ALRDeterministicPolicyModel,
+    iterator_name="records",
+    iterator_params=[col.lower() for col in active_lives_base_columns],
+    iterator_key=("policy_id",),
+    success_wrap=pd.concat,
+    delay=delayed,
+    compute=compute,
+)
 
 
-@model(steps=STEPS)
-class ActiveLivesModel(Footings):
-    """Model to calculate active life reserves (ALRs) using the 2013 individual
-    disability insurance (IDI) valuation standard.
-
-    The model is configured to use different assumptions sets - stat, gaap, or best-estimate.
-
-    The key assumptions underlying the model are -
-
-    * `Incidence Rates` - The probablility of an individual becoming disabled.
-    * `Termination Rates` - Given an an individual is disabled, the probability of an individual going off claim.
-
-    """
-
-    base_extract = param_active_base_extract
-    rider_extract = param_active_rider_extract
-    assumption_set = param_assumption_set
-    model_type = param_model_type
+@model(steps=["_create_records", "_run_foreach", "_get_valuation_dt_values"])
+class ActiveLivesDeterministicModel(Footing):
+    base_extract = define_parameter(
+        dtype=pd.DataFrame, description="The base active lives extract."
+    )
+    rider_extract = define_parameter(
+        dtype=pd.DataFrame, description="The rider active lives extract."
+    )
     valuation_dt = param_valuation_dt
-    time_0_output = define_asset(dtype=pd.DataFrame)
-    projected_output = define_asset(dtype=pd.DataFrame)
-    errors = define_asset(dtype=pd.DataFrame)
-    lapse_modifier = define_modifier(default=1.0)
-    interest_modifier = define_modifier(default=1.0)
-    incidence_modifier = define_modifier(default=1.0)
-    model_version = define_meta(meta=MOD_VERSION)
-    last_commit = define_meta(meta=GIT_REVISION)
-    run_date_time = define_meta(meta=pd.to_datetime("now"))
+    assumption_set = param_assumption_set
+    net_benefit_method = param_net_benefit_method
+    withdraw_table = param_withdraw_table
+    interest_modifier = modifier_interest
+    incidence_modifier = modifier_incidence
+    withdraw_modifier = modifier_withdraw
+    records = define_placeholder(
+        dtype=dict, description="The extract transformed to records."
+    )
+    projected = define_asset(
+        dtype=pd.DataFrame, description="The projected reserves for the policyholders."
+    )
+    time_0 = define_asset(
+        dtype=pd.DataFrame, description="The time 0 reserve for the policyholders"
+    )
+    errors = define_asset(dtype=list, description="Any errors captured.")
 
-    @step(uses=["extract"], impacts=[])
-    def check_extracts(self):
-        """Check extract against required schema.
-
-        Returns
-        -------
-        pd.DataFrame
-            The extract.
-        """
-        pass
+    @step(uses=["extract"], impacts=["records"])
+    def _create_records(self):
+        """Create records from extract."""
+        self.records = convert_to_records(self.base_extract, column_case="lower")
 
     @step(
-        uses=[
-            "base_extract",
-            "rider_extract",
-            "assumption_set",
-            "model_type",
-            "net_benefit_method",
-        ],
-        impacts=["time_0_output", "projected_output", "errors"],
+        uses=["extract", "valuation_dt", "assumptions_set", "withdraw_table"],
+        impacts=["projected", "errors"],
     )
-    def run_policy_model_per_record(self):
-        """Run each policy in extract through specified policy model.
-
-        Parameters
-        ----------
-        extracts : Tuple[pd.DataFrame, pd.DataFrame]
-            The base extract and rider extracts to run.
-        valuation_dt : pd.Timestamp
-            The valuation date to be modeled.
-        assumption_set : str
-            The assumptions set to model.
-        net_benefit_method : str
-            The net benefit method to use.
-        model_type : callable
-            The policy model to run for each policy in extract.
-
-        Raises
-        ------
-        NotImplementedError
-            When specifying policy_model = stochastic
-
-        Returns
-        -------
-        list
-            A list of all policies that have been ran through the policy model.
-        """
-
-        base_extract = self.base_extract.copy()
-        base_extract.columns = [col.lower() for col in base_extract.columns]
-
-        rider_extract = self.rider_extract.copy()
-        rider_extract.set_index(["POLICY_ID", "COVERAGE_ID"], inplace=True)
-
-        records = []
-        for base_key, base_record in base_extract.groupby(["policy_id", "coverage_id"]):
-            try:
-                rider_items = rider_extract.loc[base_key]
-                rider_records = {
-                    k: v for k, v in zip(rider_items["PARAMETER"], rider_items["VALUE"])
-                }
-            except KeyError:
-                rider_records = {}
-            records.append(
-                {**base_record.to_dict(orient="records")[0], **rider_records,}
-            )
-
-        successes, errors = dispatch_model_per_record(
-            records=records,
-            policy_type="active",
-            model_type=self.model_type,
+    def _run_foreach(self):
+        """Run the policy model foreach record."""
+        projected, errors = foreach_model(
+            records=self.records,
             valuation_dt=self.valuation_dt,
+            withdraw_table=self.withdraw_table,
             assumption_set=self.assumption_set,
             net_benefit_method=self.net_benefit_method,
+            interest_modifier=self.interest_modifier,
+            incidence_modifier=self.incidence_modifier,
+            withdraw_modifier=self.withdraw_modifier,
         )
-
-        time_0_cols = [
-            "MODEL_VERSION",
-            "LAST_COMMIT",
-            "RUN_DATE_TIME",
-            "POLICY_ID",
-            "COVERAGE_ID",
-            "ALR",
-        ]
-        try:
-            time_0 = pd.concat([success.head(1) for success in successes]).reset_index(
-                drop=True
-            )
-        except ValueError:
-            time_0 = pd.DataFrame(columns=time_0_cols)
-        try:
-            projected = pd.concat(successes)
-        except ValueError:
-            projected = pd.DataFrame(columns=OUTPUT_COLS)
-
-        self.time_0_output = time_0[time_0_cols]
+        if isinstance(projected, list):
+            projected = pd.DataFrame(columns=DETERMINSTIC_COLS)
         self.projected = projected
         self.errors = errors
+
+    @step(uses=["projected"], impacts=["time_0"])
+    def _get_valuation_dt_values(self):
+        """Get valuation date reserve values."""
+        self.time_0 = self.projected.groupby(
+            ["POLICY_ID", "COVERAGE_ID"], as_index=False
+        ).head(1)

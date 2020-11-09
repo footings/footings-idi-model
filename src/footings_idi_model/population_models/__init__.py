@@ -1,2 +1,2 @@
-from .disabled_lives import DisabledLivesModel
-from .active_lives import ActiveLivesModel
+from .disabled_lives import DisabledLivesDeterministicModel
+from .active_lives import ActiveLivesDeterministicModel
