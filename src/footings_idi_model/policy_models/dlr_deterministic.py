@@ -20,6 +20,8 @@ from ..attributes import (
     meta_model_version,
     meta_last_commit,
     meta_run_date_time,
+    modifier_ctr,
+    modifier_interest,
 )
 from ..assumptions.stat_gaap.interest import get_interest_rate
 from ..assumptions.get_claim_term_rates import get_ctr_table
@@ -108,12 +110,8 @@ class DLRDeterministicPolicyModel(Footing):
     )
     cola_percent = define_parameter(**disabled_base_schema["cola_percent"])
     benefit_amount = define_parameter(**disabled_base_schema["benefit_amount"])
-    ctr_modifier = define_modifier(
-        default=1.0, dtype=float, description="Modifier for CTR."
-    )
-    interest_modifier = define_modifier(
-        default=1.0, dtype=float, description="Interest rate modifier."
-    )
+    ctr_modifier = modifier_ctr
+    interest_modifier = modifier_interest
     age_incurred = define_placeholder(
         dtype=int, description="The age when the claim was incurred for the claimant."
     )

@@ -28,9 +28,13 @@ from ..attributes import (
     param_assumption_set,
     param_net_benefit_method,
     param_valuation_dt,
+    param_withdraw_table,
     meta_model_version,
     meta_last_commit,
     meta_run_date_time,
+    modifier_interest,
+    modifier_incidence,
+    modifier_withdraw,
 )
 from ..schemas import active_base_schema, active_rider_schema
 
@@ -122,20 +126,12 @@ class ALRDeterministicPolicyModel(Footing):
     cola_percent = define_parameter(**active_base_schema["cola_percent"])
     gross_premium = define_parameter(**active_base_schema["gross_premium"])
     benefit_amount = define_parameter(**active_base_schema["benefit_amount"])
-    interest_modifier = define_modifier(
-        default=1.0, description="The interest rate modifier"
-    )
-    withdraw_table = define_parameter(
-        dtype=str, description="Table name for withdraw rates."
-    )
-    withdraw_modifier = define_modifier(
-        default=1.0, description="The withdraw rate modifier"
-    )
+    interest_modifier = modifier_interest
+    incidence_modifier = modifier_incidence
+    withdraw_modifier = modifier_withdraw
+    withdraw_table = param_withdraw_table
     withdraw_rates = define_placeholder(
         dtype=pd.DataFrame, description="The placholder for withdraw rates."
-    )
-    incidence_modifier = define_modifier(
-        default=1.0, description="The incidence rate modifier."
     )
     incidence_rates = define_placeholder(
         dtype=pd.DataFrame, description="The placholder for incidence rates."
