@@ -59,7 +59,7 @@ columns:
   - name: IDI_OCCUPATION_CLASS
     dtype: str
     description: The IDI occupation class of the policy holder.
-    allowed: [1, 2, 3, 4, M]
+    allowed: ["1", "2", "3", "4", "M"]
 
   - name: IDI_CONTRACT
     dtype: str

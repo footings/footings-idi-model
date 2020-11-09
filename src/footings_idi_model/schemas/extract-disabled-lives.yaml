@@ -50,7 +50,7 @@ columns:
   - name: IDI_OCCUPATION_CLASS
     dtype: str
     description: The IDI occupation class of the disabled claimant.
-    allowed: [1, 2, 3, 4, M]
+    allowed: ["1", "2", "3", "4", "M"]
 
   - name: IDI_CONTRACT
     dtype: str
@@ -70,7 +70,7 @@ columns:
   - name: IDI_DIAGNOSIS_GRP
     dtype: str
     description: The IDI diagnosis group of the disabled claimant.
-    allowed: [VERY_LOW, LOW, MID, HIGH, VERY_HGIH, AG]
+    allowed: [VERY_LOW, LOW, MID, HIGH, VERY_HIGH, AG]
 
   - name: COLA_PERCENT
     dtype: float
