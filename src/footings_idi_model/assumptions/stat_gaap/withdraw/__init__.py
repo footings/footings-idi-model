@@ -14,9 +14,9 @@ WITHDRAW_TABLES = {
 
 
 @lru_cache(maxsize=4)
-def get_withdraw_table(table_nm):
+def get_withdraw_table(table_name):
     """Get withdraw rates."""
-    file = WITHDRAW_TABLES.get(table_nm, None)
+    file = WITHDRAW_TABLES.get(table_name, None)
     if file is None:
-        raise ValueError(f"The table [{table_nm}] is not known. See documentation.")
+        raise ValueError(f"The table [{table_name}] is not known. See documentation.")
     return pd.read_csv(file).rename(columns={"MORTALITY_RATE": "WITHDRAW_RATE"})
