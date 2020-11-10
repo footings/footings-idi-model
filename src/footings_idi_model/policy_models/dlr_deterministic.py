@@ -46,6 +46,7 @@ OUTPUT_COLS = [
     "LAST_COMMIT",
     "RUN_DATE_TIME",
     "POLICY_ID",
+    "CLAIM_ID",
     "DATE_BD",
     "DATE_ED",
     "DURATION_YEAR",
@@ -297,6 +298,7 @@ class DLRDeterministicPolicyModel(Footing):
         """Reduce output to only needed columns."""
         self.frame = self.frame.assign(
             POLICY_ID=self.policy_id,
+            CLAIM_ID=self.claim_id,
             RUN_DATE_TIME=self.run_date_time,
             MODEL_VERSION=self.model_version,
             LAST_COMMIT=self.last_commit,

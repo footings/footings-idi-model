@@ -42,7 +42,7 @@ foreach_model = make_foreach_model(
 )
 
 
-@model(steps=["_create_records", "_run_foreach", "_get_time0"])
+@model(steps=["_create_records", "_run_foreach", "_get_valuation_dt_values"])
 class DisabledLivesDeterministicModel(Footing):
     extract = define_parameter(
         dtype=pd.DataFrame, description="The disabled lives extract."
@@ -64,6 +64,7 @@ class DisabledLivesDeterministicModel(Footing):
 
     @step(uses=["extract"], impacts=["records"])
     def _create_records(self):
+        """Create records from extract."""
         self.records = convert_to_records(self.extract, column_case="lower")
 
     @step(
@@ -71,6 +72,7 @@ class DisabledLivesDeterministicModel(Footing):
         impacts=["projected", "errors"],
     )
     def _run_foreach(self):
+        """Run the policy model foreach record."""
         projected, errors = foreach_model(
             records=self.records,
             valuation_dt=self.valuation_dt,
@@ -84,5 +86,8 @@ class DisabledLivesDeterministicModel(Footing):
         self.errors = errors
 
     @step(uses=["projected"], impacts=["time_0"])
-    def _get_time0(self):
-        self.time_0 = self.projected.head(1)
+    def _get_valuation_dt_values(self):
+        """Get valuation date reserve values."""
+        self.time_0 = self.projected.groupby(
+            ["POLICY_ID", "CLAIM_ID"], as_index=False
+        ).head(1)

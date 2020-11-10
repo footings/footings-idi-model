@@ -281,7 +281,7 @@ class ALRDeterministicPolicyModel(Footing):
             dlr_model_cache(
                 assumption_set=self.assumption_set,
                 policy_id=self.policy_id,
-                claim_id=pd.NA,
+                claim_id="NA",
                 gender=self.gender,
                 birth_dt=self.birth_dt,
                 elimination_period=self.elimination_period,

@@ -35,9 +35,9 @@ STEPS = [
     "_get_incidence_rate",
     "_merge_incidence_rate",
     "_model_disabled_lives",
-    "_calculate_rop_payment_intervals",
-    "_calculate_rop_future_disabled_claims",
-    "_calculate_rop_expected_claim_payments",
+    "_calculate_rop_intervals",
+    "_calculate_rop_future_claims",
+    "_calculate_rop_exp_payments",
     "_calculate_benefit_cost",
     "_calculate_discount",
     "_calculate_pvfb",
@@ -63,7 +63,7 @@ class ROPDeterministicPolicyModel(ALRDeterministicPolicyModel):
     rop_expected_claim_payments = define_placeholder()
 
     @step(uses=["frame", "rop_return_frequency"], impacts=["frame"])
-    def _calculate_rop_payment_intervals(self):
+    def _calculate_rop_intervals(self):
         """Calculate return of premium (ROP) payment intervals."""
         self.frame["PAYMENT_INTERVAL"] = (
             self.frame["DURATION_YEAR"]
@@ -73,7 +73,7 @@ class ROPDeterministicPolicyModel(ALRDeterministicPolicyModel):
         )
 
     @step(uses=["frame", "modeled_disabled_lives"], impacts=["rop_future_claims_frame"])
-    def _calculate_rop_future_disabled_claims(self):
+    def _calculate_rop_future_claims(self):
         """Calculate future claims for return of premium (ROP).
         
         Using the modeled disabled lives, take each active modeled duration and filter the projected
@@ -121,7 +121,7 @@ class ROPDeterministicPolicyModel(ALRDeterministicPolicyModel):
         )
 
     @step(uses=["frame", "rop_future_claims_frame"], impacts=["frame"])
-    def _calculate_rop_expected_claim_payments(self):
+    def _calculate_rop_exp_payments(self):
         """Calculate the expected claim payments for return of premium (ROP) for each active life duration."""
         base_cols = [
             "PAYMENT_INTERVAL",
