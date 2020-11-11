@@ -35,10 +35,6 @@ columns:
     dtype: date
     description: The date premium payments end for the policy issued.
 
-  - name: BENEFIT_END_ID
-    dtype: str
-    description: The id that classifies when the benefits end (i.e., a minimum benefit period). 
-
   - name: POLICY_END_DT
     dtype: date
     description: The date coverage ends for the policy issued.
