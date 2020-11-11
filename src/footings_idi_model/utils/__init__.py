@@ -1,1 +1,2 @@
-from .extract_generator import extract_generator_model
+from .generate_disabled_extracts import GenerateDLRExtract
+from .generate_active_extracts import GenerateALRExtracts
