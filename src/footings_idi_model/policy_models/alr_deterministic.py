@@ -205,7 +205,9 @@ class ALRDeterministicPolicyModel(Footing):
     )
     def _get_withdraw_rates(self):
         self.withdraw_rates = get_withdraw_rates(
-            assumption_set=self.assumption_set, table_name=self.withdraw_table
+            assumption_set=self.assumption_set,
+            table_name=self.withdraw_table,
+            gender=self.gender,
         ).assign(
             WITHDRAW_MODIFIER=self.withdraw_modifier,
             FINAL_WITHDRAW_RATE=lambda df: df.WITHDRAW_RATE * df.WITHDRAW_MODIFIER,
