@@ -41,9 +41,8 @@ This model is a prototype model and is provided "AS IS" with no warranty of any 
    self
    installation.rst
    product_info.rst
-   user_guide.ipynb
+   models/index.rst
    assumptions.rst
-   models.rst
    testing.rst
    license.rst
    changelog.md
