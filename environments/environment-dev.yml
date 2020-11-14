@@ -1,0 +1,15 @@
+
+name: footings-idi-model-dev
+channels:
+  - conda-forge
+dependencies:
+  - pip
+  - numpy
+  - pandas
+  - dask
+  - pytest
+  - nbsphinx
+  - recommonmark
+  - sphinx_rtd_theme
+  - pip:
+    - footings>=0.8.0

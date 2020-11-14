@@ -3,11 +3,9 @@ name: footings-idi-model
 channels:
   - conda-forge
 dependencies:
-  - attrs
+  - pip
   - numpy
   - pandas
   - dask
-  - pyyaml
-  - numpydoc
-  - openpyxl
-  - pytest
+  - pip:
+    - footings>=0.8.0
