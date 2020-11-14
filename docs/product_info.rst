@@ -16,7 +16,7 @@ but also may occur with other premium structures.
 is claim termination rates. DLRs are held to recognize the full present value of the expected claim
 payments for claims that have been incurred. 
 
-Both definitions are sourced the December 2015 report - *Individual Disability Valuation Standard* 
+Both definitions are sourced from the December 2015 report - *Individual Disability Valuation Standard* 
 *Report of the Joint American Academy of Actuaries/Society of Actuaries Individual Disability*
 *Tables Work Group*  `(link) <https://www.actuary.org/sites/default/files/files/IDTWG_Table_Report_121915_0.pdf>`_.
 
