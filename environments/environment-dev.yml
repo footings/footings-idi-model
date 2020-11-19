@@ -8,7 +8,7 @@ dependencies:
   - pandas
   - dask
   - pytest
+  - pydata-sphinx-theme
   - pip:
-    - myst_nb
-    - pydata_sphinx_theme
+    - myst-nb
     - footings>=0.8.0
