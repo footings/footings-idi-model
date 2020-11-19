@@ -1,3 +1,5 @@
+import os
+import shutil
 import nox
 
 PYTHON_TEST_VERSIONS = ["3.6", "3.7", "3.8"]
@@ -23,6 +25,11 @@ def tests(session):
 
 @nox.session(python="3.7", venv_backend="none")
 def docs(session):
+    if os.path.exists("./docs/_build/"):
+        shutil.rmtree("./docs/_build/")
+    if os.path.exists("./docs/jupyter_execute/"):
+        shutil.rmtree("./docs/jupyter_execute/")
+    os.mkdir("./docs/_build/")
     session.install(".")
     session.run("sphinx-build", "-E", "-v", "-b", "html", "docs", "docs/_build")
 
