@@ -35,10 +35,9 @@ This model is a prototype model and is provided "AS IS" with no warranty of any 
 
 
 .. toctree::
-   :maxdepth: 3
+   :maxdepth: 2
    :hidden:
 
-   self
    installation.rst
    product_info.rst
    models/index.rst

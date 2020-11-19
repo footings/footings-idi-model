@@ -36,13 +36,19 @@ extensions = [
     "sphinx.ext.autosummary",
     "sphinx.ext.viewcode",
     "footings.doc_tools",
-    "nbsphinx",
-    "recommonmark",
-    "sphinx_rtd_theme",
+    "myst_nb",
 ]
+
+# autosummary settings
 autosummary_generate = True
+autosummary_generate_overwrite = True
 add_module_names = False
 
+# footings.doc_tools settings
+numpydoc_show_class_members = True
+
+# myst_nb settings
+jupyter_execute_notebooks = "cache"
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]
@@ -59,12 +65,15 @@ master_doc = "index"
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-#
-html_theme = "sphinx_rtd_theme"
+html_theme = "pydata_sphinx_theme"
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ["_static"]
 
-source_suffix = {".rst": "restructuredtext", ".txt": "markdown", ".md": "markdown"}
+source_suffix = {
+    '.rst': 'restructuredtext',
+    '.ipynb': 'myst-nb',
+    '.myst': 'myst-nb',
+}

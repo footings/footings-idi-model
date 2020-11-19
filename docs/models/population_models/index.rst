@@ -4,5 +4,5 @@ Population Models
 
 .. toctree::
 
-   disabled_lives_deterministic.ipynb
-   active_lives_deterministic.ipynb
+   disabled_lives_deterministic.md
+   active_lives_deterministic.md
