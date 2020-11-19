@@ -110,3 +110,8 @@ venv.bak/
 # dask
 dask-worker-space/
 mydask.png
+
+# jupyter-book
+.jupyter_cache/
+jupyter_execute/
+docs/models/**/*.xlsx
