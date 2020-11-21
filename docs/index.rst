@@ -6,9 +6,9 @@ Footings IDI Model
 Summary
 -------
 
-This is a python library representing an actuarial model for individual disablity insurance. It was
-built using the `Footings <https://github.com/footings/footings>`_ modeling framework. There are many
-benefits to using the footings framework which are listed on the Footings github site.
+This is a python library representing an actuarial model for individual disablity income insurance.
+It was built using the `Footings <https://github.com/footings/footings>`_ modeling framework. There
+are many benefits to using the footings framework which are listed on the Footings github site.
 
 Features
 --------
@@ -42,6 +42,5 @@ This model is a prototype model and is provided "AS IS" with no warranty of any 
    product_info.rst
    models/index.rst
    assumptions.rst
-   testing.rst
    license.rst
    changelog.md
