@@ -18,7 +18,7 @@ OUTPUT_COLS = [
     "DURATION_YEAR",
     "DURATION_MONTH",
     "BENEFIT_AMOUNT",
-    "CTR",
+    "FINAL_CTR",
     "BENEFITS_PAID",
     "DISCOUNT_VD",
     "PVFB_VD",
