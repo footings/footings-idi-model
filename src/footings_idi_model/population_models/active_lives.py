@@ -3,10 +3,9 @@ from dask import compute
 from dask.delayed import delayed
 
 from footings import (
-    define_asset,
-    define_parameter,
-    define_placeholder,
-    Footing,
+    def_return,
+    def_parameter,
+    def_intermediate,
     step,
     model,
 )
@@ -28,10 +27,7 @@ from ..policy_models.alr_deterministic import (
     ALRDeterministicPolicyModel,
     OUTPUT_COLS as DETERMINSTIC_COLS,
 )
-from ..policy_models.dlr_stochastic import OUTPUT_COLS as STOCHASTIC_COLS
 from ..schemas import active_lives_base_columns
-from ..__init__ import __version__ as MOD_VERSION
-from ..__init__ import __git_revision__ as GIT_REVISION
 
 
 foreach_model = make_foreach_model(
@@ -46,11 +42,11 @@ foreach_model = make_foreach_model(
 
 
 @model(steps=["_create_records", "_run_foreach", "_get_valuation_dt_values"])
-class ActiveLivesDeterministicModel(Footing):
-    base_extract = define_parameter(
+class ActiveLivesDeterministicModel:
+    base_extract = def_parameter(
         dtype=pd.DataFrame, description="The base active lives extract."
     )
-    rider_extract = define_parameter(
+    rider_extract = def_parameter(
         dtype=pd.DataFrame, description="The rider active lives extract."
     )
     valuation_dt = param_valuation_dt
@@ -60,24 +56,27 @@ class ActiveLivesDeterministicModel(Footing):
     interest_modifier = modifier_interest
     incidence_modifier = modifier_incidence
     withdraw_modifier = modifier_withdraw
-    records = define_placeholder(
+    model_version = meta_model_version
+    last_commit = meta_last_commit
+    run_date_time = meta_run_date_time
+    records = def_intermediate(
         dtype=dict, description="The extract transformed to records."
     )
-    projected = define_asset(
+    projected = def_return(
         dtype=pd.DataFrame, description="The projected reserves for the policyholders."
     )
-    time_0 = define_asset(
+    time_0 = def_return(
         dtype=pd.DataFrame, description="The time 0 reserve for the policyholders"
     )
-    errors = define_asset(dtype=list, description="Any errors captured.")
+    errors = def_return(dtype=list, description="Any errors captured.")
 
-    @step(uses=["extract"], impacts=["records"])
+    @step(uses=["base_extract"], impacts=["records"])
     def _create_records(self):
         """Create records from extract."""
         self.records = convert_to_records(self.base_extract, column_case="lower")
 
     @step(
-        uses=["extract", "valuation_dt", "assumptions_set", "withdraw_table"],
+        uses=["records", "valuation_dt", "assumption_set", "withdraw_table"],
         impacts=["projected", "errors"],
     )
     def _run_foreach(self):

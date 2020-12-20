@@ -7,12 +7,11 @@ import numpy as np
 import pandas as pd
 
 from footings import (
-    define_asset,
-    define_meta,
-    define_modifier,
-    define_parameter,
-    define_placeholder,
-    Footing,
+    def_return,
+    def_meta,
+    def_sensitivity,
+    def_parameter,
+    def_intermediate,
     step,
     model,
 )
@@ -41,7 +40,7 @@ from ..schemas import active_base_schema, active_rider_schema
 
 @model(steps=DLR_STEPS)
 class _ActiveLifeDLRModel(DLRDeterministicPolicyModel):
-    mode = define_meta(meta="ALR", dtype=str, description="The model mode which is ALR.")
+    mode = def_meta(meta="ALR", dtype=str, description="The model mode which is ALR.")
 
 
 def _assign_end_date(frame):
@@ -95,7 +94,7 @@ STEPS = [
 
 
 @model(steps=STEPS)
-class ALRDeterministicPolicyModel(Footing):
+class ALRDeterministicPolicyModel:
     """A policy model to calculate active life reserves (ALRs) using the 2013 individual
     disability insurance (IDI) valuation standard.
 
@@ -111,35 +110,35 @@ class ALRDeterministicPolicyModel(Footing):
     valuation_dt = param_valuation_dt
     assumption_set = param_assumption_set
     net_benefit_method = param_net_benefit_method
-    policy_id = define_parameter(**active_base_schema["policy_id"])
-    coverage_id = define_parameter(**active_base_schema["coverage_id"])
-    gender = define_parameter(**active_base_schema["gender"])
-    birth_dt = define_parameter(**active_base_schema["birth_dt"])
-    tobacco_usage = define_parameter(**active_base_schema["tobacco_usage"])
-    policy_start_dt = define_parameter(**active_base_schema["policy_start_dt"])
-    policy_end_dt = define_parameter(**active_base_schema["policy_end_dt"])
-    elimination_period = define_parameter(**active_base_schema["elimination_period"])
-    idi_market = define_parameter(**active_base_schema["idi_market"])
-    idi_contract = define_parameter(**active_base_schema["idi_contract"])
-    idi_benefit_period = define_parameter(**active_base_schema["idi_benefit_period"])
-    idi_occupation_class = define_parameter(**active_base_schema["idi_occupation_class"])
-    cola_percent = define_parameter(**active_base_schema["cola_percent"])
-    gross_premium = define_parameter(**active_base_schema["gross_premium"])
-    benefit_amount = define_parameter(**active_base_schema["benefit_amount"])
+    policy_id = def_parameter(**active_base_schema["policy_id"])
+    coverage_id = def_parameter(**active_base_schema["coverage_id"])
+    gender = def_parameter(**active_base_schema["gender"])
+    birth_dt = def_parameter(**active_base_schema["birth_dt"])
+    tobacco_usage = def_parameter(**active_base_schema["tobacco_usage"])
+    policy_start_dt = def_parameter(**active_base_schema["policy_start_dt"])
+    policy_end_dt = def_parameter(**active_base_schema["policy_end_dt"])
+    elimination_period = def_parameter(**active_base_schema["elimination_period"])
+    idi_market = def_parameter(**active_base_schema["idi_market"])
+    idi_contract = def_parameter(**active_base_schema["idi_contract"])
+    idi_benefit_period = def_parameter(**active_base_schema["idi_benefit_period"])
+    idi_occupation_class = def_parameter(**active_base_schema["idi_occupation_class"])
+    cola_percent = def_parameter(**active_base_schema["cola_percent"])
+    gross_premium = def_parameter(**active_base_schema["gross_premium"])
+    benefit_amount = def_parameter(**active_base_schema["benefit_amount"])
     interest_modifier = modifier_interest
     incidence_modifier = modifier_incidence
     withdraw_modifier = modifier_withdraw
     withdraw_table = param_withdraw_table
-    withdraw_rates = define_placeholder(
+    withdraw_rates = def_intermediate(
         dtype=pd.DataFrame, description="The placholder for withdraw rates."
     )
-    incidence_rates = define_placeholder(
+    incidence_rates = def_intermediate(
         dtype=pd.DataFrame, description="The placholder for incidence rates."
     )
-    modeled_disabled_lives = define_placeholder(
+    modeled_disabled_lives = def_intermediate(
         dtype=pd.DataFrame, description="The placholder for modeled disabled lives."
     )
-    frame = define_asset(
+    frame = def_return(
         dtype=pd.DataFrame, description="The reserve projection for an active life."
     )
     model_version = meta_model_version
@@ -200,7 +199,7 @@ class ALRDeterministicPolicyModel(Footing):
             )
 
     @step(
-        uses=["assumptions_set", "withdraw_table", "withdraw_modifier"],
+        uses=["assumption_set", "withdraw_table", "withdraw_modifier"],
         impacts=["withdraw_rates"],
     )
     def _get_withdraw_rates(self):

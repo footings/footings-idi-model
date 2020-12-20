@@ -1,17 +1,14 @@
 from copy import copy
 import datetime
-import random
 
 import numpy as np
 import pandas as pd
 
 from footings import (
     model,
-    Footing,
-    define_parameter,
-    define_placeholder,
-    define_asset,
-    define_meta,
+    def_parameter,
+    def_return,
+    def_meta,
     step,
 )
 
@@ -24,7 +21,7 @@ from ..attributes import (
     meta_model_version,
     meta_last_commit,
 )
-from ..schemas import active_lives_base_columns, active_lives_rider_columns
+from ..schemas import active_lives_base_columns
 
 
 def _calculate_age(frame: pd.DataFrame, low: float, high: float):
@@ -54,13 +51,13 @@ STEPS = [
 
 
 @model(steps=STEPS)
-class GenerateALRExtracts(Footing):
+class GenerateALRExtracts:
     """Generate ALR Extracts"""
 
     n = param_n_simulations
     volume_tbl = param_volume_tbl
     as_of_dt = param_as_of_dt
-    rop_rider_percent = define_parameter(
+    rop_rider_percent = def_parameter(
         dtype=float,
         min_val=0,
         max_val=1,
@@ -70,23 +67,23 @@ class GenerateALRExtracts(Footing):
     run_date_time = meta_run_date_time
     model_version = meta_model_version
     last_commit = meta_last_commit
-    rop_return_freq_options = define_meta(
+    rop_return_freq_options = def_meta(
         meta=[7, 10],
         dtype=list,
         description="The return frequency options to be selected at random.",
     )
-    rop_return_per_options = define_meta(
+    rop_return_per_options = def_meta(
         meta=[0.5, 0.8],
         dtype=list,
         description="The return percentage options to be selected at random.",
     )
-    rop_claims_paid_options = define_meta(
+    rop_claims_paid_options = def_meta(
         meta=0, dtype=int, description="The claims paid to date."
     )
-    base_frame = define_asset(
+    base_frame = def_return(
         dtype=pd.DataFrame, description="The base extract that is being generated."
     )
-    rider_frame = define_asset(
+    rider_frame = def_return(
         dtype=pd.DataFrame, description="The rider extract that is being generated."
     )
 

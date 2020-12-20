@@ -4,7 +4,7 @@ import pytest
 import pandas as pd
 
 from footings_idi_model.population_models import DisabledLivesDeterministicModel
-from footings.test_tools import assert_footings_audit_xlsx_equal
+from footings.test_tools import assert_footings_files_equal
 
 extract_file = os.path.join("tests", "population_models", "disabled-lives-sample.csv")
 extract = pd.read_csv(
@@ -47,4 +47,4 @@ def test_disabled_lives_deterministic_model(case, tempdir):
         {"worksheet": "_get_valuation_dt_values", "column_name": "MODEL_VERSION",},
         {"worksheet": "_get_valuation_dt_values", "column_name": "LAST_COMMIT",},
     ]
-    assert_footings_audit_xlsx_equal(test_file, expected_file, exclude=exlcude_list)
+    assert_footings_files_equal(test_file, expected_file, exclude=exlcude_list)

@@ -73,7 +73,7 @@ html_theme = "pydata_sphinx_theme"
 html_static_path = ["_static"]
 
 source_suffix = {
-    '.rst': 'restructuredtext',
-    '.ipynb': 'myst-nb',
-    '.myst': 'myst-nb',
+    ".rst": "restructuredtext",
+    ".ipynb": "myst-nb",
+    ".myst": "myst-nb",
 }

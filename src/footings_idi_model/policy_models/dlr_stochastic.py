@@ -61,7 +61,9 @@ class DLRStochasticPolicyModel(DLRDeterministicPolicyModel):
     @step(uses=["frame", "ctr_table"], impacts=["frame"])
     def _merge_ctr(self):
         self.frame = self.frame.merge(
-            self.ctr_table[["DURATION_MONTH", "FINAL_CTR"]], how="left", on=["DURATION_MONTH"],
+            self.ctr_table[["DURATION_MONTH", "FINAL_CTR"]],
+            how="left",
+            on=["DURATION_MONTH"],
         )
 
     @step(uses=["frame", "seed", "n_simulations"], impacts=["frame"])
@@ -82,7 +84,9 @@ class DLRStochasticPolicyModel(DLRDeterministicPolicyModel):
             df = df.copy()
             df["RUN"] = run
             df["RANDOM"] = np.random.uniform(size=rows)
-            df["TEMP_INFORCE"] = np.select([df["FINAL_CTR"] > df["RANDOM"]], [0], default=1.0)
+            df["TEMP_INFORCE"] = np.select(
+                [df["FINAL_CTR"] > df["RANDOM"]], [0], default=1.0
+            )
             df["TEMP_CUM"] = df["TEMP_INFORCE"].cumsum()
             df.loc[(df["TEMP_CUM"] != df.index.values + 1), "TEMP_INFORCE"] = 0.0
             condlist = [(df["TEMP_INFORCE"].shift(1) == 1) & (df["TEMP_INFORCE"] == 0)]

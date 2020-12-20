@@ -2,17 +2,16 @@ import numpy as np
 import pandas as pd
 
 from footings import (
-    define_asset,
-    define_meta,
-    define_modifier,
-    define_parameter,
-    define_placeholder,
-    Footing,
+    def_return,
+    def_meta,
+    def_sensitivity,
+    def_parameter,
+    def_intermediate,
     step,
     model,
 )
 from footings.model_tools import create_frame, calculate_age
-from ..attributes import (
+from footings_idi_model.attributes import (
     param_assumption_set,
     param_n_simulations,
     param_seed,
@@ -23,9 +22,9 @@ from ..attributes import (
     modifier_ctr,
     modifier_interest,
 )
-from ..assumptions.stat_gaap.interest import get_interest_rate
-from ..assumptions.get_claim_term_rates import get_ctr_table
-from ..schemas import disabled_base_schema
+from footings_idi_model.assumptions.stat_gaap.interest import get_interest_rate
+from footings_idi_model.assumptions.get_claim_term_rates import get_ctr_table
+from footings_idi_model.schemas import disabled_base_schema
 
 #########################################################################################
 # Create frame
@@ -83,7 +82,7 @@ STEPS = [
 
 
 @model(steps=STEPS)
-class DLRDeterministicPolicyModel(Footing):
+class DLRDeterministicPolicyModel:
     """A policy model to calculate disabled life reserves (DLRs) using the 2013 individual disability insurance (IDI) valuation standard. \n
     
     The model is configured to use different assumptions sets - stat, gaap, or best-estimate. \n
@@ -96,32 +95,30 @@ class DLRDeterministicPolicyModel(Footing):
 
     valuation_dt = param_valuation_dt
     assumption_set = param_assumption_set
-    policy_id = define_parameter(**disabled_base_schema["policy_id"])
-    claim_id = define_parameter(**disabled_base_schema["claim_id"])
-    gender = define_parameter(**disabled_base_schema["gender"])
-    birth_dt = define_parameter(**disabled_base_schema["birth_dt"])
-    incurred_dt = define_parameter(**disabled_base_schema["incurred_dt"])
-    termination_dt = define_parameter(**disabled_base_schema["termination_dt"])
-    elimination_period = define_parameter(**disabled_base_schema["elimination_period"])
-    idi_contract = define_parameter(**disabled_base_schema["idi_contract"])
-    idi_benefit_period = define_parameter(**disabled_base_schema["idi_benefit_period"])
-    idi_diagnosis_grp = define_parameter(**disabled_base_schema["idi_diagnosis_grp"])
-    idi_occupation_class = define_parameter(
-        **disabled_base_schema["idi_occupation_class"]
-    )
-    cola_percent = define_parameter(**disabled_base_schema["cola_percent"])
-    benefit_amount = define_parameter(**disabled_base_schema["benefit_amount"])
+    policy_id = def_parameter(**disabled_base_schema["policy_id"])
+    claim_id = def_parameter(**disabled_base_schema["claim_id"])
+    gender = def_parameter(**disabled_base_schema["gender"])
+    birth_dt = def_parameter(**disabled_base_schema["birth_dt"])
+    incurred_dt = def_parameter(**disabled_base_schema["incurred_dt"])
+    termination_dt = def_parameter(**disabled_base_schema["termination_dt"])
+    elimination_period = def_parameter(**disabled_base_schema["elimination_period"])
+    idi_contract = def_parameter(**disabled_base_schema["idi_contract"])
+    idi_benefit_period = def_parameter(**disabled_base_schema["idi_benefit_period"])
+    idi_diagnosis_grp = def_parameter(**disabled_base_schema["idi_diagnosis_grp"])
+    idi_occupation_class = def_parameter(**disabled_base_schema["idi_occupation_class"])
+    cola_percent = def_parameter(**disabled_base_schema["cola_percent"])
+    benefit_amount = def_parameter(**disabled_base_schema["benefit_amount"])
     ctr_modifier = modifier_ctr
     interest_modifier = modifier_interest
-    age_incurred = define_placeholder(
+    age_incurred = def_intermediate(
         dtype=int, description="The age when the claim was incurred for the claimant."
     )
-    start_pay_date = define_placeholder(
+    start_pay_date = def_intermediate(
         dtype=pd.Timestamp, description="The date payments start for claimants."
     )
-    ctr_table = define_placeholder(dtype=pd.DataFrame, description=" ")
-    frame = define_asset(dtype=pd.DataFrame, description="The reserve schedule.")
-    mode = define_meta(meta="DLR", dtype=str, description="The model mode which is DLR.")
+    ctr_table = def_intermediate(dtype=pd.DataFrame, description=" ")
+    frame = def_return(dtype=pd.DataFrame, description="The reserve schedule.")
+    mode = def_meta(meta="DLR", dtype=str, description="The model mode which is DLR.")
     model_version = meta_model_version
     last_commit = meta_last_commit
     run_date_time = meta_run_date_time

@@ -4,7 +4,7 @@ import pytest
 import pandas as pd
 
 from footings_idi_model.policy_models import ALRDeterministicPolicyModel
-from footings.test_tools import assert_footings_audit_xlsx_equal
+from footings.test_tools import assert_footings_files_equal
 
 CASES = [
     (
@@ -55,4 +55,4 @@ def test_alr_deterministic(case, tempdir):
         {"worksheet": "_to_output", "column_name": "MODEL_VERSION",},
         {"worksheet": "_to_output", "column_name": "LAST_COMMIT",},
     ]
-    assert_footings_audit_xlsx_equal(test_file, expected_file, exclude=exlcude_list)
+    assert_footings_files_equal(test_file, expected_file, exclude=exlcude_list)

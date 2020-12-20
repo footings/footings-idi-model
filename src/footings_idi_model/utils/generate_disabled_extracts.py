@@ -5,11 +5,10 @@ import pandas as pd
 
 from footings import (
     model,
-    Footing,
-    define_parameter,
-    define_placeholder,
-    define_asset,
-    define_meta,
+    def_parameter,
+    def_intermediate,
+    def_return,
+    def_meta,
     step,
 )
 
@@ -59,7 +58,7 @@ STEPS = [
 
 
 @model(steps=STEPS)
-class GenerateDLRExtract(Footing):
+class GenerateDLRExtract:
     """Generate DLR Extract"""
 
     n = param_n_simulations
@@ -69,7 +68,7 @@ class GenerateDLRExtract(Footing):
     run_date_time = meta_run_date_time
     model_version = meta_model_version
     last_commit = meta_last_commit
-    frame = define_asset(
+    frame = def_return(
         dtype=pd.DataFrame, description="The extract that is being generated."
     )
 

@@ -7,12 +7,11 @@ import numpy as np
 import pandas as pd
 
 from footings import (
-    define_asset,
-    define_meta,
-    define_modifier,
-    define_parameter,
-    define_placeholder,
-    Footing,
+    def_return,
+    def_meta,
+    def_sensitivity,
+    def_parameter,
+    def_intermediate,
     step,
     model,
 )
@@ -51,16 +50,14 @@ STEPS = [
 class ROPDeterministicPolicyModel(ALRDeterministicPolicyModel):
     """ """
 
-    rop_return_frequency = define_parameter(**active_rider_schema["rop_return_frequency"])
-    rop_return_percentage = define_parameter(
-        **active_rider_schema["rop_return_percentage"]
-    )
-    rop_claims_paid = define_parameter(**active_rider_schema["rop_claims_paid"])
-    rop_future_claims_start_dt = define_parameter(
+    rop_return_frequency = def_parameter(**active_rider_schema["rop_return_frequency"])
+    rop_return_percentage = def_parameter(**active_rider_schema["rop_return_percentage"])
+    rop_claims_paid = def_parameter(**active_rider_schema["rop_claims_paid"])
+    rop_future_claims_start_dt = def_parameter(
         **active_rider_schema["rop_future_claims_start_dt"]
     )
-    rop_future_claims_frame = define_placeholder()
-    rop_expected_claim_payments = define_placeholder()
+    rop_future_claims_frame = def_intermediate()
+    rop_expected_claim_payments = def_intermediate()
 
     @step(uses=["frame", "rop_return_frequency"], impacts=["frame"])
     def _calculate_rop_intervals(self):
