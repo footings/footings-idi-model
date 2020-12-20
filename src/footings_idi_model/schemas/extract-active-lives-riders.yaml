@@ -17,7 +17,7 @@ columns:
     dtype: float
     description: The return of premium (ROP) benefits paid.
     min_val: 0
-  
+
   - name: ROP_FUTURE_CLAIMS_START_DT
     dtype: date
     description: The return of premium (ROP) benefits paid end date.

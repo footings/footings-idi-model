@@ -43,8 +43,8 @@ model = ROPDeterministicPolicyModel(
     cola_percent=0.0,
     gross_premium=150.0,
     benefit_amount=100.0,
-    valuation_dt=pd.Timestamp("2020-03-31"), 
-    assumption_set="stat", 
+    valuation_dt=pd.Timestamp("2020-03-31"),
+    assumption_set="stat",
     withdraw_table="01CSO",
     net_benefit_method="NLP",
     rop_return_frequency=10,
@@ -70,7 +70,7 @@ output.info()
 output
 ```
 
-An audit of the model is ran by calling the `audit` method shown below. 
+An audit of the model is ran by calling the `audit` method shown below.
 
 ```{code-cell} ipython3
 model.audit("Audit-ROPDeterministicPolicyModel.xlsx")

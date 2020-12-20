@@ -18,7 +18,7 @@ param_valuation_dt = def_parameter(
 
 param_assumption_set = def_parameter(
     description="""The assumption set to use for running the model. Options are :
-    
+
         * `stat`
         * `gaap`
         * `best-estimate`
@@ -33,12 +33,14 @@ param_disabled_extract = def_parameter(
 )
 
 param_active_base_extract = def_parameter(
-    description="""The active life base extract to use. See idi_model/schema/extract-active-lives-base.yaml for specification.""",
+    description="""The active life base extract to use. See idi_model/schema/extract-active-lives-base.yaml
+    for specification.""",
     dtype=pd.DataFrame,
 )
 
 param_active_rider_extract = def_parameter(
-    description="""The active life rider extract to use. See idi_model/schema/extract-active-lives-riders.yaml for specification.""",
+    description="""The active life rider extract to use. See idi_model/schema/extract-active-lives-riders.yaml
+    for specification.""",
     dtype=pd.DataFrame,
 )
 

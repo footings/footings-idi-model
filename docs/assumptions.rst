@@ -20,5 +20,3 @@ STAT/GAAP
 
 Best Estimate
 -------------
-
-

@@ -64,7 +64,7 @@ output.info()
 output
 ```
 
-An audit of the model is ran by calling the `audit` method shown below. 
+An audit of the model is ran by calling the `audit` method shown below.
 
 ```{code-cell} ipython3
 model.audit("Audit-DLRStochasticPolicyModel.xlsx")

@@ -69,11 +69,10 @@ time0
 errors
 ```
 
-An audit of the model is ran by calling the `audit` method as shown below. 
+An audit of the model is ran by calling the `audit` method as shown below.
 
 ```{code-cell} ipython3
 model.audit("Audit-DisabledLivesDeterministicModel.xlsx")
 ```
 
 The audit file can be downloaded {download}`here.<./Audit-DisabledLivesDeterministicModel.xlsx>`
-

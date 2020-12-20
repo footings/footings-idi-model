@@ -4,7 +4,6 @@ import pandas as pd
 from footings import (
     def_return,
     def_meta,
-    def_sensitivity,
     def_parameter,
     def_intermediate,
     step,
@@ -13,8 +12,6 @@ from footings import (
 from footings.model_tools import create_frame, calculate_age
 from footings_idi_model.attributes import (
     param_assumption_set,
-    param_n_simulations,
-    param_seed,
     param_valuation_dt,
     meta_model_version,
     meta_last_commit,
@@ -83,8 +80,9 @@ STEPS = [
 
 @model(steps=STEPS)
 class DLRDeterministicPolicyModel:
-    """A policy model to calculate disabled life reserves (DLRs) using the 2013 individual disability insurance (IDI) valuation standard. \n
-    
+    """A policy model to calculate disabled life reserves (DLRs) using the 2013 individual
+    disability insurance (IDI) valuation standard. \n
+
     The model is configured to use different assumptions sets - stat, gaap, or best-estimate. \n
 
     The key assumption underlying the model is -

@@ -1,12 +1,10 @@
-import numpy as np
-import pandas as pd
 from footings import dispatch_function
 from .stat_gaap.termination import _stat_gaap_ctr
 
 
 @dispatch_function(key_parameters=("assumption_set",))
 def get_ctr_table(assumption_set, mode, model_object):
-    """Calculate claim termination rate (CTR) which varies by assumption_set (e.g., GAAP) 
+    """Calculate claim termination rate (CTR) which varies by assumption_set (e.g., GAAP)
     and mode (i.e., ALR vs DLR).
 
     The CTR utilizes the select and ultimate tables required by the 2013 IDI Valuation Standard,
@@ -18,7 +16,7 @@ def get_ctr_table(assumption_set, mode, model_object):
     assumption_set : str
     mode : str
     frame : pd.DataFrame
-    
+
     Returns
     -------
     pd.DataFrame

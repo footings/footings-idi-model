@@ -23,7 +23,7 @@ Resources
 
 Below are resources that were used to develop the model -
 
-- `Footings documentation <https://footings.readthedocs.io/en/latest/>`_ 
+- `Footings documentation <https://footings.readthedocs.io/en/latest/>`_
 - `American Academy of Actuaries 2013 IDI Valuation Table excel prototype <https://www.actuary.org/content/2013-idi-valuation-table-workbook-version-13>`_
 - `Soceity of Actuaries (SOA) 2013 Individual Disablity Income Valuation Table <https://www.soa.org/resources/experience-studies/2016/hlth-2013-individual-disability-supporting-materials/>`_
 - `Soceity of Actuaries (SOA) 2013 Individual Disability Insurance Valuation Table and Supporting Materials <https://www.soa.org/resources/experience-studies/2017/credit-disability-income/>`_
