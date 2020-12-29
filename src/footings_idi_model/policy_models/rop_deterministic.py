@@ -1,28 +1,15 @@
-from datetime import timedelta, date
-from dateutil.relativedelta import relativedelta
-from functools import lru_cache
-from inspect import getfullargspec
-
-import numpy as np
 import pandas as pd
 
 from footings import (
-    def_return,
-    def_meta,
-    def_sensitivity,
     def_parameter,
     def_intermediate,
     step,
     model,
 )
-from footings import dispatch_function
-from footings.model_tools import create_frame, calculate_age
+from footings.model_tools import frame_add_exposure
 
 from .alr_deterministic import ALRDeterministicPolicyModel
-from ..assumptions.get_withdraw_rates import get_withdraw_rates
-from ..assumptions.get_incidence_rates import get_incidence_rates
-from ..assumptions.stat_gaap.interest import get_interest_rate
-from ..schemas import active_base_schema, active_rider_schema
+from ..schemas import active_rider_schema
 
 
 STEPS = [
@@ -72,38 +59,34 @@ class ROPDeterministicPolicyModel(ALRDeterministicPolicyModel):
     @step(uses=["frame", "modeled_disabled_lives"], impacts=["rop_future_claims_frame"])
     def _calculate_rop_future_claims(self):
         """Calculate future claims for return of premium (ROP).
-        
+
         Using the modeled disabled lives, take each active modeled duration and filter the projected
         payments to be less than or equal to the last date of the ROP payment interval. The data is
         than concatenated into a single DataFrame.
         """
-        max_payment_dates = (
-            self.frame[["DURATION_YEAR", "PAYMENT_INTERVAL", "DATE_ED"]]
-            .groupby(["PAYMENT_INTERVAL"], as_index=False)
-            .transform(max)[["DATE_ED"]]
-            .assign(DURATION_YEAR=self.frame["DURATION_YEAR"])
-            .set_index(["DURATION_YEAR"])
-            .to_dict()
-            .get("DATE_ED")
-        )
+        # max_payment_dates = (
+        #     self.frame[["DURATION_YEAR", "PAYMENT_INTERVAL", "DATE_ED"]]
+        #     .groupby(["PAYMENT_INTERVAL"], as_index=False)
+        #     .transform(max)[["DATE_ED"]]
+        #     .assign(DURATION_YEAR=self.frame["DURATION_YEAR"])
+        #     .set_index(["DURATION_YEAR"])
+        #     .to_dict()
+        #     .get("DATE_ED")
+        # )
 
-        def model_payments(dur_year, dur_start_dt, dur_end_dt, frame):
-            cols = ["DATE_BD", "DATE_ED", "LIVES_MD", "BENEFIT_AMOUNT"]
-            if dur_end_dt >= self.rop_future_claims_start_dt:
-                if dur_start_dt >= self.rop_future_claims_start_dt:
-                    exp_factor = 1.0
-                else:
-                    exp_factor = (self.rop_future_claims_start_dt - dur_start_dt) / (
-                        dur_end_dt - dur_start_dt
-                    )
-            else:
-                exp_factor = 0
+        def model_payments(dur_year, frame):
             return (
-                frame[frame.DATE_ED <= max_payment_dates.get(dur_year)][cols]
+                frame[["DATE_BD", "DATE_ED", "LIVES_MD", "BENEFIT_AMOUNT"]]
                 .rename(columns={"LIVES_MD": "DISABLED_LIVES_MD"})
+                .pipe(
+                    frame_add_exposure,
+                    begin_duration_col="DATE_BD",
+                    end_duration_col="DATE_ED",
+                    begin_date=self.rop_future_claims_start_dt,
+                    exposure_name="EXPOSURE_FACTOR",
+                )
                 .assign(
                     ACTIVE_DURATION_YEAR=dur_year,
-                    EXPOSURE_FACTOR=exp_factor,
                     DISABLED_CLAIM_PAYMENTS=lambda df: df["EXPOSURE_FACTOR"]
                     * df["DISABLED_LIVES_MD"]
                     * df["BENEFIT_AMOUNT"],
@@ -111,10 +94,7 @@ class ROPDeterministicPolicyModel(ALRDeterministicPolicyModel):
             )
 
         self.rop_future_claims_frame = pd.concat(
-            [
-                model_payments(k[0], k[1], k[2], v)
-                for k, v in self.modeled_disabled_lives.items()
-            ]
+            [model_payments(k, v) for k, v in self.modeled_disabled_lives.items()]
         )
 
     @step(uses=["frame", "rop_future_claims_frame"], impacts=["frame"])

@@ -1,7 +1,5 @@
-from datetime import timedelta, date
-from dateutil.relativedelta import relativedelta
+from datetime import date
 from functools import lru_cache
-from inspect import getfullargspec
 
 import numpy as np
 import pandas as pd
@@ -9,13 +7,11 @@ import pandas as pd
 from footings import (
     def_return,
     def_meta,
-    def_sensitivity,
     def_parameter,
     def_intermediate,
     step,
     model,
 )
-from footings import dispatch_function
 from footings.model_tools import create_frame, calculate_age
 
 from .dlr_deterministic import DLRDeterministicPolicyModel
@@ -35,7 +31,7 @@ from ..attributes import (
     modifier_incidence,
     modifier_withdraw,
 )
-from ..schemas import active_base_schema, active_rider_schema
+from ..schemas import active_base_schema
 
 
 @model(steps=DLR_STEPS)
@@ -297,18 +293,13 @@ class ALRDeterministicPolicyModel:
             for record in records
         )
         self.modeled_disabled_lives = {
-            (dur_year, bd, ed): result
-            for dur_year, bd, ed, result in zip(
-                self.frame["DURATION_YEAR"],
-                self.frame["DATE_BD"],
-                self.frame["DATE_ED"],
-                results,
-            )
+            int(dur_year): result
+            for dur_year, result in zip(self.frame["DURATION_YEAR"], results)
         }
 
     @step(uses=["frame", "modeled_disabled_lives"], impacts=["frame"])
     def _calculate_benefit_cost(self):
-        dlrs = {k[0]: v["DLR"].iat[0] for k, v in self.modeled_disabled_lives.items()}
+        dlrs = {k: v["DLR"].iat[0] for k, v in self.modeled_disabled_lives.items()}
         self.frame["DLR"] = self.frame["DURATION_YEAR"].map(dlrs)
         self.frame["BENEFIT_COST"] = (
             self.frame["DLR"] * self.frame["FINAL_INCIDENCE_RATE"]
