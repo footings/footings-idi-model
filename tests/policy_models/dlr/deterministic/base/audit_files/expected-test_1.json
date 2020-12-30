@@ -1,5 +1,5 @@
 {
-  "name": "DLRDeterministicPolicyModel",
+  "name": "ValDLRBasePM",
   "instantiation": {
     "parameter.valuation_dt": "2005-02-10 00:00:00",
     "parameter.assumption_set": "stat",

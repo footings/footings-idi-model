@@ -4,7 +4,7 @@ import pytest
 import pandas as pd
 
 from footings.audit import AuditConfig, AuditStepConfig
-from footings_idi_model.policy_models import DLRDeterministicPolicyModel
+from footings_idi_model.policy_models import ValDLRBasePM
 from footings.test_tools import assert_footings_files_equal
 
 CASES = [
@@ -33,17 +33,17 @@ CASES = [
 
 @pytest.fixture(scope="session")
 def tempdir(tmpdir_factory):
-    return tmpdir_factory.mktemp("dlr_deterministic")
+    return tmpdir_factory.mktemp("dlr_base_deterministic")
 
 
 @pytest.mark.parametrize("case", CASES, ids=[x[0] for x in CASES])
-def test_dlr_deterministic(case, tempdir):
+def test_dlr_base_deterministic(case, tempdir):
     name, parameters = case
     test_file = tempdir.join(f"test-{name}.json")
     expected_file = os.path.join(
         "tests",
         "policy_models",
-        "dlr_deterministic",
+        "dlr_base_deterministic",
         "audit_files",
         f"expected-{name}.json",
     )
@@ -60,7 +60,7 @@ def test_dlr_deterministic(case, tempdir):
             show_metadata=False,
         ),
     )
-    DLRDeterministicPolicyModel(**parameters).audit(test_file, config=config)
+    ValDLRBasePM(**parameters).audit(test_file, config=config)
     exlcude_list = exlcude_list = [
         "*/RUN_DATE_TIME/",
         "*/MODEL_VERSION/",

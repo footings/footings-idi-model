@@ -18,16 +18,16 @@ execution:
 ## Documentation
 
 ```{eval-rst}
-.. autoclass:: footings_idi_model.policy_models.DLRDeterministicPolicyModel
+.. autoclass:: footings_idi_model.policy_models.ValDLRBasePM
 ```
 
 ## Usage
 
 ```{code-cell} ipython3
 import pandas as pd
-from footings_idi_model.policy_models import DLRDeterministicPolicyModel
+from footings_idi_model.policy_models import ValDLRBasePM
 
-model = DLRDeterministicPolicyModel(
+model = ValDLRBasePM(
     policy_id="policy-1",
     claim_id="claim-1",
     gender="M",
@@ -65,7 +65,7 @@ output
 An audit of the model is ran by calling the `audit` method shown below.
 
 ```{code-cell} ipython3
-model.audit("Audit-DLRDeterministicPolicyModel.xlsx")
+model.audit("Audit-ValDLRBasePM.xlsx")
 ```
 
-The audit file can be downloaded {download}`here.<./Audit-DLRDeterministicPolicyModel.xlsx>`
+The audit file can be downloaded {download}`here.<./Audit-ValDLRBasePM.xlsx>`

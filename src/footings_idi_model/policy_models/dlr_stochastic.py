@@ -5,7 +5,7 @@ from footings import model, step
 
 from ..assumptions.stat_gaap.interest import get_interest_rate
 from ..attributes import param_n_simulations, param_seed
-from .dlr_deterministic import DLRDeterministicPolicyModel
+from footings_idi_model.policy_models import ValDLRBasePM
 
 OUTPUT_COLS = [
     "MODEL_VERSION",
@@ -28,7 +28,7 @@ STEPS = [
     "_calculate_age_incurred",
     "_calculate_start_pay_date",
     "_create_frame",
-    "_calculate_cola_adjustment",
+    # "_calculate_cola_adjustment",
     "_calculate_monthly_benefits",
     "_calculate_discount",
     "_get_ctr_table",
@@ -39,7 +39,7 @@ STEPS = [
 
 
 @model(steps=STEPS)
-class DLRStochasticPolicyModel(DLRDeterministicPolicyModel):
+class DLRStochasticPolicyModel(ValDLRBasePM):
     """A policy model to calculate disabled life reserves (DLRs) using the 2013 individual
     disability insurance (IDI) valuation standard.
     The model is configured to use different assumptions sets - stat, gaap, or best-estimate.
@@ -52,7 +52,7 @@ class DLRStochasticPolicyModel(DLRDeterministicPolicyModel):
 
     @step(uses=["frame", "incurred_dt"], impacts=["frame"])
     def _calculate_discount(self):
-        """Calculate begining, middle, and ending discount factor for each duration."""
+        """Calculate beginning, middle, and ending discount factor for each duration."""
         interest_rate = get_interest_rate(self.incurred_dt)
         self.frame["DISCOUNT_VD"] = 1 / (1 + interest_rate) ** (
             (self.frame["DATE_ED"] - self.valuation_dt).dt.days / 365.25

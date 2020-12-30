@@ -1,27 +1,16 @@
-import numpy as np
 import pandas as pd
 
 from footings import (
     def_return,
-    def_meta,
-    def_parameter,
     def_intermediate,
     step,
     model,
 )
-from footings.model_tools import create_frame, calculate_age
-from footings_idi_model.attributes import (
-    param_assumption_set,
-    param_valuation_dt,
-    meta_model_version,
-    meta_last_commit,
-    meta_run_date_time,
-    modifier_ctr,
-    modifier_interest,
-)
+from footings.model_tools import create_frame, calculate_age, frame_add_exposure
 from footings_idi_model.assumptions.stat_gaap.interest import get_interest_rate
 from footings_idi_model.assumptions.get_claim_term_rates import get_ctr_table
-from footings_idi_model.schemas import disabled_base_schema
+
+from footings_idi_model.policy_models.dlr.dlr_base import DLRBasePM
 
 #########################################################################################
 # Create frame
@@ -41,6 +30,7 @@ OUTPUT_COLS = [
     "MODEL_VERSION",
     "LAST_COMMIT",
     "RUN_DATE_TIME",
+    "SOURCE",
     "POLICY_ID",
     "CLAIM_ID",
     "DATE_BD",
@@ -69,7 +59,6 @@ STEPS = [
     "_calculate_vd_weights",
     "_get_ctr_table",
     "_calculate_lives",
-    "_calculate_cola_adjustment",
     "_calculate_monthly_benefits",
     "_calculate_discount",
     "_calculate_pvfb",
@@ -79,35 +68,11 @@ STEPS = [
 
 
 @model(steps=STEPS)
-class DLRDeterministicPolicyModel:
-    """A policy model to calculate disabled life reserves (DLRs) using the 2013 individual
-    disability insurance (IDI) valuation standard. \n
-
-    The model is configured to use different assumptions sets - stat, gaap, or best-estimate. \n
-
-    The key assumption underlying the model is -
-
-    * `Termination Rates` - the probability of an individual going off claim.
-
+class ValDLRBasePM(DLRBasePM):
+    """
     """
 
-    valuation_dt = param_valuation_dt
-    assumption_set = param_assumption_set
-    policy_id = def_parameter(**disabled_base_schema["policy_id"])
-    claim_id = def_parameter(**disabled_base_schema["claim_id"])
-    gender = def_parameter(**disabled_base_schema["gender"])
-    birth_dt = def_parameter(**disabled_base_schema["birth_dt"])
-    incurred_dt = def_parameter(**disabled_base_schema["incurred_dt"])
-    termination_dt = def_parameter(**disabled_base_schema["termination_dt"])
-    elimination_period = def_parameter(**disabled_base_schema["elimination_period"])
-    idi_contract = def_parameter(**disabled_base_schema["idi_contract"])
-    idi_benefit_period = def_parameter(**disabled_base_schema["idi_benefit_period"])
-    idi_diagnosis_grp = def_parameter(**disabled_base_schema["idi_diagnosis_grp"])
-    idi_occupation_class = def_parameter(**disabled_base_schema["idi_occupation_class"])
-    cola_percent = def_parameter(**disabled_base_schema["cola_percent"])
-    benefit_amount = def_parameter(**disabled_base_schema["benefit_amount"])
-    ctr_modifier = modifier_ctr
-    interest_modifier = modifier_interest
+    # intermediate objects
     age_incurred = def_intermediate(
         dtype=int, description="The age when the claim was incurred for the claimant."
     )
@@ -115,29 +80,37 @@ class DLRDeterministicPolicyModel:
         dtype=pd.Timestamp, description="The date payments start for claimants."
     )
     ctr_table = def_intermediate(dtype=pd.DataFrame, description=" ")
-    frame = def_return(dtype=pd.DataFrame, description="The reserve schedule.")
-    mode = def_meta(meta="DLR", dtype=str, description="The model mode which is DLR.")
-    model_version = meta_model_version
-    last_commit = meta_last_commit
-    run_date_time = meta_run_date_time
 
-    @step(uses=["birth_dt", "incurred_dt"], impacts=["age_incurred"])
+    # return object
+    frame = def_return(dtype=pd.DataFrame, description="The reserve schedule.")
+
+    @step(
+        name="Calculate Age Incurred",
+        uses=["birth_dt", "incurred_dt"],
+        impacts=["age_incurred"],
+    )
     def _calculate_age_incurred(self):
-        """Calcuate the age when claimant becomes disabled."""
+        """Calculate the age when claimant becomes disabled."""
         self.age_incurred = calculate_age(self.birth_dt, self.incurred_dt, method="ACB")
 
-    @step(uses=["incurred_dt", "elimination_period"], impacts=["start_pay_date"])
+    @step(
+        name="Calculate Benefit Start Date",
+        uses=["incurred_dt", "elimination_period"],
+        impacts=["start_pay_date"],
+    )
     def _calculate_start_pay_date(self):
+        """Calculate date benefits start which is incurred date + elimination period days."""
         self.start_pay_date = self.incurred_dt + pd.DateOffset(
             days=self.elimination_period
         )
 
     @step(
+        name="Create Projected Benefit Frame",
         uses=["birth_dt", "incurred_dt", "termination_dt", "valuation_dt"],
         impacts=["frame"],
     )
     def _create_frame(self):
-        """Create frame projected out to termination date to model reserves."""
+        """Create projected benefit frame from valuation date to termination date."""
         fixed = {
             "frequency": "M",
             "col_date_nm": "DATE_BD",
@@ -156,8 +129,11 @@ class DLRDeterministicPolicyModel:
             )[["DATE_BD", "DATE_ED", "AGE_ATTAINED", "DURATION_YEAR", "DURATION_MONTH",]]
         )
 
-    @step(uses=["frame", "valuation_dt"], impacts=["frame"])
+    @step(
+        name="Calculate Weights", uses=["frame", "valuation_dt"], impacts=["frame"],
+    )
     def _calculate_vd_weights(self):
+        """Calculate weights to assign to beginning and ending duration."""
         dur_n_days = (self.frame["DATE_ED"].iat[0] - self.frame["DATE_BD"].iat[0]).days
         self.frame["WT_BD"] = (
             self.frame["DATE_ED"].iat[0] - self.valuation_dt
@@ -165,6 +141,7 @@ class DLRDeterministicPolicyModel:
         self.frame["WT_ED"] = 1 - self.frame["WT_BD"]
 
     @step(
+        name="Get CTR Table",
         uses=[
             "assumption_set",
             "mode",
@@ -180,16 +157,16 @@ class DLRDeterministicPolicyModel:
         impacts=["ctr_table"],
     )
     def _get_ctr_table(self):
-        """Get claim termination rate (CTR) table."""
+        """Get claim termination rate (CTR) table based on assumption set."""
         self.ctr_table = get_ctr_table(
             assumption_set=self.assumption_set, mode=self.mode, model_object=self,
         ).assign(
             CTR_MODIFIER=self.ctr_modifier, FINAL_CTR=lambda df: df.CTR * df.CTR_MODIFIER
         )
 
-    @step(uses=["frame", "ctr_table"], impacts=["frame"])
+    @step(name="Calculate Lives", uses=["frame", "ctr_table"], impacts=["frame"])
     def _calculate_lives(self):
-        """Calculate the begining, middle, and ending lives for each duration."""
+        """Calculate the beginning, middle, and ending lives for each duration."""
         self.frame = self.frame.merge(
             self.ctr_table[["DURATION_MONTH", "FINAL_CTR"]],
             how="left",
@@ -203,49 +180,28 @@ class DLRDeterministicPolicyModel:
             self.frame[bd_cols].prod(axis=1) + self.frame[ed_cols].prod(axis=1)
         )
 
-    @step(uses=["frame", "cola_percent"], impacts=["frame"])
-    def _calculate_cola_adjustment(self):
-        """Calculate cost of living adjustment adjustment (COLA)."""
-        max_duration = self.frame[self.frame["AGE_ATTAINED"] == 65]["DURATION_YEAR"]
-        if max_duration.size > 0:
-            upper = max_duration.iat[0]
-            power = self.frame["DURATION_YEAR"].clip(upper=upper)
-        else:
-            power = self.frame["DURATION_YEAR"]
-        self.frame["COLA_ADJUSTMENT"] = (1 + self.cola_percent) ** (power - 1)
-
-    @step(uses=["frame", "benefit_amount"], impacts=["frame"])
+    @step(
+        name="Calculate Monthly Benefits",
+        uses=["frame", "benefit_amount"],
+        impacts=["frame"],
+    )
     def _calculate_monthly_benefits(self):
         """Calculate the monthly benefit amount for each duration."""
-        days_period = (self.frame.DATE_ED - self.frame.DATE_BD).dt.days
-        condlist = [
-            self.start_pay_date > self.frame.DATE_ED,
-            (self.start_pay_date < self.valuation_dt)
-            & (self.valuation_dt < self.frame.DATE_ED)
-            & (self.valuation_dt >= self.frame.DATE_BD),
-            (self.start_pay_date > self.valuation_dt)
-            & (self.start_pay_date < self.frame.DATE_ED)
-            & (self.start_pay_date >= self.frame.DATE_BD),
-            (self.termination_dt > self.frame.DATE_BD)
-            & (self.termination_dt <= self.frame.DATE_ED),
-        ]
-        choicelist = [
-            0,
-            (self.frame.DATE_ED - self.valuation_dt).dt.days / days_period,
-            (self.frame.DATE_ED - self.start_pay_date).dt.days / days_period,
-            (self.termination_dt - self.frame.DATE_BD).dt.days / days_period,
-        ]
-        self.frame["BENEFIT_FACTOR"] = np.select(condlist, choicelist, default=1.0)
+        self.frame = frame_add_exposure(
+            self.frame,
+            begin_date=max(self.valuation_dt, self.start_pay_date),
+            end_date=self.termination_dt,
+            exposure_name="BENEFIT_FACTOR",
+            begin_duration_col="DATE_BD",
+            end_duration_col="DATE_ED",
+        )
         self.frame["BENEFIT_AMOUNT"] = (
-            self.frame[["BENEFIT_FACTOR", "COLA_ADJUSTMENT"]]
-            .prod(axis=1)
-            .mul(self.benefit_amount)
-            .round(2)
+            self.frame["BENEFIT_FACTOR"].mul(self.benefit_amount).round(2)
         )
 
-    @step(uses=["frame", "incurred_dt"], impacts=["frame"])
+    @step(name="Calculate Discount", uses=["frame", "incurred_dt"], impacts=["frame"])
     def _calculate_discount(self):
-        """Calculate begining, middle, and ending discount factor for each duration."""
+        """Calculate beginning, middle, and ending discount factor for each duration."""
         interest_rate = get_interest_rate(self.incurred_dt) * self.interest_modifier
         min_duration = self.frame["DURATION_MONTH"].min()
         self.frame["DAYS_TO_ED"] = (self.frame["DURATION_MONTH"] - min_duration + 1) * 30
@@ -262,7 +218,7 @@ class DLRDeterministicPolicyModel:
             self.frame[bd_cols].prod(axis=1) + self.frame[ed_cols].prod(axis=1)
         )
 
-    @step(uses=["frame"], impacts=["frame"])
+    @step(name="Calculate PVFB", uses=["frame"], impacts=["frame"])
     def _calculate_pvfb(self):
         """Calculate present value of future benefits (PVFB)."""
         prod_columns = ["BENEFIT_AMOUNT", "LIVES_MD", "DISCOUNT_MD"]
@@ -270,12 +226,10 @@ class DLRDeterministicPolicyModel:
             self.frame[prod_columns].prod(axis=1).iloc[::-1].cumsum().round(2)
         )
         self.frame["PVFB_ED"] = self.frame["PVFB_BD"].shift(-1, fill_value=0)
-        bd_cols, ed_cols = ["WT_BD", "PVFB_BD"], ["WT_ED", "PVFB_ED"]
-        self.frame["PVFB_VD"] = self.frame[bd_cols].prod(axis=1) + self.frame[
-            ed_cols
-        ].prod(axis=1)
+        bd, ed = ["WT_BD", "PVFB_BD"], ["WT_ED", "PVFB_ED"]
+        self.frame["PVFB_VD"] = self.frame[bd].prod(axis=1) + self.frame[ed].prod(axis=1)
 
-    @step(uses=["frame", "valuation_dt"], impacts=["frame"])
+    @step(name="Calculate DLR", uses=["frame", "valuation_dt"], impacts=["frame"])
     def _calculate_dlr(self):
         """Calculate disabled life reserves (DLR)."""
         prod_cols = ["PVFB_VD", "DISCOUNT_VD_ADJ", "LIVES_VD_ADJ"]
@@ -286,6 +240,7 @@ class DLRDeterministicPolicyModel:
         ]
 
     @step(
+        name="Create Output Frame",
         uses=["frame", "policy_id", "run_date_time", "model_version", "last_commit"],
         impacts=["frame"],
     )
@@ -294,7 +249,13 @@ class DLRDeterministicPolicyModel:
         self.frame = self.frame.assign(
             POLICY_ID=self.policy_id,
             CLAIM_ID=self.claim_id,
+            SOURCE=self.__class__.__qualname__,
             RUN_DATE_TIME=self.run_date_time,
             MODEL_VERSION=self.model_version,
             LAST_COMMIT=self.last_commit,
         )[OUTPUT_COLS]
+
+
+@model
+class ProjDLRBasePM(DLRBasePM):
+    pass

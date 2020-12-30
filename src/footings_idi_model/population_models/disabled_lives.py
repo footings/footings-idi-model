@@ -20,15 +20,15 @@ from ..attributes import (
     modifier_ctr,
     modifier_interest,
 )
-from ..policy_models.dlr_deterministic import (
-    DLRDeterministicPolicyModel,
+from footings_idi_model.policy_models.dlr.deterministic.base import (
+    ValDLRBasePM,
     OUTPUT_COLS as DETERMINSTIC_COLS,
 )
 from ..schemas import disabled_life_columns
 
 
 foreach_model = make_foreach_model(
-    DLRDeterministicPolicyModel,
+    ValDLRBasePM,
     iterator_name="records",
     iterator_params=[col.lower() for col in disabled_life_columns],
     iterator_key=("policy_id", "claim_id"),
