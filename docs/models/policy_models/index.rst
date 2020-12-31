@@ -3,9 +3,14 @@ Policy Models
 =============
 
 .. toctree::
-   :maxdepth: 0
+   :maxdepth: 3
 
-   dlr_deterministic.md
-   dlr_stochastic.md
+
    alr_deterministic.md
    rop_deterministic.md
+   dlr_deterministic_base.md
+   dlr_deterministic_cat.md
+   dlr_deterministic_cola.md
+   dlr_deterministic_res.md
+   dlr_deterministic_sis.md
+   dlr_stochastic.md

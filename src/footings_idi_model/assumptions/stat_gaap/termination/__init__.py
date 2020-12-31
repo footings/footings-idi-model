@@ -90,23 +90,23 @@ def make_select_rates(
     elimination_period,
     age_incurred,
     cola_flag,
-    mode,
+    model_mode,
 ):
     """ """
 
     def _make_query(*args):
         return " and ".join(args)
 
-    def _specify_mode(tbl, mode):
+    def _specify_model_mode(tbl, model_mode):
         cols = ["IDI_CONTRACT", "GENDER", "DURATION_YEAR", "CAUSE_MODIFIER"]
-        if mode == "DLR":
+        if model_mode[:3] == "DLR":
             tbl = tbl.rename(columns={"CAUSE_MODIFIER_DLR": "CAUSE_MODIFIER"})
             return tbl[cols]
-        elif mode == "ALR":
+        elif model_mode[:3] == "ALR":
             tbl = tbl.rename(columns={"CAUSE_MODIFIER_ALR": "CAUSE_MODIFIER"})
             return tbl[cols]
         else:
-            raise ValueError(f"The mode [{mode}] is not recognized.")
+            raise ValueError(f"The model_mode [{model_mode}] is not recognized.")
 
     bp_query = "IDI_BENEFIT_PERIOD==@idi_benefit_period"
     ct_query = "IDI_CONTRACT==@idi_contract"
@@ -125,7 +125,7 @@ def make_select_rates(
     cause_tbl = (
         get_cause_modifier()
         .query(_make_query(ct_query, gd_query))
-        .pipe(_specify_mode, mode)
+        .pipe(_specify_model_mode, model_mode)
     )
     diagnosis_tbl = get_diagnosis_modifier().query(dg_query)
     margin_tbl = margin_to_table_select(get_margin())
@@ -186,7 +186,7 @@ def _stat_gaap_ctr(
     elimination_period,
     age_incurred,
     cola_percent,
-    mode,
+    model_mode,
 ):
     cola_flag = "N" if cola_percent == 0 else "Y"
     select_tbl = make_select_rates(
@@ -198,7 +198,7 @@ def _stat_gaap_ctr(
         elimination_period=elimination_period,
         age_incurred=age_incurred,
         cola_flag=cola_flag,
-        mode=mode,
+        model_mode=model_mode,
     )
     ultimate_tbl = make_ultimate_rates(
         idi_occupation_class=idi_occupation_class, gender=gender

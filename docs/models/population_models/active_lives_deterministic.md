@@ -31,9 +31,10 @@ from footings_idi_model.population_models import ActiveLivesDeterministicModel
 ```{code-cell} ipython3
 base_extract = pd.read_csv("active-lives-sample-base.csv")
 base_extract
+```
 
 ```{code-cell} ipython3
-rider_extract = pd.read_csv(\"active-lives-sample-riders.csv\")"
+rider_extract = pd.read_csv(\"active-lives-sample-riders.csv\")
 rider_extract
 ```
 

@@ -14,8 +14,8 @@ from footings import (
 )
 from footings.model_tools import create_frame, calculate_age
 
-from footings_idi_model.policy_models import ValDLRBasePM
-from footings_idi_model.policy_models.dlr.deterministic.base import STEPS as DLR_STEPS
+from footings_idi_model.policy_models import ValDlrBasePM
+from .dlr_deterministic_base import STEPS as DLR_STEPS
 from ..assumptions.get_withdraw_rates import get_withdraw_rates
 from ..assumptions.get_incidence_rates import get_incidence_rates
 from ..assumptions.stat_gaap.interest import get_interest_rate
@@ -35,7 +35,7 @@ from ..schemas import active_base_schema
 
 
 @model(steps=DLR_STEPS)
-class _ActiveLifeDLRModel(ValDLRBasePM):
+class _ActiveLifeDLRModel(ValDlrBasePM):
     mode = def_meta(meta="ALR", dtype=str, description="The model mode which is ALR.")
 
 
