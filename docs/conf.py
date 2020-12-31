@@ -48,7 +48,7 @@ add_module_names = False
 numpydoc_show_class_members = True
 
 # myst_nb settings
-jupyter_execute_notebooks = "cache"
+# jupyter_execute_notebooks = "cache"
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]
