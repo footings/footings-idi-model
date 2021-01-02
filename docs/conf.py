@@ -77,3 +77,9 @@ source_suffix = {
     ".ipynb": "myst-nb",
     ".myst": "myst-nb",
 }
+
+html_theme_options = {
+    "github_url": "https://github.com/footings/footings-idi-model",
+    "search_bar_position": "navbar",
+    "search_bar_text": "Search this site...",
+}
