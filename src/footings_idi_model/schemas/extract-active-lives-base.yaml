@@ -25,7 +25,7 @@ columns:
   - name: COVERAGE_ID
     dtype: str
     description: The coverage ID of the policy holder.
-    allowed: [base, rop]
+    allowed: [BASE, CAT, COLA, RES, ROP, SIS, WOP]
 
   - name: POLICY_START_DT
     dtype: date
@@ -47,6 +47,11 @@ columns:
   - name: GROSS_PREMIUM
     dtype: float
     description: The policy gross premium amount.
+
+  - name: GROSS_PREMIUM_FREQ
+    dtype: str
+    description: The frequency of premium payments.
+    allowed: [MONTH, QUARTER, SEMIANNUAL, ANNUAL]
 
   - name: BENEFIT_AMOUNT
     dtype: float
