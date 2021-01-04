@@ -6,11 +6,16 @@ from footings import (
     step,
     model,
 )
-from footings.model_tools import create_frame, calculate_age, frame_add_exposure
+from footings.model_tools import (
+    create_frame,
+    calculate_age,
+    frame_add_exposure,
+    frame_add_weights,
+)
 from ..assumptions.stat_gaap.interest import get_interest_rate
 from ..assumptions.get_claim_term_rates import get_ctr_table
 
-from .dlr_base import DLRBasePM
+from .dlr_base import DLRBasePBM
 
 #########################################################################################
 # Create frame
@@ -68,7 +73,7 @@ STEPS = [
 
 
 @model(steps=STEPS)
-class ValDlrBasePM(DLRBasePM):
+class ValDlrBasePBM(DLRBasePBM):
     """The disabled life reserve (DLR) valuation model for the base policy."""
 
     # intermediate objects
@@ -85,6 +90,7 @@ class ValDlrBasePM(DLRBasePM):
     # return object
     frame = def_return(dtype=pd.DataFrame, description="The frame of projected reserves.")
 
+    # steps
     @step(
         name="Calculate Age Incurred",
         uses=["birth_dt", "incurred_dt"],
@@ -106,12 +112,12 @@ class ValDlrBasePM(DLRBasePM):
         )
 
     @step(
-        name="Create Projected Benefit Frame",
+        name="Create Projected Frame",
         uses=["birth_dt", "incurred_dt", "termination_dt", "valuation_dt"],
         impacts=["frame"],
     )
     def _create_frame(self):
-        """Create projected benefit frame from valuation date to termination date."""
+        """Create projected benefit frame from valuation date to termination date by duration month."""
         fixed = {
             "frequency": "M",
             "col_date_nm": "DATE_BD",
@@ -135,11 +141,14 @@ class ValDlrBasePM(DLRBasePM):
     )
     def _calculate_vd_weights(self):
         """Calculate weights to assign to beginning and ending duration."""
-        dur_n_days = (self.frame["DATE_ED"].iat[0] - self.frame["DATE_BD"].iat[0]).days
-        self.frame["WT_BD"] = (
-            self.frame["DATE_ED"].iat[0] - self.valuation_dt
-        ).days / dur_n_days
-        self.frame["WT_ED"] = 1 - self.frame["WT_BD"]
+        self.frame = frame_add_weights(
+            self.frame,
+            as_of_dt=self.valuation_dt,
+            begin_duration_col="DATE_BD",
+            end_duration_col="DATE_ED",
+            wt_current_name="WT_BD",
+            wt_next_name="WT_ED",
+        )
 
     @step(
         name="Get CTR Table",
@@ -202,9 +211,13 @@ class ValDlrBasePM(DLRBasePM):
             self.frame["BENEFIT_FACTOR"].mul(self.benefit_amount).round(2)
         )
 
-    @step(name="Calculate Discount", uses=["frame", "incurred_dt"], impacts=["frame"])
+    @step(
+        name="Calculate Discount Factors",
+        uses=["frame", "incurred_dt"],
+        impacts=["frame"],
+    )
     def _calculate_discount(self):
-        """Calculate beginning, middle, and ending discount factor for each duration."""
+        """Calculate beginning, middle, and ending discount factors for each duration."""
         interest_rate = get_interest_rate(self.incurred_dt) * self.interest_modifier
         min_duration = self.frame["DURATION_MONTH"].min()
         self.frame["DAYS_TO_ED"] = (self.frame["DURATION_MONTH"] - min_duration + 1) * 30
@@ -265,5 +278,5 @@ class ValDlrBasePM(DLRBasePM):
 
 
 @model
-class ProjDlrBasePM(DLRBasePM):
+class ProjDlrBasePBM(DLRBasePBM):
     pass

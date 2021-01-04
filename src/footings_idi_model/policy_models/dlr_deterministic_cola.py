@@ -1,14 +1,14 @@
 from footings import model, step
 from footings.model_tools import frame_add_exposure
-from .dlr_deterministic_base import ValDlrBasePM, STEPS
+from .dlr_deterministic_base import ValDlrBasePBM, STEPS
 
 
 @model(steps=STEPS)
-class ValDlrColaPRM(ValDlrBasePM):
+class ValDlrColaPRM(ValDlrBasePBM):
     """The disabled life reserve (DLR) valuation model for the cost of living adjustment
     (COLA) policy rider.
 
-    This model is a child of the `ValDlrBasePM` with the only change being how the monthly
+    This model is a child of the `ValDlrBasePBM` with the only change being how the monthly
     benefit is calculated. The base model uses the benefit amount passed while this model
     calculate the benefit with cola less the original benefit amount.
     """
@@ -45,5 +45,5 @@ class ValDlrColaPRM(ValDlrBasePM):
 
 
 @model
-class ProjDlrColaPRM(ValDlrBasePM):
+class ProjDlrColaPRM(ValDlrBasePBM):
     pass

@@ -1,6 +1,6 @@
 from footings import model, step, def_intermediate
 from footings.model_tools import frame_add_exposure
-from .dlr_deterministic_base import ValDlrBasePM
+from .dlr_deterministic_base import ValDlrBasePBM
 
 STEPS = [
     "_calculate_age_incurred",
@@ -19,11 +19,11 @@ STEPS = [
 
 
 @model(steps=STEPS)
-class ValDlrSisPRM(ValDlrBasePM):
+class ValDlrSisPRM(ValDlrBasePBM):
     """The disabled life reserve (DLR) valuation model for the cost of living adjustment
     (COLA) policy rider.
 
-    This model is a child of the `ValDlrBasePM` with the only changes being the addition
+    This model is a child of the `ValDlrBasePBM` with the only changes being the addition
     of a step `_get_sis_probability` to lookup the probability of the policy holder
     qualifying for SIS (i.e., sis_probability) and the monthly benefit amount is equal
     to the (1 - SIS prbability) x benefit amount.
@@ -63,5 +63,5 @@ class ValDlrSisPRM(ValDlrBasePM):
 
 
 @model
-class ProjDlrSisPRM(ValDlrBasePM):
+class ProjDlrSisPRM(ValDlrBasePBM):
     pass
