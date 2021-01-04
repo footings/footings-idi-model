@@ -4,12 +4,12 @@ name: Active Lives Rider Extract Schema
 enfore_strict: True
 nullable: False
 columns:
-  - name: ROP_RETURN_FREQUENCY
+  - name: ROP_RETURN_FREQ
     dtype: int
     description: The return of premium (ROP) frequency in years.
     allowed: [5, 7, 10]
 
-  - name: ROP_RETURN_PERCENTAGE
+  - name: ROP_RETURN_PERCENT
     dtype: float
     description: The return of premium (ROP) percentage.
 
