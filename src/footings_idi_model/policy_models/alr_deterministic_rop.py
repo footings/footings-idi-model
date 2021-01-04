@@ -8,19 +8,22 @@ from footings import (
 )
 from footings.model_tools import frame_add_exposure
 
-from .alr_deterministic import ALRDeterministicPolicyModel
+from .alr_deterministic_base import ValAlrBasePBM, ProjAlrBasePBM
 from ..schemas import active_rider_schema
 
 
 STEPS = [
+    "_calculate_age_issued",
     "_create_frame",
+    "_calculate_vd_weights",
     "_calculate_age_attained",
     "_calculate_termination_dt",
     "_get_withdraw_rates",
+    "_merge_withdraw_rates",
     "_calculate_lives",
     "_get_incidence_rate",
     "_merge_incidence_rate",
-    "_model_disabled_lives",
+    "_model_claim_cost",
     "_calculate_rop_intervals",
     "_calculate_rop_future_claims",
     "_calculate_rop_exp_payments",
@@ -34,35 +37,39 @@ STEPS = [
 
 
 @model(steps=STEPS)
-class ROPDeterministicPolicyModel(ALRDeterministicPolicyModel):
-    """ """
+class ValAlrRopPRM(ValAlrBasePBM):
+    """The active life reserve (ALR) valuation model for the return of premium (ROP)
+    policy rider.
 
-    rop_return_frequency = def_parameter(**active_rider_schema["rop_return_frequency"])
-    rop_return_percentage = def_parameter(**active_rider_schema["rop_return_percentage"])
+    This model is a child of the `ValAlrBasePBM` with a few changes -
+
+    - The addition of rop_return_freq, rop_return_percent and rop_claims_paid parameters.
+    - The addition of steps _calculate_rop_intervals, _calculate_rop_future_claims, and
+    _calculate_rop_exp_payments steps which are used in the calculation of benefit cost.
+    """
+
+    rop_return_freq = def_parameter(**active_rider_schema["rop_return_freq"])
+    rop_return_percent = def_parameter(**active_rider_schema["rop_return_percent"])
     rop_claims_paid = def_parameter(**active_rider_schema["rop_claims_paid"])
     rop_future_claims_start_dt = def_parameter(
         **active_rider_schema["rop_future_claims_start_dt"]
     )
-    rop_future_claims_frame = def_intermediate()
-    rop_expected_claim_payments = def_intermediate()
+    rop_future_claims_frame = def_intermediate(dtype=pd.DataFrame, description="")
+    rop_expected_claim_payments = def_intermediate(dtype=pd.DataFrame, description="")
 
-    @step(uses=["frame", "rop_return_frequency"], impacts=["frame"])
+    @step(uses=["frame", "rop_return_freq"], impacts=["frame"])
     def _calculate_rop_intervals(self):
         """Calculate return of premium (ROP) payment intervals."""
         self.frame["PAYMENT_INTERVAL"] = (
-            self.frame["DURATION_YEAR"]
-            .subtract(1)
-            .div(self.rop_return_frequency)
-            .astype(int)
+            self.frame["DURATION_YEAR"].subtract(1).div(self.rop_return_freq).astype(int)
         )
 
     @step(uses=["frame", "modeled_disabled_lives"], impacts=["rop_future_claims_frame"])
     def _calculate_rop_future_claims(self):
-        """Calculate future claims for return of premium (ROP).
-
-        Using the modeled disabled lives, take each active modeled duration and filter the projected
-        payments to be less than or equal to the last date of the ROP payment interval. The data is
-        than concatenated into a single DataFrame.
+        """Calculate future claims for return of premium (ROP) using the modeled disabled lives.
+        This step takes take each active modeled duration and filters the projected payments to
+        be less than or equal to the last date of the ROP payment interval. The data is than
+        concatenated into a single DataFrame.
         """
         # max_payment_dates = (
         #     self.frame[["DURATION_YEAR", "PAYMENT_INTERVAL", "DATE_ED"]]
@@ -126,7 +133,7 @@ class ROPDeterministicPolicyModel(ALRDeterministicPolicyModel):
         uses=[
             "frame",
             "rop_claims_paid",
-            "rop_return_percentage",
+            "rop_return_percent",
             "rop_expected_claim_payments",
             "rop_future_claims_start_dt",
         ],
@@ -164,7 +171,7 @@ class ROPDeterministicPolicyModel(ALRDeterministicPolicyModel):
         self.frame.loc[max_int_rows, "TOTAL_PREMIUM"] = self.frame.loc[max_int_rows][
             "PAYMENT_INTERVAL"
         ].map(total_premium)
-        self.frame["RETURN_PERCENTAGE"] = self.rop_return_percentage
+        self.frame["RETURN_PERCENTAGE"] = self.rop_return_percent
         self.frame["BENEFIT_COST"] = (
             (
                 self.frame["TOTAL_PREMIUM"] * self.frame["RETURN_PERCENTAGE"]
@@ -174,3 +181,8 @@ class ROPDeterministicPolicyModel(ALRDeterministicPolicyModel):
             .clip(lower=0)
             .round(2)
         )
+
+
+@model
+class ProjAlrRopPRM(ProjAlrBasePBM):
+    pass
