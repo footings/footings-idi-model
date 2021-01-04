@@ -6,16 +6,16 @@ Policy Models
    :maxdepth: 2
 
 
-   alr_deterministic_base.md
-   alr_deterministic_cat.md
-   alr_deterministic_cola.md
-   alr_deterministic_res.md
-   alr_deterministic_rop.md
-   alr_deterministic_sis.md
-   alr_deterministic_wop.md
-   dlr_deterministic_base.md
-   dlr_deterministic_cat.md
-   dlr_deterministic_cola.md
-   dlr_deterministic_res.md
-   dlr_deterministic_sis.md
-   dlr_stochastic.md
+   active_deterministic_base.md
+   active_deterministic_cat.md
+   active_deterministic_cola.md
+   active_deterministic_res.md
+   active_deterministic_rop.md
+   active_deterministic_sis.md
+   active_deterministic_wop.md
+   disabled_deterministic_base.md
+   disabled_deterministic_cat.md
+   disabled_deterministic_cola.md
+   disabled_deterministic_res.md
+   disabled_deterministic_sis.md
+   disabled_stochastic.md
