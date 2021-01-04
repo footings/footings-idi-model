@@ -13,23 +13,24 @@ execution:
 ---
 
 
-# ALR Deterministic
+# ALR - Deterministic - Base
 
-## Documentation
+## Valuation Model
+
+### Documentation
 
 ```{eval-rst}
-.. autoclass:: footings_idi_model.policy_models.ALRDeterministicPolicyModel
+.. autoclass:: footings_idi_model.policy_models.ValAlrBasePBM
 ```
 
-## Usage
+### Usage
 
 ```{code-cell} ipython3
 import pandas as pd
-from footings_idi_model.policy_models import ALRDeterministicPolicyModel
+from footings_idi_model.policy_models import ValAlrBasePBM
 
-model = ALRDeterministicPolicyModel(
+model = ValAlrBasePBM(
     policy_id="policy-1",
-    coverage_id="base",
     gender="M",
     tobacco_usage="N",
     birth_dt=pd.Timestamp("1970-03-26"),
@@ -41,7 +42,8 @@ model = ALRDeterministicPolicyModel(
     idi_benefit_period="TO65",
     idi_occupation_class="M",
     cola_percent=0.0,
-    gross_premium=150.0,
+    gross_premium=10.0,
+    gross_premium_freq="MONTH",
     benefit_amount=100.0,
     valuation_dt=pd.Timestamp("2020-03-31"),
     assumption_set="stat",
@@ -69,7 +71,17 @@ output
 An audit of the model is ran by calling the `audit` method shown below.
 
 ```{code-cell} ipython3
-model.audit("Audit-ALRDeterministicPolicyModel.xlsx")
+model.audit("Audit-ValAlrBasePBM.xlsx")
 ```
 
-The audit file can be downloaded {download}`here.<./Audit-ALRDeterministicPolicyModel.xlsx>`
+The audit file can be downloaded {download}`here.<./Audit-ValAlrBasePBM.xlsx>`
+
+## Projection Model
+
+### Documentation
+
+To be completed.
+
+### Usage
+
+To be completed.

@@ -13,38 +13,43 @@ execution:
 ---
 
 
-# DLR - Deterministic - Base
+# ALR - Deterministic - Residual Rider
 
-## Valuation Model
+## Valuation  Model
 
 ### Documentation
 
 ```{eval-rst}
-.. autoclass:: footings_idi_model.policy_models.ValDlrBasePBM
+.. autoclass:: footings_idi_model.policy_models.ValAlrResPRM
 ```
 
 ### Usage
 
 ```{code-cell} ipython3
 import pandas as pd
-from footings_idi_model.policy_models import ValDlrBasePBM
+from footings_idi_model.policy_models import ValAlrResPRM
 
-model = ValDlrBasePBM(
+model = ValAlrResPRM(
     policy_id="policy-1",
-    claim_id="claim-1",
     gender="M",
+    tobacco_usage="N",
     birth_dt=pd.Timestamp("1970-03-26"),
-    incurred_dt=pd.Timestamp("2015-06-02"),
-    termination_dt=pd.Timestamp("2035-03-26"),
+    policy_start_dt=pd.Timestamp("2015-06-02"),
+    policy_end_dt=pd.Timestamp("2035-03-26"),
     elimination_period=90,
+    idi_market="INDV",
     idi_contract="AS",
     idi_benefit_period="TO65",
-    idi_diagnosis_grp="LOW",
     idi_occupation_class="M",
     cola_percent=0.0,
-    benefit_amount=200.0,
+    gross_premium=10.0,
+    gross_premium_freq="MONTH",
+    benefit_amount=100.0,
     valuation_dt=pd.Timestamp("2020-03-31"),
     assumption_set="stat",
+    withdraw_table="01CSO",
+    net_benefit_method="NLP",
+    residual_benefit_percent=0.5,
 )
 ```
 
@@ -67,11 +72,10 @@ output
 An audit of the model is ran by calling the `audit` method shown below.
 
 ```{code-cell} ipython3
-model.audit("Audit-ValDlrBasePBM.xlsx")
+model.audit("Audit-ValAlrResPRM.xlsx")
 ```
 
-The audit file can be downloaded {download}`here.<./Audit-ValDlrBasePBM.xlsx>`
-
+The audit file can be downloaded {download}`here.<./Audit-ValAlrResPRM.xlsx>`
 
 ## Projection Model
 

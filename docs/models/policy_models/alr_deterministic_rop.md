@@ -13,23 +13,24 @@ execution:
 ---
 
 
-# ROP Deterministic
+# ALR - Deterministic - ROP Rider
 
-## Documentation
+## Valuation Model
+
+### Documentation
 
 ```{eval-rst}
-.. autoclass:: footings_idi_model.policy_models.ROPDeterministicPolicyModel
+.. autoclass:: footings_idi_model.policy_models.ValAlrRopPRM
 ```
 
-## Usage
+### Usage
 
 ```{code-cell} ipython3
 import pandas as pd
-from footings_idi_model.policy_models import ROPDeterministicPolicyModel
+from footings_idi_model.policy_models import ValAlrRopPRM
 
-model = ROPDeterministicPolicyModel(
+model = ValAlrRopPRM(
     policy_id="policy-1",
-    coverage_id="base",
     gender="M",
     tobacco_usage="N",
     birth_dt=pd.Timestamp("1970-03-26"),
@@ -41,14 +42,15 @@ model = ROPDeterministicPolicyModel(
     idi_benefit_period="TO65",
     idi_occupation_class="M",
     cola_percent=0.0,
-    gross_premium=150.0,
-    benefit_amount=100.0,
+    gross_premium=10.0,
+    gross_premium_freq="MONTH",
+    benefit_amount=10.0,
     valuation_dt=pd.Timestamp("2020-03-31"),
     assumption_set="stat",
     withdraw_table="01CSO",
     net_benefit_method="NLP",
-    rop_return_frequency=10,
-    rop_return_percentage=0.5,
+    rop_return_freq=10,
+    rop_return_percent=0.5,
     rop_claims_paid=0,
     rop_future_claims_start_dt=pd.Timestamp("2005-02-10"),
 )
@@ -73,7 +75,17 @@ output
 An audit of the model is ran by calling the `audit` method shown below.
 
 ```{code-cell} ipython3
-model.audit("Audit-ROPDeterministicPolicyModel.xlsx")
+model.audit("Audit-ValAlrRopPRM.xlsx")
 ```
 
-The audit file can be downloaded {download}`here.<./Audit-ROPDeterministicPolicyModel.xlsx>`
+The audit file can be downloaded {download}`here.<./Audit-ValAlrRopPRM.xlsx>`
+
+## Projection Model
+
+### Documentation
+
+To be completed.
+
+### Usage
+
+To be completed.
