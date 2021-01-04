@@ -4,7 +4,7 @@ import pytest
 import pandas as pd
 
 from footings.audit import AuditConfig, AuditStepConfig
-from footings_idi_model.policy_models import ValDlrBasePM
+from footings_idi_model.policy_models import ValDlrBasePBM
 from footings.test_tools import assert_footings_files_equal
 
 CASES = [
@@ -57,10 +57,12 @@ def test_dlr_deterministic_base(case, tempdir):
             show_metadata=False,
         ),
     )
-    ValDlrBasePM(**parameters).audit(test_file, config=config)
+    ValDlrBasePBM(**parameters).audit(test_file, config=config)
     exlcude_list = exlcude_list = [
-        "*/RUN_DATE_TIME/",
-        "*/MODEL_VERSION/",
-        "*/LAST_COMMIT/",
+        "*RUN_DATE_TIME",
+        "*MODEL_VERSION",
+        "*LAST_COMMIT",
     ]
-    assert_footings_files_equal(test_file, expected_file, exclude_keys=exlcude_list)
+    assert_footings_files_equal(
+        test_file, expected_file, tolerance=0.01, exclude_keys=exlcude_list
+    )
