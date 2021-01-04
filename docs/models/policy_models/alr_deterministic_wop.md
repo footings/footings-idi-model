@@ -13,7 +13,7 @@ execution:
 ---
 
 
-# ALR - Deterministic - WOP Rider
+# Active - Deterministic - WOP Rider
 
 ## Valuation Model
 

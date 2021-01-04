@@ -13,23 +13,23 @@ execution:
 ---
 
 
-# ALR - Deterministic - SIS Rider
+# Active - Deterministic - SIS Rider
 
 ## Valuation Model
 
 ### Documentation
 
 ```{eval-rst}
-.. autoclass:: footings_idi_model.policy_models.ValAlrSisPRM
+.. autoclass:: footings_idi_model.policy_models.AValSisRPM
 ```
 
 ### Usage
 
 ```{code-cell} ipython3
 import pandas as pd
-from footings_idi_model.policy_models import ValAlrSisPRM
+from footings_idi_model.policy_models import AValSisRPM
 
-model = ValAlrSisPRM(
+model = AValSisRPM(
     policy_id="policy-1",
     gender="M",
     tobacco_usage="N",
@@ -71,10 +71,10 @@ output
 An audit of the model is ran by calling the `audit` method shown below.
 
 ```{code-cell} ipython3
-model.audit("Audit-ValAlrSisPRM.xlsx")
+model.audit("Audit-AValSisRPM.xlsx")
 ```
 
-The audit file can be downloaded {download}`here.<./Audit-ValAlrSisPRM.xlsx>`
+The audit file can be downloaded {download}`here.<./Audit-AValSisRPM.xlsx>`
 
 ## Projection Model
 

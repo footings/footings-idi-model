@@ -13,23 +13,23 @@ execution:
 ---
 
 
-# ALR - Deterministic - Base
+# Active - Deterministic - Base
 
 ## Valuation Model
 
 ### Documentation
 
 ```{eval-rst}
-.. autoclass:: footings_idi_model.policy_models.ValAlrBasePBM
+.. autoclass:: footings_idi_model.policy_models.AValBasePM
 ```
 
 ### Usage
 
 ```{code-cell} ipython3
 import pandas as pd
-from footings_idi_model.policy_models import ValAlrBasePBM
+from footings_idi_model.policy_models import AValBasePM
 
-model = ValAlrBasePBM(
+model = AValBasePM(
     policy_id="policy-1",
     gender="M",
     tobacco_usage="N",
@@ -71,10 +71,10 @@ output
 An audit of the model is ran by calling the `audit` method shown below.
 
 ```{code-cell} ipython3
-model.audit("Audit-ValAlrBasePBM.xlsx")
+model.audit("Audit-AValBasePM.xlsx")
 ```
 
-The audit file can be downloaded {download}`here.<./Audit-ValAlrBasePBM.xlsx>`
+The audit file can be downloaded {download}`here.<./Audit-AValBasePM.xlsx>`
 
 ## Projection Model
 

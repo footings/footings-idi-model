@@ -4,7 +4,7 @@ import pytest
 import pandas as pd
 
 from footings.audit import AuditConfig, AuditStepConfig
-from footings_idi_model.policy_models import ValDlrSisPRM
+from footings_idi_model.policy_models import DValResRPM
 from footings.test_tools import assert_footings_files_equal
 
 CASES = [
@@ -25,6 +25,7 @@ CASES = [
             "idi_diagnosis_grp": "AG",
             "idi_occupation_class": "M",
             "cola_percent": 0.0,
+            "residual_benefit_percent": 0.5,
             "benefit_amount": 100.0,
         },
     ),
@@ -38,7 +39,7 @@ def tempdir(tmpdir_factory):
 
 
 @pytest.mark.parametrize("case", CASES, ids=[x[0] for x in CASES])
-def test_dlr_deterministic_cola(case, tempdir):
+def test_dlr_deterministic_res(case, tempdir):
     name, parameters = case
     test_file = tempdir.join(f"test-{name}.json")
     expected_file = os.path.join(
@@ -57,7 +58,7 @@ def test_dlr_deterministic_cola(case, tempdir):
             show_metadata=False,
         ),
     )
-    ValDlrSisPRM(**parameters).audit(test_file, config=config)
+    DValResRPM(**parameters).audit(test_file, config=config)
     exlcude_list = exlcude_list = [
         "*RUN_DATE_TIME",
         "*MODEL_VERSION",

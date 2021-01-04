@@ -13,23 +13,23 @@ execution:
 ---
 
 
-# ALR - Deterministic - ROP Rider
+# Active - Deterministic - ROP Rider
 
 ## Valuation Model
 
 ### Documentation
 
 ```{eval-rst}
-.. autoclass:: footings_idi_model.policy_models.ValAlrRopPRM
+.. autoclass:: footings_idi_model.policy_models.AValRopRPM
 ```
 
 ### Usage
 
 ```{code-cell} ipython3
 import pandas as pd
-from footings_idi_model.policy_models import ValAlrRopPRM
+from footings_idi_model.policy_models import AValRopRPM
 
-model = ValAlrRopPRM(
+model = AValRopRPM(
     policy_id="policy-1",
     gender="M",
     tobacco_usage="N",
@@ -75,10 +75,10 @@ output
 An audit of the model is ran by calling the `audit` method shown below.
 
 ```{code-cell} ipython3
-model.audit("Audit-ValAlrRopPRM.xlsx")
+model.audit("Audit-AValRopRPM.xlsx")
 ```
 
-The audit file can be downloaded {download}`here.<./Audit-ValAlrRopPRM.xlsx>`
+The audit file can be downloaded {download}`here.<./Audit-AValRopRPM.xlsx>`
 
 ## Projection Model
 

@@ -55,8 +55,8 @@ def test_disabled_lives_deterministic_model(case, tempdir):
     )
     DisabledLivesDeterministicModel(**parameters).audit(test_file, config=config)
     exlcude_list = exlcude_list = [
-        "*/RUN_DATE_TIME/",
-        "*/MODEL_VERSION/",
-        "*/LAST_COMMIT/",
+        "*RUN_DATE_TIME",
+        "*MODEL_VERSION",
+        "*LAST_COMMIT",
     ]
     assert_footings_files_equal(test_file, expected_file, exclude_keys=exlcude_list)

@@ -13,23 +13,23 @@ execution:
 ---
 
 
-# ALR - Deterministic - COLA Rider
+# Active - Deterministic - COLA Rider
 
 ## Valuation  Model
 
 ### Documentation
 
 ```{eval-rst}
-.. autoclass:: footings_idi_model.policy_models.ValAlrColaPRM
+.. autoclass:: footings_idi_model.policy_models.AValColaRPM
 ```
 
 ### Usage
 
 ```{code-cell} ipython3
 import pandas as pd
-from footings_idi_model.policy_models import ValAlrColaPRM
+from footings_idi_model.policy_models import AValColaRPM
 
-model = ValAlrColaPRM(
+model = AValColaRPM(
     policy_id="policy-1",
     gender="M",
     tobacco_usage="N",
@@ -71,10 +71,10 @@ output
 An audit of the model is ran by calling the `audit` method shown below.
 
 ```{code-cell} ipython3
-model.audit("Audit-ValAlrColaPRM.xlsx")
+model.audit("Audit-AValColaRPM.xlsx")
 ```
 
-The audit file can be downloaded {download}`here.<./Audit-ValAlrColaPRM.xlsx>`
+The audit file can be downloaded {download}`here.<./Audit-AValColaRPM.xlsx>`
 
 ## Projection Model
 

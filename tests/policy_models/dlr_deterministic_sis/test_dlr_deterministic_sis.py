@@ -4,7 +4,7 @@ import pytest
 import pandas as pd
 
 from footings.audit import AuditConfig, AuditStepConfig
-from footings_idi_model.policy_models import ValDlrBasePBM
+from footings_idi_model.policy_models import DValSisRPM
 from footings.test_tools import assert_footings_files_equal
 
 CASES = [
@@ -38,7 +38,7 @@ def tempdir(tmpdir_factory):
 
 
 @pytest.mark.parametrize("case", CASES, ids=[x[0] for x in CASES])
-def test_dlr_deterministic_base(case, tempdir):
+def test_dlr_deterministic_cola(case, tempdir):
     name, parameters = case
     test_file = tempdir.join(f"test-{name}.json")
     expected_file = os.path.join(
@@ -57,12 +57,10 @@ def test_dlr_deterministic_base(case, tempdir):
             show_metadata=False,
         ),
     )
-    ValDlrBasePBM(**parameters).audit(test_file, config=config)
+    DValSisRPM(**parameters).audit(test_file, config=config)
     exlcude_list = exlcude_list = [
         "*RUN_DATE_TIME",
         "*MODEL_VERSION",
         "*LAST_COMMIT",
     ]
-    assert_footings_files_equal(
-        test_file, expected_file, tolerance=0.01, exclude_keys=exlcude_list
-    )
+    assert_footings_files_equal(test_file, expected_file, exclude_keys=exlcude_list)

@@ -13,23 +13,23 @@ execution:
 ---
 
 
-# DLR - Deterministic - CAT Rider
+# Disabled - Deterministic - CAT Rider
 
 ## Valuation Model
 
 ### Documentation
 
 ```{eval-rst}
-.. autoclass:: footings_idi_model.policy_models.ValDlrCatPRM
+.. autoclass:: footings_idi_model.policy_models.DValCatRPM
 ```
 
 ### Usage
 
 ```{code-cell} ipython3
 import pandas as pd
-from footings_idi_model.policy_models import ValDlrCatPRM
+from footings_idi_model.policy_models import DValCatRPM
 
-model = ValDlrCatPRM(
+model = DValCatRPM(
     policy_id="policy-1",
     claim_id="claim-1",
     gender="M",
@@ -67,10 +67,10 @@ output
 An audit of the model is ran by calling the `audit` method shown below.
 
 ```{code-cell} ipython3
-model.audit("Audit-ValDlrCatPRM.xlsx")
+model.audit("Audit-DValCatRPM.xlsx")
 ```
 
-The audit file can be downloaded {download}`here.<./Audit-ValDlrCatPRM.xlsx>`
+The audit file can be downloaded {download}`here.<./Audit-DValCatRPM.xlsx>`
 
 
 ## Projection Model

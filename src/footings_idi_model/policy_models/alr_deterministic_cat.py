@@ -1,10 +1,10 @@
 from footings import model, def_meta
-from .alr_deterministic_base import ValAlrBasePBM, STEPS
-from .dlr_deterministic_cat import ValDlrCatPRM, STEPS as CC_STEPS
+from .alr_deterministic_base import AValBasePM, STEPS
+from .dlr_deterministic_cat import DValCatRPM, STEPS as CC_STEPS
 
 
 @model(steps=CC_STEPS)
-class _ActiveLifeCATClaimCostModel(ValDlrCatPRM):
+class _ActiveLifeCATClaimCostModel(DValCatRPM):
     """Base model used to calculate claim cost for active lives."""
 
     model_mode = def_meta(
@@ -15,10 +15,10 @@ class _ActiveLifeCATClaimCostModel(ValDlrCatPRM):
 
 
 @model(steps=STEPS)
-class ValAlrCatPRM(ValAlrBasePBM):
+class AValCatRPM(AValBasePM):
     """The active life reserve (ALR) valuation model for the catastrophic (CAT) policy rider.
 
-    This model is a child of the `ValAlrBasePBM` with the only change being the model mode is
+    This model is a child of the `AValBasePM` with the only change being the model mode is
     changed from ALR to ALRCAT. This is to notify the model to calculate a different set of
     claim termination rates.
     """
@@ -31,5 +31,5 @@ class ValAlrCatPRM(ValAlrBasePBM):
 
 
 @model
-class ProjAlrCatPRM(ValAlrBasePBM):
+class AProjCatRPM(AValBasePM):
     pass

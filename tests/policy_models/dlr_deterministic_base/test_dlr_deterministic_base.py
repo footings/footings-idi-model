@@ -4,36 +4,28 @@ import pytest
 import pandas as pd
 
 from footings.audit import AuditConfig, AuditStepConfig
-from footings_idi_model.policy_models import ValAlrRopPRM
+from footings_idi_model.policy_models import DValBasePM
 from footings.test_tools import assert_footings_files_equal
 
 CASES = [
     (
         "test_1",
         {
-            "assumption_set": "stat",
             "valuation_dt": pd.Timestamp("2005-02-10"),
+            "assumption_set": "stat",
             "policy_id": "M1",
+            "claim_id": "M1C1",
             "gender": "M",
-            "tobacco_usage": "N",
             "birth_dt": pd.Timestamp("1970-02-10"),
-            "policy_start_dt": pd.Timestamp("2005-02-10"),
-            "policy_end_dt": pd.Timestamp("2037-02-10"),
+            "incurred_dt": pd.Timestamp("2005-02-10"),
+            "termination_dt": pd.Timestamp("2037-02-10"),
             "elimination_period": 90,
-            "idi_market": "INDV",
             "idi_contract": "AS",
             "idi_benefit_period": "TO67",
+            "idi_diagnosis_grp": "AG",
             "idi_occupation_class": "M",
             "cola_percent": 0.0,
-            "withdraw_table": "01CSO",
-            "gross_premium": 10.0,
-            "gross_premium_freq": "MONTH",
-            "benefit_amount": 10.0,
-            "net_benefit_method": "PT2",
-            "rop_return_freq": 10,
-            "rop_return_percent": 0.5,
-            "rop_claims_paid": 0,
-            "rop_future_claims_start_dt": pd.Timestamp("2005-02-10"),
+            "benefit_amount": 100.0,
         },
     ),
 ]
@@ -46,7 +38,7 @@ def tempdir(tmpdir_factory):
 
 
 @pytest.mark.parametrize("case", CASES, ids=[x[0] for x in CASES])
-def test_alr_deterministic_rop(case, tempdir):
+def test_dlr_deterministic_base(case, tempdir):
     name, parameters = case
     test_file = tempdir.join(f"test-{name}.json")
     expected_file = os.path.join(
@@ -65,6 +57,12 @@ def test_alr_deterministic_rop(case, tempdir):
             show_metadata=False,
         ),
     )
-    ValAlrRopPRM(**parameters).audit(test_file, config=config)
-    exlcude_list = ["*RUN_DATE_TIME", "*MODEL_VERSION", "*LAST_COMMIT"]
-    assert_footings_files_equal(test_file, expected_file, exclude_keys=exlcude_list)
+    DValBasePM(**parameters).audit(test_file, config=config)
+    exlcude_list = exlcude_list = [
+        "*RUN_DATE_TIME",
+        "*MODEL_VERSION",
+        "*LAST_COMMIT",
+    ]
+    assert_footings_files_equal(
+        test_file, expected_file, tolerance=0.01, exclude_keys=exlcude_list
+    )

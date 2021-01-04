@@ -13,23 +13,23 @@ execution:
 ---
 
 
-# ALR - Deterministic - Residual Rider
+# Active - Deterministic - Residual Rider
 
 ## Valuation  Model
 
 ### Documentation
 
 ```{eval-rst}
-.. autoclass:: footings_idi_model.policy_models.ValAlrResPRM
+.. autoclass:: footings_idi_model.policy_models.AValResRPM
 ```
 
 ### Usage
 
 ```{code-cell} ipython3
 import pandas as pd
-from footings_idi_model.policy_models import ValAlrResPRM
+from footings_idi_model.policy_models import AValResRPM
 
-model = ValAlrResPRM(
+model = AValResRPM(
     policy_id="policy-1",
     gender="M",
     tobacco_usage="N",
@@ -72,10 +72,10 @@ output
 An audit of the model is ran by calling the `audit` method shown below.
 
 ```{code-cell} ipython3
-model.audit("Audit-ValAlrResPRM.xlsx")
+model.audit("Audit-AValResRPM.xlsx")
 ```
 
-The audit file can be downloaded {download}`here.<./Audit-ValAlrResPRM.xlsx>`
+The audit file can be downloaded {download}`here.<./Audit-AValResRPM.xlsx>`
 
 ## Projection Model
 

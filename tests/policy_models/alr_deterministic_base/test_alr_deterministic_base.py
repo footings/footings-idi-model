@@ -4,7 +4,7 @@ import pytest
 import pandas as pd
 
 from footings.audit import AuditConfig, AuditStepConfig
-from footings_idi_model.policy_models import ValAlrBasePBM
+from footings_idi_model.policy_models import AValBasePM
 from footings.test_tools import assert_footings_files_equal
 
 CASES = [
@@ -61,6 +61,6 @@ def test_alr_deterministic_base(case, tempdir):
             show_metadata=False,
         ),
     )
-    ValAlrBasePBM(**parameters).audit(test_file, config=config)
+    AValBasePM(**parameters).audit(test_file, config=config)
     exlcude_list = ["*RUN_DATE_TIME", "*MODEL_VERSION", "*LAST_COMMIT"]
     assert_footings_files_equal(test_file, expected_file, exclude_keys=exlcude_list)

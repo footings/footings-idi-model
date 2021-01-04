@@ -4,7 +4,7 @@ import pytest
 import pandas as pd
 
 from footings.audit import AuditConfig, AuditStepConfig
-from footings_idi_model.policy_models import ValAlrResPRM
+from footings_idi_model.policy_models import AValCatRPM
 from footings.test_tools import assert_footings_files_equal
 
 CASES = [
@@ -30,7 +30,6 @@ CASES = [
             "gross_premium": 25.0,
             "gross_premium_freq": "MONTH",
             "benefit_amount": 200.0,
-            "residual_benefit_percent": 0.5,
         },
     ),
 ]
@@ -43,7 +42,7 @@ def tempdir(tmpdir_factory):
 
 
 @pytest.mark.parametrize("case", CASES, ids=[x[0] for x in CASES])
-def test_alr_deterministic_res(case, tempdir):
+def test_alr_deterministic_cat(case, tempdir):
     name, parameters = case
     test_file = tempdir.join(f"test-{name}.json")
     expected_file = os.path.join(
@@ -62,6 +61,6 @@ def test_alr_deterministic_res(case, tempdir):
             show_metadata=False,
         ),
     )
-    ValAlrResPRM(**parameters).audit(test_file, config=config)
+    AValCatRPM(**parameters).audit(test_file, config=config)
     exlcude_list = ["*RUN_DATE_TIME", "*MODEL_VERSION", "*LAST_COMMIT"]
     assert_footings_files_equal(test_file, expected_file, exclude_keys=exlcude_list)
