@@ -14,8 +14,11 @@ def get_ctr_table(assumption_set, model_mode, model_object):
     Parameters
     ----------
     assumption_set : str
-    mode : str
-    frame : pd.DataFrame
+        The name of the assumption set to use. Either stat, gaap, or best-estimate.
+    model_mode : str
+        The model mode to use. Either ALR, DLR, ALRCAT, or DLRCAT.
+    model_object
+        The model object to pass.
 
     Returns
     -------
@@ -26,55 +29,9 @@ def get_ctr_table(assumption_set, model_mode, model_object):
     raise NotImplementedError(msg)
 
 
-@get_ctr_table.register(assumption_set="gaap", model_mode="DLR")
-def _(model_object):
-    return _stat_gaap_ctr(
-        frame=model_object.frame,
-        idi_benefit_period=model_object.idi_benefit_period,
-        idi_contract=model_object.idi_contract,
-        idi_diagnosis_grp=model_object.idi_diagnosis_grp,
-        idi_occupation_class=model_object.idi_occupation_class,
-        gender=model_object.gender,
-        elimination_period=model_object.elimination_period,
-        age_incurred=model_object.age_incurred,
-        cola_percent=model_object.cola_percent,
-        model_mode=model_object.model_mode,
-    )
-
-
-@get_ctr_table.register(assumption_set="gaap", model_mode="DLRCAT")
-def _(model_object):
-    return _stat_gaap_ctr(
-        frame=model_object.frame,
-        idi_benefit_period=model_object.idi_benefit_period,
-        idi_contract=model_object.idi_contract,
-        idi_diagnosis_grp=model_object.idi_diagnosis_grp,
-        idi_occupation_class=model_object.idi_occupation_class,
-        gender=model_object.gender,
-        elimination_period=model_object.elimination_period,
-        age_incurred=model_object.age_incurred,
-        cola_percent=model_object.cola_percent,
-        model_mode=model_object.model_mode,
-    )
-
-
-@get_ctr_table.register(assumption_set="stat", model_mode="DLR")
-def _(model_object):
-    return _stat_gaap_ctr(
-        frame=model_object.frame,
-        idi_benefit_period=model_object.idi_benefit_period,
-        idi_contract=model_object.idi_contract,
-        idi_diagnosis_grp=model_object.idi_diagnosis_grp,
-        idi_occupation_class=model_object.idi_occupation_class,
-        gender=model_object.gender,
-        elimination_period=model_object.elimination_period,
-        age_incurred=model_object.age_incurred,
-        cola_percent=model_object.cola_percent,
-        model_mode=model_object.model_mode,
-    )
-
-
-@get_ctr_table.register(assumption_set="stat", model_mode="DLRCAT")
+@get_ctr_table.register(
+    assumption_set=("stat", "gaap"), model_mode=("ALR", "DLR", "ALRCAT", "DLRCAT")
+)
 def _(model_object):
     return _stat_gaap_ctr(
         frame=model_object.frame,
