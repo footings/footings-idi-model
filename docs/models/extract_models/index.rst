@@ -1,6 +1,6 @@
 
-Population Models
-=================
+Extract Models
+==============
 
 .. toctree::
 

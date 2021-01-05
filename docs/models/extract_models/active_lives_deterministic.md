@@ -18,14 +18,14 @@ execution:
 ## Documentation
 
 ```{eval-rst}
-.. autoclass:: footings_idi_model.population_models.ActiveLivesDeterministicModel
+.. autoclass:: footings_idi_model.extract_models.ActiveLivesDeterministicModel
 ```
 
 ## Usage
 
 ```{code-cell} ipython3
 import pandas as pd
-from footings_idi_model.population_models import ActiveLivesDeterministicModel
+from footings_idi_model.extract_models import ActiveLivesDeterministicModel
 ```
 
 ```{code-cell} ipython3
