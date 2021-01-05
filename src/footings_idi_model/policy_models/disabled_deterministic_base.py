@@ -38,6 +38,7 @@ OUTPUT_COLS = [
     "SOURCE",
     "POLICY_ID",
     "CLAIM_ID",
+    "COVERAGE_ID",
     "DATE_BD",
     "DATE_ED",
     "DURATION_YEAR",
@@ -274,6 +275,7 @@ class DValBasePMD(DLRBasePMD):
             RUN_DATE_TIME=self.run_date_time,
             MODEL_VERSION=self.model_version,
             LAST_COMMIT=self.last_commit,
+            COVERAGE_ID=self.coverage_id,
         )[OUTPUT_COLS]
 
 

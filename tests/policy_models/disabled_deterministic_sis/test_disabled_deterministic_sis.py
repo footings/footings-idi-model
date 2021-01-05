@@ -15,6 +15,7 @@ CASES = [
             "assumption_set": "stat",
             "policy_id": "M1",
             "claim_id": "M1C1",
+            "coverage_id": "SIS",
             "gender": "M",
             "birth_dt": pd.Timestamp("1970-02-10"),
             "incurred_dt": pd.Timestamp("2005-02-10"),
