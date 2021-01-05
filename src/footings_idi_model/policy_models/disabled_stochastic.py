@@ -5,7 +5,7 @@ from footings import model, step
 
 from ..assumptions.stat_gaap.interest import get_interest_rate
 from ..attributes import param_n_simulations, param_seed
-from .disabled_deterministic_base import DValBasePM
+from .disabled_deterministic_base import DValBasePMD
 
 OUTPUT_COLS = [
     "MODEL_VERSION",
@@ -39,7 +39,7 @@ STEPS = [
 
 
 @model(steps=STEPS)
-class DLRStochasticPolicyModel(DValBasePM):
+class DLRStochasticPolicyModel(DValBasePMD):
     """A policy model to calculate disabled life reserves (DLRs) using the 2013 individual
     disability insurance (IDI) valuation standard.
     The model is configured to use different assumptions sets - stat, gaap, or best-estimate.

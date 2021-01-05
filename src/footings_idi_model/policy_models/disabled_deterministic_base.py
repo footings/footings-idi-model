@@ -15,7 +15,7 @@ from footings.model_tools import (
 from ..assumptions.stat_gaap.interest import get_interest_rate
 from ..assumptions.get_claim_term_rates import get_ctr_table
 
-from .disabled_base import DLRBasePM
+from .disabled_base import DLRBasePMD
 
 #########################################################################################
 # Create frame
@@ -73,7 +73,7 @@ STEPS = [
 
 
 @model(steps=STEPS)
-class DValBasePM(DLRBasePM):
+class DValBasePMD(DLRBasePMD):
     """The disabled life reserve (DLR) valuation model for the base policy."""
 
     # intermediate objects
@@ -278,5 +278,5 @@ class DValBasePM(DLRBasePM):
 
 
 @model
-class DProjBasePM(DLRBasePM):
+class DProjBasePMD(DLRBasePMD):
     pass

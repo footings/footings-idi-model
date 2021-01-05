@@ -1,12 +1,12 @@
 from footings import model, def_meta
-from .disabled_deterministic_base import DValBasePM, STEPS
+from .disabled_deterministic_base import DValBasePMD, STEPS
 
 
 @model(steps=STEPS)
-class DValCatRPM(DValBasePM):
+class DValCatRPMD(DValBasePMD):
     """The disabled life reserve (DLR) valuation model for the catastrophic (CAT) policy rider.
 
-    This model is a child of the `DValBasePM` with the only change being the model mode is
+    This model is a child of the `DValBasePMD` with the only change being the model mode is
     changed from DLR to DLRCAT. This is to notify the model to calculate a different set of
     claim termination rates.
     """
@@ -19,5 +19,5 @@ class DValCatRPM(DValBasePM):
 
 
 @model
-class DProjCatRPM(DValBasePM):
+class DProjCatRPMD(DValBasePMD):
     pass

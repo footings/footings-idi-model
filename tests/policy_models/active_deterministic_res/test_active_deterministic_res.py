@@ -4,7 +4,7 @@ import pytest
 import pandas as pd
 
 from footings.audit import AuditConfig, AuditStepConfig
-from footings_idi_model.policy_models import AValResRPM
+from footings_idi_model.policy_models import AValResRPMD
 from footings.test_tools import assert_footings_files_equal
 
 CASES = [
@@ -62,6 +62,6 @@ def test_active_deterministic_res(case, tempdir):
             show_metadata=False,
         ),
     )
-    AValResRPM(**parameters).audit(test_file, config=config)
+    AValResRPMD(**parameters).audit(test_file, config=config)
     exlcude_list = ["*RUN_DATE_TIME", "*MODEL_VERSION", "*LAST_COMMIT"]
     assert_footings_files_equal(test_file, expected_file, exclude_keys=exlcude_list)

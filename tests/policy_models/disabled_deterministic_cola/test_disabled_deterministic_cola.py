@@ -4,7 +4,7 @@ import pytest
 import pandas as pd
 
 from footings.audit import AuditConfig, AuditStepConfig
-from footings_idi_model.policy_models import DValColaRPM
+from footings_idi_model.policy_models import DValColaRPMD
 from footings.test_tools import assert_footings_files_equal
 
 CASES = [
@@ -57,7 +57,7 @@ def test_disabled_deterministic_cola(case, tempdir):
             show_metadata=False,
         ),
     )
-    DValColaRPM(**parameters).audit(test_file, config=config)
+    DValColaRPMD(**parameters).audit(test_file, config=config)
     exlcude_list = exlcude_list = [
         "*RUN_DATE_TIME",
         "*MODEL_VERSION",

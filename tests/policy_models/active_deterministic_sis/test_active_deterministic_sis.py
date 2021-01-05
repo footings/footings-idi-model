@@ -4,7 +4,7 @@ import pytest
 import pandas as pd
 
 from footings.audit import AuditConfig, AuditStepConfig
-from footings_idi_model.policy_models import AValSisRPM
+from footings_idi_model.policy_models import AValSisRPMD
 from footings.test_tools import assert_footings_files_equal
 
 CASES = [
@@ -61,6 +61,6 @@ def test_active_deterministic_sis(case, tempdir):
             show_metadata=False,
         ),
     )
-    AValSisRPM(**parameters).audit(test_file, config=config)
+    AValSisRPMD(**parameters).audit(test_file, config=config)
     exlcude_list = ["*RUN_DATE_TIME", "*MODEL_VERSION", "*LAST_COMMIT"]
     assert_footings_files_equal(test_file, expected_file, exclude_keys=exlcude_list)

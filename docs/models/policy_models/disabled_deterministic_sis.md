@@ -20,16 +20,16 @@ execution:
 ### Documentation
 
 ```{eval-rst}
-.. autoclass:: footings_idi_model.policy_models.DValSisRPM
+.. autoclass:: footings_idi_model.policy_models.DValSisRPMD
 ```
 
 ### Usage
 
 ```{code-cell} ipython3
 import pandas as pd
-from footings_idi_model.policy_models import DValSisRPM
+from footings_idi_model.policy_models import DValSisRPMD
 
-model = DValSisRPM(
+model = DValSisRPMD(
     policy_id="policy-1",
     claim_id="claim-1",
     gender="M",
@@ -67,10 +67,10 @@ output
 An audit of the model is ran by calling the `audit` method shown below.
 
 ```{code-cell} ipython3
-model.audit("Audit-DValSisRPM.xlsx")
+model.audit("Audit-DValSisRPMD.xlsx")
 ```
 
-The audit file can be downloaded {download}`here.<./Audit-DValSisRPM.xlsx>`
+The audit file can be downloaded {download}`here.<./Audit-DValSisRPMD.xlsx>`
 
 
 ## Projection Model

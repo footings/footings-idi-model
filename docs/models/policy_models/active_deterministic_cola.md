@@ -20,16 +20,16 @@ execution:
 ### Documentation
 
 ```{eval-rst}
-.. autoclass:: footings_idi_model.policy_models.AValColaRPM
+.. autoclass:: footings_idi_model.policy_models.AValColaRPMD
 ```
 
 ### Usage
 
 ```{code-cell} ipython3
 import pandas as pd
-from footings_idi_model.policy_models import AValColaRPM
+from footings_idi_model.policy_models import AValColaRPMD
 
-model = AValColaRPM(
+model = AValColaRPMD(
     policy_id="policy-1",
     gender="M",
     tobacco_usage="N",
@@ -71,10 +71,10 @@ output
 An audit of the model is ran by calling the `audit` method shown below.
 
 ```{code-cell} ipython3
-model.audit("Audit-AValColaRPM.xlsx")
+model.audit("Audit-AValColaRPMD.xlsx")
 ```
 
-The audit file can be downloaded {download}`here.<./Audit-AValColaRPM.xlsx>`
+The audit file can be downloaded {download}`here.<./Audit-AValColaRPMD.xlsx>`
 
 ## Projection Model
 

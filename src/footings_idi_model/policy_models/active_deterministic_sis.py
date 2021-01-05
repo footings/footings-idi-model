@@ -1,10 +1,10 @@
 from footings import model, def_meta
-from .active_deterministic_base import AValBasePM, STEPS
-from .disabled_deterministic_sis import DValSisRPM, STEPS as CC_STEPS
+from .active_deterministic_base import AValBasePMD, STEPS
+from .disabled_deterministic_sis import DValSisRPMD, STEPS as CC_STEPS
 
 
 @model(steps=CC_STEPS)
-class _ActiveLifeSISClaimCostModel(DValSisRPM):
+class _ActiveLifeSISClaimCostModel(DValSisRPMD):
     """Base model used to calculate claim cost for active lives."""
 
     model_mode = def_meta(
@@ -15,11 +15,11 @@ class _ActiveLifeSISClaimCostModel(DValSisRPM):
 
 
 @model(steps=STEPS)
-class AValSisRPM(AValBasePM):
+class AValSisRPMD(AValBasePMD):
     """The active life reserve (ALR) valuation model for the cost of living adjustment
     (COLA) policy rider.
 
-    This model is a child of the `AValBasePM` with the only changes being the addition
+    This model is a child of the `AValBasePMD` with the only changes being the addition
     of a step `_get_sis_probability` to lookup the probability of the policy holder
     qualifying for SIS (i.e., sis_probability) when modeling claim cost and the
     benefit amount is equal to the (1 - SIS prbability) x benefit amount.
@@ -33,5 +33,5 @@ class AValSisRPM(AValBasePM):
 
 
 @model
-class AProjSisRPM(AValBasePM):
+class AProjSisRPMD(AValBasePMD):
     pass

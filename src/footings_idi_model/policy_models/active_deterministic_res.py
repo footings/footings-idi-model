@@ -1,10 +1,10 @@
 from footings import model, def_parameter, def_meta
-from .active_deterministic_base import AValBasePM, STEPS
-from .disabled_deterministic_res import DValResRPM, STEPS as CC_STEPS
+from .active_deterministic_base import AValBasePMD, STEPS
+from .disabled_deterministic_res import DValResRPMD, STEPS as CC_STEPS
 
 
 @model(steps=CC_STEPS)
-class _ActiveLifeRESClaimCostModel(DValResRPM):
+class _ActiveLifeRESClaimCostModel(DValResRPMD):
     """Base model used to calculate claim cost for active lives."""
 
     model_mode = def_meta(
@@ -15,11 +15,11 @@ class _ActiveLifeRESClaimCostModel(DValResRPM):
 
 
 @model(steps=STEPS)
-class AValResRPM(AValBasePM):
+class AValResRPMD(AValBasePMD):
     """The active life reserve (ALR) valuation model for the cost of living adjustment
     (COLA) policy rider.
 
-    This model is a child of the `AValBasePM` with the only change being how the monthly
+    This model is a child of the `AValBasePMD` with the only change being how the monthly
     benefit is calculated. The base model uses the benefit amount passed while this model
     calculates the benefit as the benefit amount x residual benefit percent.
     """
@@ -36,5 +36,5 @@ class AValResRPM(AValBasePM):
 
 
 @model
-class AProjResRPM(AValBasePM):
+class AProjResRPMD(AValBasePMD):
     pass

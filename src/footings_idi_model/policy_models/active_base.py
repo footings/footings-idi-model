@@ -20,7 +20,7 @@ from ..schemas import active_base_schema
 
 
 @model
-class ALRBasePM:
+class ALRBasePMD:
     """ALR base parameters, sensitivities, and meta."""
 
     # parameters

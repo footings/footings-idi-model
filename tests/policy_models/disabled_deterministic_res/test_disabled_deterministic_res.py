@@ -4,7 +4,7 @@ import pytest
 import pandas as pd
 
 from footings.audit import AuditConfig, AuditStepConfig
-from footings_idi_model.policy_models import DValResRPM
+from footings_idi_model.policy_models import DValResRPMD
 from footings.test_tools import assert_footings_files_equal
 
 CASES = [
@@ -58,7 +58,7 @@ def test_disabled_deterministic_res(case, tempdir):
             show_metadata=False,
         ),
     )
-    DValResRPM(**parameters).audit(test_file, config=config)
+    DValResRPMD(**parameters).audit(test_file, config=config)
     exlcude_list = exlcude_list = [
         "*RUN_DATE_TIME",
         "*MODEL_VERSION",

@@ -8,7 +8,7 @@ from footings import (
 )
 from footings.model_tools import frame_add_exposure
 
-from .active_deterministic_base import AValBasePM, AProjBasePM
+from .active_deterministic_base import AValBasePMD, AProjBasePMD
 from ..schemas import active_rider_schema
 
 
@@ -37,11 +37,11 @@ STEPS = [
 
 
 @model(steps=STEPS)
-class AValRopRPM(AValBasePM):
+class AValRopRPMD(AValBasePMD):
     """The active life reserve (ALR) valuation model for the return of premium (ROP)
     policy rider.
 
-    This model is a child of the `AValBasePM` with a few changes -
+    This model is a child of the `AValBasePMD` with a few changes -
 
     - The addition of rop_return_freq, rop_return_percent and rop_claims_paid parameters.
     - The addition of steps _calculate_rop_intervals, _calculate_rop_future_claims, and
@@ -184,5 +184,5 @@ class AValRopRPM(AValBasePM):
 
 
 @model
-class AProjRopRPM(AProjBasePM):
+class AProjRopRPMD(AProjBasePMD):
     pass

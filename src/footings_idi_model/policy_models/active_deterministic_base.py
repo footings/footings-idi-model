@@ -14,8 +14,8 @@ from footings import (
 )
 from footings.model_tools import create_frame, calculate_age, frame_add_weights
 
-from .active_base import ALRBasePM
-from .disabled_deterministic_base import DValBasePM, STEPS as CC_STEPS
+from .active_base import ALRBasePMD
+from .disabled_deterministic_base import DValBasePMD, STEPS as CC_STEPS
 from ..assumptions.get_withdraw_rates import get_withdraw_rates
 from ..assumptions.get_incidence_rates import get_incidence_rates
 from ..assumptions.stat_gaap.interest import get_interest_rate
@@ -75,7 +75,7 @@ STEPS = [
 
 
 @model(steps=CC_STEPS)
-class _ActiveLifeBaseClaimCostModel(DValBasePM):
+class _ActiveLifeBaseClaimCostModel(DValBasePMD):
     """Base model used to calculate claim cost for active lives."""
 
     model_mode = def_meta(
@@ -86,7 +86,7 @@ class _ActiveLifeBaseClaimCostModel(DValBasePM):
 
 
 @model(steps=STEPS)
-class AValBasePM(ALRBasePM):
+class AValBasePMD(ALRBasePMD):
     """The active life reserve (ALR) valuation model for the base policy."""
 
     # meta
@@ -432,5 +432,5 @@ class AValBasePM(ALRBasePM):
 
 
 @model
-class AProjBasePM(ALRBasePM):
+class AProjBasePMD(ALRBasePMD):
     pass

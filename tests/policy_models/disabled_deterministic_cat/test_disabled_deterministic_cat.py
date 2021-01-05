@@ -4,7 +4,7 @@ import pytest
 import pandas as pd
 
 from footings.audit import AuditConfig, AuditStepConfig
-from footings_idi_model.policy_models import DValCatRPM
+from footings_idi_model.policy_models import DValCatRPMD
 from footings.test_tools import assert_footings_files_equal
 
 CASES = [
@@ -57,7 +57,7 @@ def test_disabled_deterministic_cat(case, tempdir):
             show_metadata=False,
         ),
     )
-    DValCatRPM(**parameters).audit(test_file, config=config)
+    DValCatRPMD(**parameters).audit(test_file, config=config)
     exlcude_list = exlcude_list = [
         "*RUN_DATE_TIME",
         "*MODEL_VERSION",

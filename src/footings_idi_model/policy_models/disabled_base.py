@@ -16,7 +16,7 @@ from footings_idi_model.schemas import disabled_base_schema
 
 
 @model
-class DLRBasePM:
+class DLRBasePMD:
     """DLR base parameters, sensitivities, and meta."""
 
     # parameters
