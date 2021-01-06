@@ -1,4 +1,4 @@
-from footings import model, step, def_parameter
+from footings import model, step, def_parameter, def_meta
 from footings.model_tools import frame_add_exposure
 from .disabled_deterministic_base import DValBasePMD, STEPS
 
@@ -16,6 +16,11 @@ class DValResRPMD(DValBasePMD):
     residual_benefit_percent = def_parameter(
         dtype=float,
         description="The residual benefit percent to multiply by the benefit amount.",
+    )
+    coverage_id = def_meta(
+        meta="RES",
+        dtype=str,
+        description="The coverage id which recognizes base policy vs riders.",
     )
 
     @step(

@@ -24,14 +24,22 @@ class AValResRPMD(AValBasePMD):
     calculates the benefit as the benefit amount x residual benefit percent.
     """
 
+    # parameter
     residual_benefit_percent = def_parameter(
         dtype=float,
         description="The residual benefit percent to multiply by the benefit amount.",
     )
+
+    # meta
     claim_cost_model = def_meta(
         meta=_ActiveLifeRESClaimCostModel,
         dtype=callable,
         description="The claim cost model used.",
+    )
+    coverage_id = def_meta(
+        meta="RES",
+        dtype=str,
+        description="The coverage id which recognizes base policy vs riders.",
     )
 
 

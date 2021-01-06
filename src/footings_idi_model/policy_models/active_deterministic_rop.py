@@ -2,6 +2,7 @@ import pandas as pd
 
 from footings import (
     def_parameter,
+    def_meta,
     def_intermediate,
     step,
     model,
@@ -48,12 +49,22 @@ class AValRopRPMD(AValBasePMD):
     _calculate_rop_exp_payments steps which are used in the calculation of benefit cost.
     """
 
+    # additional parameters
     rop_return_freq = def_parameter(**active_rider_schema["rop_return_freq"])
     rop_return_percent = def_parameter(**active_rider_schema["rop_return_percent"])
     rop_claims_paid = def_parameter(**active_rider_schema["rop_claims_paid"])
     rop_future_claims_start_dt = def_parameter(
         **active_rider_schema["rop_future_claims_start_dt"]
     )
+
+    # meta
+    coverage_id = def_meta(
+        meta="ROP",
+        dtype=str,
+        description="The coverage id which recognizes base policy vs riders.",
+    )
+
+    # intermediates
     rop_future_claims_frame = def_intermediate(dtype=pd.DataFrame, description="")
     rop_expected_claim_payments = def_intermediate(dtype=pd.DataFrame, description="")
 

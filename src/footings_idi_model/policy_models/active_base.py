@@ -29,6 +29,7 @@ class ALRBasePMD:
     net_benefit_method = param_net_benefit_method
     withdraw_table = param_withdraw_table
     policy_id = def_parameter(**active_base_schema["policy_id"])
+    coverage_id = def_parameter(**active_base_schema["coverage_id"])
     gender = def_parameter(**active_base_schema["gender"])
     birth_dt = def_parameter(**active_base_schema["birth_dt"])
     tobacco_usage = def_parameter(**active_base_schema["tobacco_usage"])

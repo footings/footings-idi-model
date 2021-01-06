@@ -1,4 +1,4 @@
-from footings import model, step, def_intermediate
+from footings import model, step, def_meta, def_intermediate
 from footings.model_tools import frame_add_exposure
 from .disabled_deterministic_base import DValBasePMD
 
@@ -32,6 +32,11 @@ class DValSisRPMD(DValBasePMD):
     sis_probability = def_intermediate(
         dtype=float,
         description="The probability of policyholder qualifying for social insurance supplement benefit.",
+    )
+    coverage_id = def_meta(
+        meta="SIS",
+        dtype=str,
+        description="The coverage id which recognizes base policy vs riders.",
     )
 
     @step(name="Get SIS Probability", uses=[], impacts=["sis_probability"])

@@ -13,30 +13,34 @@ execution:
 ---
 
 
-# Disabled Lives Deterministic Model
+# Disabled Lives - Deterministic
 
-## Documentation
+## Valuation Model
+### Documentation
 
 ```{eval-rst}
-.. autoclass:: footings_idi_model.extract_models.DisabledLivesDeterministicModel
+.. autoclass:: footings_idi_model.extract_models.DisabledLivesValEMD
 ```
 
-## Usage
+### Usage
 
 ```{code-cell} ipython3
 import pandas as pd
-from footings_idi_model.extract_models import DisabledLivesDeterministicModel
+from footings_idi_model.extract_models import DisabledLivesValEMD
 ```
 
 ```{code-cell} ipython3
-extract = pd.read_csv("disabled-lives-sample.csv")
+extract = pd.read_csv(
+  "disabled-lives-sample.csv",
+  parse_dates=["BIRTH_DT", "INCURRED_DT", "TERMINATION_DT"]
+)
 extract
 ```
 
 ```{code-cell} ipython3
-model = DisabledLivesDeterministicModel(
+model = DisabledLivesValEMD(
     extract=extract,
-    valuation_dt=pd.Timestamp("2020-03-31"),
+    valuation_dt=pd.Timestamp("2020-01-01"),
     assumption_set="stat",
 )
 ```
@@ -48,7 +52,7 @@ To run the model call the `run` method which returns -
 - policies that error out when the model runs (`run`).
 
 ```{code-cell} ipython3
-errors, projected, time0 = model.run()
+projected, time0, errors = model.run()
 ```
 
 Note the `time0` and `projected` have the same columns with `time0` being a subset of the `projected` frame.
@@ -72,7 +76,17 @@ errors
 An audit of the model is ran by calling the `audit` method as shown below.
 
 ```{code-cell} ipython3
-model.audit("Audit-DisabledLivesDeterministicModel.xlsx")
+model.audit("Audit-DisabledLivesValEMD.xlsx")
 ```
 
-The audit file can be downloaded {download}`here.<./Audit-DisabledLivesDeterministicModel.xlsx>`
+The audit file can be downloaded {download}`here.<./Audit-DisabledLivesValEMD.xlsx>`
+
+## Projection Model
+
+### Documentation
+
+To be completed.
+
+### Usage
+
+To be completed.

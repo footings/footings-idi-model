@@ -1,6 +1,7 @@
 import pandas as pd
 
 from footings import (
+    def_meta,
     def_return,
     def_intermediate,
     step,
@@ -76,6 +77,12 @@ STEPS = [
 @model(steps=STEPS)
 class DValBasePMD(DLRBasePMD):
     """The disabled life reserve (DLR) valuation model for the base policy."""
+
+    coverage_id = def_meta(
+        meta="BASE",
+        dtype=str,
+        description="The coverage id which recognizes base policy vs riders.",
+    )
 
     # intermediate objects
     age_incurred = def_intermediate(

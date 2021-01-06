@@ -4,7 +4,7 @@ import pytest
 import pandas as pd
 
 from footings.audit import AuditConfig, AuditStepConfig
-from footings_idi_model.extract_models import ActiveLivesDeterministicModel
+from footings_idi_model.extract_models import ActiveLivesValEMD
 from footings.test_tools import assert_footings_files_equal
 
 extract_base_file = os.path.join(
@@ -38,7 +38,8 @@ CASES = [
 
 @pytest.fixture(scope="session")
 def tempdir(tmpdir_factory):
-    return tmpdir_factory.mktemp("active-lives")
+    dir_name = os.path.dirname(__file__).split("/")[-1]
+    return tmpdir_factory.mktemp(dir_name)
 
 
 @pytest.mark.parametrize("case", CASES, ids=[x[0] for x in CASES])
@@ -46,7 +47,7 @@ def test_active_lives_model(case, tempdir):
     name, parameters = case
     test_file = tempdir.join(f"test-{name}.json")
     expected_file = os.path.join(
-        "tests", "extract_models", "active_lives", "audit_files", f"expected-{name}.json",
+        os.path.dirname(__file__), "audit_files", f"expected-{name}.json",
     )
     config = AuditConfig(
         show_signature=False,
@@ -61,7 +62,7 @@ def test_active_lives_model(case, tempdir):
             show_metadata=False,
         ),
     )
-    ActiveLivesDeterministicModel(**parameters).audit(test_file, config=config)
+    ActiveLivesValEMD(**parameters).audit(test_file, config=config)
     exlcude_list = exlcude_list = [
         "*RUN_DATE_TIME",
         "*MODEL_VERSION",

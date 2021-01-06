@@ -32,6 +32,7 @@ OUTPUT_COLS = [
     "RUN_DATE_TIME",
     "SOURCE",
     "POLICY_ID",
+    "COVERAGE_ID",
     "DATE_BD",
     "DATE_ED",
     "DURATION_YEAR",
@@ -94,6 +95,11 @@ class AValBasePMD(ALRBasePMD):
         meta=_ActiveLifeBaseClaimCostModel,
         dtype=callable,
         description="The claim cost model used.",
+    )
+    coverage_id = def_meta(
+        meta="BASE",
+        dtype=str,
+        description="The coverage id which recognizes base policy vs riders.",
     )
 
     # intermediate objects
@@ -427,6 +433,7 @@ class AValBasePMD(ALRBasePMD):
             LAST_COMMIT=self.last_commit,
             RUN_DATE_TIME=self.run_date_time,
             SOURCE=self.__class__.__qualname__,
+            COVERAGE_ID=self.coverage_id,
             BENEFIT_AMOUNT=self.benefit_amount,
         )[OUTPUT_COLS]
 

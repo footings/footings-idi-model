@@ -1,4 +1,4 @@
-from footings import model, step
+from footings import model, step, def_meta
 from footings.model_tools import frame_add_exposure
 from .disabled_deterministic_base import DValBasePMD, STEPS
 
@@ -12,6 +12,12 @@ class DValColaRPMD(DValBasePMD):
     benefit is calculated. The base model uses the benefit amount passed while this model
     calculate the benefit with cola less the original benefit amount.
     """
+
+    coverage_id = def_meta(
+        meta="COLA",
+        dtype=str,
+        description="The coverage id which recognizes base policy vs riders.",
+    )
 
     @step(
         name="Calculate Monthly Benefits",

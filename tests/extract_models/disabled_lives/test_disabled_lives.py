@@ -4,7 +4,7 @@ import pytest
 import pandas as pd
 
 from footings.audit import AuditConfig, AuditStepConfig
-from footings_idi_model.extract_models import DisabledLivesDeterministicModel
+from footings_idi_model.extract_models import DisabledLivesValEMD
 from footings.test_tools import assert_footings_files_equal
 
 extract_file = os.path.join("tests", "extract_models", "disabled_lives", "extract.csv")
@@ -26,19 +26,16 @@ CASES = [
 
 @pytest.fixture(scope="session")
 def tempdir(tmpdir_factory):
-    return tmpdir_factory.mktemp("disabled-lives")
+    dir_name = os.path.dirname(__file__).split("/")[-1]
+    return tmpdir_factory.mktemp(dir_name)
 
 
 @pytest.mark.parametrize("case", CASES, ids=[x[0] for x in CASES])
-def test_disabled_lives_deterministic_model(case, tempdir):
+def test_disabled_lives_deterministic(case, tempdir):
     name, parameters = case
     test_file = tempdir.join(f"test-{name}.json")
     expected_file = os.path.join(
-        "tests",
-        "extract_models",
-        "disabled_lives",
-        "audit_files",
-        f"expected-{name}.json",
+        os.path.dirname(__file__), "audit_files", f"expected-{name}.json",
     )
     config = AuditConfig(
         show_signature=False,
@@ -53,7 +50,7 @@ def test_disabled_lives_deterministic_model(case, tempdir):
             show_metadata=False,
         ),
     )
-    DisabledLivesDeterministicModel(**parameters).audit(test_file, config=config)
+    DisabledLivesValEMD(**parameters).audit(test_file, config=config)
     exlcude_list = exlcude_list = [
         "*RUN_DATE_TIME",
         "*MODEL_VERSION",

@@ -28,6 +28,11 @@ class AValCatRPMD(AValBasePMD):
         dtype=callable,
         description="The claim cost model used.",
     )
+    coverage_id = def_meta(
+        meta="CAT",
+        dtype=str,
+        description="The coverage id which recognizes base policy vs riders.",
+    )
 
 
 @model
