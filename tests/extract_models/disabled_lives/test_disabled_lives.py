@@ -2,10 +2,25 @@ import os
 
 import pytest
 import pandas as pd
+import ray
 
 from footings.audit import AuditConfig, AuditStepConfig
 from footings_idi_model.extract_models import DisabledLivesValEMD
 from footings.test_tools import assert_footings_files_equal
+
+
+@pytest.fixture
+def shutdown_only():
+    yield None
+    # The code after the yield will run as teardown code.
+    ray.shutdown()
+
+
+@pytest.fixture(scope="session")
+def tempdir(tmpdir_factory):
+    dir_name = os.path.dirname(__file__).split("/")[-1]
+    return tmpdir_factory.mktemp(dir_name)
+
 
 extract_file = os.path.join("tests", "extract_models", "disabled_lives", "extract.csv")
 extract = pd.read_csv(
@@ -16,7 +31,7 @@ CASES = [
     (
         "test_1",
         {
-            "extract": extract[:5],
+            "extract": extract,
             "valuation_dt": pd.Timestamp("2020-03-31"),
             "assumption_set": "stat",
         },
@@ -24,14 +39,9 @@ CASES = [
 ]
 
 
-@pytest.fixture(scope="session")
-def tempdir(tmpdir_factory):
-    dir_name = os.path.dirname(__file__).split("/")[-1]
-    return tmpdir_factory.mktemp(dir_name)
-
-
 @pytest.mark.parametrize("case", CASES, ids=[x[0] for x in CASES])
-def test_disabled_lives_deterministic(case, tempdir):
+def test_disabled_lives_deterministic(case, tempdir, shutdown_only):
+    ray.init(num_cpus=1)
     name, parameters = case
     test_file = tempdir.join(f"test-{name}.json")
     expected_file = os.path.join(

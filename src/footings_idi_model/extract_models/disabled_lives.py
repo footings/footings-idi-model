@@ -1,6 +1,4 @@
 import pandas as pd
-from dask import compute
-from dask.delayed import delayed
 
 from footings import (
     def_return,
@@ -9,7 +7,8 @@ from footings import (
     step,
     model,
 )
-from footings.model_tools import make_foreach_model, convert_to_records
+from footings.model_tools import convert_to_records
+from footings.parallel_tools.ray import create_ray_foreach_model
 
 from ..attributes import (
     param_assumption_set,
@@ -20,21 +19,36 @@ from ..attributes import (
     modifier_ctr,
     modifier_interest,
 )
-from ..policy_models.disabled_deterministic_base import (
+from ..policy_models import (
     DValBasePMD,
-    OUTPUT_COLS as DETERMINSTIC_COLS,
+    DValCatRPMD,
+    DValColaRPMD,
+    DValResRPMD,
+    DValSisRPMD,
 )
-from ..schemas import disabled_life_columns
+from ..policy_models.disabled_deterministic_base import OUTPUT_COLS as DETERMINSTIC_COLS
 
+models = {
+    "BASE": DValBasePMD,
+    "CAT": DValCatRPMD,
+    "COLA": DValColaRPMD,
+    "RES": DValResRPMD,
+    "SIS": DValSisRPMD,
+}
 
-foreach_model = make_foreach_model(
-    DValBasePMD,
+foreach_model = create_ray_foreach_model(
+    models,
     iterator_name="records",
-    iterator_params=[col.lower() for col in disabled_life_columns],
-    iterator_key=("policy_id", "claim_id", "coverage_id",),
+    iterator_keys=("policy_id", "coverage_id",),
+    mapped_keys=("coverage_id",),
+    pass_iterator_keys=("policy_id",),
+    constant_params=(
+        "valuation_dt",
+        "assumption_set",
+        "interest_modifier",
+        "ctr_modifier",
+    ),
     success_wrap=pd.concat,
-    delay=delayed,
-    compute=compute,
 )
 
 
