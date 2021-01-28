@@ -1,17 +1,16 @@
 import pandas as pd
-from dask import compute
-from dask.delayed import delayed
 
-from footings import (
+from footings.model import (
     def_return,
     def_parameter,
     def_intermediate,
     step,
     model,
 )
-from footings.model_tools import make_foreach_model, convert_to_records
+from footings.model_tools import convert_to_records
+from footings.parallel_tools.dask import create_dask_foreach_jig
 
-from ..attributes import (
+from ..shared import (
     param_assumption_set,
     param_valuation_dt,
     param_net_benefit_method,
@@ -23,21 +22,42 @@ from ..attributes import (
     modifier_incidence,
     modifier_withdraw,
 )
-from ..policy_models.active_deterministic_base import (
+from ..policy_models import (
     AValBasePMD,
-    OUTPUT_COLS as DETERMINSTIC_COLS,
+    AValCatRPMD,
+    AValColaRPMD,
+    AValResRPMD,
+    AValRopRPMD,
+    AValSisRPMD,
 )
-from ..schemas import active_lives_base_columns
+from ..data import ActiveLivesValOutput  # ActiveLivesBaseExtract,
 
 
-foreach_model = make_foreach_model(
-    AValBasePMD,
+models = {
+    "BASE": AValBasePMD,
+    "CAT": AValCatRPMD,
+    "COLA": AValColaRPMD,
+    "RES": AValResRPMD,
+    "ROP": AValRopRPMD,
+    "SIS": AValSisRPMD,
+}
+
+foreach_model = create_dask_foreach_jig(
+    models,
     iterator_name="records",
-    iterator_params=[col.lower() for col in active_lives_base_columns],
-    iterator_key=("policy_id", "coverage_id",),
+    iterator_keys=("policy_id", "coverage_id",),
+    mapped_keys=("coverage_id",),
+    pass_iterator_keys=("policy_id",),
+    constant_params=(
+        "valuation_dt",
+        "withdraw_table",
+        "assumption_set",
+        "net_benefit_method",
+        "interest_modifier",
+        "incidence_modifier",
+        "withdraw_modifier",
+    ),
     success_wrap=pd.concat,
-    delay=delayed,
-    compute=compute,
 )
 
 
@@ -97,6 +117,7 @@ class ActiveLivesValEMD:
     )
     def _run_foreach(self):
         """Foreach record run through respective policy model based on COVERAGE_ID value."""
+
         projected, errors = foreach_model(
             records=self.records,
             valuation_dt=self.valuation_dt,
@@ -108,7 +129,7 @@ class ActiveLivesValEMD:
             withdraw_modifier=self.withdraw_modifier,
         )
         if isinstance(projected, list):
-            projected = pd.DataFrame(columns=DETERMINSTIC_COLS)
+            projected = pd.DataFrame(columns=list(ActiveLivesValOutput.columns))
         self.projected = projected
         self.errors = errors
 

@@ -1,4 +1,4 @@
-from footings import model, def_meta
+from footings.model import model, def_meta
 from .disabled_deterministic_base import DValBasePMD, STEPS
 
 

@@ -6,7 +6,7 @@ import ray
 
 from footings.audit import AuditConfig, AuditStepConfig
 from footings_idi_model.extract_models import DisabledLivesValEMD
-from footings.test_tools import assert_footings_files_equal
+from footings.testing import assert_footings_files_equal
 
 
 @pytest.fixture
@@ -23,7 +23,7 @@ def tempdir(tmpdir_factory):
 
 
 extract_file = os.path.join("tests", "extract_models", "disabled_lives", "extract.csv")
-extract = pd.read_csv(
+base_extract = pd.read_csv(
     extract_file, parse_dates=["BIRTH_DT", "INCURRED_DT", "TERMINATION_DT"]
 )
 
@@ -31,7 +31,8 @@ CASES = [
     (
         "test_1",
         {
-            "extract": extract,
+            "base_extract": base_extract,
+            "rider_extract": pd.DataFrame(),
             "valuation_dt": pd.Timestamp("2020-03-31"),
             "assumption_set": "stat",
         },

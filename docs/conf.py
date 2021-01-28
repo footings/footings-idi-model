@@ -12,6 +12,7 @@
 import os
 import sys
 from footings_idi_model import __version__ as version
+from footings.data_dictionary import DataDictionary
 
 sys.path.insert(0, os.path.abspath("./.."))
 
@@ -35,7 +36,7 @@ extensions = [
     "sphinx.ext.intersphinx",
     "sphinx.ext.autosummary",
     "sphinx.ext.viewcode",
-    "footings.doc_tools",
+    "sphinx.ext.napoleon",
     "myst_nb",
 ]
 
@@ -44,8 +45,16 @@ autosummary_generate = True
 autosummary_generate_overwrite = True
 add_module_names = False
 
-# footings.doc_tools settings
-numpydoc_show_class_members = True
+# napoleonsettings
+napoleon_custom_sections = [
+    "Parameters",
+    "Sensitivities",
+    "Meta",
+    "Intermediates",
+    "Returns",
+    "Steps",
+    "Columns",
+]
 
 # myst_nb settings
 # jupyter_execute_notebooks = "cache"
@@ -83,3 +92,15 @@ html_theme_options = {
     "search_bar_position": "navbar",
     "search_bar_text": "Search this site...",
 }
+
+
+def exclude_data_dict_sigs(app, what, name, obj, options, signature, return_annotation):
+    if isinstance(obj, DataDictionary):
+        return None, None
+    if issubclass(obj, DataDictionary):
+        return None, None
+    return signature, return_annotation
+
+
+def setup(app):
+    app.connect("autodoc-process-signature", exclude_data_dict_sigs)

@@ -1,6 +1,6 @@
 import pandas as pd
 
-from footings import (
+from footings.model import (
     def_parameter,
     def_meta,
     def_intermediate,
@@ -10,7 +10,6 @@ from footings import (
 from footings.model_tools import frame_add_exposure
 
 from .active_deterministic_base import AValBasePMD, AProjBasePMD
-from ..schemas import active_rider_schema
 
 
 STEPS = [
@@ -50,11 +49,18 @@ class AValRopRPMD(AValBasePMD):
     """
 
     # additional parameters
-    rop_return_freq = def_parameter(**active_rider_schema["rop_return_freq"])
-    rop_return_percent = def_parameter(**active_rider_schema["rop_return_percent"])
-    rop_claims_paid = def_parameter(**active_rider_schema["rop_claims_paid"])
+    rop_return_freq = def_parameter(
+        dtype="int", description="The return of premium (ROP) frequency in years."
+    )
+    rop_return_percent = def_parameter(
+        dtype="float", description="The return of premium (ROP) percentage."
+    )
+    rop_claims_paid = def_parameter(
+        dtype="float", description="The return of premium (ROP) benefits paid."
+    )
     rop_future_claims_start_dt = def_parameter(
-        **active_rider_schema["rop_future_claims_start_dt"]
+        dtype="datetime64[ns]",
+        description="The return of premium (ROP) benefits paid end date.",
     )
 
     # meta

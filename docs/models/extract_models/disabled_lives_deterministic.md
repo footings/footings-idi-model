@@ -30,16 +30,17 @@ from footings_idi_model.extract_models import DisabledLivesValEMD
 ```
 
 ```{code-cell} ipython3
-extract = pd.read_csv(
+base_extract = pd.read_csv(
   "disabled-lives-sample.csv",
   parse_dates=["BIRTH_DT", "INCURRED_DT", "TERMINATION_DT"]
 )
-extract
+base_extract
 ```
 
 ```{code-cell} ipython3
 model = DisabledLivesValEMD(
-    extract=extract,
+    base_extract=base_extract,
+    rider_extract=pd.DataFrame(),
     valuation_dt=pd.Timestamp("2020-01-01"),
     assumption_set="stat",
 )

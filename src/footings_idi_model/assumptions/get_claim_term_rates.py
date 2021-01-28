@@ -1,4 +1,4 @@
-from footings import dispatch_function
+from footings.utils import dispatch_function
 from .stat_gaap.termination import _stat_gaap_ctr
 
 

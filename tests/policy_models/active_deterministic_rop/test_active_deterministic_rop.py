@@ -5,7 +5,7 @@ import pandas as pd
 
 from footings.audit import AuditConfig, AuditStepConfig
 from footings_idi_model.policy_models import AValRopRPMD
-from footings.test_tools import assert_footings_files_equal
+from footings.testing import assert_footings_files_equal
 
 CASES = [
     (
@@ -26,6 +26,7 @@ CASES = [
             "idi_occupation_class": "M",
             "cola_percent": 0.0,
             "withdraw_table": "01CSO",
+            "premium_pay_to_dt": pd.Timestamp("2005-02-10"),
             "gross_premium": 10.0,
             "gross_premium_freq": "MONTH",
             "benefit_amount": 10.0,

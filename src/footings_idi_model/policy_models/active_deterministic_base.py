@@ -5,7 +5,7 @@ from inspect import getfullargspec
 import numpy as np
 import pandas as pd
 
-from footings import (
+from footings.model import (
     model,
     step,
     def_meta,
@@ -14,44 +14,78 @@ from footings import (
 )
 from footings.model_tools import create_frame, calculate_age, frame_add_weights
 
-from .active_base import ALRBasePMD
 from .disabled_deterministic_base import DValBasePMD, STEPS as CC_STEPS
+from ..shared import (
+    param_assumption_set,
+    param_net_benefit_method,
+    param_valuation_dt,
+    param_withdraw_table,
+    meta_model_version,
+    meta_last_commit,
+    meta_run_date_time,
+    modifier_interest,
+    modifier_incidence,
+    modifier_withdraw,
+    modifier_ctr,
+)
 from ..assumptions.get_withdraw_rates import get_withdraw_rates
 from ..assumptions.get_incidence_rates import get_incidence_rates
 from ..assumptions.stat_gaap.interest import get_interest_rate
+from ..data import (
+    ActiveLivesBaseExtract,
+    # ActiveLivesRiderExtract,
+    ActiveLivesValOutput,
+    # ActiveLivesProjOutput,
+)
 
 
-def _assign_end_date(frame):
-    frame["DATE_ED"] = frame["DATE_BD"].shift(-1, fill_value=frame["DATE_BD"].iat[-1])
-    return frame[frame.index != max(frame.index)]
+#########################################################################################
+# Policy model parent (shared by both projection and valuation models)
+#########################################################################################
 
 
-OUTPUT_COLS = [
-    "MODEL_VERSION",
-    "LAST_COMMIT",
-    "RUN_DATE_TIME",
-    "SOURCE",
-    "POLICY_ID",
-    "COVERAGE_ID",
-    "DATE_BD",
-    "DATE_ED",
-    "DURATION_YEAR",
-    "LIVES_BD",
-    "LIVES_MD",
-    "LIVES_ED",
-    "DISCOUNT_BD",
-    "DISCOUNT_MD",
-    "DISCOUNT_ED",
-    "BENEFIT_AMOUNT",
-    "FINAL_INCIDENCE_RATE",
-    "BENEFIT_COST",
-    "PVFB",
-    "PVFNB",
-    "ALR_BD",
-    "ALR_ED",
-    "DATE_ALR",
-    "ALR",
-]
+@model
+class ALRBasePMD:
+    """ALR base parameters, sensitivities, and meta."""
+
+    # parameters
+    valuation_dt = param_valuation_dt
+    assumption_set = param_assumption_set
+    net_benefit_method = param_net_benefit_method
+    withdraw_table = param_withdraw_table
+    policy_id = ActiveLivesBaseExtract.def_parameter("POLICY_ID")
+    coverage_id = ActiveLivesBaseExtract.def_parameter("COVERAGE_ID")
+    gender = ActiveLivesBaseExtract.def_parameter("GENDER")
+    birth_dt = ActiveLivesBaseExtract.def_parameter("BIRTH_DT")
+    tobacco_usage = ActiveLivesBaseExtract.def_parameter("TOBACCO_USAGE")
+    policy_start_dt = ActiveLivesBaseExtract.def_parameter("POLICY_START_DT")
+    policy_end_dt = ActiveLivesBaseExtract.def_parameter("POLICY_END_DT")
+    elimination_period = ActiveLivesBaseExtract.def_parameter("ELIMINATION_PERIOD")
+    idi_market = ActiveLivesBaseExtract.def_parameter("IDI_MARKET")
+    idi_contract = ActiveLivesBaseExtract.def_parameter("IDI_CONTRACT")
+    idi_benefit_period = ActiveLivesBaseExtract.def_parameter("IDI_BENEFIT_PERIOD")
+    idi_occupation_class = ActiveLivesBaseExtract.def_parameter("IDI_OCCUPATION_CLASS")
+    cola_percent = ActiveLivesBaseExtract.def_parameter("COLA_PERCENT")
+    premium_pay_to_dt = ActiveLivesBaseExtract.def_parameter("PREMIUM_PAY_TO_DT")
+    gross_premium = ActiveLivesBaseExtract.def_parameter("GROSS_PREMIUM")
+    gross_premium_freq = ActiveLivesBaseExtract.def_parameter("GROSS_PREMIUM_FREQ")
+    benefit_amount = ActiveLivesBaseExtract.def_parameter("BENEFIT_AMOUNT")
+
+    # sensitivities
+    ctr_modifier = modifier_ctr
+    interest_modifier = modifier_interest
+    incidence_modifier = modifier_incidence
+    withdraw_modifier = modifier_withdraw
+
+    # meta
+    model_version = meta_model_version
+    last_commit = meta_last_commit
+    run_date_time = meta_run_date_time
+
+
+#########################################################################################
+# Valuation Policy Model - Base
+#########################################################################################
 
 
 STEPS = [
@@ -73,6 +107,11 @@ STEPS = [
     "_calculate_alr",
     "_to_output",
 ]
+
+
+def _assign_end_date(frame):
+    frame["DATE_ED"] = frame["DATE_BD"].shift(-1, fill_value=frame["DATE_BD"].iat[-1])
+    return frame[frame.index != max(frame.index)]
 
 
 @model(steps=CC_STEPS)
@@ -435,7 +474,12 @@ class AValBasePMD(ALRBasePMD):
             SOURCE=self.__class__.__qualname__,
             COVERAGE_ID=self.coverage_id,
             BENEFIT_AMOUNT=self.benefit_amount,
-        )[OUTPUT_COLS]
+        )[list(ActiveLivesValOutput.columns)]
+
+
+#########################################################################################
+# Projection Policy Model - Base
+#########################################################################################
 
 
 @model

@@ -1,7 +1,4 @@
-import numpy as np
-import pandas as pd
-from footings import dispatch_function
-
+from footings.utils import dispatch_function
 from .stat_gaap.withdraw import get_withdraw_table
 
 

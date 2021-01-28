@@ -5,7 +5,7 @@ import pandas as pd
 
 from footings.audit import AuditConfig, AuditStepConfig
 from footings_idi_model.policy_models import AValColaRPMD
-from footings.test_tools import assert_footings_files_equal
+from footings.testing import assert_footings_files_equal
 
 CASES = [
     (
@@ -27,6 +27,7 @@ CASES = [
             "idi_benefit_period": "TO67",
             "idi_occupation_class": "M",
             "cola_percent": 0.0,
+            "premium_pay_to_dt": pd.Timestamp("2005-02-10"),
             "gross_premium": 25.0,
             "gross_premium_freq": "MONTH",
             "benefit_amount": 200.0,

@@ -5,7 +5,7 @@ from functools import lru_cache
 import numpy as np
 import pandas as pd
 
-from footings.model_tools import once
+from footings.utils import once
 
 directory, filename = os.path.split(__file__)
 

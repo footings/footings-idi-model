@@ -5,7 +5,7 @@ import pandas as pd
 
 from footings.audit import AuditConfig, AuditStepConfig
 from footings_idi_model.policy_models import DValBasePMD
-from footings.test_tools import assert_footings_files_equal
+from footings.testing import assert_footings_files_equal
 
 CASES = [
     (

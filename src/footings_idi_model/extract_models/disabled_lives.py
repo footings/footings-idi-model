@@ -1,6 +1,6 @@
 import pandas as pd
 
-from footings import (
+from footings.model import (
     def_return,
     def_parameter,
     def_intermediate,
@@ -8,9 +8,9 @@ from footings import (
     model,
 )
 from footings.model_tools import convert_to_records
-from footings.parallel_tools.ray import create_ray_foreach_model
+from footings.parallel_tools.dask import create_dask_foreach_jig
 
-from ..attributes import (
+from ..shared import (
     param_assumption_set,
     param_valuation_dt,
     meta_model_version,
@@ -26,7 +26,12 @@ from ..policy_models import (
     DValResRPMD,
     DValSisRPMD,
 )
-from ..policy_models.disabled_deterministic_base import OUTPUT_COLS as DETERMINSTIC_COLS
+from ..data import (
+    # DisabledLivesBaseExtract,
+    DisabledLivesValOutput,
+    # DisabledLivesProjOutput,
+)
+
 
 models = {
     "BASE": DValBasePMD,
@@ -36,7 +41,7 @@ models = {
     "SIS": DValSisRPMD,
 }
 
-foreach_model = create_ray_foreach_model(
+foreach_model = create_dask_foreach_jig(
     models,
     iterator_name="records",
     iterator_keys=("policy_id", "coverage_id",),
@@ -61,7 +66,12 @@ class DisabledLivesValEMD:
     """
 
     # parameters
-    extract = def_parameter(dtype=pd.DataFrame, description="The disabled lives extract.")
+    base_extract = def_parameter(
+        dtype=pd.DataFrame, description="The base policy extract for disabled lives."
+    )
+    rider_extract = def_parameter(
+        dtype=pd.DataFrame, description="The rider extract for disabled lives."
+    )
     valuation_dt = param_valuation_dt
     assumption_set = param_assumption_set
 
@@ -88,10 +98,22 @@ class DisabledLivesValEMD:
     )
     errors = def_return(dtype=list, description="Any errors captured.")
 
-    @step(name="Create Records from Extract", uses=["extract"], impacts=["records"])
+    @step(
+        name="Create Records from Extracts",
+        uses=["base_extract", "rider_extract"],
+        impacts=["records"],
+    )
     def _create_records(self):
         """Turn extract into a list of records for each row in extract."""
-        self.records = convert_to_records(self.extract, column_case="lower")
+        frame = self.base_extract.copy()
+        del frame["IDI_MARKET"]
+        del frame["TOBACCO_USAGE"]
+        records = convert_to_records(frame, column_case="lower")
+        # for record in records:
+        #     if records["COVERAGE_ID"] in ["RES", "SIS"]:
+        #         pass
+
+        self.records = records
 
     @step(
         name="Run Records with Policy Models",
@@ -108,7 +130,7 @@ class DisabledLivesValEMD:
             ctr_modifier=self.ctr_modifier,
         )
         if isinstance(projected, list):
-            projected = pd.DataFrame(columns=DETERMINSTIC_COLS)
+            projected = pd.DataFrame(columns=list(DisabledLivesValOutput.columns))
         self.projected = projected
         self.errors = errors
 

@@ -1,10 +1,10 @@
 import pandas as pd
 import numpy as np
 
-from footings import model, step
+from footings.model import model, step
 
 from ..assumptions.stat_gaap.interest import get_interest_rate
-from ..attributes import param_n_simulations, param_seed
+from ..shared import param_n_simulations, param_seed
 from .disabled_deterministic_base import DValBasePMD
 
 OUTPUT_COLS = [

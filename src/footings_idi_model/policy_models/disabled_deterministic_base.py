@@ -1,6 +1,6 @@
 import pandas as pd
 
-from footings import (
+from footings.model import (
     def_meta,
     def_return,
     def_intermediate,
@@ -13,51 +13,69 @@ from footings.model_tools import (
     frame_add_exposure,
     frame_add_weights,
 )
+from ..shared import (
+    param_assumption_set,
+    param_valuation_dt,
+    meta_model_version,
+    meta_last_commit,
+    meta_run_date_time,
+    modifier_ctr,
+    modifier_interest,
+)
 from ..assumptions.stat_gaap.interest import get_interest_rate
 from ..assumptions.get_claim_term_rates import get_ctr_table
+from ..data import (
+    DisabledLivesBaseExtract,
+    # DisabledLivesRiderExtract,
+    DisabledLivesValOutput,
+    # DisabledLivesProjOutput,
+)
 
-from .disabled_base import DLRBasePMD
 
 #########################################################################################
-# Create frame
+# Policy model parent (shared by both projection and valuation models)
 #########################################################################################
 
 
-def _assign_end_date(frame):
-    frame["DATE_ED"] = frame["DATE_BD"].shift(-1, fill_value=frame["DATE_BD"].iat[-1])
-    return frame[frame.index != max(frame.index)]
+@model
+class DLRBasePMD:
+    """DLR base parameters, sensitivities, and meta."""
+
+    # parameters
+    valuation_dt = param_valuation_dt
+    assumption_set = param_assumption_set
+    policy_id = DisabledLivesBaseExtract.def_parameter("POLICY_ID")
+    claim_id = DisabledLivesBaseExtract.def_parameter("CLAIM_ID")
+    gender = DisabledLivesBaseExtract.def_parameter("GENDER")
+    birth_dt = DisabledLivesBaseExtract.def_parameter("BIRTH_DT")
+    incurred_dt = DisabledLivesBaseExtract.def_parameter("INCURRED_DT")
+    termination_dt = DisabledLivesBaseExtract.def_parameter("TERMINATION_DT")
+    elimination_period = DisabledLivesBaseExtract.def_parameter("ELIMINATION_PERIOD")
+    idi_contract = DisabledLivesBaseExtract.def_parameter("IDI_CONTRACT")
+    idi_benefit_period = DisabledLivesBaseExtract.def_parameter("IDI_BENEFIT_PERIOD")
+    idi_diagnosis_grp = DisabledLivesBaseExtract.def_parameter("IDI_DIAGNOSIS_GRP")
+    idi_occupation_class = DisabledLivesBaseExtract.def_parameter("IDI_OCCUPATION_CLASS")
+    cola_percent = DisabledLivesBaseExtract.def_parameter("COLA_PERCENT")
+    benefit_amount = DisabledLivesBaseExtract.def_parameter("BENEFIT_AMOUNT")
+
+    # sensitivities
+    ctr_modifier = modifier_ctr
+    interest_modifier = modifier_interest
+
+    # meta
+    model_version = meta_model_version
+    last_commit = meta_last_commit
+    run_date_time = meta_run_date_time
+    model_mode = def_meta(
+        meta="DLR",
+        dtype=str,
+        description="Mode used in CTR calculation as it varies whether policy is active or disabled.",
+    )
 
 
-def _filter_frame(frame, valuation_dt):
-    return frame[frame["DATE_ED"] >= valuation_dt]
-
-
-OUTPUT_COLS = [
-    "MODEL_VERSION",
-    "LAST_COMMIT",
-    "RUN_DATE_TIME",
-    "SOURCE",
-    "POLICY_ID",
-    "CLAIM_ID",
-    "COVERAGE_ID",
-    "DATE_BD",
-    "DATE_ED",
-    "DURATION_YEAR",
-    "DURATION_MONTH",
-    "BENEFIT_AMOUNT",
-    "FINAL_CTR",
-    "LIVES_BD",
-    "LIVES_MD",
-    "LIVES_ED",
-    "DISCOUNT_BD",
-    "DISCOUNT_MD",
-    "DISCOUNT_ED",
-    "PVFB_BD",
-    "PVFB_ED",
-    "DATE_DLR",
-    "DLR",
-]
-
+#########################################################################################
+# Valuation Policy Model - Base
+#########################################################################################
 
 STEPS = [
     "_calculate_age_incurred",
@@ -72,6 +90,15 @@ STEPS = [
     "_calculate_dlr",
     "_to_output",
 ]
+
+
+def _assign_end_date(frame):
+    frame["DATE_ED"] = frame["DATE_BD"].shift(-1, fill_value=frame["DATE_BD"].iat[-1])
+    return frame[frame.index != max(frame.index)]
+
+
+def _filter_frame(frame, valuation_dt):
+    return frame[frame["DATE_ED"] >= valuation_dt]
 
 
 @model(steps=STEPS)
@@ -283,7 +310,13 @@ class DValBasePMD(DLRBasePMD):
             MODEL_VERSION=self.model_version,
             LAST_COMMIT=self.last_commit,
             COVERAGE_ID=self.coverage_id,
-        )[OUTPUT_COLS]
+            # set column order
+        )[list(DisabledLivesValOutput.columns)]
+
+
+#########################################################################################
+# Projection Policy Model - Base
+#########################################################################################
 
 
 @model

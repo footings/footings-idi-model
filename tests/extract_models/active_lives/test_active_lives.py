@@ -2,10 +2,25 @@ import os
 
 import pytest
 import pandas as pd
+import ray
 
 from footings.audit import AuditConfig, AuditStepConfig
 from footings_idi_model.extract_models import ActiveLivesValEMD
-from footings.test_tools import assert_footings_files_equal
+from footings.testing import assert_footings_files_equal
+
+
+@pytest.fixture
+def shutdown_only():
+    yield None
+    # The code after the yield will run as teardown code.
+    ray.shutdown()
+
+
+@pytest.fixture(scope="session")
+def tempdir(tmpdir_factory):
+    dir_name = os.path.dirname(__file__).split("/")[-1]
+    return tmpdir_factory.mktemp(dir_name)
+
 
 extract_base_file = os.path.join(
     "tests", "extract_models", "active_lives", "extract-base.csv"
@@ -36,14 +51,9 @@ CASES = [
 ]
 
 
-@pytest.fixture(scope="session")
-def tempdir(tmpdir_factory):
-    dir_name = os.path.dirname(__file__).split("/")[-1]
-    return tmpdir_factory.mktemp(dir_name)
-
-
 @pytest.mark.parametrize("case", CASES, ids=[x[0] for x in CASES])
-def test_active_lives_model(case, tempdir):
+def test_active_lives_model(case, tempdir, shutdown_only):
+    ray.init(num_cpus=1)
     name, parameters = case
     test_file = tempdir.join(f"test-{name}.json")
     expected_file = os.path.join(

@@ -11,4 +11,4 @@ dependencies:
   - pydata-sphinx-theme
   - pip:
     - myst-nb
-    - footings>=0.8.0
+    - footings>=0.9.1

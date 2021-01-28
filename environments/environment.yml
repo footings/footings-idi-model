@@ -8,4 +8,4 @@ dependencies:
   - pandas
   - dask
   - pip:
-    - footings>=0.8.0
+    - footings>=0.9.1

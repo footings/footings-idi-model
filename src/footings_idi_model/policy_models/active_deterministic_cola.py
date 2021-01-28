@@ -1,4 +1,4 @@
-from footings import model, def_meta
+from footings.model import model, def_meta
 from .active_deterministic_base import AValBasePMD, STEPS
 from .disabled_deterministic_cola import DValColaRPMD, STEPS as CC_STEPS
 

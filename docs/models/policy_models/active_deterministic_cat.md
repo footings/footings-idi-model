@@ -42,6 +42,7 @@ model = AValCatRPMD(
     idi_benefit_period="TO65",
     idi_occupation_class="M",
     cola_percent=0.0,
+    premium_pay_to_dt=pd.Timestamp("2020-03-31"),
     gross_premium=10.0,
     gross_premium_freq="MONTH",
     benefit_amount=100.0,
