@@ -22,17 +22,23 @@ def tempdir(tmpdir_factory):
     return tmpdir_factory.mktemp(dir_name)
 
 
-extract_file = os.path.join("tests", "extract_models", "disabled_lives", "extract.csv")
-base_extract = pd.read_csv(
-    extract_file, parse_dates=["BIRTH_DT", "INCURRED_DT", "TERMINATION_DT"]
+base_extract_file = os.path.join(
+    "tests", "extract_models", "disabled_lives", "disabled-lives-sample-base.csv"
 )
+base_extract = pd.read_csv(
+    base_extract_file, parse_dates=["BIRTH_DT", "INCURRED_DT", "TERMINATION_DT"]
+)
+rider_extract_file = os.path.join(
+    "tests", "extract_models", "disabled_lives", "disabled-lives-sample-riders.csv"
+)
+rider_extract = pd.read_csv(rider_extract_file)
 
 CASES = [
     (
         "test_1",
         {
             "base_extract": base_extract,
-            "rider_extract": pd.DataFrame(),
+            "rider_extract": rider_extract,
             "valuation_dt": pd.Timestamp("2020-03-31"),
             "assumption_set": "stat",
         },

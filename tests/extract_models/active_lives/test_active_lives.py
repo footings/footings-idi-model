@@ -23,7 +23,7 @@ def tempdir(tmpdir_factory):
 
 
 extract_base_file = os.path.join(
-    "tests", "extract_models", "active_lives", "extract-base.csv"
+    "tests", "extract_models", "active_lives", "active-lives-sample-base.csv"
 )
 base_extract = pd.read_csv(
     extract_base_file,
@@ -31,7 +31,7 @@ base_extract = pd.read_csv(
 )
 
 extract_rider_file = os.path.join(
-    "tests", "extract_models", "active_lives", "extract-riders.csv"
+    "tests", "extract_models", "active_lives", "active-lives-sample-riders.csv"
 )
 rider_extract = pd.read_csv(extract_rider_file)
 

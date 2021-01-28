@@ -67,7 +67,7 @@ tags: [hide-input]
 ---
 import pandas as pd
 base_extract = pd.read_csv(
-  "../../models/extract_models/disabled-lives-sample.csv",
+  "../../models/extract_models/disabled-lives-sample-base.csv",
   parse_dates=["BIRTH_DT", "INCURRED_DT", "TERMINATION_DT"]
 )
 base_extract
@@ -77,4 +77,17 @@ base_extract
 
 ```{eval-rst}
 .. autodata:: footings_idi_model.data.DisabledLivesRiderExtract
+```
+
+### Sample Data
+
+```{code-cell} ipython3
+---
+tags: [hide-input]
+---
+import pandas as pd
+rider_extract = pd.read_csv(
+  "../../models/extract_models/disabled-lives-sample-riders.csv",
+)
+rider_extract
 ```

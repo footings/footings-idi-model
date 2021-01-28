@@ -109,11 +109,26 @@ class DisabledLivesValEMD:
         del frame["IDI_MARKET"]
         del frame["TOBACCO_USAGE"]
         records = convert_to_records(frame, column_case="lower")
-        # for record in records:
-        #     if records["COVERAGE_ID"] in ["RES", "SIS"]:
-        #         pass
+        idx_cols = ["POLICY_ID", "CLAIM_ID", "COVERAGE_ID"]
+        rider_data = self.rider_extract.pivot(
+            index=idx_cols, columns="RIDER_ATTRIBUTE", values="VALUE"
+        ).to_dict(orient="index")
 
-        self.records = records
+        def update_record(record):
+            key = (
+                record["policy_id"],
+                record["claim_id"],
+                record["coverage_id"],
+            )
+            kwargs_add = rider_data.get(key, None)
+            if kwargs_add is not None:
+                return {**record, **kwargs_add}
+            return record
+
+        self.records = [
+            record if record["coverage_id"] not in ["RES"] else update_record(record)
+            for record in records
+        ]
 
     @step(
         name="Run Records with Policy Models",

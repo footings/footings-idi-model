@@ -108,7 +108,26 @@ class ActiveLivesValEMD:
     @step(name="Create Records from Extract", uses=["base_extract"], impacts=["records"])
     def _create_records(self):
         """Turn extract into a list of records for each row in extract."""
-        self.records = convert_to_records(self.base_extract, column_case="lower")
+        records = convert_to_records(self.base_extract, column_case="lower")
+        idx_cols = ["POLICY_ID", "COVERAGE_ID"]
+        rider_data = self.rider_extract.pivot(
+            index=idx_cols, columns="RIDER_ATTRIBUTE", values="VALUE"
+        ).to_dict(orient="index")
+
+        def update_record(record):
+            key = (
+                record["policy_id"],
+                record["coverage_id"],
+            )
+            kwargs_add = rider_data.get(key, None)
+            if kwargs_add is not None:
+                return {**record, **kwargs_add}
+            return record
+
+        self.records = [
+            record if record["coverage_id"] not in ["ROP"] else update_record(record)
+            for record in records
+        ]
 
     @step(
         name="Run Records with Policy Models",
