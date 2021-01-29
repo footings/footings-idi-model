@@ -1,6 +1,6 @@
 from .active_lives_data import (
     ActiveLivesBaseExtract,
-    ActiveLivesRiderExtract,
+    ActiveLivesROPRiderExtract,
     ActiveLivesProjOutput,
     ActiveLivesValOutput,
 )

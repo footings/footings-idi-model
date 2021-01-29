@@ -73,8 +73,8 @@ class ActiveLivesValEMD:
     base_extract = def_parameter(
         dtype=pd.DataFrame, description="The base active lives extract."
     )
-    rider_extract = def_parameter(
-        dtype=pd.DataFrame, description="The rider active lives extract."
+    rider_rop_extract = def_parameter(
+        dtype=pd.DataFrame, description="The ROP rider active lives extract."
     )
     valuation_dt = param_valuation_dt
     assumption_set = param_assumption_set
@@ -109,17 +109,20 @@ class ActiveLivesValEMD:
     def _create_records(self):
         """Turn extract into a list of records for each row in extract."""
         records = convert_to_records(self.base_extract, column_case="lower")
-        idx_cols = ["POLICY_ID", "COVERAGE_ID"]
-        rider_data = self.rider_extract.pivot(
-            index=idx_cols, columns="RIDER_ATTRIBUTE", values="VALUE"
-        ).to_dict(orient="index")
+        idx_cols = ["policy_id", "coverage_id"]
+
+        rider_records = (
+            self.rider_rop_extract.rename(columns=str.lower)
+            .set_index(idx_cols)
+            .to_dict(orient="index")
+        )
 
         def update_record(record):
             key = (
                 record["policy_id"],
                 record["coverage_id"],
             )
-            kwargs_add = rider_data.get(key, None)
+            kwargs_add = rider_records.get(key, None)
             if kwargs_add is not None:
                 return {**record, **kwargs_add}
             return record

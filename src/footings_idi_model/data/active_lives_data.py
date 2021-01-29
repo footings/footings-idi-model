@@ -69,15 +69,27 @@ class ActiveLivesBaseExtract:
 
 
 @data_dictionary
-class ActiveLivesRiderExtract:
+class ActiveLivesROPRiderExtract:
     """
     Rider policy extract for active lives. A unique record is represented by POLICY_ID + COVERAGE_ID + RIDER_ATTRIBUTE.
     """
 
     POLICY_ID = ActiveLivesBaseExtract.def_column("POLICY_ID")
     COVERAGE_ID = ActiveLivesBaseExtract.def_column("COVERAGE_ID")
-    RIDER_ATTRIBUTE = def_column(dtype="string", description="The rider attribute name.")
-    VALUE = def_column(dtype="object", description="The value of the rider attribute.")
+    ROP_RETURN_FREQ = def_column(
+        dtype="int", description="The ROP return frequency for the policy holder."
+    )
+    ROP_RETURN_PERCENT = def_column(
+        dtype="float", description="The ROP return percent for the policy holder."
+    )
+    ROP_CLAIMS_PAID = def_column(
+        dtype="float",
+        description="The claims paid through ROP_FUTURE_CLAIMS_START_DT for the policy holder.",
+    )
+    ROP_FUTURE_CLAIMS_START_DT = def_column(
+        dtype="datetime64[ns]",
+        description="The date which to start modeling future expected claims.",
+    )
 
 
 #########################################################################################

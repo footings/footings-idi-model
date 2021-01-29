@@ -38,14 +38,17 @@ base_extract
 ```
 
 ```{code-cell} ipython3
-rider_extract = pd.read_csv("active-lives-sample-riders.csv")
-rider_extract
+rider_rop_extract = pd.read_csv(
+  "active-lives-sample-riders-rop.csv",
+  parse_dates=["ROP_FUTURE_CLAIMS_START_DT"]
+)
+rider_rop_extract
 ```
 
 ```{code-cell} ipython3
 model = ActiveLivesValEMD(
     base_extract=base_extract,
-    rider_extract=rider_extract,
+    rider_rop_extract=rider_rop_extract,
     valuation_dt=pd.Timestamp("2020-03-31"),
     withdraw_table="01CSO",
     assumption_set="stat",

@@ -33,7 +33,7 @@ from ..assumptions.get_incidence_rates import get_incidence_rates
 from ..assumptions.stat_gaap.interest import get_interest_rate
 from ..data import (
     ActiveLivesBaseExtract,
-    # ActiveLivesRiderExtract,
+    # ActiveLivesROPRiderExtract,
     ActiveLivesValOutput,
     # ActiveLivesProjOutput,
 )

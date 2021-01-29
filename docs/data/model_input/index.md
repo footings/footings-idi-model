@@ -34,10 +34,10 @@ base_extract = pd.read_csv(
 base_extract
 ```
 
-## Active Lives - Rider
+## Active Lives - ROP Rider
 
 ```{eval-rst}
-.. autodata:: footings_idi_model.data.ActiveLivesRiderExtract
+.. autodata:: footings_idi_model.data.ActiveLivesROPRiderExtract
 ```
 
 ### Sample Data
@@ -48,7 +48,7 @@ tags: [hide-input]
 ---
 import pandas as pd
 rider_extract = pd.read_csv(
-  "../../models/extract_models/active-lives-sample-riders.csv",
+  "../../models/extract_models/active-lives-sample-riders-rop.csv",
 )
 rider_extract
 ```

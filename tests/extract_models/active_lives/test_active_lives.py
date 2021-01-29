@@ -31,9 +31,11 @@ base_extract = pd.read_csv(
 )
 
 extract_rider_file = os.path.join(
-    "tests", "extract_models", "active_lives", "active-lives-sample-riders.csv"
+    "tests", "extract_models", "active_lives", "active-lives-sample-riders-rop.csv"
 )
-rider_extract = pd.read_csv(extract_rider_file)
+rider_rop_extract = pd.read_csv(
+    extract_rider_file, parse_dates=["ROP_FUTURE_CLAIMS_START_DT"]
+)
 
 
 CASES = [
@@ -41,7 +43,7 @@ CASES = [
         "test_1",
         {
             "base_extract": base_extract,
-            "rider_extract": rider_extract,
+            "rider_rop_extract": rider_rop_extract,
             "valuation_dt": pd.Timestamp("2020-03-31"),
             "withdraw_table": "01CSO",
             "assumption_set": "stat",
