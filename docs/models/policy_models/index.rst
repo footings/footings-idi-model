@@ -18,4 +18,3 @@ Policy Models
    disabled_deterministic_cola.md
    disabled_deterministic_res.md
    disabled_deterministic_sis.md
-   disabled_stochastic.md
