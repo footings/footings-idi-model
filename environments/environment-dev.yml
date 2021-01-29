@@ -113,7 +113,6 @@ dependencies:
     - entrypoints==0.3
     - et-xmlfile==1.0.1
     - footings==0.10.0rc0
-    - footings-idi-model==0.6.0rc0+2.g0df5a54.dirty
     - gitdb==4.0.5
     - gitpython==3.1.12
     - importlib-metadata==3.4.0
