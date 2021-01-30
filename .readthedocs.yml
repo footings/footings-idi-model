@@ -6,7 +6,9 @@ version: 2
 build:
     image: latest
 
-formats: all
+formats:
+  - epub
+  - pdf
 
 conda:
   environment: environments/environment-dev.yml
