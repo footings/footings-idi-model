@@ -161,3 +161,5 @@ dependencies:
     - webencodings==0.5.1
     - widgetsnbextension==3.5.1
     - zipp==3.4.0
+    # relative to this file. Needs to be editable to be accepted.
+    - -e ..
