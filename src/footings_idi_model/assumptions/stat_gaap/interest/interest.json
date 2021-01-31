@@ -1,5 +1,0 @@
-[
-    {"min_disable_year":1900,"max_disable_year":2000,"interest":0.03},
-    {"min_disable_year":2001,"max_disable_year":2007,"interest":0.03},
-    {"min_disable_year":2008,"max_disable_year":2100,"interest":0.03}
-]
