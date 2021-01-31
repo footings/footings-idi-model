@@ -4,7 +4,7 @@ import datetime
 import numpy as np
 import pandas as pd
 
-from footings import (
+from footings.model import (
     model,
     def_parameter,
     def_return,
@@ -12,7 +12,7 @@ from footings import (
     step,
 )
 
-from ..attributes import (
+from ..shared import (
     param_volume_tbl,
     param_n_simulations,
     param_seed,
