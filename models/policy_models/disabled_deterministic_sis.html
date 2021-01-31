@@ -1,0 +1,826 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Disabled - Deterministic - SIS Rider &#8212; Footings IDI Model 0.6.0rc0+9.g3419d57 documentation</title>
+    
+  <link rel="stylesheet" href="../../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.3da636dd464baa7582d2.js">
+
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Extract Models" href="../extract_models/index.html" />
+    <link rel="prev" title="Disabled - Deterministic - Residual Rider" href="disabled_deterministic_res.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main">
+<div class="container-xl">
+
+    <a class="navbar-brand" href="../../index.html">
+    
+      <p class="title">Footings IDI Model</p>
+    
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar-menu" class="col-lg-9 collapse navbar-collapse">
+      <ul id="navbar-main-elements" class="navbar-nav mr-auto">
+        
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../installation.html">Installation</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../product_info.html">Product Information</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../data/index.html">Data</a>
+        </li>
+        
+        <li class="nav-item active">
+            <a class="nav-link" href="../index.html">Models</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../assumptions.html">Assumptions</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../license.html">License</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../changelog.html">Changelog</a>
+        </li>
+        
+        
+      </ul>
+
+
+      <form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this site..." aria-label="Search this site..." autocomplete="off" >
+</form>
+      
+
+      <ul class="navbar-nav">
+        
+          <li class="nav-item">
+            <a class="nav-link" href="https://github.com/footings/footings-idi-model" target="_blank" rel="noopener">
+              <span><i class="fab fa-github-square"></i></span>
+            </a>
+          </li>
+        
+        
+      </ul>
+    </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+          <div class="col-12 col-md-3 bd-sidebar"><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+
+    <div class="bd-toc-item active">
+    
+  
+    <ul class="nav bd-sidenav">
+        
+        
+        
+        
+        
+        
+        
+        
+          
+            
+  
+                <li class="active">
+                    <a href="index.html">Policy Models</a>
+                    <ul>
+                    
+                        <li class="">
+                            <a href="active_deterministic_base.html">Active - Deterministic - Base</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="active_deterministic_cat.html">Active - Deterministic - CAT Rider</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="active_deterministic_cola.html">Active - Deterministic - COLA Rider</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="active_deterministic_res.html">Active - Deterministic - Residual Rider</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="active_deterministic_rop.html">Active - Deterministic - ROP Rider</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="active_deterministic_sis.html">Active - Deterministic - SIS Rider</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="active_deterministic_wop.html">Active - Deterministic - WOP Rider</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="disabled_deterministic_base.html">Disabled - Deterministic - Base</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="disabled_deterministic_cat.html">Disabled - Deterministic - CAT Rider</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="disabled_deterministic_cola.html">Disabled - Deterministic - COLA Rider</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="disabled_deterministic_res.html">Disabled - Deterministic - Residual Rider</a>
+                        </li>
+                    
+                        <li class="active">
+                            <a href="">Disabled - Deterministic - SIS Rider</a>
+                        </li>
+                    
+                    </ul>
+                </li>
+            
+          
+            
+                <li class="">
+                    <a href="../extract_models/index.html">Extract Models</a>
+                </li>
+            
+          
+        
+        
+        
+        
+        
+        
+        
+        
+      </ul>
+  
+  </nav>
+          </div>
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+              
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#valuation-model" class="nav-link">Valuation Model</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#documentation" class="nav-link">Documentation</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#usage" class="nav-link">Usage</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#projection-model" class="nav-link">Projection Model</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id1" class="nav-link">Documentation</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id2" class="nav-link">Usage</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+    </ul>
+</nav>
+
+
+              
+          </div>
+          
+
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <div class="section" id="disabled-deterministic-sis-rider">
+<h1>Disabled - Deterministic - SIS Rider<a class="headerlink" href="#disabled-deterministic-sis-rider" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="valuation-model">
+<h2>Valuation Model<a class="headerlink" href="#valuation-model" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="documentation">
+<h3>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt id="footings_idi_model.policy_models.DValSisRPMD">
+<em class="property">class </em><code class="sig-name descname">DValSisRPMD</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span></em>, <em class="sig-param"><span class="n">valuation_dt</span><span class="p">:</span> <span class="n">pandas._libs.tslibs.timestamps.Timestamp</span></em>, <em class="sig-param"><span class="n">assumption_set</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">policy_id</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">claim_id</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">gender</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">birth_dt</span><span class="p">:</span> <span class="n">pandas._libs.tslibs.timestamps.Timestamp</span></em>, <em class="sig-param"><span class="n">incurred_dt</span><span class="p">:</span> <span class="n">pandas._libs.tslibs.timestamps.Timestamp</span></em>, <em class="sig-param"><span class="n">termination_dt</span><span class="p">:</span> <span class="n">pandas._libs.tslibs.timestamps.Timestamp</span></em>, <em class="sig-param"><span class="n">elimination_period</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">idi_contract</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">idi_benefit_period</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">idi_diagnosis_grp</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">idi_occupation_class</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">cola_percent</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">benefit_amount</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">ctr_modifier</span><span class="p">:</span> <span class="n">float</span> <span class="o">=</span> <span class="default_value">1.0</span></em>, <em class="sig-param"><span class="n">interest_modifier</span><span class="p">:</span> <span class="n">float</span> <span class="o">=</span> <span class="default_value">1.0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#footings_idi_model.policy_models.DValSisRPMD" title="Permalink to this definition">¶</a></dt>
+<dd><p>The disabled life reserve (DLR) valuation model for the cost of living adjustment
+(COLA) policy rider.</p>
+<p>This model is a child of the <cite>DValBasePMD</cite> with the only changes being the addition
+of a step <cite>_get_sis_probability</cite> to lookup the probability of the policy holder
+qualifying for SIS (i.e., sis_probability) and the monthly benefit amount is equal
+to the (1 - SIS prbability) x benefit amount.</p>
+<p class="rubric">Parameters</p>
+<dl>
+<dt>valuation_dt<span class="classifier">Timestamp</span></dt><dd><p>The valuation date which reserves are based.</p>
+</dd>
+<dt>assumption_set<span class="classifier">str</span></dt><dd><p>The assumption set to use for running the model. Options are :</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><cite>stat</cite></p></li>
+<li><p><cite>gaap</cite></p></li>
+<li><p><cite>best-estimate</cite></p></li>
+</ul>
+</div></blockquote>
+</dd>
+<dt>policy_id<span class="classifier">str</span></dt><dd><p>The policy ID of the disabled claimant.</p>
+</dd>
+<dt>claim_id<span class="classifier">str</span></dt><dd><p>The claim ID of the disabled claimant.</p>
+</dd>
+<dt>gender<span class="classifier">str</span></dt><dd><p>The gender of the disabled claimant.</p>
+</dd>
+<dt>birth_dt<span class="classifier">Timestamp</span></dt><dd><p>The birth date of the disabled claimant.</p>
+</dd>
+<dt>incurred_dt<span class="classifier">Timestamp</span></dt><dd><p>The date of disablement for the claimant (i.e., the disablement date).</p>
+</dd>
+<dt>termination_dt<span class="classifier">Timestamp</span></dt><dd><p>The termination date of the disabled claimant (i.e., the date benefits will stop being paid).</p>
+</dd>
+<dt>elimination_period<span class="classifier">int</span></dt><dd><p>The elimination days before benefits are paid for the disabled claimant.</p>
+</dd>
+<dt>idi_contract<span class="classifier">str</span></dt><dd><p>The IDI contract type of the disabled claimant.</p>
+</dd>
+<dt>idi_benefit_period<span class="classifier">str</span></dt><dd><p>The IDI benefit period for the disabled claimant.</p>
+</dd>
+<dt>idi_diagnosis_grp<span class="classifier">str</span></dt><dd><p>The IDI diagnosis group of the disabled claimant.</p>
+</dd>
+<dt>idi_occupation_class<span class="classifier">str</span></dt><dd><p>The IDI occupation class of the disabled claimant.</p>
+</dd>
+<dt>cola_percent<span class="classifier">float</span></dt><dd><p>The COLA percent for the disabled claimant (0 if no COLA provided).</p>
+</dd>
+<dt>benefit_amount<span class="classifier">float</span></dt><dd><p>The benefit amount for the disabled claimant.</p>
+</dd>
+</dl>
+<p class="rubric">Sensitivities</p>
+<dl class="simple">
+<dt>ctr_modifier<span class="classifier">float</span></dt><dd><p>Modifier for CTR.</p>
+</dd>
+<dt>interest_modifier<span class="classifier">float</span></dt><dd><p>Interest rate modifier.</p>
+</dd>
+</dl>
+<p class="rubric">Meta</p>
+<dl class="simple">
+<dt>model_version<span class="classifier">str</span></dt><dd><p>The model version generated by versioneer.</p>
+</dd>
+<dt>last_commit<span class="classifier">str</span></dt><dd><p>The last git commit.</p>
+</dd>
+<dt>run_date_time<span class="classifier">Timestamp</span></dt><dd><p>The run date and time.</p>
+</dd>
+<dt>model_mode<span class="classifier">str</span></dt><dd><p>Mode used in CTR calculation as it varies whether policy is active or disabled.</p>
+</dd>
+<dt>coverage_id<span class="classifier">str</span></dt><dd><p>The coverage id which recognizes base policy vs riders.</p>
+</dd>
+</dl>
+<p class="rubric">Intermediates</p>
+<dl class="simple">
+<dt>age_incurred<span class="classifier">int</span></dt><dd><p>The age when the claim was incurred for the claimant.</p>
+</dd>
+<dt>start_pay_date<span class="classifier">Timestamp</span></dt><dd><p>The date payments start for claimants.</p>
+</dd>
+<dt>ctr_table<span class="classifier">DataFrame</span></dt><dd><p>The claim termination rate (CTR) table.</p>
+</dd>
+<dt>sis_probability<span class="classifier">float</span></dt><dd><p>The probability of policyholder qualifying for social insurance supplement benefit.</p>
+</dd>
+</dl>
+<p class="rubric">Returns</p>
+<dl class="simple">
+<dt>frame<span class="classifier">DataFrame</span></dt><dd><p>The frame of projected reserves.</p>
+</dd>
+</dl>
+<p class="rubric">Steps</p>
+<ol class="arabic simple">
+<li><p>Calculate Age Incurred - Calculate the age when claimant becomes disabled.</p></li>
+<li><p>Calculate Benefit Start Date - Calculate date benefits start which is incurred date + elimination period days.</p></li>
+<li><p>Create Projected Frame - Create projected benefit frame from valuation date to termination date by duration month.</p></li>
+<li><p>Calculate Weights - Calculate weights to assign to beginning and ending duration.</p></li>
+<li><p>Get CTR Table - Get claim termination rate (CTR) table based on assumption set.</p></li>
+<li><p>Calculate Lives - Calculate the beginning, middle, and ending lives for each duration.</p></li>
+<li><p>Get SIS Probability - Get SIS probability.</p></li>
+<li><p>Calculate Monthly Benefits - Calculate the monthly benefit amount for each duration.</p></li>
+<li><p>Calculate Discount Factors - Calculate beginning, middle, and ending discount factors for each duration.</p></li>
+<li><p>Calculate PVFB - Calculate present value of future benefits (PVFB).</p></li>
+<li><p>Calculate DLR - Calculate disabled life reserves (DLR).</p></li>
+<li><p>Create Output Frame - Reduce output to only needed columns.</p></li>
+</ol>
+</dd></dl>
+
+</div>
+<div class="section" id="usage">
+<h3>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">footings_idi_model.policy_models</span> <span class="kn">import</span> <span class="n">DValSisRPMD</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">DValSisRPMD</span><span class="p">(</span>
+    <span class="n">policy_id</span><span class="o">=</span><span class="s2">&quot;policy-1&quot;</span><span class="p">,</span>
+    <span class="n">claim_id</span><span class="o">=</span><span class="s2">&quot;claim-1&quot;</span><span class="p">,</span>
+    <span class="n">gender</span><span class="o">=</span><span class="s2">&quot;M&quot;</span><span class="p">,</span>
+    <span class="n">birth_dt</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="s2">&quot;1970-03-26&quot;</span><span class="p">),</span>
+    <span class="n">incurred_dt</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="s2">&quot;2015-06-02&quot;</span><span class="p">),</span>
+    <span class="n">termination_dt</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="s2">&quot;2035-03-26&quot;</span><span class="p">),</span>
+    <span class="n">elimination_period</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span>
+    <span class="n">idi_contract</span><span class="o">=</span><span class="s2">&quot;AS&quot;</span><span class="p">,</span>
+    <span class="n">idi_benefit_period</span><span class="o">=</span><span class="s2">&quot;TO65&quot;</span><span class="p">,</span>
+    <span class="n">idi_diagnosis_grp</span><span class="o">=</span><span class="s2">&quot;LOW&quot;</span><span class="p">,</span>
+    <span class="n">idi_occupation_class</span><span class="o">=</span><span class="s2">&quot;M&quot;</span><span class="p">,</span>
+    <span class="n">cola_percent</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+    <span class="n">benefit_amount</span><span class="o">=</span><span class="mf">200.0</span><span class="p">,</span>
+    <span class="n">valuation_dt</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="s2">&quot;2020-03-31&quot;</span><span class="p">),</span>
+    <span class="n">assumption_set</span><span class="o">=</span><span class="s2">&quot;stat&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>To run the model call the <code class="docutils literal notranslate"><span class="pre">run</span></code> method.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">output</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The model returns a DataFrame of the projected reserves.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">output</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+Int64Index: 181 entries, 0 to 180
+Data columns (total 23 columns):
+ #   Column          Non-Null Count  Dtype         
+---  ------          --------------  -----         
+ 0   MODEL_VERSION   181 non-null    object        
+ 1   LAST_COMMIT     181 non-null    object        
+ 2   RUN_DATE_TIME   181 non-null    datetime64[ns]
+ 3   SOURCE          181 non-null    object        
+ 4   POLICY_ID       181 non-null    object        
+ 5   CLAIM_ID        181 non-null    object        
+ 6   COVERAGE_ID     181 non-null    object        
+ 7   DATE_BD         181 non-null    datetime64[ns]
+ 8   DATE_ED         181 non-null    datetime64[ns]
+ 9   DURATION_YEAR   181 non-null    Int64         
+ 10  DURATION_MONTH  181 non-null    Int64         
+ 11  BENEFIT_AMOUNT  181 non-null    float64       
+ 12  FINAL_CTR       181 non-null    float64       
+ 13  LIVES_BD        181 non-null    float64       
+ 14  LIVES_MD        181 non-null    float64       
+ 15  LIVES_ED        181 non-null    float64       
+ 16  DISCOUNT_BD     181 non-null    float64       
+ 17  DISCOUNT_MD     181 non-null    float64       
+ 18  DISCOUNT_ED     181 non-null    float64       
+ 19  PVFB_BD         181 non-null    float64       
+ 20  PVFB_ED         181 non-null    float64       
+ 21  DATE_DLR        181 non-null    datetime64[ns]
+ 22  DLR             181 non-null    float64       
+dtypes: Int64(2), datetime64[ns](4), float64(11), object(6)
+memory usage: 34.3+ KB
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">output</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>MODEL_VERSION</th>
+      <th>LAST_COMMIT</th>
+      <th>RUN_DATE_TIME</th>
+      <th>SOURCE</th>
+      <th>POLICY_ID</th>
+      <th>CLAIM_ID</th>
+      <th>COVERAGE_ID</th>
+      <th>DATE_BD</th>
+      <th>DATE_ED</th>
+      <th>DURATION_YEAR</th>
+      <th>...</th>
+      <th>LIVES_BD</th>
+      <th>LIVES_MD</th>
+      <th>LIVES_ED</th>
+      <th>DISCOUNT_BD</th>
+      <th>DISCOUNT_MD</th>
+      <th>DISCOUNT_ED</th>
+      <th>PVFB_BD</th>
+      <th>PVFB_ED</th>
+      <th>DATE_DLR</th>
+      <th>DLR</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.6.0rc0+9.g3419d57</td>
+      <td>3419d57d94b9bc75f100fc0f63c2e58e709a19b3</td>
+      <td>2021-01-31 11:59:43.379973</td>
+      <td>DValSisRPMD</td>
+      <td>policy-1</td>
+      <td>claim-1</td>
+      <td>SIS</td>
+      <td>2020-03-02</td>
+      <td>2020-04-02</td>
+      <td>5</td>
+      <td>...</td>
+      <td>1.000000</td>
+      <td>0.998690</td>
+      <td>0.997381</td>
+      <td>1.000000</td>
+      <td>0.998769</td>
+      <td>0.997540</td>
+      <td>7490.98</td>
+      <td>7487.12</td>
+      <td>2020-03-31</td>
+      <td>7523.08</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.6.0rc0+9.g3419d57</td>
+      <td>3419d57d94b9bc75f100fc0f63c2e58e709a19b3</td>
+      <td>2021-01-31 11:59:43.379973</td>
+      <td>DValSisRPMD</td>
+      <td>policy-1</td>
+      <td>claim-1</td>
+      <td>SIS</td>
+      <td>2020-04-02</td>
+      <td>2020-05-02</td>
+      <td>5</td>
+      <td>...</td>
+      <td>0.997381</td>
+      <td>0.996111</td>
+      <td>0.994841</td>
+      <td>0.997540</td>
+      <td>0.996312</td>
+      <td>0.995086</td>
+      <td>7487.12</td>
+      <td>7427.58</td>
+      <td>2020-04-30</td>
+      <td>7504.42</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.6.0rc0+9.g3419d57</td>
+      <td>3419d57d94b9bc75f100fc0f63c2e58e709a19b3</td>
+      <td>2021-01-31 11:59:43.379973</td>
+      <td>DValSisRPMD</td>
+      <td>policy-1</td>
+      <td>claim-1</td>
+      <td>SIS</td>
+      <td>2020-05-02</td>
+      <td>2020-06-02</td>
+      <td>5</td>
+      <td>...</td>
+      <td>0.994841</td>
+      <td>0.993574</td>
+      <td>0.992307</td>
+      <td>0.995086</td>
+      <td>0.993861</td>
+      <td>0.992638</td>
+      <td>7427.58</td>
+      <td>7368.33</td>
+      <td>2020-05-31</td>
+      <td>7481.98</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.6.0rc0+9.g3419d57</td>
+      <td>3419d57d94b9bc75f100fc0f63c2e58e709a19b3</td>
+      <td>2021-01-31 11:59:43.379973</td>
+      <td>DValSisRPMD</td>
+      <td>policy-1</td>
+      <td>claim-1</td>
+      <td>SIS</td>
+      <td>2020-06-02</td>
+      <td>2020-07-02</td>
+      <td>6</td>
+      <td>...</td>
+      <td>0.992307</td>
+      <td>0.990969</td>
+      <td>0.989630</td>
+      <td>0.992638</td>
+      <td>0.991416</td>
+      <td>0.990195</td>
+      <td>7368.33</td>
+      <td>7309.38</td>
+      <td>2020-06-30</td>
+      <td>7460.50</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.6.0rc0+9.g3419d57</td>
+      <td>3419d57d94b9bc75f100fc0f63c2e58e709a19b3</td>
+      <td>2021-01-31 11:59:43.379973</td>
+      <td>DValSisRPMD</td>
+      <td>policy-1</td>
+      <td>claim-1</td>
+      <td>SIS</td>
+      <td>2020-07-02</td>
+      <td>2020-08-02</td>
+      <td>6</td>
+      <td>...</td>
+      <td>0.989630</td>
+      <td>0.988295</td>
+      <td>0.986960</td>
+      <td>0.990195</td>
+      <td>0.988977</td>
+      <td>0.987759</td>
+      <td>7309.38</td>
+      <td>7250.74</td>
+      <td>2020-07-31</td>
+      <td>7438.98</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>176</th>
+      <td>0.6.0rc0+9.g3419d57</td>
+      <td>3419d57d94b9bc75f100fc0f63c2e58e709a19b3</td>
+      <td>2021-01-31 11:59:43.379973</td>
+      <td>DValSisRPMD</td>
+      <td>policy-1</td>
+      <td>claim-1</td>
+      <td>SIS</td>
+      <td>2034-11-02</td>
+      <td>2034-12-02</td>
+      <td>20</td>
+      <td>...</td>
+      <td>0.755674</td>
+      <td>0.755109</td>
+      <td>0.754545</td>
+      <td>0.648217</td>
+      <td>0.647420</td>
+      <td>0.646623</td>
+      <td>139.92</td>
+      <td>110.59</td>
+      <td>2034-11-30</td>
+      <td>230.48</td>
+    </tr>
+    <tr>
+      <th>177</th>
+      <td>0.6.0rc0+9.g3419d57</td>
+      <td>3419d57d94b9bc75f100fc0f63c2e58e709a19b3</td>
+      <td>2021-01-31 11:59:43.379973</td>
+      <td>DValSisRPMD</td>
+      <td>policy-1</td>
+      <td>claim-1</td>
+      <td>SIS</td>
+      <td>2034-12-02</td>
+      <td>2035-01-02</td>
+      <td>20</td>
+      <td>...</td>
+      <td>0.754545</td>
+      <td>0.753982</td>
+      <td>0.753418</td>
+      <td>0.646623</td>
+      <td>0.645827</td>
+      <td>0.645032</td>
+      <td>110.59</td>
+      <td>81.37</td>
+      <td>2034-12-31</td>
+      <td>171.27</td>
+    </tr>
+    <tr>
+      <th>178</th>
+      <td>0.6.0rc0+9.g3419d57</td>
+      <td>3419d57d94b9bc75f100fc0f63c2e58e709a19b3</td>
+      <td>2021-01-31 11:59:43.379973</td>
+      <td>DValSisRPMD</td>
+      <td>policy-1</td>
+      <td>claim-1</td>
+      <td>SIS</td>
+      <td>2035-01-02</td>
+      <td>2035-02-02</td>
+      <td>20</td>
+      <td>...</td>
+      <td>0.753418</td>
+      <td>0.752855</td>
+      <td>0.752293</td>
+      <td>0.645032</td>
+      <td>0.644238</td>
+      <td>0.643445</td>
+      <td>81.37</td>
+      <td>52.27</td>
+      <td>2035-01-31</td>
+      <td>111.83</td>
+    </tr>
+    <tr>
+      <th>179</th>
+      <td>0.6.0rc0+9.g3419d57</td>
+      <td>3419d57d94b9bc75f100fc0f63c2e58e709a19b3</td>
+      <td>2021-01-31 11:59:43.379973</td>
+      <td>DValSisRPMD</td>
+      <td>policy-1</td>
+      <td>claim-1</td>
+      <td>SIS</td>
+      <td>2035-02-02</td>
+      <td>2035-03-02</td>
+      <td>20</td>
+      <td>...</td>
+      <td>0.752293</td>
+      <td>0.751731</td>
+      <td>0.751169</td>
+      <td>0.643445</td>
+      <td>0.642653</td>
+      <td>0.641862</td>
+      <td>52.27</td>
+      <td>23.28</td>
+      <td>2035-02-28</td>
+      <td>52.15</td>
+    </tr>
+    <tr>
+      <th>180</th>
+      <td>0.6.0rc0+9.g3419d57</td>
+      <td>3419d57d94b9bc75f100fc0f63c2e58e709a19b3</td>
+      <td>2021-01-31 11:59:43.379973</td>
+      <td>DValSisRPMD</td>
+      <td>policy-1</td>
+      <td>claim-1</td>
+      <td>SIS</td>
+      <td>2035-03-02</td>
+      <td>2035-04-02</td>
+      <td>20</td>
+      <td>...</td>
+      <td>0.751169</td>
+      <td>0.750608</td>
+      <td>0.750047</td>
+      <td>0.641862</td>
+      <td>0.641072</td>
+      <td>0.640283</td>
+      <td>23.28</td>
+      <td>0.00</td>
+      <td>2035-03-31</td>
+      <td>3.13</td>
+    </tr>
+  </tbody>
+</table>
+<p>181 rows × 23 columns</p>
+</div></div></div>
+</div>
+<p>An audit of the model is ran by calling the <code class="docutils literal notranslate"><span class="pre">audit</span></code> method shown below.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">audit</span><span class="p">(</span><span class="s2">&quot;Audit-DValSisRPMD.xlsx&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The audit file can be downloaded <a class="reference download internal" download="" href="../../_downloads/15fd23e9a35c13374e0cb19ba4173d5b/Audit-DValSisRPMD.xlsx"><code class="xref download docutils literal notranslate"><span class="pre">here.</span></code></a></p>
+</div>
+</div>
+<div class="section" id="projection-model">
+<h2>Projection Model<a class="headerlink" href="#projection-model" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id1">
+<h3>Documentation<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>To be completed.</p>
+</div>
+<div class="section" id="id2">
+<h3>Usage<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>To be completed.</p>
+</div>
+</div>
+</div>
+
+
+              </div>
+              
+              
+              <div class='prev-next-bottom'>
+                
+    <a class='left-prev' id="prev-link" href="disabled_deterministic_res.html" title="previous page">Disabled - Deterministic - Residual Rider</a>
+    <a class='right-next' id="next-link" href="../extract_models/index.html" title="next page">Extract Models</a>
+
+              </div>
+              
+          </main>
+          
+
+      </div>
+    </div>
+
+    
+  <script src="../../_static/js/index.3da636dd464baa7582d2.js"></script>
+
+
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    <p>
+          &copy; Copyright 2020, Dustin Tindall.<br/>
+        Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.2.1.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

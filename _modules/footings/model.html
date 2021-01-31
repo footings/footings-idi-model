@@ -1,0 +1,798 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>footings.model &#8212; Footings IDI Model 0.6.0rc0+9.g3419d57 documentation</title>
+    
+  <link rel="stylesheet" href="../../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.3da636dd464baa7582d2.js">
+
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main">
+<div class="container-xl">
+
+    <a class="navbar-brand" href="../../index.html">
+    
+      <p class="title">Footings IDI Model</p>
+    
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar-menu" class="col-lg-9 collapse navbar-collapse">
+      <ul id="navbar-main-elements" class="navbar-nav mr-auto">
+        
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../installation.html">Installation</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../product_info.html">Product Information</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../data/index.html">Data</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../models/index.html">Models</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../assumptions.html">Assumptions</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../license.html">License</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../changelog.html">Changelog</a>
+        </li>
+        
+        
+      </ul>
+
+
+      <form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this site..." aria-label="Search this site..." autocomplete="off" >
+</form>
+      
+
+      <ul class="navbar-nav">
+        
+          <li class="nav-item">
+            <a class="nav-link" href="https://github.com/footings/footings-idi-model" target="_blank" rel="noopener">
+              <span><i class="fab fa-github-square"></i></span>
+            </a>
+          </li>
+        
+        
+      </ul>
+    </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+          <div class="col-12 col-md-3 bd-sidebar"><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+
+    <div class="bd-toc-item active">
+    
+  
+    <ul class="nav bd-sidenav">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+      </ul>
+  
+  </nav>
+          </div>
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+              
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+    </ul>
+</nav>
+
+
+              
+          </div>
+          
+
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <h1>Source code for footings.model</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span><span class="p">,</span> <span class="n">auto</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">traceback</span> <span class="kn">import</span> <span class="n">extract_tb</span><span class="p">,</span> <span class="n">format_list</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
+
+<span class="kn">from</span> <span class="nn">attr</span> <span class="kn">import</span> <span class="n">attrs</span><span class="p">,</span> <span class="n">attrib</span><span class="p">,</span> <span class="n">make_class</span><span class="p">,</span> <span class="n">evolve</span><span class="p">,</span> <span class="n">NOTHING</span>
+<span class="kn">from</span> <span class="nn">attr.setters</span> <span class="kn">import</span> <span class="n">NO_OP</span>
+<span class="kn">from</span> <span class="nn">attr._make</span> <span class="kn">import</span> <span class="n">_CountingAttr</span>
+<span class="kn">from</span> <span class="nn">attr.setters</span> <span class="kn">import</span> <span class="n">frozen</span>
+<span class="kn">import</span> <span class="nn">numpydoc.docscrape</span> <span class="k">as</span> <span class="nn">numpydoc</span>
+
+<span class="kn">from</span> <span class="nn">.audit</span> <span class="kn">import</span> <span class="n">run_model_audit</span>
+<span class="kn">from</span> <span class="nn">.doc_tools.docscrape</span> <span class="kn">import</span> <span class="n">FootingsDoc</span>
+<span class="kn">from</span> <span class="nn">.exceptions</span> <span class="kn">import</span> <span class="n">ModelCreationError</span><span class="p">,</span> <span class="n">ModelRunError</span>
+<span class="kn">from</span> <span class="nn">.visualize</span> <span class="kn">import</span> <span class="n">visualize_model</span>
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;Model&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;model&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;step&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;def_parameter&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;def_sensitivity&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;def_meta&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;def_intermediate&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;def_return&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+
+
+<span class="k">class</span> <span class="nc">ModelAttributeType</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Allowed dodel attribute types belonging to a model.&quot;&quot;&quot;</span>
+
+    <span class="n">Parameter</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">Sensitivity</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">Meta</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">Intermediate</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">Return</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">_define</span><span class="p">(</span>
+    <span class="n">attribute_type</span><span class="p">:</span> <span class="n">ModelAttributeType</span><span class="p">,</span>
+    <span class="n">init</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="n">frozen</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="n">dtype</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">description</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">default</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">NOTHING</span><span class="p">,</span>
+    <span class="n">validator</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">converter</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="n">metadata</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="n">description</span> <span class="k">if</span> <span class="n">description</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;footings_attribute_type&quot;</span><span class="p">:</span> <span class="n">attribute_type</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="n">on_setattr</span> <span class="o">=</span> <span class="n">NO_OP</span> <span class="k">if</span> <span class="n">frozen</span> <span class="ow">is</span> <span class="kc">False</span> <span class="k">else</span> <span class="kc">None</span>
+
+    <span class="k">return</span> <span class="n">attrib</span><span class="p">(</span>
+        <span class="n">init</span><span class="o">=</span><span class="n">init</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="n">dtype</span><span class="p">,</span>
+        <span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span>
+        <span class="n">validator</span><span class="o">=</span><span class="n">validator</span><span class="p">,</span>
+        <span class="n">converter</span><span class="o">=</span><span class="n">converter</span><span class="p">,</span>
+        <span class="n">metadata</span><span class="o">=</span><span class="n">metadata</span><span class="p">,</span>
+        <span class="n">on_setattr</span><span class="o">=</span><span class="n">on_setattr</span><span class="p">,</span>
+        <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">def_parameter</span><span class="p">(</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">dtype</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">description</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">converter</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">validator</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Define a parameter attribute under the model.</span>
+
+<span class="sd">    A parameter attribute is a frozen attribute that is passed on instantiation of the model.</span>
+
+<span class="sd">    :param Optional[Any] dtype: The expected type of the attribute. If not None, value will be</span>
+<span class="sd">        validated on instantiation.</span>
+<span class="sd">    :param Optional[str] description: Optional description to add.</span>
+<span class="sd">    :param Optional[callable] converter: Optional callable that is used to convert value to desired format.</span>
+<span class="sd">    :param Optional[callable] validator: Optional callaable that is used to validate value.</span>
+<span class="sd">    :param kwargs: Advanced options to pass through to `attrs.attrib`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_define</span><span class="p">(</span>
+        <span class="n">attribute_type</span><span class="o">=</span><span class="n">ModelAttributeType</span><span class="o">.</span><span class="n">Parameter</span><span class="p">,</span>
+        <span class="n">init</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
+        <span class="n">converter</span><span class="o">=</span><span class="n">converter</span><span class="p">,</span>
+        <span class="n">validator</span><span class="o">=</span><span class="n">validator</span><span class="p">,</span>
+        <span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">def_sensitivity</span><span class="p">(</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">default</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="n">NOTHING</span><span class="p">,</span>
+    <span class="n">dtype</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">description</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">converter</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">validator</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Define a sensitivity attribute under the model.</span>
+
+<span class="sd">    A sensitivity attribute is a frozen attribute with a default value that is passed on</span>
+<span class="sd">    instantiation of the model.</span>
+
+<span class="sd">    :param Any default: The default value of the sensitivity.</span>
+<span class="sd">    :param Optional[Any] dtype: The expected type of the attribute. If not None, value will be</span>
+<span class="sd">        validated on instantiation.</span>
+<span class="sd">    :param Optional[str] description: Optional description to add.</span>
+<span class="sd">    :param Optional[callable] converter: Optional callable that is used to convert value to desired format.</span>
+<span class="sd">    :param Optional[callable] validator: Optional callaable that is used to validate value.</span>
+<span class="sd">    :param kwargs: Advanced options to pass through to `attrs.attrib`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_define</span><span class="p">(</span>
+        <span class="n">attribute_type</span><span class="o">=</span><span class="n">ModelAttributeType</span><span class="o">.</span><span class="n">Sensitivity</span><span class="p">,</span>
+        <span class="n">init</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span>
+        <span class="n">converter</span><span class="o">=</span><span class="n">converter</span><span class="p">,</span>
+        <span class="n">validator</span><span class="o">=</span><span class="n">validator</span><span class="p">,</span>
+        <span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">def_meta</span><span class="p">(</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">meta</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+    <span class="n">dtype</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">description</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">converter</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">validator</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Define a meta attribute under the model.</span>
+
+<span class="sd">    A meta attribute is a frozen attribute that is passed on instantiation of the model.</span>
+
+<span class="sd">    :param Any meta: The meta value to pass to the model.</span>
+<span class="sd">    :param Optional[Any] dtype: The expected type of the attribute. If not None, value will be</span>
+<span class="sd">        validated on instantiation.</span>
+<span class="sd">    :param Optional[str] description: Optional description to add.</span>
+<span class="sd">    :param Optional[callable] converter: Optional callable that is used to convert value to desired format.</span>
+<span class="sd">    :param Optional[callable] validator: Optional callaable that is used to validate value.</span>
+<span class="sd">    :param kwargs: Advanced options to pass through to `attrs.attrib`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_define</span><span class="p">(</span>
+        <span class="n">attribute_type</span><span class="o">=</span><span class="n">ModelAttributeType</span><span class="o">.</span><span class="n">Meta</span><span class="p">,</span>
+        <span class="n">init</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="n">meta</span><span class="p">,</span>
+        <span class="n">converter</span><span class="o">=</span><span class="n">converter</span><span class="p">,</span>
+        <span class="n">validator</span><span class="o">=</span><span class="n">validator</span><span class="p">,</span>
+        <span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">def_intermediate</span><span class="p">(</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">dtype</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">description</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">init_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Define an intermediate attribute under the model.</span>
+
+<span class="sd">    A placeholder is a non-frozen attribute that is created by the model and not returned when</span>
+<span class="sd">    the model runs. It can be used to hold intermediate values for calculation.</span>
+
+<span class="sd">    :param Optional[Any] dtype: The expected type of the attribute. If not None, value will be</span>
+<span class="sd">        validated on instantiation.</span>
+<span class="sd">    :param Optional[str] description: Optional description to add.</span>
+<span class="sd">    :param Optional[Any] init_value: Optional initival value to assign.</span>
+<span class="sd">    :param kwargs: Advanced options to pass through to `attrs.attrib`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_define</span><span class="p">(</span>
+        <span class="n">attribute_type</span><span class="o">=</span><span class="n">ModelAttributeType</span><span class="o">.</span><span class="n">Intermediate</span><span class="p">,</span>
+        <span class="n">init</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="n">init_value</span><span class="p">,</span>
+        <span class="n">frozen</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">def_return</span><span class="p">(</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">dtype</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">description</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">init_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Define an intermediate attribute under the model.</span>
+
+<span class="sd">    A placeholder is a non-frozen attribute that is created by the model and returned when</span>
+<span class="sd">    the model runs.</span>
+
+<span class="sd">    :param Optional[Any] dtype: The expected type of the attribute. If not None, value will be</span>
+<span class="sd">        validated on instantiation.</span>
+<span class="sd">    :param Optional[str] description: Optional description to add.</span>
+<span class="sd">    :param Optional[Any] init_value: Optional initival value to assign.</span>
+<span class="sd">    :param kwargs: Advanced options to pass through to `attrs.attrib`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_define</span><span class="p">(</span>
+        <span class="n">attribute_type</span><span class="o">=</span><span class="n">ModelAttributeType</span><span class="o">.</span><span class="n">Return</span><span class="p">,</span>
+        <span class="n">init</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="n">init_value</span><span class="p">,</span>
+        <span class="n">frozen</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">to_step</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__model_steps__</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">ModelRunError</span><span class="p">(</span><span class="s2">&quot;Not able to run model because no steps are registered.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__model_returns__</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">ModelRunError</span><span class="p">(</span>
+            <span class="s2">&quot;Not able to run model because no return attributes are registered.&quot;</span>
+        <span class="p">)</span>
+    <span class="k">if</span> <span class="n">to_step</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">steps</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__model_steps__</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__model_steps__</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">to_step</span><span class="p">)</span>
+            <span class="n">steps</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__model_steps__</span><span class="p">[:</span> <span class="p">(</span><span class="n">position</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+        <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;The step passed to to_step &#39;</span><span class="si">{</span><span class="n">to_step</span><span class="si">}</span><span class="s2">&#39; does not exist as a step.&quot;</span>
+            <span class="k">raise</span> <span class="n">e</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_run_step</span><span class="p">(</span><span class="n">step</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">step</span><span class="p">)()</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">exc_type</span><span class="p">,</span> <span class="n">exc_value</span><span class="p">,</span> <span class="n">exc_trace</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">exc_info</span><span class="p">()</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;At step [</span><span class="si">{</span><span class="n">step</span><span class="si">}</span><span class="s2">], an error occured.</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="n">msg</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;  Error Type = </span><span class="si">{</span><span class="n">exc_type</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="n">msg</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;  Error Message = </span><span class="si">{</span><span class="n">exc_value</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="n">msg</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;  Error Trace = </span><span class="si">{</span><span class="n">format_list</span><span class="p">(</span><span class="n">extract_tb</span><span class="p">(</span><span class="n">exc_trace</span><span class="p">))</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="k">raise</span> <span class="n">ModelRunError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="n">steps</span><span class="p">:</span>
+        <span class="n">_run_step</span><span class="p">(</span><span class="n">step</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">to_step</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__model_returns__</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ret</span><span class="p">)</span> <span class="k">for</span> <span class="n">ret</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__model_returns__</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__model_returns__</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+
+<span class="nd">@attrs</span><span class="p">(</span><span class="n">slots</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">Model</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;The parent modeling class providing the key methods of run, audit, and visualize.&quot;&quot;&quot;</span>
+
+    <span class="n">__model_steps__</span><span class="p">:</span> <span class="nb">tuple</span> <span class="o">=</span> <span class="n">attrib</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">__model_parameters__</span><span class="p">:</span> <span class="nb">tuple</span> <span class="o">=</span> <span class="n">attrib</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">__model_sensitivities__</span><span class="p">:</span> <span class="nb">tuple</span> <span class="o">=</span> <span class="n">attrib</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">__model_meta__</span><span class="p">:</span> <span class="nb">tuple</span> <span class="o">=</span> <span class="n">attrib</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">__model_intermediates__</span><span class="p">:</span> <span class="nb">tuple</span> <span class="o">=</span> <span class="n">attrib</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">__model_returns__</span><span class="p">:</span> <span class="nb">tuple</span> <span class="o">=</span> <span class="n">attrib</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">__model_attribute_map__</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="n">attrib</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">visualize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Visualize the model to get an understanding of what model attributes are used and when.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">visualize_model</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">audit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Audit the model which returns copies of the object as it is modified across each step.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        file : str, optional</span>
+<span class="sd">            The name of the audit output file.</span>
+<span class="sd">        kwargs</span>
+<span class="sd">            Additional key words passed to audit.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">            An audit file in specfified format (e.g., .xlsx).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">run_model_audit</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">file</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">to_step</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Runs the model and returns any returns defined.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        to_step : str, optional</span>
+<span class="sd">            The name of the step to run model to.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">_run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">to_step</span><span class="o">=</span><span class="n">to_step</span><span class="p">)</span>
+
+
+<span class="nd">@attrs</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">slots</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">Step</span><span class="p">:</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">attrib</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
+    <span class="n">docstring</span> <span class="o">=</span> <span class="n">attrib</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
+    <span class="n">method</span> <span class="o">=</span> <span class="n">attrib</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="n">callable</span><span class="p">)</span>
+    <span class="n">method_name</span> <span class="o">=</span> <span class="n">attrib</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
+    <span class="n">uses</span> <span class="o">=</span> <span class="n">attrib</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span>
+    <span class="n">impacts</span> <span class="o">=</span> <span class="n">attrib</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span>
+    <span class="n">metadata</span> <span class="o">=</span> <span class="n">attrib</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="nb">dict</span><span class="p">,</span> <span class="n">factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">method</span><span class="p">:</span> <span class="n">callable</span><span class="p">,</span>
+        <span class="n">uses</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+        <span class="n">impacts</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+        <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">docstring</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">metadata</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="n">method_name</span> <span class="o">=</span> <span class="n">method</span><span class="o">.</span><span class="vm">__qualname__</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">name</span> <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">method_name</span><span class="p">,</span>
+            <span class="n">docstring</span><span class="o">=</span><span class="n">docstring</span> <span class="k">if</span> <span class="n">docstring</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">method</span><span class="o">.</span><span class="vm">__doc__</span><span class="p">,</span>
+            <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">,</span>
+            <span class="n">method_name</span><span class="o">=</span><span class="n">method_name</span><span class="p">,</span>
+            <span class="n">uses</span><span class="o">=</span><span class="n">uses</span><span class="p">,</span>
+            <span class="n">impacts</span><span class="o">=</span><span class="n">impacts</span><span class="p">,</span>
+            <span class="n">metadata</span><span class="o">=</span><span class="p">{}</span> <span class="k">if</span> <span class="n">metadata</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">metadata</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__doc__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">docstring</span>
+
+    <span class="k">def</span> <span class="fm">__get__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">objtype</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">obj</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span>
+        <span class="k">return</span> <span class="n">partial</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">method</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">step</span><span class="p">(</span>
+    <span class="n">method</span><span class="p">:</span> <span class="n">callable</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">uses</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+    <span class="n">impacts</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">docstring</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">metadata</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Turn a method into a step within the footings framework.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    method : callable, optional</span>
+<span class="sd">        The method to decorate, by default None.</span>
+<span class="sd">    uses : List[str]</span>
+<span class="sd">        A list of the object names used by the step.</span>
+<span class="sd">    impacts : List[str]</span>
+<span class="sd">        A list of the object names that are impacted by the step (i.e., the returns and intermediates).</span>
+<span class="sd">    wrap : callable, optional</span>
+<span class="sd">        Wrap or source the docstring from another object, by default None.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    callable</span>
+<span class="sd">        The decorated method with a attributes for uses and impacts and updated docstring if wrap passed.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">method</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">partial</span><span class="p">(</span>
+            <span class="n">step</span><span class="p">,</span>
+            <span class="n">uses</span><span class="o">=</span><span class="n">uses</span><span class="p">,</span>
+            <span class="n">impacts</span><span class="o">=</span><span class="n">impacts</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+            <span class="n">docstring</span><span class="o">=</span><span class="n">docstring</span><span class="p">,</span>
+            <span class="n">metadata</span><span class="o">=</span><span class="n">metadata</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">Step</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+        <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">,</span>
+        <span class="n">uses</span><span class="o">=</span><span class="n">uses</span><span class="p">,</span>
+        <span class="n">impacts</span><span class="o">=</span><span class="n">impacts</span><span class="p">,</span>
+        <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+        <span class="n">docstring</span><span class="o">=</span><span class="n">docstring</span><span class="p">,</span>
+        <span class="n">metadata</span><span class="o">=</span><span class="n">metadata</span><span class="p">,</span>
+    <span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_make_doc_parameter</span><span class="p">(</span><span class="n">attribute</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">attribute</span><span class="o">.</span><span class="n">type</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">atype</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">attribute</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">atype</span> <span class="o">=</span> <span class="n">attribute</span><span class="o">.</span><span class="n">type</span>
+    <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">attribute</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="s2">&quot;__qualname__&quot;</span><span class="p">):</span>
+        <span class="n">atype</span> <span class="o">=</span> <span class="n">attribute</span><span class="o">.</span><span class="n">type</span><span class="o">.</span><span class="vm">__qualname__</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">atype</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">attribute</span><span class="o">.</span><span class="n">type</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">atype</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">numpydoc</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span>
+        <span class="n">attribute</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">atype</span><span class="p">,</span> <span class="p">[</span><span class="n">attribute</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;description&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)]</span>
+    <span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_parse_attriubtes</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+    <span class="n">sections</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Parameters&quot;</span><span class="p">,</span> <span class="s2">&quot;Sensitivities&quot;</span><span class="p">,</span> <span class="s2">&quot;Meta&quot;</span><span class="p">,</span> <span class="s2">&quot;Intermediates&quot;</span><span class="p">,</span> <span class="s2">&quot;Returns&quot;</span><span class="p">]</span>
+    <span class="n">parsed_attributes</span> <span class="o">=</span> <span class="p">{</span><span class="n">section</span><span class="p">:</span> <span class="p">[]</span> <span class="k">for</span> <span class="n">section</span> <span class="ow">in</span> <span class="n">sections</span><span class="p">}</span>
+
+    <span class="k">for</span> <span class="n">attribute</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">__attrs_attrs__</span><span class="p">:</span>
+        <span class="n">attribute_type</span> <span class="o">=</span> <span class="n">attribute</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;footings_attribute_type&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">attribute_type</span> <span class="ow">is</span> <span class="n">ModelAttributeType</span><span class="o">.</span><span class="n">Parameter</span><span class="p">:</span>
+            <span class="n">parsed_attributes</span><span class="p">[</span><span class="s2">&quot;Parameters&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_make_doc_parameter</span><span class="p">(</span><span class="n">attribute</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="n">attribute_type</span> <span class="ow">is</span> <span class="n">ModelAttributeType</span><span class="o">.</span><span class="n">Sensitivity</span><span class="p">:</span>
+            <span class="n">parsed_attributes</span><span class="p">[</span><span class="s2">&quot;Sensitivities&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_make_doc_parameter</span><span class="p">(</span><span class="n">attribute</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="n">attribute_type</span> <span class="ow">is</span> <span class="n">ModelAttributeType</span><span class="o">.</span><span class="n">Meta</span><span class="p">:</span>
+            <span class="n">parsed_attributes</span><span class="p">[</span><span class="s2">&quot;Meta&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_make_doc_parameter</span><span class="p">(</span><span class="n">attribute</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="n">attribute_type</span> <span class="ow">is</span> <span class="n">ModelAttributeType</span><span class="o">.</span><span class="n">Intermediate</span><span class="p">:</span>
+            <span class="n">parsed_attributes</span><span class="p">[</span><span class="s2">&quot;Intermediates&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_make_doc_parameter</span><span class="p">(</span><span class="n">attribute</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="n">attribute_type</span> <span class="ow">is</span> <span class="n">ModelAttributeType</span><span class="o">.</span><span class="n">Return</span><span class="p">:</span>
+            <span class="n">parsed_attributes</span><span class="p">[</span><span class="s2">&quot;Returns&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_make_doc_parameter</span><span class="p">(</span><span class="n">attribute</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">parsed_attributes</span>
+
+
+<span class="k">def</span> <span class="nf">_generate_steps_sections</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">steps</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">[</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">idx</span><span class="si">}</span><span class="s2">) </span><span class="si">{</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">step</span><span class="p">)</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">step</span><span class="p">)</span><span class="o">.</span><span class="n">docstring</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">step</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">steps</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">_attr_doc</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">steps</span><span class="p">):</span>
+
+    <span class="n">parsed_attributes</span> <span class="o">=</span> <span class="n">_parse_attriubtes</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span>
+    <span class="n">doc</span> <span class="o">=</span> <span class="n">FootingsDoc</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span>
+
+    <span class="n">doc</span><span class="p">[</span><span class="s2">&quot;Parameters&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">parsed_attributes</span><span class="p">[</span><span class="s2">&quot;Parameters&quot;</span><span class="p">]</span>
+    <span class="n">doc</span><span class="p">[</span><span class="s2">&quot;Sensitivities&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">parsed_attributes</span><span class="p">[</span><span class="s2">&quot;Sensitivities&quot;</span><span class="p">]</span>
+    <span class="n">doc</span><span class="p">[</span><span class="s2">&quot;Meta&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">parsed_attributes</span><span class="p">[</span><span class="s2">&quot;Meta&quot;</span><span class="p">]</span>
+    <span class="n">doc</span><span class="p">[</span><span class="s2">&quot;Intermediates&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">parsed_attributes</span><span class="p">[</span><span class="s2">&quot;Intermediates&quot;</span><span class="p">]</span>
+    <span class="n">doc</span><span class="p">[</span><span class="s2">&quot;Returns&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">parsed_attributes</span><span class="p">[</span><span class="s2">&quot;Returns&quot;</span><span class="p">]</span>
+    <span class="n">doc</span><span class="p">[</span><span class="s2">&quot;Steps&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_generate_steps_sections</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">steps</span><span class="p">)</span>
+    <span class="n">doc</span><span class="p">[</span><span class="s2">&quot;Methods&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="bp">cls</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">cls</span>
+
+
+<span class="k">def</span> <span class="nf">_update_uses_impacts</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">attribute_map</span><span class="p">):</span>
+    <span class="n">flags</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;parameter.&quot;</span><span class="p">,</span> <span class="s2">&quot;sensitivity.&quot;</span><span class="p">,</span> <span class="s2">&quot;meta.&quot;</span><span class="p">,</span> <span class="s2">&quot;intermediate.&quot;</span><span class="p">,</span> <span class="s2">&quot;return.&quot;</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">inner</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">any</span><span class="p">([</span><span class="n">flag</span> <span class="ow">in</span> <span class="n">x</span> <span class="k">for</span> <span class="n">flag</span> <span class="ow">in</span> <span class="n">flags</span><span class="p">]):</span>
+            <span class="k">return</span> <span class="n">x</span>
+        <span class="k">if</span> <span class="n">x</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">attribute_map</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;The attribute [</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">] does not belong to the model.&quot;</span>
+            <span class="k">raise</span> <span class="n">ModelCreationError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">attribute_map</span><span class="p">[</span><span class="n">x</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="nb">tuple</span><span class="p">([</span><span class="n">inner</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">src</span><span class="p">])</span>
+
+
+<span class="k">def</span> <span class="nf">model</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="nb">type</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">steps</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]):</span>
+    <span class="sd">&quot;&quot;&quot;Turn a class into a model within the footings framework.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    cls : type</span>
+<span class="sd">        The class to turn into a model.</span>
+<span class="sd">    steps : List[str], optional</span>
+<span class="sd">        The list of steps to the model.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    cls</span>
+<span class="sd">        Returns cls as a model within footings framework.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="bp">cls</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">partial</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">steps</span><span class="o">=</span><span class="n">steps</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">inner</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="c1"># In order to be instantiated as a model, need to pass the following test.</span>
+
+        <span class="c1"># 1. All attributes need to belong to a footings_attribute_type</span>
+        <span class="n">exclude</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;run&quot;</span><span class="p">,</span> <span class="s2">&quot;audit&quot;</span><span class="p">,</span> <span class="s2">&quot;visualize&quot;</span><span class="p">]</span>
+        <span class="n">attributes</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;_&quot;</span> <span class="ow">and</span> <span class="n">x</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">exclude</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="s2">&quot;__attrs_attrs__&quot;</span><span class="p">):</span>
+            <span class="n">attributes</span> <span class="o">+=</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">__attrs_attrs__</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;_&quot;</span><span class="p">]</span>
+            <span class="n">attrs_attrs</span> <span class="o">=</span> <span class="p">{</span><span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">__attrs_attrs__</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;_&quot;</span><span class="p">}</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">attrs_attrs</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">parameters</span><span class="p">,</span> <span class="n">sensitivities</span><span class="p">,</span> <span class="n">meta</span><span class="p">,</span> <span class="n">intermediates</span><span class="p">,</span> <span class="n">returns</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">attribute</span> <span class="ow">in</span> <span class="n">attributes</span><span class="p">:</span>
+            <span class="n">attr</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">attribute</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">attribute</span> <span class="ow">in</span> <span class="n">attrs_attrs</span><span class="p">:</span>
+                <span class="n">attr</span> <span class="o">=</span> <span class="n">attrs_attrs</span><span class="p">[</span><span class="n">attribute</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">attr</span><span class="p">,</span> <span class="n">_CountingAttr</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+                    <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;The attribute </span><span class="si">{</span><span class="n">attribute</span><span class="si">}</span><span class="s2"> is not registered to a known Models group.</span><span class="se">\n</span><span class="s2">&quot;</span>
+                    <span class="n">msg</span> <span class="o">+=</span> <span class="s2">&quot;Use one of def_* functions from the footings library when building a model.&quot;</span>
+                    <span class="k">raise</span> <span class="n">ModelCreationError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+            <span class="n">attribute_type</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;footings_attribute_type&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="n">attribute_type</span> <span class="ow">is</span> <span class="kc">None</span>
+                <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">attribute_type</span><span class="p">,</span> <span class="n">ModelAttributeType</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span>
+            <span class="p">):</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;The attribute </span><span class="si">{</span><span class="n">attribute</span><span class="si">}</span><span class="s2"> is not registered to a known Models attribute type.</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="n">msg</span> <span class="o">+=</span> <span class="s2">&quot;Use one of def_* functions from the footings library when building a model.&quot;</span>
+                <span class="k">raise</span> <span class="n">ModelCreationError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">attribute_type</span> <span class="ow">is</span> <span class="n">ModelAttributeType</span><span class="o">.</span><span class="n">Parameter</span><span class="p">:</span>
+                <span class="n">parameters</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">attribute</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">attribute_type</span> <span class="ow">is</span> <span class="n">ModelAttributeType</span><span class="o">.</span><span class="n">Sensitivity</span><span class="p">:</span>
+                <span class="n">sensitivities</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">attribute</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">attribute_type</span> <span class="ow">is</span> <span class="n">ModelAttributeType</span><span class="o">.</span><span class="n">Meta</span><span class="p">:</span>
+                <span class="n">meta</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">attribute</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">attribute_type</span> <span class="ow">is</span> <span class="n">ModelAttributeType</span><span class="o">.</span><span class="n">Intermediate</span><span class="p">:</span>
+                <span class="n">intermediates</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">attribute</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">attribute_type</span> <span class="ow">is</span> <span class="n">ModelAttributeType</span><span class="o">.</span><span class="n">Return</span><span class="p">:</span>
+                <span class="n">returns</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">attribute</span><span class="p">)</span>
+
+        <span class="c1"># 2. For steps -</span>
+        <span class="c1">#    - all steps are methods of cls</span>
+        <span class="c1">#    - all steps have attributes uses and impacts</span>
+        <span class="n">missing_steps</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">missing_attributes</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">step_nm</span> <span class="ow">in</span> <span class="n">steps</span><span class="p">:</span>
+            <span class="n">step</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">step_nm</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">step</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">missing_steps</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">step_nm</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">step</span><span class="p">,</span> <span class="s2">&quot;uses&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span> <span class="ow">or</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">step</span><span class="p">,</span> <span class="s2">&quot;impacts&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+                <span class="n">missing_attributes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">step_nm</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">missing_steps</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ModelCreationError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;The following steps listed are missing - </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">missing_steps</span><span class="p">)</span><span class="si">}</span><span class="s2"> from the object.&quot;</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">missing_attributes</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ModelCreationError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;The followings steps listed do not appear to be decorated steps - </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">missing_attributes</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span>
+            <span class="p">)</span>
+
+        <span class="c1"># If all test pass, update steps and returns with known values as defaults.</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">__model_steps__</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">steps</span><span class="p">)</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">__model_parameters__</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">__model_sensitivities__</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">sensitivities</span><span class="p">)</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">__model_meta__</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">meta</span><span class="p">)</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">__model_intermediates__</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">intermediates</span><span class="p">)</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">__model_returns__</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">returns</span><span class="p">)</span>
+
+        <span class="n">attribute_map</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="o">**</span><span class="p">{</span><span class="n">p</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;parameter.</span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">parameters</span><span class="p">},</span>
+            <span class="o">**</span><span class="p">{</span><span class="n">m</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;sensitivity.</span><span class="si">{</span><span class="n">m</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">sensitivities</span><span class="p">},</span>
+            <span class="o">**</span><span class="p">{</span><span class="n">m</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;meta.</span><span class="si">{</span><span class="n">m</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">meta</span><span class="p">},</span>
+            <span class="o">**</span><span class="p">{</span><span class="n">p</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;intermediate.</span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">intermediates</span><span class="p">},</span>
+            <span class="o">**</span><span class="p">{</span><span class="n">a</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;return.</span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">returns</span><span class="p">},</span>
+        <span class="p">}</span>
+
+        <span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="n">steps</span><span class="p">:</span>
+            <span class="n">use_old</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">step</span><span class="p">)</span><span class="o">.</span><span class="n">uses</span>
+            <span class="n">use_new</span> <span class="o">=</span> <span class="n">_update_uses_impacts</span><span class="p">(</span><span class="n">use_old</span><span class="p">,</span> <span class="n">attribute_map</span><span class="p">)</span>
+            <span class="n">impact_old</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">step</span><span class="p">)</span><span class="o">.</span><span class="n">impacts</span>
+            <span class="n">impact_new</span> <span class="o">=</span> <span class="n">_update_uses_impacts</span><span class="p">(</span><span class="n">impact_old</span><span class="p">,</span> <span class="n">attribute_map</span><span class="p">)</span>
+            <span class="n">new_step</span> <span class="o">=</span> <span class="n">evolve</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">step</span><span class="p">),</span> <span class="n">uses</span><span class="o">=</span><span class="n">use_new</span><span class="p">,</span> <span class="n">impacts</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(</span><span class="n">impact_new</span><span class="p">))</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">step</span><span class="p">,</span> <span class="n">new_step</span><span class="p">)</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">__model_attribute_map__</span> <span class="o">=</span> <span class="n">attribute_map</span>
+
+        <span class="n">exclude</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">Model</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;_&quot;</span><span class="p">]</span>
+        <span class="n">attrs</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="n">x</span><span class="p">:</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;_&quot;</span> <span class="ow">and</span> <span class="n">x</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">exclude</span>
+        <span class="p">}</span>
+
+        <span class="c1"># Make attrs dataclass and update signature</span>
+        <span class="bp">cls</span> <span class="o">=</span> <span class="n">make_class</span><span class="p">(</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
+            <span class="n">attrs</span><span class="o">=</span><span class="n">attrs</span><span class="p">,</span>
+            <span class="n">bases</span><span class="o">=</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">Model</span><span class="p">,),</span>
+            <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">on_setattr</span><span class="o">=</span><span class="n">frozen</span><span class="p">,</span>
+            <span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">slots</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">_attr_doc</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">steps</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">inner</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span>
+</pre></div>
+
+              </div>
+              
+              
+              <div class='prev-next-bottom'>
+                
+
+              </div>
+              
+          </main>
+          
+
+      </div>
+    </div>
+
+    
+  <script src="../../_static/js/index.3da636dd464baa7582d2.js"></script>
+
+
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    <p>
+          &copy; Copyright 2020, Dustin Tindall.<br/>
+        Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.2.1.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

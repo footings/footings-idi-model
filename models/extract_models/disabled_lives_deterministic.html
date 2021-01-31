@@ -1,0 +1,1361 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Disabled Lives - Deterministic &#8212; Footings IDI Model 0.6.0rc0+9.g3419d57 documentation</title>
+    
+  <link rel="stylesheet" href="../../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.3da636dd464baa7582d2.js">
+
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Active Lives - Deterministic" href="active_lives_deterministic.html" />
+    <link rel="prev" title="Extract Models" href="index.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main">
+<div class="container-xl">
+
+    <a class="navbar-brand" href="../../index.html">
+    
+      <p class="title">Footings IDI Model</p>
+    
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar-menu" class="col-lg-9 collapse navbar-collapse">
+      <ul id="navbar-main-elements" class="navbar-nav mr-auto">
+        
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../installation.html">Installation</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../product_info.html">Product Information</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../data/index.html">Data</a>
+        </li>
+        
+        <li class="nav-item active">
+            <a class="nav-link" href="../index.html">Models</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../assumptions.html">Assumptions</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../license.html">License</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../changelog.html">Changelog</a>
+        </li>
+        
+        
+      </ul>
+
+
+      <form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this site..." aria-label="Search this site..." autocomplete="off" >
+</form>
+      
+
+      <ul class="navbar-nav">
+        
+          <li class="nav-item">
+            <a class="nav-link" href="https://github.com/footings/footings-idi-model" target="_blank" rel="noopener">
+              <span><i class="fab fa-github-square"></i></span>
+            </a>
+          </li>
+        
+        
+      </ul>
+    </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+          <div class="col-12 col-md-3 bd-sidebar"><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+
+    <div class="bd-toc-item active">
+    
+  
+    <ul class="nav bd-sidenav">
+        
+        
+        
+        
+        
+        
+        
+        
+          
+            
+                <li class="">
+                    <a href="../policy_models/index.html">Policy Models</a>
+                </li>
+            
+          
+            
+  
+                <li class="active">
+                    <a href="index.html">Extract Models</a>
+                    <ul>
+                    
+                        <li class="active">
+                            <a href="">Disabled Lives - Deterministic</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="active_lives_deterministic.html">Active Lives - Deterministic</a>
+                        </li>
+                    
+                    </ul>
+                </li>
+            
+          
+        
+        
+        
+        
+        
+        
+        
+        
+      </ul>
+  
+  </nav>
+          </div>
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+              
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#valuation-model" class="nav-link">Valuation Model</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#documentation" class="nav-link">Documentation</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#usage" class="nav-link">Usage</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#projection-model" class="nav-link">Projection Model</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id1" class="nav-link">Documentation</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id2" class="nav-link">Usage</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+    </ul>
+</nav>
+
+
+              
+          </div>
+          
+
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <div class="section" id="disabled-lives-deterministic">
+<h1>Disabled Lives - Deterministic<a class="headerlink" href="#disabled-lives-deterministic" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="valuation-model">
+<h2>Valuation Model<a class="headerlink" href="#valuation-model" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="documentation">
+<h3>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt id="footings_idi_model.extract_models.DisabledLivesValEMD">
+<em class="property">class </em><code class="sig-name descname">DisabledLivesValEMD</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span></em>, <em class="sig-param"><span class="n">base_extract</span><span class="p">:</span> <span class="n">pandas.core.frame.DataFrame</span></em>, <em class="sig-param"><span class="n">rider_extract</span><span class="p">:</span> <span class="n">pandas.core.frame.DataFrame</span></em>, <em class="sig-param"><span class="n">valuation_dt</span><span class="p">:</span> <span class="n">pandas._libs.tslibs.timestamps.Timestamp</span></em>, <em class="sig-param"><span class="n">assumption_set</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">ctr_modifier</span><span class="p">:</span> <span class="n">float</span> <span class="o">=</span> <span class="default_value">1.0</span></em>, <em class="sig-param"><span class="n">interest_modifier</span><span class="p">:</span> <span class="n">float</span> <span class="o">=</span> <span class="default_value">1.0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#footings_idi_model.extract_models.DisabledLivesValEMD" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disabled lives deterministic valuation extract model.</p>
+<p>This model takes an extract of policies and runs them through the respective Policy Models
+based on the COVERAGE_ID column (i.e., whether it is base policy or rider).</p>
+<p class="rubric">Parameters</p>
+<dl>
+<dt>base_extract<span class="classifier">DataFrame</span></dt><dd><p>The base policy extract for disabled lives.</p>
+</dd>
+<dt>rider_extract<span class="classifier">DataFrame</span></dt><dd><p>The rider extract for disabled lives.</p>
+</dd>
+<dt>valuation_dt<span class="classifier">Timestamp</span></dt><dd><p>The valuation date which reserves are based.</p>
+</dd>
+<dt>assumption_set<span class="classifier">str</span></dt><dd><p>The assumption set to use for running the model. Options are :</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><cite>stat</cite></p></li>
+<li><p><cite>gaap</cite></p></li>
+<li><p><cite>best-estimate</cite></p></li>
+</ul>
+</div></blockquote>
+</dd>
+</dl>
+<p class="rubric">Sensitivities</p>
+<dl class="simple">
+<dt>ctr_modifier<span class="classifier">float</span></dt><dd><p>Modifier for CTR.</p>
+</dd>
+<dt>interest_modifier<span class="classifier">float</span></dt><dd><p>Interest rate modifier.</p>
+</dd>
+</dl>
+<p class="rubric">Meta</p>
+<dl class="simple">
+<dt>model_version<span class="classifier">str</span></dt><dd><p>The model version generated by versioneer.</p>
+</dd>
+<dt>last_commit<span class="classifier">str</span></dt><dd><p>The last git commit.</p>
+</dd>
+<dt>run_date_time<span class="classifier">Timestamp</span></dt><dd><p>The run date and time.</p>
+</dd>
+</dl>
+<p class="rubric">Intermediates</p>
+<dl class="simple">
+<dt>records<span class="classifier">dict</span></dt><dd><p>The extract transformed to records.</p>
+</dd>
+</dl>
+<p class="rubric">Returns</p>
+<dl class="simple">
+<dt>projected<span class="classifier">DataFrame</span></dt><dd><p>The projected reserves for the policyholders.</p>
+</dd>
+<dt>time_0<span class="classifier">DataFrame</span></dt><dd><p>The time 0 reserve for the policyholders.</p>
+</dd>
+<dt>errors<span class="classifier">list</span></dt><dd><p>Any errors captured.</p>
+</dd>
+</dl>
+<p class="rubric">Steps</p>
+<ol class="arabic simple">
+<li><p>Create Records from Extracts - Turn extract into a list of records for each row in extract.</p></li>
+<li><p>Run Records with Policy Models - Foreach record run through respective policy model based on COVERAGE_ID value.</p></li>
+<li><p>Get Time0 Values - Filter projected reserves frame down to time_0 reserve for each record.</p></li>
+</ol>
+</dd></dl>
+
+</div>
+<div class="section" id="usage">
+<h3>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">footings_idi_model.extract_models</span> <span class="kn">import</span> <span class="n">DisabledLivesValEMD</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">base_extract</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
+  <span class="s2">&quot;disabled-lives-sample-base.csv&quot;</span><span class="p">,</span>
+  <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;BIRTH_DT&quot;</span><span class="p">,</span> <span class="s2">&quot;INCURRED_DT&quot;</span><span class="p">,</span> <span class="s2">&quot;TERMINATION_DT&quot;</span><span class="p">]</span>
+<span class="p">)</span>
+<span class="n">base_extract</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>POLICY_ID</th>
+      <th>BIRTH_DT</th>
+      <th>CLAIM_ID</th>
+      <th>COVERAGE_ID</th>
+      <th>IDI_OCCUPATION_CLASS</th>
+      <th>IDI_CONTRACT</th>
+      <th>IDI_BENEFIT_PERIOD</th>
+      <th>IDI_MARKET</th>
+      <th>GENDER</th>
+      <th>TOBACCO_USAGE</th>
+      <th>INCURRED_DT</th>
+      <th>TERMINATION_DT</th>
+      <th>ELIMINATION_PERIOD</th>
+      <th>BENEFIT_AMOUNT</th>
+      <th>IDI_DIAGNOSIS_GRP</th>
+      <th>COLA_PERCENT</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>M768</td>
+      <td>1967-01-15</td>
+      <td>M768C1</td>
+      <td>BASE</td>
+      <td>2</td>
+      <td>AS</td>
+      <td>LIFE</td>
+      <td>INDV</td>
+      <td>F</td>
+      <td>N</td>
+      <td>2011-01-15</td>
+      <td>2087-01-14</td>
+      <td>180</td>
+      <td>100</td>
+      <td>HIGH</td>
+      <td>0.02</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>M768</td>
+      <td>1967-01-15</td>
+      <td>M768C1</td>
+      <td>CAT</td>
+      <td>2</td>
+      <td>AS</td>
+      <td>LIFE</td>
+      <td>INDV</td>
+      <td>F</td>
+      <td>N</td>
+      <td>2011-01-15</td>
+      <td>2087-01-14</td>
+      <td>180</td>
+      <td>100</td>
+      <td>HIGH</td>
+      <td>0.02</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>M768</td>
+      <td>1967-01-15</td>
+      <td>M768C1</td>
+      <td>COLA</td>
+      <td>2</td>
+      <td>AS</td>
+      <td>LIFE</td>
+      <td>INDV</td>
+      <td>F</td>
+      <td>N</td>
+      <td>2011-01-15</td>
+      <td>2087-01-14</td>
+      <td>180</td>
+      <td>100</td>
+      <td>HIGH</td>
+      <td>0.02</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>M288</td>
+      <td>1966-08-16</td>
+      <td>M288C1</td>
+      <td>BASE</td>
+      <td>M</td>
+      <td>AO</td>
+      <td>24M</td>
+      <td>INDV</td>
+      <td>M</td>
+      <td>N</td>
+      <td>2019-08-16</td>
+      <td>2021-10-15</td>
+      <td>60</td>
+      <td>100</td>
+      <td>VERY_HIGH</td>
+      <td>0.02</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>M234</td>
+      <td>1984-09-12</td>
+      <td>M234C1</td>
+      <td>BASE</td>
+      <td>4</td>
+      <td>AS</td>
+      <td>TO67</td>
+      <td>INDV</td>
+      <td>F</td>
+      <td>N</td>
+      <td>2019-09-12</td>
+      <td>2051-09-11</td>
+      <td>360</td>
+      <td>100</td>
+      <td>VERY_HIGH</td>
+      <td>0.03</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>M234</td>
+      <td>1984-09-12</td>
+      <td>M234C1</td>
+      <td>RES</td>
+      <td>4</td>
+      <td>AS</td>
+      <td>TO67</td>
+      <td>INDV</td>
+      <td>F</td>
+      <td>N</td>
+      <td>2019-09-12</td>
+      <td>2051-09-11</td>
+      <td>360</td>
+      <td>100</td>
+      <td>VERY_HIGH</td>
+      <td>0.03</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>M344</td>
+      <td>1964-07-24</td>
+      <td>M344C1</td>
+      <td>BASE</td>
+      <td>1</td>
+      <td>AS</td>
+      <td>24M</td>
+      <td>INDV</td>
+      <td>F</td>
+      <td>Y</td>
+      <td>2019-07-24</td>
+      <td>2021-08-23</td>
+      <td>30</td>
+      <td>100</td>
+      <td>HIGH</td>
+      <td>0.02</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>M533</td>
+      <td>1958-08-18</td>
+      <td>M533C1</td>
+      <td>BASE</td>
+      <td>1</td>
+      <td>SO</td>
+      <td>60M</td>
+      <td>INDV</td>
+      <td>F</td>
+      <td>N</td>
+      <td>2017-08-18</td>
+      <td>2022-09-17</td>
+      <td>30</td>
+      <td>100</td>
+      <td>MID</td>
+      <td>0.02</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>M434</td>
+      <td>1968-08-02</td>
+      <td>M434C1</td>
+      <td>BASE</td>
+      <td>1</td>
+      <td>SO</td>
+      <td>TO70</td>
+      <td>INDV</td>
+      <td>F</td>
+      <td>Y</td>
+      <td>2010-08-02</td>
+      <td>2038-08-01</td>
+      <td>180</td>
+      <td>100</td>
+      <td>HIGH</td>
+      <td>0.03</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>M445</td>
+      <td>1958-09-03</td>
+      <td>M445C1</td>
+      <td>BASE</td>
+      <td>M</td>
+      <td>AO</td>
+      <td>60M</td>
+      <td>INDV</td>
+      <td>M</td>
+      <td>Y</td>
+      <td>2016-09-03</td>
+      <td>2021-11-02</td>
+      <td>60</td>
+      <td>100</td>
+      <td>VERY_LOW</td>
+      <td>0.03</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>M221</td>
+      <td>1987-12-02</td>
+      <td>M221C1</td>
+      <td>BASE</td>
+      <td>1</td>
+      <td>AS</td>
+      <td>TO67</td>
+      <td>INDV</td>
+      <td>M</td>
+      <td>N</td>
+      <td>2019-12-02</td>
+      <td>2054-12-01</td>
+      <td>90</td>
+      <td>100</td>
+      <td>MID</td>
+      <td>0.03</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>M9</td>
+      <td>1970-10-17</td>
+      <td>M9C1</td>
+      <td>BASE</td>
+      <td>2</td>
+      <td>AO</td>
+      <td>TO70</td>
+      <td>INDV</td>
+      <td>M</td>
+      <td>Y</td>
+      <td>2009-10-17</td>
+      <td>2040-10-16</td>
+      <td>90</td>
+      <td>100</td>
+      <td>VERY_HIGH</td>
+      <td>0.03</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>M776</td>
+      <td>1958-10-02</td>
+      <td>M776C1</td>
+      <td>BASE</td>
+      <td>1</td>
+      <td>AS</td>
+      <td>TO67</td>
+      <td>INDV</td>
+      <td>M</td>
+      <td>N</td>
+      <td>1990-10-02</td>
+      <td>2025-10-01</td>
+      <td>360</td>
+      <td>100</td>
+      <td>HIGH</td>
+      <td>0.02</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>M776</td>
+      <td>1958-10-02</td>
+      <td>M776C1</td>
+      <td>SIS</td>
+      <td>1</td>
+      <td>AS</td>
+      <td>TO67</td>
+      <td>INDV</td>
+      <td>M</td>
+      <td>N</td>
+      <td>1990-10-02</td>
+      <td>2025-10-01</td>
+      <td>360</td>
+      <td>100</td>
+      <td>HIGH</td>
+      <td>0.02</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>M776</td>
+      <td>1958-10-02</td>
+      <td>M776C1</td>
+      <td>COLA</td>
+      <td>1</td>
+      <td>AS</td>
+      <td>TO67</td>
+      <td>INDV</td>
+      <td>M</td>
+      <td>N</td>
+      <td>1990-10-02</td>
+      <td>2025-10-01</td>
+      <td>360</td>
+      <td>100</td>
+      <td>HIGH</td>
+      <td>0.02</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rider_extract</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;disabled-lives-sample-riders.csv&quot;</span><span class="p">)</span>
+<span class="n">rider_extract</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>POLICY_ID</th>
+      <th>CLAIM_ID</th>
+      <th>COVERAGE_ID</th>
+      <th>RIDER_ATTRIBUTE</th>
+      <th>VALUE</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>M234</td>
+      <td>M234C1</td>
+      <td>RES</td>
+      <td>residual_benefit_percent</td>
+      <td>0.5</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">DisabledLivesValEMD</span><span class="p">(</span>
+    <span class="n">base_extract</span><span class="o">=</span><span class="n">base_extract</span><span class="p">,</span>
+    <span class="n">rider_extract</span><span class="o">=</span><span class="n">rider_extract</span><span class="p">,</span>
+    <span class="n">valuation_dt</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="s2">&quot;2020-03-31&quot;</span><span class="p">),</span>
+    <span class="n">assumption_set</span><span class="o">=</span><span class="s2">&quot;stat&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>To run the model call the <code class="docutils literal notranslate"><span class="pre">run</span></code> method which returns -</p>
+<ul class="simple">
+<li><p>the projected reserve for each policy in the extract (<code class="docutils literal notranslate"><span class="pre">projected</span></code>),</p></li>
+<li><p>the reserve as of the valuation date for each policy (<code class="docutils literal notranslate"><span class="pre">time0</span></code>), and</p></li>
+<li><p>policies that error out when the model runs (<code class="docutils literal notranslate"><span class="pre">run</span></code>).</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">projected</span><span class="p">,</span> <span class="n">time0</span><span class="p">,</span> <span class="n">errors</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Note the <code class="docutils literal notranslate"><span class="pre">time0</span></code> and <code class="docutils literal notranslate"><span class="pre">projected</span></code> have the same columns with <code class="docutils literal notranslate"><span class="pre">time0</span></code> being a subset of the <code class="docutils literal notranslate"><span class="pre">projected</span></code> frame.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">projected</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+Int64Index: 4334 entries, 0 to 66
+Data columns (total 23 columns):
+ #   Column          Non-Null Count  Dtype         
+---  ------          --------------  -----         
+ 0   MODEL_VERSION   4334 non-null   object        
+ 1   LAST_COMMIT     4334 non-null   object        
+ 2   RUN_DATE_TIME   4334 non-null   datetime64[ns]
+ 3   SOURCE          4334 non-null   object        
+ 4   POLICY_ID       4334 non-null   object        
+ 5   CLAIM_ID        4334 non-null   object        
+ 6   COVERAGE_ID     4334 non-null   object        
+ 7   DATE_BD         4334 non-null   datetime64[ns]
+ 8   DATE_ED         4334 non-null   datetime64[ns]
+ 9   DURATION_YEAR   4334 non-null   Int64         
+ 10  DURATION_MONTH  4334 non-null   Int64         
+ 11  BENEFIT_AMOUNT  4334 non-null   float64       
+ 12  FINAL_CTR       4334 non-null   float64       
+ 13  LIVES_BD        4334 non-null   float64       
+ 14  LIVES_MD        4334 non-null   float64       
+ 15  LIVES_ED        4334 non-null   float64       
+ 16  DISCOUNT_BD     4334 non-null   float64       
+ 17  DISCOUNT_MD     4334 non-null   float64       
+ 18  DISCOUNT_ED     4334 non-null   float64       
+ 19  PVFB_BD         4334 non-null   float64       
+ 20  PVFB_ED         4334 non-null   float64       
+ 21  DATE_DLR        4334 non-null   datetime64[ns]
+ 22  DLR             4334 non-null   float64       
+dtypes: Int64(2), datetime64[ns](4), float64(11), object(6)
+memory usage: 821.1+ KB
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">projected</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>MODEL_VERSION</th>
+      <th>LAST_COMMIT</th>
+      <th>RUN_DATE_TIME</th>
+      <th>SOURCE</th>
+      <th>POLICY_ID</th>
+      <th>CLAIM_ID</th>
+      <th>COVERAGE_ID</th>
+      <th>DATE_BD</th>
+      <th>DATE_ED</th>
+      <th>DURATION_YEAR</th>
+      <th>...</th>
+      <th>LIVES_BD</th>
+      <th>LIVES_MD</th>
+      <th>LIVES_ED</th>
+      <th>DISCOUNT_BD</th>
+      <th>DISCOUNT_MD</th>
+      <th>DISCOUNT_ED</th>
+      <th>PVFB_BD</th>
+      <th>PVFB_ED</th>
+      <th>DATE_DLR</th>
+      <th>DLR</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.6.0rc0+9.g3419d57</td>
+      <td>3419d57d94b9bc75f100fc0f63c2e58e709a19b3</td>
+      <td>2021-01-31 11:58:38.354928</td>
+      <td>DValBasePMD</td>
+      <td>M768</td>
+      <td>M768C1</td>
+      <td>BASE</td>
+      <td>2020-03-15</td>
+      <td>2020-04-15</td>
+      <td>10</td>
+      <td>...</td>
+      <td>1.000000</td>
+      <td>0.999172</td>
+      <td>0.998345</td>
+      <td>1.000000</td>
+      <td>0.998769</td>
+      <td>0.997540</td>
+      <td>20701.09</td>
+      <td>20652.80</td>
+      <td>2020-03-31</td>
+      <td>20720.15</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.6.0rc0+9.g3419d57</td>
+      <td>3419d57d94b9bc75f100fc0f63c2e58e709a19b3</td>
+      <td>2021-01-31 11:58:38.354928</td>
+      <td>DValBasePMD</td>
+      <td>M768</td>
+      <td>M768C1</td>
+      <td>BASE</td>
+      <td>2020-04-15</td>
+      <td>2020-05-15</td>
+      <td>10</td>
+      <td>...</td>
+      <td>0.998345</td>
+      <td>0.997519</td>
+      <td>0.996692</td>
+      <td>0.997540</td>
+      <td>0.996312</td>
+      <td>0.995086</td>
+      <td>20652.80</td>
+      <td>20553.41</td>
+      <td>2020-04-30</td>
+      <td>20730.56</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.6.0rc0+9.g3419d57</td>
+      <td>3419d57d94b9bc75f100fc0f63c2e58e709a19b3</td>
+      <td>2021-01-31 11:58:38.354928</td>
+      <td>DValBasePMD</td>
+      <td>M768</td>
+      <td>M768C1</td>
+      <td>BASE</td>
+      <td>2020-05-15</td>
+      <td>2020-06-15</td>
+      <td>10</td>
+      <td>...</td>
+      <td>0.996692</td>
+      <td>0.995868</td>
+      <td>0.995043</td>
+      <td>0.995086</td>
+      <td>0.993861</td>
+      <td>0.992638</td>
+      <td>20553.41</td>
+      <td>20454.44</td>
+      <td>2020-05-31</td>
+      <td>20715.93</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.6.0rc0+9.g3419d57</td>
+      <td>3419d57d94b9bc75f100fc0f63c2e58e709a19b3</td>
+      <td>2021-01-31 11:58:38.354928</td>
+      <td>DValBasePMD</td>
+      <td>M768</td>
+      <td>M768C1</td>
+      <td>BASE</td>
+      <td>2020-06-15</td>
+      <td>2020-07-15</td>
+      <td>10</td>
+      <td>...</td>
+      <td>0.995043</td>
+      <td>0.994219</td>
+      <td>0.993396</td>
+      <td>0.992638</td>
+      <td>0.991416</td>
+      <td>0.990195</td>
+      <td>20454.44</td>
+      <td>20355.87</td>
+      <td>2020-06-30</td>
+      <td>20701.25</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.6.0rc0+9.g3419d57</td>
+      <td>3419d57d94b9bc75f100fc0f63c2e58e709a19b3</td>
+      <td>2021-01-31 11:58:38.354928</td>
+      <td>DValBasePMD</td>
+      <td>M768</td>
+      <td>M768C1</td>
+      <td>BASE</td>
+      <td>2020-07-15</td>
+      <td>2020-08-15</td>
+      <td>10</td>
+      <td>...</td>
+      <td>0.993396</td>
+      <td>0.992574</td>
+      <td>0.991752</td>
+      <td>0.990195</td>
+      <td>0.988977</td>
+      <td>0.987759</td>
+      <td>20355.87</td>
+      <td>20257.70</td>
+      <td>2020-07-31</td>
+      <td>20686.50</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>62</th>
+      <td>0.6.0rc0+9.g3419d57</td>
+      <td>3419d57d94b9bc75f100fc0f63c2e58e709a19b3</td>
+      <td>2021-01-31 11:58:38.354928</td>
+      <td>DValColaRPMD</td>
+      <td>M776</td>
+      <td>M776C1</td>
+      <td>COLA</td>
+      <td>2025-05-02</td>
+      <td>2025-06-02</td>
+      <td>35</td>
+      <td>...</td>
+      <td>0.881537</td>
+      <td>0.880525</td>
+      <td>0.879514</td>
+      <td>0.858370</td>
+      <td>0.857313</td>
+      <td>0.856258</td>
+      <td>330.69</td>
+      <td>263.92</td>
+      <td>2025-05-31</td>
+      <td>356.06</td>
+    </tr>
+    <tr>
+      <th>63</th>
+      <td>0.6.0rc0+9.g3419d57</td>
+      <td>3419d57d94b9bc75f100fc0f63c2e58e709a19b3</td>
+      <td>2021-01-31 11:58:38.354928</td>
+      <td>DValColaRPMD</td>
+      <td>M776</td>
+      <td>M776C1</td>
+      <td>COLA</td>
+      <td>2025-06-02</td>
+      <td>2025-07-02</td>
+      <td>35</td>
+      <td>...</td>
+      <td>0.879514</td>
+      <td>0.878505</td>
+      <td>0.877496</td>
+      <td>0.856258</td>
+      <td>0.855204</td>
+      <td>0.854151</td>
+      <td>263.92</td>
+      <td>197.47</td>
+      <td>2025-06-30</td>
+      <td>269.10</td>
+    </tr>
+    <tr>
+      <th>64</th>
+      <td>0.6.0rc0+9.g3419d57</td>
+      <td>3419d57d94b9bc75f100fc0f63c2e58e709a19b3</td>
+      <td>2021-01-31 11:58:38.354928</td>
+      <td>DValColaRPMD</td>
+      <td>M776</td>
+      <td>M776C1</td>
+      <td>COLA</td>
+      <td>2025-07-02</td>
+      <td>2025-08-02</td>
+      <td>35</td>
+      <td>...</td>
+      <td>0.877496</td>
+      <td>0.876489</td>
+      <td>0.875482</td>
+      <td>0.854151</td>
+      <td>0.853100</td>
+      <td>0.852050</td>
+      <td>197.47</td>
+      <td>131.33</td>
+      <td>2025-07-31</td>
+      <td>181.72</td>
+    </tr>
+    <tr>
+      <th>65</th>
+      <td>0.6.0rc0+9.g3419d57</td>
+      <td>3419d57d94b9bc75f100fc0f63c2e58e709a19b3</td>
+      <td>2021-01-31 11:58:38.354928</td>
+      <td>DValColaRPMD</td>
+      <td>M776</td>
+      <td>M776C1</td>
+      <td>COLA</td>
+      <td>2025-08-02</td>
+      <td>2025-09-02</td>
+      <td>35</td>
+      <td>...</td>
+      <td>0.875482</td>
+      <td>0.874478</td>
+      <td>0.873473</td>
+      <td>0.852050</td>
+      <td>0.851001</td>
+      <td>0.849954</td>
+      <td>131.33</td>
+      <td>65.51</td>
+      <td>2025-08-31</td>
+      <td>93.93</td>
+    </tr>
+    <tr>
+      <th>66</th>
+      <td>0.6.0rc0+9.g3419d57</td>
+      <td>3419d57d94b9bc75f100fc0f63c2e58e709a19b3</td>
+      <td>2021-01-31 11:58:38.354928</td>
+      <td>DValColaRPMD</td>
+      <td>M776</td>
+      <td>M776C1</td>
+      <td>COLA</td>
+      <td>2025-09-02</td>
+      <td>2025-10-02</td>
+      <td>35</td>
+      <td>...</td>
+      <td>0.873473</td>
+      <td>0.872471</td>
+      <td>0.871469</td>
+      <td>0.849954</td>
+      <td>0.848908</td>
+      <td>0.847863</td>
+      <td>65.51</td>
+      <td>0.00</td>
+      <td>2025-09-30</td>
+      <td>5.72</td>
+    </tr>
+  </tbody>
+</table>
+<p>4334 rows × 23 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">time0</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>MODEL_VERSION</th>
+      <th>LAST_COMMIT</th>
+      <th>RUN_DATE_TIME</th>
+      <th>SOURCE</th>
+      <th>POLICY_ID</th>
+      <th>CLAIM_ID</th>
+      <th>COVERAGE_ID</th>
+      <th>DATE_DLR</th>
+      <th>DLR</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.6.0rc0+9.g3419d57</td>
+      <td>3419d57d94b9bc75f100fc0f63c2e58e709a19b3</td>
+      <td>2021-01-31 11:58:38.354928</td>
+      <td>DValBasePMD</td>
+      <td>M768</td>
+      <td>M768C1</td>
+      <td>BASE</td>
+      <td>2020-03-31</td>
+      <td>20720.15</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>0.6.0rc0+9.g3419d57</td>
+      <td>3419d57d94b9bc75f100fc0f63c2e58e709a19b3</td>
+      <td>2021-01-31 11:58:38.354928</td>
+      <td>DValCatRPMD</td>
+      <td>M768</td>
+      <td>M768C1</td>
+      <td>CAT</td>
+      <td>2020-03-31</td>
+      <td>20720.15</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>0.6.0rc0+9.g3419d57</td>
+      <td>3419d57d94b9bc75f100fc0f63c2e58e709a19b3</td>
+      <td>2021-01-31 11:58:38.354928</td>
+      <td>DValColaRPMD</td>
+      <td>M768</td>
+      <td>M768C1</td>
+      <td>COLA</td>
+      <td>2020-03-31</td>
+      <td>8277.61</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>0.6.0rc0+9.g3419d57</td>
+      <td>3419d57d94b9bc75f100fc0f63c2e58e709a19b3</td>
+      <td>2021-01-31 11:58:38.354928</td>
+      <td>DValBasePMD</td>
+      <td>M288</td>
+      <td>M288C1</td>
+      <td>BASE</td>
+      <td>2020-03-31</td>
+      <td>1196.84</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>0.6.0rc0+9.g3419d57</td>
+      <td>3419d57d94b9bc75f100fc0f63c2e58e709a19b3</td>
+      <td>2021-01-31 11:58:38.354928</td>
+      <td>DValBasePMD</td>
+      <td>M234</td>
+      <td>M234C1</td>
+      <td>BASE</td>
+      <td>2020-03-31</td>
+      <td>6373.47</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>0.6.0rc0+9.g3419d57</td>
+      <td>3419d57d94b9bc75f100fc0f63c2e58e709a19b3</td>
+      <td>2021-01-31 11:58:38.354928</td>
+      <td>DValResRPMD</td>
+      <td>M234</td>
+      <td>M234C1</td>
+      <td>RES</td>
+      <td>2020-03-31</td>
+      <td>3186.74</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>0.6.0rc0+9.g3419d57</td>
+      <td>3419d57d94b9bc75f100fc0f63c2e58e709a19b3</td>
+      <td>2021-01-31 11:58:38.354928</td>
+      <td>DValBasePMD</td>
+      <td>M344</td>
+      <td>M344C1</td>
+      <td>BASE</td>
+      <td>2020-03-31</td>
+      <td>1244.17</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>0.6.0rc0+9.g3419d57</td>
+      <td>3419d57d94b9bc75f100fc0f63c2e58e709a19b3</td>
+      <td>2021-01-31 11:58:38.354928</td>
+      <td>DValBasePMD</td>
+      <td>M533</td>
+      <td>M533C1</td>
+      <td>BASE</td>
+      <td>2020-03-31</td>
+      <td>2656.92</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>0.6.0rc0+9.g3419d57</td>
+      <td>3419d57d94b9bc75f100fc0f63c2e58e709a19b3</td>
+      <td>2021-01-31 11:58:38.354928</td>
+      <td>DValBasePMD</td>
+      <td>M434</td>
+      <td>M434C1</td>
+      <td>BASE</td>
+      <td>2020-03-31</td>
+      <td>15049.39</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>0.6.0rc0+9.g3419d57</td>
+      <td>3419d57d94b9bc75f100fc0f63c2e58e709a19b3</td>
+      <td>2021-01-31 11:58:38.354928</td>
+      <td>DValBasePMD</td>
+      <td>M445</td>
+      <td>M445C1</td>
+      <td>BASE</td>
+      <td>2020-03-31</td>
+      <td>1809.56</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>0.6.0rc0+9.g3419d57</td>
+      <td>3419d57d94b9bc75f100fc0f63c2e58e709a19b3</td>
+      <td>2021-01-31 11:58:38.354928</td>
+      <td>DValBasePMD</td>
+      <td>M221</td>
+      <td>M221C1</td>
+      <td>BASE</td>
+      <td>2020-03-31</td>
+      <td>9180.59</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>0.6.0rc0+9.g3419d57</td>
+      <td>3419d57d94b9bc75f100fc0f63c2e58e709a19b3</td>
+      <td>2021-01-31 11:58:38.354928</td>
+      <td>DValBasePMD</td>
+      <td>M9</td>
+      <td>M9C1</td>
+      <td>BASE</td>
+      <td>2020-03-31</td>
+      <td>15142.95</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>0.6.0rc0+9.g3419d57</td>
+      <td>3419d57d94b9bc75f100fc0f63c2e58e709a19b3</td>
+      <td>2021-01-31 11:58:38.354928</td>
+      <td>DValBasePMD</td>
+      <td>M776</td>
+      <td>M776C1</td>
+      <td>BASE</td>
+      <td>2020-03-31</td>
+      <td>5720.32</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>0.6.0rc0+9.g3419d57</td>
+      <td>3419d57d94b9bc75f100fc0f63c2e58e709a19b3</td>
+      <td>2021-01-31 11:58:38.354928</td>
+      <td>DValSisRPMD</td>
+      <td>M776</td>
+      <td>M776C1</td>
+      <td>SIS</td>
+      <td>2020-03-31</td>
+      <td>1716.10</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>0.6.0rc0+9.g3419d57</td>
+      <td>3419d57d94b9bc75f100fc0f63c2e58e709a19b3</td>
+      <td>2021-01-31 11:58:38.354928</td>
+      <td>DValColaRPMD</td>
+      <td>M776</td>
+      <td>M776C1</td>
+      <td>COLA</td>
+      <td>2020-03-31</td>
+      <td>4866.04</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">errors</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[]
+</pre></div>
+</div>
+</div>
+</div>
+<p>An audit of the model is ran by calling the <code class="docutils literal notranslate"><span class="pre">audit</span></code> method as shown below.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">audit</span><span class="p">(</span><span class="s2">&quot;Audit-DisabledLivesValEMD.xlsx&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The audit file can be downloaded <a class="reference download internal" download="" href="../../_downloads/a5f37983c56a2b29532252ab5827acd7/Audit-DisabledLivesValEMD.xlsx"><code class="xref download docutils literal notranslate"><span class="pre">here.</span></code></a></p>
+</div>
+</div>
+<div class="section" id="projection-model">
+<h2>Projection Model<a class="headerlink" href="#projection-model" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id1">
+<h3>Documentation<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>To be completed.</p>
+</div>
+<div class="section" id="id2">
+<h3>Usage<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>To be completed.</p>
+</div>
+</div>
+</div>
+
+
+              </div>
+              
+              
+              <div class='prev-next-bottom'>
+                
+    <a class='left-prev' id="prev-link" href="index.html" title="previous page">Extract Models</a>
+    <a class='right-next' id="next-link" href="active_lives_deterministic.html" title="next page">Active Lives - Deterministic</a>
+
+              </div>
+              
+          </main>
+          
+
+      </div>
+    </div>
+
+    
+  <script src="../../_static/js/index.3da636dd464baa7582d2.js"></script>
+
+
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    <p>
+          &copy; Copyright 2020, Dustin Tindall.<br/>
+        Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.2.1.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>
