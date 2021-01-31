@@ -11,4 +11,5 @@ dependencies:
   - pydata-sphinx-theme
   - pip:
     - myst-nb
+    - nox
     - footings>=0.10.*
