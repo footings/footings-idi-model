@@ -45,7 +45,8 @@ class AValRopRPMD(AValBasePMD):
 
     - The addition of rop_return_freq, rop_return_percent and rop_claims_paid parameters.
     - The addition of steps _calculate_rop_intervals, _calculate_rop_future_claims, and
-    _calculate_rop_exp_payments steps which are used in the calculation of benefit cost.
+        _calculate_rop_exp_payments steps which are used in the calculation of benefit cost.
+
     """
 
     # additional parameters
@@ -74,20 +75,24 @@ class AValRopRPMD(AValBasePMD):
     rop_future_claims_frame = def_intermediate(dtype=pd.DataFrame, description="")
     rop_expected_claim_payments = def_intermediate(dtype=pd.DataFrame, description="")
 
-    @step(uses=["frame", "rop_return_freq"], impacts=["frame"])
+    @step(
+        name="Calculate ROP Payment Intervals",
+        uses=["frame", "rop_return_freq"],
+        impacts=["frame"],
+    )
     def _calculate_rop_intervals(self):
         """Calculate return of premium (ROP) payment intervals."""
         self.frame["PAYMENT_INTERVAL"] = (
             self.frame["DURATION_YEAR"].subtract(1).div(self.rop_return_freq).astype(int)
         )
 
-    @step(uses=["frame", "modeled_disabled_lives"], impacts=["rop_future_claims_frame"])
+    @step(
+        name="Model Future Claims",
+        uses=["frame", "modeled_disabled_lives"],
+        impacts=["rop_future_claims_frame"],
+    )
     def _calculate_rop_future_claims(self):
-        """Calculate future claims for return of premium (ROP) using the modeled disabled lives.
-        This step takes take each active modeled duration and filters the projected payments to
-        be less than or equal to the last date of the ROP payment interval. The data is than
-        concatenated into a single DataFrame.
-        """
+        """Calculate future claims for return of premium (ROP) using the modeled disabled lives."""
         # max_payment_dates = (
         #     self.frame[["DURATION_YEAR", "PAYMENT_INTERVAL", "DATE_ED"]]
         #     .groupby(["PAYMENT_INTERVAL"], as_index=False)
@@ -121,7 +126,11 @@ class AValRopRPMD(AValBasePMD):
             [model_payments(k, v) for k, v in self.modeled_disabled_lives.items()]
         )
 
-    @step(uses=["frame", "rop_future_claims_frame"], impacts=["frame"])
+    @step(
+        name="Calculate Expected Claims",
+        uses=["frame", "rop_future_claims_frame"],
+        impacts=["frame"],
+    )
     def _calculate_rop_exp_payments(self):
         """Calculate the expected claim payments for return of premium (ROP) for each active life duration."""
         base_cols = [
@@ -147,6 +156,7 @@ class AValRopRPMD(AValBasePMD):
         )
 
     @step(
+        name="Calculate Benefit Cost",
         uses=[
             "frame",
             "rop_claims_paid",
