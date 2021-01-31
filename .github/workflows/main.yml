@@ -1,0 +1,95 @@
+name: Main
+
+on:
+  push:
+    branches: [dev, master]
+  pull_request:
+    branches: [dev, master]
+
+jobs:
+  pre-commit:
+    name: Precommit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - uses: actions/cache@v1
+        with:
+          path: ~/.cache/pre-commit
+          key: pre-commit-${{ hashFiles('.pre-commit-config.yaml') }}
+      - uses: pre-commit/action@v2.0.0
+  tests:
+    name: Test for python - ${{ matrix.os }} - ${{ matrix.python-version }}"
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: bash -l {0}
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.7", "3.8"]
+        os: [ubuntu-latest, macOS-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: "${{ matrix.python-version }}"
+      - name: Set up Miniconda
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          auto-update-conda: true
+          python-version: ${{ matrix.python-version }}
+          environment-file: environments/footings-idi-model-dev.yml
+          activate-environment: footings-idi-model-dev
+          auto-activate-base: false
+      - name: Conda info
+        run: |
+          conda info
+          conda list
+      - name: Run tests
+        run:  nox -s run_tests
+  create-and-publish-docs:
+    name: Create Documentation
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash -l {0}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: "${{ matrix.python-version }}"
+      - name: Set up Miniconda
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          auto-update-conda: true
+          python-version: ${{ matrix.python-version }}
+          environment-file: environments/footings-idi-model-dev.yml
+          activate-environment: footings-idi-model-dev
+          auto-activate-base: false
+      - name: Conda info
+        run: |
+          conda info
+          conda list
+      - name: Run sphinx
+        run:  nox -s create_docs
+      - name: Deploy docs to github pages - master
+        if: github.ref == 'refs/heads/master'
+        uses: peaceiris/actions-gh-pages@v3
+        env:
+          github_token: ${{ secrets.GTIHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: ./docs/_build
+          destination_dir: ./master
+      - name: Deploy docs to github pages - dev
+        if: github.ref == 'refs/heads/dev'
+        uses: peaceiris/actions-gh-pages@v3
+        env:
+          github_token: ${{ secrets.GTIHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: ./docs/_build
+          destination_dir: ./dev
