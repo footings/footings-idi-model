@@ -9,7 +9,5 @@ dependencies:
   - dask
   - pytest
   - pydata-sphinx-theme
-  - pip:
-    - myst-nb
-    - nox
-    - footings>=0.10.*
+  - nox
+  - myst-nb

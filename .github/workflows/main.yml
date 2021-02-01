@@ -36,13 +36,23 @@ jobs:
         with:
           auto-update-conda: true
           python-version: 3.8
-          environment-file: environments/footings-idi-model-dev.yml
-          activate-environment: footings-idi-model-dev
-          auto-activate-base: false
+          # environment-file: environments/footings-idi-model-dev.yml
+          # activate-environment: footings-idi-model-dev
+          auto-activate-base: True # False
       - name: Conda info
         run: |
           conda info
           conda list
+      - name: Install conda-lock
+        run: |
+          conda install --channel conda-forge conda-lock
+      - name: Create environment and activate
+        run: |
+          conda create -n footings-idi-model-dev --file environments/footings-idi-model-linux-64.lock
+          conda activate footings-idi-model-dev
+      - name: Install footings library
+        run: |
+          pip install footings==0.10.0rc0
       - name: Run sphinx
         run:  nox -s create_docs
       - name: Deploy docs to github pages - master
