@@ -7,7 +7,7 @@ import nox
 def run_tests(session):
     session.run("pip", "install", "--no-deps", ".")
     session.run("pip", "show", "footings_idi_model")
-    session.run("pytest")
+    session.run("pytest", "-v", ".")
 
 
 @nox.session(venv_backend="none")
