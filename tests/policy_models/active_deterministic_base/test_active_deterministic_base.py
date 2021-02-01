@@ -64,4 +64,6 @@ def test_active_deterministic_base(case, tempdir):
     )
     AValBasePMD(**parameters).audit(test_file, config=config)
     exlcude_list = ["*RUN_DATE_TIME", "*MODEL_VERSION", "*LAST_COMMIT"]
-    assert_footings_files_equal(test_file, expected_file, exclude_keys=exlcude_list)
+    assert_footings_files_equal(
+        test_file, expected_file, exclude_keys=exlcude_list, tolerance=0.0001
+    )
