@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Active - Deterministic - COLA Rider &#8212; Footings IDI Model 0.6.0rc0+9.g3419d57 documentation</title>
+    <title>Active - Deterministic - COLA Rider &#8212; Footings IDI Model 0+untagged.1.g78760bc documentation</title>
     
-  <link rel="stylesheet" href="../../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
+  <link rel="stylesheet" href="../../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
     
   <link rel="stylesheet"
@@ -25,18 +25,17 @@
     href="../../_static/vendor/lato_latin-ext/1.44.1/index.css">
 
     
-    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
     
-  <link rel="preload" as="script" href="../../_static/js/index.3da636dd464baa7582d2.js">
+  <link rel="preload" as="script" href="../../_static/js/index.d3f166471bb80abb5163.js">
 
     <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
     <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/language_data.js"></script>
     <script src="../../_static/togglebutton.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -438,46 +437,128 @@ calculate the benefit with cola less the original benefit amount.</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">AttributeError</span><span class="g g-Whitespace">                            </span>Traceback (most recent call last)
+<span class="nn">/usr/share/miniconda/envs/footings-idi-model-dev/lib/python3.8/site-packages/footings/model.py</span> in <span class="ni">_run_step</span><span class="nt">(step)</span>
+<span class="g g-Whitespace">    </span><span class="mi">248</span>         <span class="k">try</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">249</span>             <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">step</span><span class="p">)()</span>
+<span class="g g-Whitespace">    </span><span class="mi">250</span>         <span class="k">except</span><span class="p">:</span>
+
+<span class="nn">/usr/share/miniconda/envs/footings-idi-model-dev/lib/python3.8/site-packages/footings/model.py</span> in <span class="ni">__call__</span><span class="nt">(self, *args, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">352</span>     <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="ne">--&gt; </span><span class="mi">353</span>         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">method</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">354</span> 
+
+<span class="nn">/usr/share/miniconda/envs/footings-idi-model-dev/lib/python3.8/site-packages/footings_idi_model/policy_models/disabled_deterministic_cola.py</span> in <span class="ni">_calculate_monthly_benefits</span><span class="nt">(self)</span>
+<span class="g g-Whitespace">     </span><span class="mi">44</span>         <span class="bp">self</span><span class="o">.</span><span class="n">frame</span><span class="p">[</span><span class="s2">&quot;BENEFIT_AMOUNT&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+<span class="ne">---&gt; </span><span class="mi">45</span>             <span class="bp">self</span><span class="o">.</span><span class="n">frame</span><span class="p">[</span><span class="s2">&quot;BENEFIT_FACTOR&quot;</span><span class="p">]</span>
+<span class="g g-Whitespace">     </span><span class="mi">46</span>             <span class="o">.</span><span class="n">mul</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">benefit_amount</span><span class="p">)</span>
+
+<span class="nn">/usr/share/miniconda/envs/footings-idi-model-dev/lib/python3.8/site-packages/pandas/core/series.py</span> in <span class="ni">round</span><span class="nt">(self, decimals, *args, **kwargs)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2182</span>         <span class="n">nv</span><span class="o">.</span><span class="n">validate_round</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">2183</span>         <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_values</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">decimals</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2184</span>         <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_constructor</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">)</span><span class="o">.</span><span class="n">__finalize__</span><span class="p">(</span>
+
+<span class="ne">AttributeError</span>: &#39;FloatingArray&#39; object has no attribute &#39;round&#39;
+
+<span class="n">During</span> <span class="n">handling</span> <span class="n">of</span> <span class="n">the</span> <span class="n">above</span> <span class="n">exception</span><span class="p">,</span> <span class="n">another</span> <span class="n">exception</span> <span class="n">occurred</span><span class="p">:</span>
+
+<span class="ne">ModelRunError</span><span class="g g-Whitespace">                             </span>Traceback (most recent call last)
+<span class="nn">/usr/share/miniconda/envs/footings-idi-model-dev/lib/python3.8/site-packages/footings/model.py</span> in <span class="ni">_run_step</span><span class="nt">(step)</span>
+<span class="g g-Whitespace">    </span><span class="mi">248</span>         <span class="k">try</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">249</span>             <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">step</span><span class="p">)()</span>
+<span class="g g-Whitespace">    </span><span class="mi">250</span>         <span class="k">except</span><span class="p">:</span>
+
+<span class="nn">/usr/share/miniconda/envs/footings-idi-model-dev/lib/python3.8/site-packages/footings/model.py</span> in <span class="ni">__call__</span><span class="nt">(self, *args, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">352</span>     <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="ne">--&gt; </span><span class="mi">353</span>         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">method</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">354</span> 
+
+<span class="nn">/usr/share/miniconda/envs/footings-idi-model-dev/lib/python3.8/site-packages/footings_idi_model/policy_models/active_deterministic_base.py</span> in <span class="ni">_model_claim_cost</span><span class="nt">(self)</span>
+<span class="g g-Whitespace">    </span><span class="mi">349</span>         <span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">350</span>         <span class="bp">self</span><span class="o">.</span><span class="n">modeled_disabled_lives</span> <span class="o">=</span> <span class="p">{</span>
+<span class="g g-Whitespace">    </span><span class="mi">351</span>             <span class="nb">int</span><span class="p">(</span><span class="n">dur_year</span><span class="p">):</span> <span class="n">result</span>
+
+<span class="nn">/usr/share/miniconda/envs/footings-idi-model-dev/lib/python3.8/site-packages/footings_idi_model/policy_models/active_deterministic_base.py</span> in <span class="ni">&lt;dictcomp&gt;</span><span class="nt">(.0)</span>
+<span class="g g-Whitespace">    </span><span class="mi">349</span>         <span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">350</span>         <span class="bp">self</span><span class="o">.</span><span class="n">modeled_disabled_lives</span> <span class="o">=</span> <span class="p">{</span>
+<span class="g g-Whitespace">    </span><span class="mi">351</span>             <span class="nb">int</span><span class="p">(</span><span class="n">dur_year</span><span class="p">):</span> <span class="n">result</span>
+
+<span class="nn">/usr/share/miniconda/envs/footings-idi-model-dev/lib/python3.8/site-packages/footings_idi_model/policy_models/active_deterministic_base.py</span> in <span class="ni">&lt;genexpr&gt;</span><span class="nt">(.0)</span>
+<span class="g g-Whitespace">    </span><span class="mi">346</span>         <span class="n">results</span> <span class="o">=</span> <span class="p">(</span>
+<span class="ne">--&gt; </span><span class="mi">347</span>             <span class="n">claim_cost_model</span><span class="p">(</span><span class="n">claim_id</span><span class="o">=</span><span class="s2">&quot;NA&quot;</span><span class="p">,</span> <span class="n">idi_diagnosis_grp</span><span class="o">=</span><span class="s2">&quot;AG&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">self_kws</span><span class="p">,</span> <span class="o">**</span><span class="n">record</span><span class="p">,)</span>
+<span class="g g-Whitespace">    </span><span class="mi">348</span>             <span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="n">records</span>
+
+<span class="nn">/usr/share/miniconda/envs/footings-idi-model-dev/lib/python3.8/site-packages/footings_idi_model/policy_models/active_deterministic_base.py</span> in <span class="ni">claim_cost_model</span><span class="nt">(**kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">326</span>         <span class="k">def</span> <span class="nf">claim_cost_model</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="ne">--&gt; </span><span class="mi">327</span>             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">claim_cost_model</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<span class="g g-Whitespace">    </span><span class="mi">328</span> 
+
+<span class="nn">/usr/share/miniconda/envs/footings-idi-model-dev/lib/python3.8/site-packages/footings/model.py</span> in <span class="ni">run</span><span class="nt">(self, to_step)</span>
+<span class="g g-Whitespace">    </span><span class="mi">309</span>         <span class="sd">&quot;&quot;&quot;</span>
+<span class="ne">--&gt; </span><span class="mi">310</span><span class="sd">         return _run(self, to_step=to_step)</span>
+<span class="g g-Whitespace">    </span><span class="mi">311</span><span class="sd"> </span>
+
+<span class="nn">/usr/share/miniconda/envs/footings-idi-model-dev/lib/python3.8/site-packages/footings/model.py</span> in <span class="ni">_run</span><span class="nt">(self, to_step)</span>
+<span class="g g-Whitespace">    </span><span class="mi">258</span><span class="sd">     for step in steps:</span>
+<span class="ne">--&gt; </span><span class="mi">259</span><span class="sd">         _run_step(step)</span>
+<span class="g g-Whitespace">    </span><span class="mi">260</span><span class="sd"> </span>
+
+<span class="nn">/usr/share/miniconda/envs/footings-idi-model-dev/lib/python3.8/site-packages/footings/model.py</span> in <span class="ni">_run_step</span><span class="nt">(step)</span>
+<span class="g g-Whitespace">    </span><span class="mi">255</span><span class="sd">             msg += f&quot;  Error Trace = {format_list(extract_tb(exc_trace))}\n&quot;</span>
+<span class="ne">--&gt; </span><span class="mi">256</span><span class="sd">             raise ModelRunError(msg)</span>
+<span class="g g-Whitespace">    </span><span class="mi">257</span><span class="sd"> </span>
+
+<span class="ne">ModelRunError</span>: At step [_calculate_monthly_benefits], an error occured.
+<span class="sd">  Error Type = AttributeError</span>
+<span class="sd">  Error Message = &#39;FloatingArray&#39; object has no attribute &#39;round&#39;</span>
+<span class="sd">  Error Trace = [&#39;  File &quot;/usr/share/miniconda/envs/footings-idi-model-dev/lib/python3.8/site-packages/footings/model.py&quot;, line 249, in _run_step\n    return getattr(self, step)()\n&#39;, &#39;  File &quot;/usr/share/miniconda/envs/footings-idi-model-dev/lib/python3.8/site-packages/footings/model.py&quot;, line 353, in __call__\n    return self.method(*args, **kwargs)\n&#39;, &#39;  File &quot;/usr/share/miniconda/envs/footings-idi-model-dev/lib/python3.8/site-packages/footings_idi_model/policy_models/disabled_deterministic_cola.py&quot;, line 45, in _calculate_monthly_benefits\n    self.frame[&quot;BENEFIT_FACTOR&quot;]\n&#39;, &#39;  File &quot;/usr/share/miniconda/envs/footings-idi-model-dev/lib/python3.8/site-packages/pandas/core/series.py&quot;, line 2183, in round\n    result = self._values.round(decimals)\n&#39;]</span>
+
+
+<span class="sd">During handling of the above exception, another exception occurred:</span>
+
+<span class="ne">ModelRunError</span><span class="g g-Whitespace">                             </span>Traceback (most recent call last)
+<span class="sd">&lt;ipython-input-2-26c491dd16c9&gt; in &lt;module&gt;</span>
+<span class="ne">----&gt; </span><span class="mi">1</span><span class="sd"> output = model.run()</span>
+
+<span class="nn">/usr/share/miniconda/envs/footings-idi-model-dev/lib/python3.8/site-packages/footings/model.py</span> in <span class="ni">run</span><span class="nt">(self, to_step)</span>
+<span class="g g-Whitespace">    </span><span class="mi">308</span><span class="sd"> </span>
+<span class="g g-Whitespace">    </span><span class="mi">309</span><span class="sd">         &quot;&quot;&quot;</span>
+<span class="ne">--&gt; </span><span class="mi">310</span>         <span class="k">return</span> <span class="n">_run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">to_step</span><span class="o">=</span><span class="n">to_step</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">311</span> 
+<span class="g g-Whitespace">    </span><span class="mi">312</span> 
+
+<span class="nn">/usr/share/miniconda/envs/footings-idi-model-dev/lib/python3.8/site-packages/footings/model.py</span> in <span class="ni">_run</span><span class="nt">(self, to_step)</span>
+<span class="g g-Whitespace">    </span><span class="mi">257</span> 
+<span class="g g-Whitespace">    </span><span class="mi">258</span>     <span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="n">steps</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">259</span>         <span class="n">_run_step</span><span class="p">(</span><span class="n">step</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">260</span> 
+<span class="g g-Whitespace">    </span><span class="mi">261</span>     <span class="k">if</span> <span class="n">to_step</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+
+<span class="nn">/usr/share/miniconda/envs/footings-idi-model-dev/lib/python3.8/site-packages/footings/model.py</span> in <span class="ni">_run_step</span><span class="nt">(step)</span>
+<span class="g g-Whitespace">    </span><span class="mi">254</span>             <span class="n">msg</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;  Error Message = </span><span class="si">{</span><span class="n">exc_value</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">255</span>             <span class="n">msg</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;  Error Trace = </span><span class="si">{</span><span class="n">format_list</span><span class="p">(</span><span class="n">extract_tb</span><span class="p">(</span><span class="n">exc_trace</span><span class="p">))</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+<span class="ne">--&gt; </span><span class="mi">256</span>             <span class="k">raise</span> <span class="n">ModelRunError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">257</span> 
+<span class="g g-Whitespace">    </span><span class="mi">258</span>     <span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="n">steps</span><span class="p">:</span>
+
+<span class="ne">ModelRunError</span>: At step [_model_claim_cost], an error occured.
+  <span class="n">Error</span> <span class="n">Type</span> <span class="o">=</span> <span class="n">ModelRunError</span>
+  <span class="n">Error</span> <span class="n">Message</span> <span class="o">=</span> <span class="n">At</span> <span class="n">step</span> <span class="p">[</span><span class="n">_calculate_monthly_benefits</span><span class="p">],</span> <span class="n">an</span> <span class="n">error</span> <span class="n">occured</span><span class="o">.</span>
+  <span class="n">Error</span> <span class="n">Type</span> <span class="o">=</span> <span class="ne">AttributeError</span>
+  <span class="n">Error</span> <span class="n">Message</span> <span class="o">=</span> <span class="s1">&#39;FloatingArray&#39;</span> <span class="nb">object</span> <span class="n">has</span> <span class="n">no</span> <span class="n">attribute</span> <span class="s1">&#39;round&#39;</span>
+  <span class="n">Error</span> <span class="n">Trace</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;  File &quot;/usr/share/miniconda/envs/footings-idi-model-dev/lib/python3.8/site-packages/footings/model.py&quot;, line 249, in _run_step</span><span class="se">\n</span><span class="s1">    return getattr(self, step)()</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;  File &quot;/usr/share/miniconda/envs/footings-idi-model-dev/lib/python3.8/site-packages/footings/model.py&quot;, line 353, in __call__</span><span class="se">\n</span><span class="s1">    return self.method(*args, **kwargs)</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;  File &quot;/usr/share/miniconda/envs/footings-idi-model-dev/lib/python3.8/site-packages/footings_idi_model/policy_models/disabled_deterministic_cola.py&quot;, line 45, in _calculate_monthly_benefits</span><span class="se">\n</span><span class="s1">    self.frame[&quot;BENEFIT_FACTOR&quot;]</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;  File &quot;/usr/share/miniconda/envs/footings-idi-model-dev/lib/python3.8/site-packages/pandas/core/series.py&quot;, line 2183, in round</span><span class="se">\n</span><span class="s1">    result = self._values.round(decimals)</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">]</span>
+
+  <span class="n">Error</span> <span class="n">Trace</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;  File &quot;/usr/share/miniconda/envs/footings-idi-model-dev/lib/python3.8/site-packages/footings/model.py&quot;, line 249, in _run_step</span><span class="se">\n</span><span class="s1">    return getattr(self, step)()</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;  File &quot;/usr/share/miniconda/envs/footings-idi-model-dev/lib/python3.8/site-packages/footings/model.py&quot;, line 353, in __call__</span><span class="se">\n</span><span class="s1">    return self.method(*args, **kwargs)</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;  File &quot;/usr/share/miniconda/envs/footings-idi-model-dev/lib/python3.8/site-packages/footings_idi_model/policy_models/active_deterministic_base.py&quot;, line 350, in _model_claim_cost</span><span class="se">\n</span><span class="s1">    self.modeled_disabled_lives = {</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;  File &quot;/usr/share/miniconda/envs/footings-idi-model-dev/lib/python3.8/site-packages/footings_idi_model/policy_models/active_deterministic_base.py&quot;, line 350, in &lt;dictcomp&gt;</span><span class="se">\n</span><span class="s1">    self.modeled_disabled_lives = {</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;  File &quot;/usr/share/miniconda/envs/footings-idi-model-dev/lib/python3.8/site-packages/footings_idi_model/policy_models/active_deterministic_base.py&quot;, line 347, in &lt;genexpr&gt;</span><span class="se">\n</span><span class="s1">    claim_cost_model(claim_id=&quot;NA&quot;, idi_diagnosis_grp=&quot;AG&quot;, **self_kws, **record,)</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;  File &quot;/usr/share/miniconda/envs/footings-idi-model-dev/lib/python3.8/site-packages/footings_idi_model/policy_models/active_deterministic_base.py&quot;, line 327, in claim_cost_model</span><span class="se">\n</span><span class="s1">    return self.claim_cost_model(**kwargs).run()</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;  File &quot;/usr/share/miniconda/envs/footings-idi-model-dev/lib/python3.8/site-packages/footings/model.py&quot;, line 310, in run</span><span class="se">\n</span><span class="s1">    return _run(self, to_step=to_step)</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;  File &quot;/usr/share/miniconda/envs/footings-idi-model-dev/lib/python3.8/site-packages/footings/model.py&quot;, line 259, in _run</span><span class="se">\n</span><span class="s1">    _run_step(step)</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;  File &quot;/usr/share/miniconda/envs/footings-idi-model-dev/lib/python3.8/site-packages/footings/model.py&quot;, line 256, in _run_step</span><span class="se">\n</span><span class="s1">    raise ModelRunError(msg)</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
 </div>
 <p>The model returns a DataFrame of the projected reserves.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">output</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
-Int64Index: 16 entries, 4 to 19
-Data columns (total 24 columns):
- #   Column                Non-Null Count  Dtype         
----  ------                --------------  -----         
- 0   MODEL_VERSION         16 non-null     object        
- 1   LAST_COMMIT           16 non-null     object        
- 2   RUN_DATE_TIME         16 non-null     datetime64[ns]
- 3   SOURCE                16 non-null     object        
- 4   POLICY_ID             16 non-null     object        
- 5   COVERAGE_ID           16 non-null     object        
- 6   DATE_BD               16 non-null     datetime64[ns]
- 7   DATE_ED               16 non-null     datetime64[ns]
- 8   DURATION_YEAR         16 non-null     Int64         
- 9   LIVES_BD              16 non-null     float64       
- 10  LIVES_MD              16 non-null     float64       
- 11  LIVES_ED              16 non-null     float64       
- 12  DISCOUNT_BD           16 non-null     float64       
- 13  DISCOUNT_MD           16 non-null     float64       
- 14  DISCOUNT_ED           16 non-null     float64       
- 15  BENEFIT_AMOUNT        16 non-null     float64       
- 16  FINAL_INCIDENCE_RATE  16 non-null     float64       
- 17  BENEFIT_COST          16 non-null     float64       
- 18  PVFB                  16 non-null     float64       
- 19  PVFNB                 16 non-null     float64       
- 20  ALR_BD                16 non-null     float64       
- 21  ALR_ED                16 non-null     float64       
- 22  DATE_ALR              16 non-null     datetime64[ns]
- 23  ALR                   16 non-null     float64       
-dtypes: Int64(1), datetime64[ns](4), float64(14), object(5)
-memory usage: 3.1+ KB
 </pre></div>
 </div>
 </div>
@@ -488,437 +569,6 @@ memory usage: 3.1+ KB
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>MODEL_VERSION</th>
-      <th>LAST_COMMIT</th>
-      <th>RUN_DATE_TIME</th>
-      <th>SOURCE</th>
-      <th>POLICY_ID</th>
-      <th>COVERAGE_ID</th>
-      <th>DATE_BD</th>
-      <th>DATE_ED</th>
-      <th>DURATION_YEAR</th>
-      <th>LIVES_BD</th>
-      <th>...</th>
-      <th>DISCOUNT_ED</th>
-      <th>BENEFIT_AMOUNT</th>
-      <th>FINAL_INCIDENCE_RATE</th>
-      <th>BENEFIT_COST</th>
-      <th>PVFB</th>
-      <th>PVFNB</th>
-      <th>ALR_BD</th>
-      <th>ALR_ED</th>
-      <th>DATE_ALR</th>
-      <th>ALR</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>4</th>
-      <td>0.6.0rc0+9.g3419d57</td>
-      <td>3419d57d94b9bc75f100fc0f63c2e58e709a19b3</td>
-      <td>2021-01-31 11:59:02.993456</td>
-      <td>AValColaRPMD</td>
-      <td>policy-1</td>
-      <td>COLA</td>
-      <td>2019-06-02</td>
-      <td>2020-06-02</td>
-      <td>5</td>
-      <td>0.987588</td>
-      <td>...</td>
-      <td>0.862609</td>
-      <td>100.0</td>
-      <td>0.007967</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>2020-03-31</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>0.6.0rc0+9.g3419d57</td>
-      <td>3419d57d94b9bc75f100fc0f63c2e58e709a19b3</td>
-      <td>2021-01-31 11:59:02.993456</td>
-      <td>AValColaRPMD</td>
-      <td>policy-1</td>
-      <td>COLA</td>
-      <td>2020-06-02</td>
-      <td>2021-06-02</td>
-      <td>6</td>
-      <td>0.983993</td>
-      <td>...</td>
-      <td>0.837484</td>
-      <td>100.0</td>
-      <td>0.008640</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>2021-03-31</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>0.6.0rc0+9.g3419d57</td>
-      <td>3419d57d94b9bc75f100fc0f63c2e58e709a19b3</td>
-      <td>2021-01-31 11:59:02.993456</td>
-      <td>AValColaRPMD</td>
-      <td>policy-1</td>
-      <td>COLA</td>
-      <td>2021-06-02</td>
-      <td>2022-06-02</td>
-      <td>7</td>
-      <td>0.980146</td>
-      <td>...</td>
-      <td>0.813092</td>
-      <td>100.0</td>
-      <td>0.009378</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>2022-03-31</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>0.6.0rc0+9.g3419d57</td>
-      <td>3419d57d94b9bc75f100fc0f63c2e58e709a19b3</td>
-      <td>2021-01-31 11:59:02.993456</td>
-      <td>AValColaRPMD</td>
-      <td>policy-1</td>
-      <td>COLA</td>
-      <td>2022-06-02</td>
-      <td>2023-06-02</td>
-      <td>8</td>
-      <td>0.975970</td>
-      <td>...</td>
-      <td>0.789409</td>
-      <td>100.0</td>
-      <td>0.010159</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>2023-03-31</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>0.6.0rc0+9.g3419d57</td>
-      <td>3419d57d94b9bc75f100fc0f63c2e58e709a19b3</td>
-      <td>2021-01-31 11:59:02.993456</td>
-      <td>AValColaRPMD</td>
-      <td>policy-1</td>
-      <td>COLA</td>
-      <td>2023-06-02</td>
-      <td>2024-06-02</td>
-      <td>9</td>
-      <td>0.971383</td>
-      <td>...</td>
-      <td>0.766417</td>
-      <td>100.0</td>
-      <td>0.010993</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>2024-03-31</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>0.6.0rc0+9.g3419d57</td>
-      <td>3419d57d94b9bc75f100fc0f63c2e58e709a19b3</td>
-      <td>2021-01-31 11:59:02.993456</td>
-      <td>AValColaRPMD</td>
-      <td>policy-1</td>
-      <td>COLA</td>
-      <td>2024-06-02</td>
-      <td>2025-06-02</td>
-      <td>10</td>
-      <td>0.966322</td>
-      <td>...</td>
-      <td>0.744094</td>
-      <td>100.0</td>
-      <td>0.011891</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>2025-03-31</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>0.6.0rc0+9.g3419d57</td>
-      <td>3419d57d94b9bc75f100fc0f63c2e58e709a19b3</td>
-      <td>2021-01-31 11:59:02.993456</td>
-      <td>AValColaRPMD</td>
-      <td>policy-1</td>
-      <td>COLA</td>
-      <td>2025-06-02</td>
-      <td>2026-06-02</td>
-      <td>11</td>
-      <td>0.960689</td>
-      <td>...</td>
-      <td>0.722421</td>
-      <td>100.0</td>
-      <td>0.012832</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>2026-03-31</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>0.6.0rc0+9.g3419d57</td>
-      <td>3419d57d94b9bc75f100fc0f63c2e58e709a19b3</td>
-      <td>2021-01-31 11:59:02.993456</td>
-      <td>AValColaRPMD</td>
-      <td>policy-1</td>
-      <td>COLA</td>
-      <td>2026-06-02</td>
-      <td>2027-06-02</td>
-      <td>12</td>
-      <td>0.954425</td>
-      <td>...</td>
-      <td>0.701380</td>
-      <td>100.0</td>
-      <td>0.013837</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>2027-03-31</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>0.6.0rc0+9.g3419d57</td>
-      <td>3419d57d94b9bc75f100fc0f63c2e58e709a19b3</td>
-      <td>2021-01-31 11:59:02.993456</td>
-      <td>AValColaRPMD</td>
-      <td>policy-1</td>
-      <td>COLA</td>
-      <td>2027-06-02</td>
-      <td>2028-06-02</td>
-      <td>13</td>
-      <td>0.947496</td>
-      <td>...</td>
-      <td>0.680951</td>
-      <td>100.0</td>
-      <td>0.014907</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>2028-03-31</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>0.6.0rc0+9.g3419d57</td>
-      <td>3419d57d94b9bc75f100fc0f63c2e58e709a19b3</td>
-      <td>2021-01-31 11:59:02.993456</td>
-      <td>AValColaRPMD</td>
-      <td>policy-1</td>
-      <td>COLA</td>
-      <td>2028-06-02</td>
-      <td>2029-06-02</td>
-      <td>14</td>
-      <td>0.939963</td>
-      <td>...</td>
-      <td>0.661118</td>
-      <td>100.0</td>
-      <td>0.016019</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>2029-03-31</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>14</th>
-      <td>0.6.0rc0+9.g3419d57</td>
-      <td>3419d57d94b9bc75f100fc0f63c2e58e709a19b3</td>
-      <td>2021-01-31 11:59:02.993456</td>
-      <td>AValColaRPMD</td>
-      <td>policy-1</td>
-      <td>COLA</td>
-      <td>2029-06-02</td>
-      <td>2030-06-02</td>
-      <td>15</td>
-      <td>0.931851</td>
-      <td>...</td>
-      <td>0.641862</td>
-      <td>100.0</td>
-      <td>0.017184</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>2030-03-31</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>15</th>
-      <td>0.6.0rc0+9.g3419d57</td>
-      <td>3419d57d94b9bc75f100fc0f63c2e58e709a19b3</td>
-      <td>2021-01-31 11:59:02.993456</td>
-      <td>AValColaRPMD</td>
-      <td>policy-1</td>
-      <td>COLA</td>
-      <td>2030-06-02</td>
-      <td>2031-06-02</td>
-      <td>16</td>
-      <td>0.923073</td>
-      <td>...</td>
-      <td>0.623167</td>
-      <td>100.0</td>
-      <td>0.018414</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>2031-03-31</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>16</th>
-      <td>0.6.0rc0+9.g3419d57</td>
-      <td>3419d57d94b9bc75f100fc0f63c2e58e709a19b3</td>
-      <td>2021-01-31 11:59:02.993456</td>
-      <td>AValColaRPMD</td>
-      <td>policy-1</td>
-      <td>COLA</td>
-      <td>2031-06-02</td>
-      <td>2032-06-02</td>
-      <td>17</td>
-      <td>0.913473</td>
-      <td>...</td>
-      <td>0.605016</td>
-      <td>100.0</td>
-      <td>0.019708</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>2032-03-31</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>0.6.0rc0+9.g3419d57</td>
-      <td>3419d57d94b9bc75f100fc0f63c2e58e709a19b3</td>
-      <td>2021-01-31 11:59:02.993456</td>
-      <td>AValColaRPMD</td>
-      <td>policy-1</td>
-      <td>COLA</td>
-      <td>2032-06-02</td>
-      <td>2033-06-02</td>
-      <td>18</td>
-      <td>0.902886</td>
-      <td>...</td>
-      <td>0.587395</td>
-      <td>100.0</td>
-      <td>0.021045</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>2033-03-31</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>18</th>
-      <td>0.6.0rc0+9.g3419d57</td>
-      <td>3419d57d94b9bc75f100fc0f63c2e58e709a19b3</td>
-      <td>2021-01-31 11:59:02.993456</td>
-      <td>AValColaRPMD</td>
-      <td>policy-1</td>
-      <td>COLA</td>
-      <td>2033-06-02</td>
-      <td>2034-06-02</td>
-      <td>19</td>
-      <td>0.891167</td>
-      <td>...</td>
-      <td>0.570286</td>
-      <td>100.0</td>
-      <td>0.022403</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>2034-03-31</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>19</th>
-      <td>0.6.0rc0+9.g3419d57</td>
-      <td>3419d57d94b9bc75f100fc0f63c2e58e709a19b3</td>
-      <td>2021-01-31 11:59:02.993456</td>
-      <td>AValColaRPMD</td>
-      <td>policy-1</td>
-      <td>COLA</td>
-      <td>2034-06-02</td>
-      <td>2035-06-02</td>
-      <td>20</td>
-      <td>0.878272</td>
-      <td>...</td>
-      <td>0.553676</td>
-      <td>100.0</td>
-      <td>0.023750</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>2035-03-31</td>
-      <td>0.0</td>
-    </tr>
-  </tbody>
-</table>
-<p>16 rows × 24 columns</p>
-</div></div></div>
 </div>
 <p>An audit of the model is ran by calling the <code class="docutils literal notranslate"><span class="pre">audit</span></code> method shown below.</p>
 <div class="cell docutils container">
@@ -928,7 +578,7 @@ memory usage: 3.1+ KB
 </div>
 </div>
 </div>
-<p>The audit file can be downloaded <a class="reference download internal" download="" href="../../_downloads/4533fb308d0fcfbc1bff47af57b392c4/Audit-AValColaRPMD.xlsx"><code class="xref download docutils literal notranslate"><span class="pre">here.</span></code></a></p>
+<p>The audit file can be downloaded <code class="xref download docutils literal notranslate"><span class="pre">here.</span></code></p>
 </div>
 </div>
 <div class="section" id="projection-model">
@@ -962,14 +612,14 @@ memory usage: 3.1+ KB
     </div>
 
     
-  <script src="../../_static/js/index.3da636dd464baa7582d2.js"></script>
+  <script src="../../_static/js/index.d3f166471bb80abb5163.js"></script>
 
 
     <footer class="footer mt-5 mt-md-0">
   <div class="container">
     <p>
           &copy; Copyright 2020, Dustin Tindall.<br/>
-        Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.2.1.<br/>
+        Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.4.3.<br/>
     </p>
   </div>
 </footer>
