@@ -15,10 +15,6 @@ jobs:
       - uses: actions/setup-python@v2
         with:
           python-version: 3.8
-      - uses: actions/cache@v1
-        with:
-          path: ~/.cache/pre-commit
-          key: pre-commit-${{ hashFiles('.pre-commit-config.yaml') }}
       - uses: pre-commit/action@v2.0.0
   tests:
     name: Test for python - ${{ matrix.os }} - ${{ matrix.python-version }}"
@@ -81,7 +77,7 @@ jobs:
         if: github.ref == 'refs/heads/master'
         uses: peaceiris/actions-gh-pages@v3
         env:
-          github_token: ${{ secrets.GTIHUB_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
           publish_dir: ./docs/_build
           destination_dir: ./master
@@ -89,7 +85,7 @@ jobs:
         if: github.ref == 'refs/heads/dev'
         uses: peaceiris/actions-gh-pages@v3
         env:
-          github_token: ${{ secrets.GTIHUB_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
           publish_dir: ./docs/_build
           destination_dir: ./dev

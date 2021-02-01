@@ -3,7 +3,7 @@ repos:
     rev: stable
     hooks:
     - id: black
-      language_version: python3.7
+      language_version: python3.8
       args: [--line-length=90]
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v2.3.0
@@ -17,5 +17,5 @@ repos:
     rev: 3.7.9
     hooks:
     - id: flake8
-      language_version: python3.7
+      language_version: python3.8
       exclude: __init__.py, _version.py, versioneer.py
