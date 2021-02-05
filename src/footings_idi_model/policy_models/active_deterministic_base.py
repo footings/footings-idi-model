@@ -433,8 +433,9 @@ class AValBasePMD(ALRBasePMD):
         self.frame["ALR_BD"] = (
             (self.frame["PVFB"] - self.frame["PVFNB"])
             .div(self.frame["DISCOUNT_BD"])
+            .round(2)
             .clip(lower=0)
-        ).round(2)
+        )
         self.frame["ALR_ED"] = self.frame["ALR_BD"].shift(-1, fill_value=0)
 
         self.frame = self.frame[self.frame["DATE_ED"] >= self.valuation_dt].copy()
