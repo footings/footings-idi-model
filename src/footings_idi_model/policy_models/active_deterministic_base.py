@@ -232,9 +232,9 @@ class AValBasePMD(ALRBasePMD):
         elif self.idi_benefit_period == "LIFE":
             self.frame["TERMINATION_DT"] = pd.to_datetime(
                 date(
-                    year=date.year(self.birth_dt) + 120,
-                    month=date.month(self.birth_dt),
-                    day=date.day(self.birth_dt),
+                    year=self.birth_dt.year + 120,
+                    month=self.birth_dt.month,
+                    day=self.birth_dt.day,
                 )
             )
 
