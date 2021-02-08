@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Policy Models &#8212; Footings IDI Model 0.5.0+5.gb49aa97 documentation</title>
+    <title>Policy Models &#8212; Footings IDI Model 0.6.0rc0 documentation</title>
     
-  <link rel="stylesheet" href="../../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
+  <link rel="stylesheet" href="../../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
     
   <link rel="stylesheet"
@@ -25,23 +25,22 @@
     href="../../_static/vendor/lato_latin-ext/1.44.1/index.css">
 
     
-    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
     
-  <link rel="preload" as="script" href="../../_static/js/index.3da636dd464baa7582d2.js">
+  <link rel="preload" as="script" href="../../_static/js/index.d3f166471bb80abb5163.js">
 
     <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
     <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/language_data.js"></script>
     <script src="../../_static/togglebutton.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="DLR Deterministic" href="dlr_deterministic.html" />
+    <link rel="next" title="Active - Deterministic - Base" href="active_deterministic_base.html" />
     <link rel="prev" title="Models" href="../index.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -72,6 +71,10 @@
             <a class="nav-link" href="../../product_info.html">Product Information</a>
         </li>
         
+        <li class="nav-item ">
+            <a class="nav-link" href="../../data/index.html">Data</a>
+        </li>
+        
         <li class="nav-item active">
             <a class="nav-link" href="../index.html">Models</a>
         </li>
@@ -92,9 +95,19 @@
       </ul>
 
 
+      <form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this site..." aria-label="Search this site..." autocomplete="off" >
+</form>
       
 
       <ul class="navbar-nav">
+        
+          <li class="nav-item">
+            <a class="nav-link" href="https://github.com/footings/footings-idi-model" target="_blank" rel="noopener">
+              <span><i class="fab fa-github-square"></i></span>
+            </a>
+          </li>
         
         
       </ul>
@@ -106,16 +119,14 @@
     <div class="container-xl">
       <div class="row">
           
-          <div class="col-12 col-md-3 bd-sidebar"><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
-  <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
-</form>
-<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+          <div class="col-12 col-md-3 bd-sidebar"><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
 
     <div class="bd-toc-item active">
     
   
     <ul class="nav bd-sidenav">
+        
+        
         
         
         
@@ -130,19 +141,51 @@
                     <ul>
                     
                         <li class="">
-                            <a href="dlr_deterministic.html">DLR Deterministic</a>
+                            <a href="active_deterministic_base.html">Active - Deterministic - Base</a>
                         </li>
                     
                         <li class="">
-                            <a href="dlr_stochastic.html">DLR Stochastic</a>
+                            <a href="active_deterministic_cat.html">Active - Deterministic - CAT Rider</a>
                         </li>
                     
                         <li class="">
-                            <a href="alr_deterministic.html">ALR Deterministic</a>
+                            <a href="active_deterministic_cola.html">Active - Deterministic - COLA Rider</a>
                         </li>
                     
                         <li class="">
-                            <a href="rop_deterministic.html">ROP Deterministic</a>
+                            <a href="active_deterministic_res.html">Active - Deterministic - Residual Rider</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="active_deterministic_rop.html">Active - Deterministic - ROP Rider</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="active_deterministic_sis.html">Active - Deterministic - SIS Rider</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="active_deterministic_wop.html">Active - Deterministic - WOP Rider</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="disabled_deterministic_base.html">Disabled - Deterministic - Base</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="disabled_deterministic_cat.html">Disabled - Deterministic - CAT Rider</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="disabled_deterministic_cola.html">Disabled - Deterministic - COLA Rider</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="disabled_deterministic_res.html">Disabled - Deterministic - Residual Rider</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="disabled_deterministic_sis.html">Disabled - Deterministic - SIS Rider</a>
                         </li>
                     
                     </ul>
@@ -151,7 +194,7 @@
           
             
                 <li class="">
-                    <a href="../population_models/index.html">Population Models</a>
+                    <a href="../extract_models/index.html">Extract Models</a>
                 </li>
             
           
@@ -193,24 +236,64 @@
 <h1>Policy Models<a class="headerlink" href="#policy-models" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="dlr_deterministic.html">DLR Deterministic</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="dlr_deterministic.html#documentation">Documentation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="dlr_deterministic.html#usage">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="active_deterministic_base.html">Active - Deterministic - Base</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="active_deterministic_base.html#valuation-model">Valuation Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="active_deterministic_base.html#projection-model">Projection Model</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="dlr_stochastic.html">DLR Stochastic</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="dlr_stochastic.html#documentation">Documentation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="dlr_stochastic.html#usage">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="active_deterministic_cat.html">Active - Deterministic - CAT Rider</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="active_deterministic_cat.html#valuation-model">Valuation Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="active_deterministic_cat.html#projection-model">Projection Model</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="alr_deterministic.html">ALR Deterministic</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="alr_deterministic.html#documentation">Documentation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="alr_deterministic.html#usage">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="active_deterministic_cola.html">Active - Deterministic - COLA Rider</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="active_deterministic_cola.html#valuation-model">Valuation  Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="active_deterministic_cola.html#projection-model">Projection Model</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="rop_deterministic.html">ROP Deterministic</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="rop_deterministic.html#documentation">Documentation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="rop_deterministic.html#usage">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="active_deterministic_res.html">Active - Deterministic - Residual Rider</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="active_deterministic_res.html#valuation-model">Valuation  Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="active_deterministic_res.html#projection-model">Projection Model</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="active_deterministic_rop.html">Active - Deterministic - ROP Rider</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="active_deterministic_rop.html#valuation-model">Valuation Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="active_deterministic_rop.html#projection-model">Projection Model</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="active_deterministic_sis.html">Active - Deterministic - SIS Rider</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="active_deterministic_sis.html#valuation-model">Valuation Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="active_deterministic_sis.html#projection-model">Projection Model</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="active_deterministic_wop.html">Active - Deterministic - WOP Rider</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="active_deterministic_wop.html#valuation-model">Valuation Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="active_deterministic_wop.html#projection-model">Projection Model</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="disabled_deterministic_base.html">Disabled - Deterministic - Base</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="disabled_deterministic_base.html#valuation-model">Valuation Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="disabled_deterministic_base.html#projection-model">Projection Model</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="disabled_deterministic_cat.html">Disabled - Deterministic - CAT Rider</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="disabled_deterministic_cat.html#valuation-model">Valuation Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="disabled_deterministic_cat.html#projection-model">Projection Model</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="disabled_deterministic_cola.html">Disabled - Deterministic - COLA Rider</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="disabled_deterministic_cola.html#valuation-model">Valuation Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="disabled_deterministic_cola.html#projection-model">Projection Model</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="disabled_deterministic_res.html">Disabled - Deterministic - Residual Rider</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="disabled_deterministic_res.html#valuation-model">Valuation Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="disabled_deterministic_res.html#projection-model">Projection Model</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="disabled_deterministic_sis.html">Disabled - Deterministic - SIS Rider</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="disabled_deterministic_sis.html#valuation-model">Valuation Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="disabled_deterministic_sis.html#projection-model">Projection Model</a></li>
 </ul>
 </li>
 </ul>
@@ -224,7 +307,7 @@
               <div class='prev-next-bottom'>
                 
     <a class='left-prev' id="prev-link" href="../index.html" title="previous page">Models</a>
-    <a class='right-next' id="next-link" href="dlr_deterministic.html" title="next page">DLR Deterministic</a>
+    <a class='right-next' id="next-link" href="active_deterministic_base.html" title="next page">Active - Deterministic - Base</a>
 
               </div>
               
@@ -235,14 +318,14 @@
     </div>
 
     
-  <script src="../../_static/js/index.3da636dd464baa7582d2.js"></script>
+  <script src="../../_static/js/index.d3f166471bb80abb5163.js"></script>
 
 
     <footer class="footer mt-5 mt-md-0">
   <div class="container">
     <p>
           &copy; Copyright 2020, Dustin Tindall.<br/>
-        Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.2.1.<br/>
+        Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.4.3.<br/>
     </p>
   </div>
 </footer>

@@ -1,0 +1,1112 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Model Input (Extracts) &#8212; Footings IDI Model 0.6.0rc0 documentation</title>
+    
+  <link rel="stylesheet" href="../../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Model Output" href="../model_outputs/index.html" />
+    <link rel="prev" title="Data" href="../index.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main">
+<div class="container-xl">
+
+    <a class="navbar-brand" href="../../index.html">
+    
+      <p class="title">Footings IDI Model</p>
+    
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar-menu" class="col-lg-9 collapse navbar-collapse">
+      <ul id="navbar-main-elements" class="navbar-nav mr-auto">
+        
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../installation.html">Installation</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../product_info.html">Product Information</a>
+        </li>
+        
+        <li class="nav-item active">
+            <a class="nav-link" href="../index.html">Data</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../models/index.html">Models</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../assumptions.html">Assumptions</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../license.html">License</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../changelog.html">Changelog</a>
+        </li>
+        
+        
+      </ul>
+
+
+      <form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this site..." aria-label="Search this site..." autocomplete="off" >
+</form>
+      
+
+      <ul class="navbar-nav">
+        
+          <li class="nav-item">
+            <a class="nav-link" href="https://github.com/footings/footings-idi-model" target="_blank" rel="noopener">
+              <span><i class="fab fa-github-square"></i></span>
+            </a>
+          </li>
+        
+        
+      </ul>
+    </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+          <div class="col-12 col-md-3 bd-sidebar"><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+
+    <div class="bd-toc-item active">
+    
+  
+    <ul class="nav bd-sidenav">
+        
+        
+        
+        
+        
+        
+          
+            
+                <li class="active">
+                    <a href="">Model Input (Extracts)</a>
+                </li>
+            
+          
+            
+                <li class="">
+                    <a href="../model_outputs/index.html">Model Output</a>
+                </li>
+            
+          
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+      </ul>
+  
+  </nav>
+          </div>
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+              
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#active-lives-base" class="nav-link">Active Lives - Base</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#sample-data" class="nav-link">Sample Data</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#active-lives-rop-rider" class="nav-link">Active Lives - ROP Rider</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id1" class="nav-link">Sample Data</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#disabled-lives-base" class="nav-link">Disabled Lives - Base</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id2" class="nav-link">Sample Data</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#disabled-lives-rider" class="nav-link">Disabled Lives - Rider</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id3" class="nav-link">Sample Data</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+    </ul>
+</nav>
+
+
+              
+          </div>
+          
+
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <div class="section" id="model-input-extracts">
+<h1>Model Input (Extracts)<a class="headerlink" href="#model-input-extracts" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="active-lives-base">
+<h2>Active Lives - Base<a class="headerlink" href="#active-lives-base" title="Permalink to this headline">¶</a></h2>
+<dl class="py data">
+<dt id="footings_idi_model.data.ActiveLivesBaseExtract">
+<code class="sig-name descname">ActiveLivesBaseExtract</code><em class="property"> = &lt;footings.data_dictionary.ActiveLivesBaseExtract object&gt;</em><a class="headerlink" href="#footings_idi_model.data.ActiveLivesBaseExtract" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base policy extract for active lives. A unique record is represented by POLICY_ID + COVERAGE_ID.</p>
+<p class="rubric">Columns</p>
+<dl class="simple">
+<dt>POLICY_ID<span class="classifier">PandasDtype.String</span></dt><dd><p>The policy ID of the policy holder.</p>
+</dd>
+<dt>COVERAGE_ID<span class="classifier">PandasDtype.String</span></dt><dd><p>The coverage ID of the policy holder.</p>
+</dd>
+<dt>BIRTH_DT<span class="classifier">PandasDtype.DateTime</span></dt><dd><p>The birth date of the policy holder.</p>
+</dd>
+<dt>GENDER<span class="classifier">PandasDtype.String</span></dt><dd><p>The gender of the policy holder.</p>
+</dd>
+<dt>TOBACCO_USAGE<span class="classifier">PandasDtype.Bool</span></dt><dd><p>The tabacco usage of the policy holder.</p>
+</dd>
+<dt>POLICY_START_DT<span class="classifier">PandasDtype.DateTime</span></dt><dd><p>The date coverage starts for the policy issued.</p>
+</dd>
+<dt>PREMIUM_PAY_TO_DT<span class="classifier">PandasDtype.DateTime</span></dt><dd><p>The date premium payments end for the policy issued.</p>
+</dd>
+<dt>POLICY_END_DT<span class="classifier">PandasDtype.DateTime</span></dt><dd><p>The date coverage ends for the policy issued.</p>
+</dd>
+<dt>ELIMINATION_PERIOD<span class="classifier">PandasDtype.Int</span></dt><dd><p>The elimination days before benefits are paid for the policy holder.</p>
+</dd>
+<dt>GROSS_PREMIUM<span class="classifier">PandasDtype.Float</span></dt><dd><p>The policy gross premium amount.</p>
+</dd>
+<dt>GROSS_PREMIUM_FREQ<span class="classifier">PandasDtype.String</span></dt><dd><p>The frequency of premium payments.</p>
+</dd>
+<dt>BENEFIT_AMOUNT<span class="classifier">PandasDtype.Float</span></dt><dd><p>The benefit amount for the policy holder.</p>
+</dd>
+<dt>IDI_OCCUPATION_CLASS<span class="classifier">PandasDtype.String</span></dt><dd><p>The IDI occupation class of the policy holder.</p>
+</dd>
+<dt>IDI_CONTRACT<span class="classifier">PandasDtype.String</span></dt><dd><p>The IDI contract type of the policy holder.</p>
+</dd>
+<dt>IDI_BENEFIT_PERIOD<span class="classifier">PandasDtype.String</span></dt><dd><p>The IDI benefit period for the policy holder.</p>
+</dd>
+<dt>IDI_MARKET<span class="classifier">PandasDtype.String</span></dt><dd><p>The IDI market for the policy holder.</p>
+</dd>
+<dt>COLA_PERCENT<span class="classifier">PandasDtype.Float</span></dt><dd><p>The COLA percent for the policy holder (0 if no COLA provided).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<div class="section" id="sample-data">
+<h3>Sample Data<a class="headerlink" href="#sample-data" title="Permalink to this headline">¶</a></h3>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">base_extract</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
+  <span class="s2">&quot;../../models/extract_models/active-lives-sample-base.csv&quot;</span><span class="p">,</span>
+  <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;BIRTH_DT&quot;</span><span class="p">,</span> <span class="s2">&quot;POLICY_START_DT&quot;</span><span class="p">,</span> <span class="s2">&quot;PREMIUM_PAY_TO_DT&quot;</span><span class="p">,</span> <span class="s2">&quot;POLICY_END_DT&quot;</span><span class="p">]</span>
+<span class="p">)</span>
+<span class="n">base_extract</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>POLICY_ID</th>
+      <th>BIRTH_DT</th>
+      <th>GENDER</th>
+      <th>TOBACCO_USAGE</th>
+      <th>COVERAGE_ID</th>
+      <th>POLICY_START_DT</th>
+      <th>PREMIUM_PAY_TO_DT</th>
+      <th>POLICY_END_DT</th>
+      <th>ELIMINATION_PERIOD</th>
+      <th>GROSS_PREMIUM</th>
+      <th>GROSS_PREMIUM_FREQ</th>
+      <th>BENEFIT_AMOUNT</th>
+      <th>IDI_OCCUPATION_CLASS</th>
+      <th>IDI_CONTRACT</th>
+      <th>IDI_BENEFIT_PERIOD</th>
+      <th>IDI_MARKET</th>
+      <th>COLA_PERCENT</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>M1</td>
+      <td>1978-08-01</td>
+      <td>F</td>
+      <td>N</td>
+      <td>BASE</td>
+      <td>2018-03-06</td>
+      <td>2048-07-31</td>
+      <td>2048-07-31</td>
+      <td>360</td>
+      <td>10</td>
+      <td>MONTH</td>
+      <td>100</td>
+      <td>M</td>
+      <td>AS</td>
+      <td>TO70</td>
+      <td>INDV</td>
+      <td>0.02</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>M1</td>
+      <td>1978-08-01</td>
+      <td>F</td>
+      <td>N</td>
+      <td>ROP</td>
+      <td>2018-03-06</td>
+      <td>2048-07-31</td>
+      <td>2048-07-31</td>
+      <td>360</td>
+      <td>10</td>
+      <td>MONTH</td>
+      <td>100</td>
+      <td>M</td>
+      <td>AS</td>
+      <td>TO70</td>
+      <td>INDV</td>
+      <td>0.02</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>M2</td>
+      <td>1967-11-03</td>
+      <td>M</td>
+      <td>N</td>
+      <td>BASE</td>
+      <td>2018-01-19</td>
+      <td>2032-11-02</td>
+      <td>2032-11-02</td>
+      <td>14</td>
+      <td>10</td>
+      <td>MONTH</td>
+      <td>100</td>
+      <td>4</td>
+      <td>AS</td>
+      <td>18M</td>
+      <td>INDV</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>M3</td>
+      <td>1982-06-17</td>
+      <td>M</td>
+      <td>N</td>
+      <td>BASE</td>
+      <td>2007-06-19</td>
+      <td>2047-06-16</td>
+      <td>2047-06-16</td>
+      <td>180</td>
+      <td>10</td>
+      <td>MONTH</td>
+      <td>100</td>
+      <td>M</td>
+      <td>AS</td>
+      <td>TO65</td>
+      <td>INDV</td>
+      <td>0.03</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>M3</td>
+      <td>1982-06-17</td>
+      <td>M</td>
+      <td>N</td>
+      <td>ROP</td>
+      <td>2007-06-19</td>
+      <td>2047-06-16</td>
+      <td>2047-06-16</td>
+      <td>180</td>
+      <td>10</td>
+      <td>MONTH</td>
+      <td>100</td>
+      <td>M</td>
+      <td>AS</td>
+      <td>TO65</td>
+      <td>INDV</td>
+      <td>0.03</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>M4</td>
+      <td>1974-03-08</td>
+      <td>F</td>
+      <td>Y</td>
+      <td>BASE</td>
+      <td>2009-10-06</td>
+      <td>2041-03-07</td>
+      <td>2041-03-07</td>
+      <td>90</td>
+      <td>10</td>
+      <td>MONTH</td>
+      <td>100</td>
+      <td>1</td>
+      <td>AS</td>
+      <td>TO67</td>
+      <td>INDV</td>
+      <td>0.03</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>M4</td>
+      <td>1974-03-08</td>
+      <td>F</td>
+      <td>Y</td>
+      <td>ROP</td>
+      <td>2009-10-06</td>
+      <td>2041-03-07</td>
+      <td>2041-03-07</td>
+      <td>90</td>
+      <td>10</td>
+      <td>MONTH</td>
+      <td>100</td>
+      <td>1</td>
+      <td>AS</td>
+      <td>TO67</td>
+      <td>INDV</td>
+      <td>0.03</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>M5</td>
+      <td>1972-12-10</td>
+      <td>F</td>
+      <td>Y</td>
+      <td>BASE</td>
+      <td>2003-01-29</td>
+      <td>2037-12-09</td>
+      <td>2037-12-09</td>
+      <td>90</td>
+      <td>10</td>
+      <td>MONTH</td>
+      <td>100</td>
+      <td>2</td>
+      <td>AO</td>
+      <td>TO65</td>
+      <td>INDV</td>
+      <td>0.03</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>M5</td>
+      <td>1972-12-10</td>
+      <td>F</td>
+      <td>Y</td>
+      <td>ROP</td>
+      <td>2003-01-29</td>
+      <td>2037-12-09</td>
+      <td>2037-12-09</td>
+      <td>90</td>
+      <td>10</td>
+      <td>MONTH</td>
+      <td>100</td>
+      <td>2</td>
+      <td>AO</td>
+      <td>TO65</td>
+      <td>INDV</td>
+      <td>0.03</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</div>
+</div>
+<div class="section" id="active-lives-rop-rider">
+<h2>Active Lives - ROP Rider<a class="headerlink" href="#active-lives-rop-rider" title="Permalink to this headline">¶</a></h2>
+<dl class="py data">
+<dt id="footings_idi_model.data.ActiveLivesROPRiderExtract">
+<code class="sig-name descname">ActiveLivesROPRiderExtract</code><em class="property"> = &lt;footings.data_dictionary.ActiveLivesROPRiderExtract object&gt;</em><a class="headerlink" href="#footings_idi_model.data.ActiveLivesROPRiderExtract" title="Permalink to this definition">¶</a></dt>
+<dd><p>Rider policy extract for active lives. A unique record is represented by POLICY_ID + COVERAGE_ID + RIDER_ATTRIBUTE.</p>
+<p class="rubric">Columns</p>
+<dl class="simple">
+<dt>POLICY_ID<span class="classifier">PandasDtype.String</span></dt><dd><p>The policy ID of the policy holder.</p>
+</dd>
+<dt>COVERAGE_ID<span class="classifier">PandasDtype.String</span></dt><dd><p>The coverage ID of the policy holder.</p>
+</dd>
+<dt>ROP_RETURN_FREQ<span class="classifier">PandasDtype.Int</span></dt><dd><p>The ROP return frequency for the policy holder.</p>
+</dd>
+<dt>ROP_RETURN_PERCENT<span class="classifier">PandasDtype.Float</span></dt><dd><p>The ROP return percent for the policy holder.</p>
+</dd>
+<dt>ROP_CLAIMS_PAID<span class="classifier">PandasDtype.Float</span></dt><dd><p>The claims paid through ROP_FUTURE_CLAIMS_START_DT for the policy holder.</p>
+</dd>
+<dt>ROP_FUTURE_CLAIMS_START_DT<span class="classifier">PandasDtype.DateTime</span></dt><dd><p>The date which to start modeling future expected claims.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<div class="section" id="id1">
+<h3>Sample Data<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">rider_extract</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
+  <span class="s2">&quot;../../models/extract_models/active-lives-sample-riders-rop.csv&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">rider_extract</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>POLICY_ID</th>
+      <th>COVERAGE_ID</th>
+      <th>ROP_RETURN_FREQ</th>
+      <th>ROP_RETURN_PERCENT</th>
+      <th>ROP_CLAIMS_PAID</th>
+      <th>ROP_FUTURE_CLAIMS_START_DT</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>M1</td>
+      <td>ROP</td>
+      <td>10</td>
+      <td>0.8</td>
+      <td>0</td>
+      <td>2020-03-31</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>M3</td>
+      <td>ROP</td>
+      <td>7</td>
+      <td>0.5</td>
+      <td>0</td>
+      <td>2020-03-31</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>M4</td>
+      <td>ROP</td>
+      <td>10</td>
+      <td>0.5</td>
+      <td>1000</td>
+      <td>2020-03-31</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>M5</td>
+      <td>ROP</td>
+      <td>7</td>
+      <td>0.8</td>
+      <td>0</td>
+      <td>2020-03-31</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</div>
+</div>
+<div class="section" id="disabled-lives-base">
+<h2>Disabled Lives - Base<a class="headerlink" href="#disabled-lives-base" title="Permalink to this headline">¶</a></h2>
+<dl class="py data">
+<dt id="footings_idi_model.data.DisabledLivesBaseExtract">
+<code class="sig-name descname">DisabledLivesBaseExtract</code><em class="property"> = &lt;footings.data_dictionary.DisabledLivesBaseExtract object&gt;</em><a class="headerlink" href="#footings_idi_model.data.DisabledLivesBaseExtract" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base policy extract for disabled lives. A unique record is represented by POLICY_ID + CLAIM_ID + COVERAGE_ID.</p>
+<p class="rubric">Columns</p>
+<dl class="simple">
+<dt>POLICY_ID<span class="classifier">PandasDtype.String</span></dt><dd><p>The policy ID of the disabled claimant.</p>
+</dd>
+<dt>CLAIM_ID<span class="classifier">PandasDtype.String</span></dt><dd><p>The claim ID of the disabled claimant.</p>
+</dd>
+<dt>COVERAGE_ID<span class="classifier">PandasDtype.String</span></dt><dd><p>The coverage ID of the disabled claimant.</p>
+</dd>
+<dt>BIRTH_DT<span class="classifier">PandasDtype.DateTime</span></dt><dd><p>The birth date of the disabled claimant.</p>
+</dd>
+<dt>GENDER<span class="classifier">PandasDtype.String</span></dt><dd><p>The gender of the disabled claimant.</p>
+</dd>
+<dt>TOBACCO_USAGE<span class="classifier">PandasDtype.Bool</span></dt><dd><p>The tabacco usage of the disabled claimant.</p>
+</dd>
+<dt>INCURRED_DT<span class="classifier">PandasDtype.DateTime</span></dt><dd><p>The date of disablement for the claimant (i.e., the disablement date).</p>
+</dd>
+<dt>TERMINATION_DT<span class="classifier">PandasDtype.DateTime</span></dt><dd><p>The termination date of the disabled claimant (i.e., the date benefits will stop being paid).</p>
+</dd>
+<dt>ELIMINATION_PERIOD<span class="classifier">PandasDtype.Int</span></dt><dd><p>The elimination days before benefits are paid for the disabled claimant.</p>
+</dd>
+<dt>BENEFIT_AMOUNT<span class="classifier">PandasDtype.Float16</span></dt><dd><p>The benefit amount for the disabled claimant.</p>
+</dd>
+<dt>IDI_OCCUPATION_CLASS<span class="classifier">PandasDtype.String</span></dt><dd><p>The IDI occupation class of the disabled claimant.</p>
+</dd>
+<dt>IDI_CONTRACT<span class="classifier">PandasDtype.String</span></dt><dd><p>The IDI contract type of the disabled claimant.</p>
+</dd>
+<dt>IDI_BENEFIT_PERIOD<span class="classifier">PandasDtype.String</span></dt><dd><p>The IDI benefit period for the disabled claimant.</p>
+</dd>
+<dt>IDI_MARKET<span class="classifier">PandasDtype.String</span></dt><dd><p>The IDI market for the disabled claimant.</p>
+</dd>
+<dt>IDI_DIAGNOSIS_GRP<span class="classifier">PandasDtype.String</span></dt><dd><p>The IDI diagnosis group of the disabled claimant.</p>
+</dd>
+<dt>COLA_PERCENT<span class="classifier">PandasDtype.Float16</span></dt><dd><p>The COLA percent for the disabled claimant (0 if no COLA provided).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<div class="section" id="id2">
+<h3>Sample Data<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">base_extract</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
+  <span class="s2">&quot;../../models/extract_models/disabled-lives-sample-base.csv&quot;</span><span class="p">,</span>
+  <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;BIRTH_DT&quot;</span><span class="p">,</span> <span class="s2">&quot;INCURRED_DT&quot;</span><span class="p">,</span> <span class="s2">&quot;TERMINATION_DT&quot;</span><span class="p">]</span>
+<span class="p">)</span>
+<span class="n">base_extract</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>POLICY_ID</th>
+      <th>BIRTH_DT</th>
+      <th>CLAIM_ID</th>
+      <th>COVERAGE_ID</th>
+      <th>IDI_OCCUPATION_CLASS</th>
+      <th>IDI_CONTRACT</th>
+      <th>IDI_BENEFIT_PERIOD</th>
+      <th>IDI_MARKET</th>
+      <th>GENDER</th>
+      <th>TOBACCO_USAGE</th>
+      <th>INCURRED_DT</th>
+      <th>TERMINATION_DT</th>
+      <th>ELIMINATION_PERIOD</th>
+      <th>BENEFIT_AMOUNT</th>
+      <th>IDI_DIAGNOSIS_GRP</th>
+      <th>COLA_PERCENT</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>M768</td>
+      <td>1967-01-15</td>
+      <td>M768C1</td>
+      <td>BASE</td>
+      <td>2</td>
+      <td>AS</td>
+      <td>LIFE</td>
+      <td>INDV</td>
+      <td>F</td>
+      <td>N</td>
+      <td>2011-01-15</td>
+      <td>2087-01-14</td>
+      <td>180</td>
+      <td>100</td>
+      <td>HIGH</td>
+      <td>0.02</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>M768</td>
+      <td>1967-01-15</td>
+      <td>M768C1</td>
+      <td>CAT</td>
+      <td>2</td>
+      <td>AS</td>
+      <td>LIFE</td>
+      <td>INDV</td>
+      <td>F</td>
+      <td>N</td>
+      <td>2011-01-15</td>
+      <td>2087-01-14</td>
+      <td>180</td>
+      <td>100</td>
+      <td>HIGH</td>
+      <td>0.02</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>M768</td>
+      <td>1967-01-15</td>
+      <td>M768C1</td>
+      <td>COLA</td>
+      <td>2</td>
+      <td>AS</td>
+      <td>LIFE</td>
+      <td>INDV</td>
+      <td>F</td>
+      <td>N</td>
+      <td>2011-01-15</td>
+      <td>2087-01-14</td>
+      <td>180</td>
+      <td>100</td>
+      <td>HIGH</td>
+      <td>0.02</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>M288</td>
+      <td>1966-08-16</td>
+      <td>M288C1</td>
+      <td>BASE</td>
+      <td>M</td>
+      <td>AO</td>
+      <td>24M</td>
+      <td>INDV</td>
+      <td>M</td>
+      <td>N</td>
+      <td>2019-08-16</td>
+      <td>2021-10-15</td>
+      <td>60</td>
+      <td>100</td>
+      <td>VERY_HIGH</td>
+      <td>0.02</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>M234</td>
+      <td>1984-09-12</td>
+      <td>M234C1</td>
+      <td>BASE</td>
+      <td>4</td>
+      <td>AS</td>
+      <td>TO67</td>
+      <td>INDV</td>
+      <td>F</td>
+      <td>N</td>
+      <td>2019-09-12</td>
+      <td>2051-09-11</td>
+      <td>360</td>
+      <td>100</td>
+      <td>VERY_HIGH</td>
+      <td>0.03</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>M234</td>
+      <td>1984-09-12</td>
+      <td>M234C1</td>
+      <td>RES</td>
+      <td>4</td>
+      <td>AS</td>
+      <td>TO67</td>
+      <td>INDV</td>
+      <td>F</td>
+      <td>N</td>
+      <td>2019-09-12</td>
+      <td>2051-09-11</td>
+      <td>360</td>
+      <td>100</td>
+      <td>VERY_HIGH</td>
+      <td>0.03</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>M344</td>
+      <td>1964-07-24</td>
+      <td>M344C1</td>
+      <td>BASE</td>
+      <td>1</td>
+      <td>AS</td>
+      <td>24M</td>
+      <td>INDV</td>
+      <td>F</td>
+      <td>Y</td>
+      <td>2019-07-24</td>
+      <td>2021-08-23</td>
+      <td>30</td>
+      <td>100</td>
+      <td>HIGH</td>
+      <td>0.02</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>M533</td>
+      <td>1958-08-18</td>
+      <td>M533C1</td>
+      <td>BASE</td>
+      <td>1</td>
+      <td>SO</td>
+      <td>60M</td>
+      <td>INDV</td>
+      <td>F</td>
+      <td>N</td>
+      <td>2017-08-18</td>
+      <td>2022-09-17</td>
+      <td>30</td>
+      <td>100</td>
+      <td>MID</td>
+      <td>0.02</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>M434</td>
+      <td>1968-08-02</td>
+      <td>M434C1</td>
+      <td>BASE</td>
+      <td>1</td>
+      <td>SO</td>
+      <td>TO70</td>
+      <td>INDV</td>
+      <td>F</td>
+      <td>Y</td>
+      <td>2010-08-02</td>
+      <td>2038-08-01</td>
+      <td>180</td>
+      <td>100</td>
+      <td>HIGH</td>
+      <td>0.03</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>M445</td>
+      <td>1958-09-03</td>
+      <td>M445C1</td>
+      <td>BASE</td>
+      <td>M</td>
+      <td>AO</td>
+      <td>60M</td>
+      <td>INDV</td>
+      <td>M</td>
+      <td>Y</td>
+      <td>2016-09-03</td>
+      <td>2021-11-02</td>
+      <td>60</td>
+      <td>100</td>
+      <td>VERY_LOW</td>
+      <td>0.03</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>M221</td>
+      <td>1987-12-02</td>
+      <td>M221C1</td>
+      <td>BASE</td>
+      <td>1</td>
+      <td>AS</td>
+      <td>TO67</td>
+      <td>INDV</td>
+      <td>M</td>
+      <td>N</td>
+      <td>2019-12-02</td>
+      <td>2054-12-01</td>
+      <td>90</td>
+      <td>100</td>
+      <td>MID</td>
+      <td>0.03</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>M9</td>
+      <td>1970-10-17</td>
+      <td>M9C1</td>
+      <td>BASE</td>
+      <td>2</td>
+      <td>AO</td>
+      <td>TO70</td>
+      <td>INDV</td>
+      <td>M</td>
+      <td>Y</td>
+      <td>2009-10-17</td>
+      <td>2040-10-16</td>
+      <td>90</td>
+      <td>100</td>
+      <td>VERY_HIGH</td>
+      <td>0.03</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>M776</td>
+      <td>1958-10-02</td>
+      <td>M776C1</td>
+      <td>BASE</td>
+      <td>1</td>
+      <td>AS</td>
+      <td>TO67</td>
+      <td>INDV</td>
+      <td>M</td>
+      <td>N</td>
+      <td>1990-10-02</td>
+      <td>2025-10-01</td>
+      <td>360</td>
+      <td>100</td>
+      <td>HIGH</td>
+      <td>0.02</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>M776</td>
+      <td>1958-10-02</td>
+      <td>M776C1</td>
+      <td>SIS</td>
+      <td>1</td>
+      <td>AS</td>
+      <td>TO67</td>
+      <td>INDV</td>
+      <td>M</td>
+      <td>N</td>
+      <td>1990-10-02</td>
+      <td>2025-10-01</td>
+      <td>360</td>
+      <td>100</td>
+      <td>HIGH</td>
+      <td>0.02</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>M776</td>
+      <td>1958-10-02</td>
+      <td>M776C1</td>
+      <td>COLA</td>
+      <td>1</td>
+      <td>AS</td>
+      <td>TO67</td>
+      <td>INDV</td>
+      <td>M</td>
+      <td>N</td>
+      <td>1990-10-02</td>
+      <td>2025-10-01</td>
+      <td>360</td>
+      <td>100</td>
+      <td>HIGH</td>
+      <td>0.02</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</div>
+</div>
+<div class="section" id="disabled-lives-rider">
+<h2>Disabled Lives - Rider<a class="headerlink" href="#disabled-lives-rider" title="Permalink to this headline">¶</a></h2>
+<dl class="py data">
+<dt id="footings_idi_model.data.DisabledLivesRiderExtract">
+<code class="sig-name descname">DisabledLivesRiderExtract</code><em class="property"> = &lt;footings.data_dictionary.DisabledLivesRiderExtract object&gt;</em><a class="headerlink" href="#footings_idi_model.data.DisabledLivesRiderExtract" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Rider policy extract for disabled lives. A unique record is represented by POLICY_ID + CLAIM_ID + COVERAGE_ID</dt><dd><ul class="simple">
+<li><p>RIDER_ATTRIBUTE.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Columns</p>
+<dl class="simple">
+<dt>POLICY_ID<span class="classifier">PandasDtype.String</span></dt><dd><p>The policy ID of the disabled claimant.</p>
+</dd>
+<dt>CLAIM_ID<span class="classifier">PandasDtype.String</span></dt><dd><p>The claim ID of the disabled claimant.</p>
+</dd>
+<dt>COVERAGE_ID<span class="classifier">PandasDtype.String</span></dt><dd><p>The coverage ID of the disabled claimant.</p>
+</dd>
+<dt>RIDER_ATTRIBUTE<span class="classifier">PandasDtype.String</span></dt><dd><p>The rider attribute name.</p>
+</dd>
+<dt>VALUE<span class="classifier">PandasDtype.Object</span></dt><dd><p>The value of the rider attribute.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<div class="section" id="id3">
+<h3>Sample Data<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">rider_extract</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
+  <span class="s2">&quot;../../models/extract_models/disabled-lives-sample-riders.csv&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">rider_extract</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>POLICY_ID</th>
+      <th>CLAIM_ID</th>
+      <th>COVERAGE_ID</th>
+      <th>RIDER_ATTRIBUTE</th>
+      <th>VALUE</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>M234</td>
+      <td>M234C1</td>
+      <td>RES</td>
+      <td>residual_benefit_percent</td>
+      <td>0.5</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</div>
+</div>
+</div>
+
+
+              </div>
+              
+              
+              <div class='prev-next-bottom'>
+                
+    <a class='left-prev' id="prev-link" href="../index.html" title="previous page">Data</a>
+    <a class='right-next' id="next-link" href="../model_outputs/index.html" title="next page">Model Output</a>
+
+              </div>
+              
+          </main>
+          
+
+      </div>
+    </div>
+
+    
+  <script src="../../_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    <p>
+          &copy; Copyright 2020, Dustin Tindall.<br/>
+        Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.4.3.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

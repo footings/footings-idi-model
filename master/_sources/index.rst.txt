@@ -40,6 +40,7 @@ This model is a prototype model and is provided "AS IS" with no warranty of any 
 
    installation.rst
    product_info.rst
+   data/index.rst
    models/index.rst
    assumptions.rst
    license.rst
