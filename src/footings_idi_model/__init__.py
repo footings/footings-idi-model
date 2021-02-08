@@ -1,5 +1,4 @@
 from . import assumptions, data, extract_models, policy_models
-from ._version import get_versions
 
 try:
     import importlib.metadata as importlib_metadata

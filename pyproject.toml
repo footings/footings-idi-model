@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "footings-idi-model"
 packages = [
-    { include = "footings-idi-model", from = "src" }
+    { include = "footings_idi_model", from = "src" }
 ]
 version = "v0.6.0rc0"
 description = "An example individual disability model using the footings framework."
@@ -22,7 +22,9 @@ classifiers = [
 python = "^3.7"
 numpy = "^1.11"
 pandas = "^1.0"
-footings = "^0.10"
+openpyxl = "^3.0"
+gitpython = "^3.1"
+footings =  { git = "https://github.com/footings/footings.git", branch = "master" }
 
 
 [tool.poetry.dev-dependencies]
