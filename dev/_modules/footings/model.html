@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>footings.model &#8212; Footings IDI Model 0+untagged.1.g78760bc documentation</title>
+    <title>footings.model &#8212; Footings IDI Model 0.6.0rc0 documentation</title>
     
   <link rel="stylesheet" href="../../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
@@ -165,23 +165,21 @@
               <div>
                 
   <h1>Source code for footings.model</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span><span class="p">,</span> <span class="n">auto</span>
+<span></span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span><span class="p">,</span> <span class="n">auto</span>
 <span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
-<span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">from</span> <span class="nn">traceback</span> <span class="kn">import</span> <span class="n">extract_tb</span><span class="p">,</span> <span class="n">format_list</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
 
-<span class="kn">from</span> <span class="nn">attr</span> <span class="kn">import</span> <span class="n">attrs</span><span class="p">,</span> <span class="n">attrib</span><span class="p">,</span> <span class="n">make_class</span><span class="p">,</span> <span class="n">evolve</span><span class="p">,</span> <span class="n">NOTHING</span>
-<span class="kn">from</span> <span class="nn">attr.setters</span> <span class="kn">import</span> <span class="n">NO_OP</span>
-<span class="kn">from</span> <span class="nn">attr._make</span> <span class="kn">import</span> <span class="n">_CountingAttr</span>
-<span class="kn">from</span> <span class="nn">attr.setters</span> <span class="kn">import</span> <span class="n">frozen</span>
 <span class="kn">import</span> <span class="nn">numpydoc.docscrape</span> <span class="k">as</span> <span class="nn">numpydoc</span>
+<span class="kn">from</span> <span class="nn">attr</span> <span class="kn">import</span> <span class="n">NOTHING</span><span class="p">,</span> <span class="n">attrib</span><span class="p">,</span> <span class="n">attrs</span><span class="p">,</span> <span class="n">evolve</span><span class="p">,</span> <span class="n">make_class</span>
+<span class="kn">from</span> <span class="nn">attr._make</span> <span class="kn">import</span> <span class="n">_CountingAttr</span>
+<span class="kn">from</span> <span class="nn">attr.setters</span> <span class="kn">import</span> <span class="n">NO_OP</span><span class="p">,</span> <span class="n">frozen</span>
 
 <span class="kn">from</span> <span class="nn">.audit</span> <span class="kn">import</span> <span class="n">run_model_audit</span>
 <span class="kn">from</span> <span class="nn">.doc_tools.docscrape</span> <span class="kn">import</span> <span class="n">FootingsDoc</span>
 <span class="kn">from</span> <span class="nn">.exceptions</span> <span class="kn">import</span> <span class="n">ModelCreationError</span><span class="p">,</span> <span class="n">ModelRunError</span>
 <span class="kn">from</span> <span class="nn">.visualize</span> <span class="kn">import</span> <span class="n">visualize_model</span>
-
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s2">&quot;Model&quot;</span><span class="p">,</span>
