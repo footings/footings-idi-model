@@ -1,0 +1,414 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Changelog &#8212; Footings IDI Model 0.6.0rc0 documentation</title>
+    
+  <link rel="stylesheet" href="_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="License" href="license.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main">
+<div class="container-xl">
+
+    <a class="navbar-brand" href="index.html">
+    
+      <p class="title">Footings IDI Model</p>
+    
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar-menu" class="col-lg-9 collapse navbar-collapse">
+      <ul id="navbar-main-elements" class="navbar-nav mr-auto">
+        
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="installation.html">Installation</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="product_info.html">Product Information</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="data/index.html">Data</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="models/index.html">Models</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="assumptions.html">Assumptions</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="license.html">License</a>
+        </li>
+        
+        <li class="nav-item active">
+            <a class="nav-link" href="">Changelog</a>
+        </li>
+        
+        
+      </ul>
+
+
+      <form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this site..." aria-label="Search this site..." autocomplete="off" >
+</form>
+      
+
+      <ul class="navbar-nav">
+        
+          <li class="nav-item">
+            <a class="nav-link" href="https://github.com/footings/footings-idi-model" target="_blank" rel="noopener">
+              <span><i class="fab fa-github-square"></i></span>
+            </a>
+          </li>
+        
+        
+      </ul>
+    </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+          <div class="col-12 col-md-3 bd-sidebar"><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+
+    <div class="bd-toc-item active">
+    
+  
+    <ul class="nav bd-sidenav">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+          
+        
+        
+      </ul>
+  
+  </nav>
+          </div>
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+              
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#unreleased" class="nav-link">Unreleased</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#v0-5-0" class="nav-link">v0.5.0</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#v0-4-0" class="nav-link">v0.4.0</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#v0-3-0" class="nav-link">v0.3.0</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#v0-2-1" class="nav-link">v0.2.1</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#v0-2-0" class="nav-link">v0.2.0</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#v0-1-0" class="nav-link">v0.1.0</a>
+        </li>
+    
+    </ul>
+</nav>
+
+
+              
+          </div>
+          
+
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <div class="section" id="changelog">
+<h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
+<p>All notable changes to this project will be documented in this file. Dates are displayed in UTC.</p>
+<p>Generated by <a class="reference external" href="https://github.com/CookPete/auto-changelog"><code class="docutils literal notranslate"><span class="pre">auto-changelog</span></code></a>.</p>
+<div class="section" id="unreleased">
+<h2><a class="reference external" href="https://github.com/dustindall/footings-idi-model/compare/v0.5.0...HEAD">Unreleased</a><a class="headerlink" href="#unreleased" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="v0-5-0">
+<h2><a class="reference external" href="https://github.com/dustindall/footings-idi-model/compare/v0.4.0...v0.5.0">v0.5.0</a><a class="headerlink" href="#v0-5-0" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>21 November 2020</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>Updates to ctr assumption files. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/c218d52b8c755732ac11e81aa3f5c687dea723c6"><code class="docutils literal notranslate"><span class="pre">c218d52</span></code></a></p></li>
+<li><p>Bulk documenation update using myst_nb. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/b77e21efb39866e8aaf7d0d9c8114027c0b6b157"><code class="docutils literal notranslate"><span class="pre">b77e21e</span></code></a></p></li>
+<li><p>Major update to doc configuration. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/c0071a0c4e50c7c525051d1ba373391f5c36f615"><code class="docutils literal notranslate"><span class="pre">c0071a0</span></code></a></p></li>
+<li><p>Major refactoring to idi_model. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/b10b803749907f26fc878e93b2d3858e4960eedf"><code class="docutils literal notranslate"><span class="pre">b10b803</span></code></a></p></li>
+<li><p>Moved generate policy extract to under utils using new footings api. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/a27a55061c420bd61f65a5428e4502998b3263ae"><code class="docutils literal notranslate"><span class="pre">a27a550</span></code></a></p></li>
+<li><p>Updates to docs. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/00e60319c8589ac3997b784c2dc77757aa82b440"><code class="docutils literal notranslate"><span class="pre">00e6031</span></code></a></p></li>
+<li><p>Removal of functions module. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/9715adac36cf5cfd05d3815529a4ef2df292ea58"><code class="docutils literal notranslate"><span class="pre">9715ada</span></code></a></p></li>
+<li><p>Updates to alr and rop deterministic policy models. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/13628ff21611dbe817f9a9b5dea749a659e13897"><code class="docutils literal notranslate"><span class="pre">13628ff</span></code></a></p></li>
+<li><p>Reconfigured lapse and mortality to be just withdraw to be more generic. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/4ef1c31de56a8196decac58b05d94a362c8b5945"><code class="docutils literal notranslate"><span class="pre">4ef1c31</span></code></a></p></li>
+<li><p>Removeal of disable lives file under functions. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/e4caba91046c9a3d468d4b55f820c4935a512ed7"><code class="docutils literal notranslate"><span class="pre">e4caba9</span></code></a></p></li>
+<li><p>Updates to get test working. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/9882bbf8233aedf4bd6faea4212cd70327b14224"><code class="docutils literal notranslate"><span class="pre">9882bbf</span></code></a></p></li>
+<li><p>Updates to documentation and noxfile.py <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/2a40db6e32208d63a732e06d2fc10079145352bc"><code class="docutils literal notranslate"><span class="pre">2a40db6</span></code></a></p></li>
+<li><p>Bulk update on new standard. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/9b6b4ecaebf0b3ee16e72f467c07658fc55b2e16"><code class="docutils literal notranslate"><span class="pre">9b6b4ec</span></code></a></p></li>
+<li><p>Updates to active and disables lives model. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/d5f76349682ef48d704dc3c250618f8e9bb794b7"><code class="docutils literal notranslate"><span class="pre">d5f7634</span></code></a></p></li>
+<li><p>Added first pass of a dlr stochastic model. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/1343f80abf31ec4ecd861ffed22e3c11b4ed2b94"><code class="docutils literal notranslate"><span class="pre">1343f80</span></code></a></p></li>
+<li><p>Refactored DLRStochastic model to inherit most items from DLRDeterministic. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/c3653b6f4be808f281e60697f4568ebe0c9dfa00"><code class="docutils literal notranslate"><span class="pre">c3653b6</span></code></a></p></li>
+<li><p>ALR incidence rate functions for stat/gaap. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/0432f6432a9467590b962de251fd5b2cc350484f"><code class="docutils literal notranslate"><span class="pre">0432f64</span></code></a></p></li>
+<li><p>Updated DLR deterministic using new framework. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/51440e9c2a28e6185359256a226b81e3b17af262"><code class="docutils literal notranslate"><span class="pre">51440e9</span></code></a></p></li>
+<li><p>Updates to docs for dlr_stochastic_model. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/62337fa1f2aa2d3d93f2f9f4b6791d449293bb70"><code class="docutils literal notranslate"><span class="pre">62337fa</span></code></a></p></li>
+<li><p>Turned object types in dataframes to categorical. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/9ad197bdfb45cab071455ce669690ea9339234fb"><code class="docutils literal notranslate"><span class="pre">9ad197b</span></code></a></p></li>
+<li><p>Added option to run stochastic to disabled_lives_model. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/bf12814f665b8d55e00ffe7ff9ef5326feb6641b"><code class="docutils literal notranslate"><span class="pre">bf12814</span></code></a></p></li>
+<li><p>Updates to docs. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/11c277dc2d83d85c613bcb0a3fea3e6668de328a"><code class="docutils literal notranslate"><span class="pre">11c277d</span></code></a></p></li>
+<li><p>Moved stat/gaap ctr function and other dlr additions. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/962e81233c8b7dbadfb389c09efcc5642467225c"><code class="docutils literal notranslate"><span class="pre">962e812</span></code></a></p></li>
+<li><p>Moved more attributes to stand alone attributes file. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/c4f5b0a320d5660c6e84c1b84ddfaf1de5080d0f"><code class="docutils literal notranslate"><span class="pre">c4f5b0a</span></code></a></p></li>
+<li><p>Updates to rider extract, run_policy_per_model_record, and added coverage_id to dispatch_model. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/ef115d608c21f1c771622b53d702c29778040b0c"><code class="docutils literal notranslate"><span class="pre">ef115d6</span></code></a></p></li>
+<li><p>General updates to models to improve test. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/2a4aba7fce1da9c1fd3b21fec35e99cf40807b69"><code class="docutils literal notranslate"><span class="pre">2a4aba7</span></code></a></p></li>
+<li><p>Moved from one environment file to two. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/b3142fac8b4b83c22e7c3ed9b01e516e4e9dd503"><code class="docutils literal notranslate"><span class="pre">b3142fa</span></code></a></p></li>
+<li><p>Filtered mortality table to specific gender. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/d038ad551ce291c735ad9facc6b589334b39bd77"><code class="docutils literal notranslate"><span class="pre">d038ad5</span></code></a></p></li>
+<li><p>With readthedocs specify conda environement. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/2e300dc5c3cfc331fb397305d4f898bb4abcd51c"><code class="docutils literal notranslate"><span class="pre">2e300dc</span></code></a></p></li>
+<li><p>Updated schemas to remove need for categories and corrected descriptions. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/2fb18c4275f9b836f31485ae671e59b8c6f67f5e"><code class="docutils literal notranslate"><span class="pre">2fb18c4</span></code></a></p></li>
+<li><p>Update to init files. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/9028d55becc2f5ce97940222064d4561cf07c91d"><code class="docutils literal notranslate"><span class="pre">9028d55</span></code></a></p></li>
+<li><p>Black changes to attributes. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/ae4096845f1837c4d63f4ccd8141b3f36b746282"><code class="docutils literal notranslate"><span class="pre">ae40968</span></code></a></p></li>
+<li><p>Removed <strong>all</strong> from dlr_deterministic.py <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/ec056340aeecae59326e38fd743a18cff5d219c0"><code class="docutils literal notranslate"><span class="pre">ec05634</span></code></a></p></li>
+<li><p>Added interest and ctr modifier to dlr deterministic usage. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/29bee62ff657f6ae8810c6804a544d7b869e841d"><code class="docutils literal notranslate"><span class="pre">29bee62</span></code></a></p></li>
+<li><p>Added generate model parameters to attributes. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/962ca6fe398d96e0cea13895b1224f3972eb81a1"><code class="docutils literal notranslate"><span class="pre">962ca6f</span></code></a></p></li>
+<li><p>Black formatting changes. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/1e612590a1bd33caa887ccb1456d4a5fd5296654"><code class="docutils literal notranslate"><span class="pre">1e61259</span></code></a></p></li>
+<li><p>Updated nox docs to remove some directories generated with myst_nb. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/695e4f6cfdb31b4e75af51396a627c95b80f7930"><code class="docutils literal notranslate"><span class="pre">695e4f6</span></code></a></p></li>
+<li><p>Updated table_nm to table_name. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/2df2db89cf452dc5da1cb238d5aca90ec27a4894"><code class="docutils literal notranslate"><span class="pre">2df2db8</span></code></a></p></li>
+<li><p>Removed mode from get_withdraw_rates. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/2e351f344c41b4a6d813c7ad86db9423ecdc0e23"><code class="docutils literal notranslate"><span class="pre">2e351f3</span></code></a></p></li>
+<li><p>Made idi occupation class a string for both extracts and fixed disgnosis group name VERY_HIGH. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/482a4d66f2b282aaeb078b3a8e64ab99919967d1"><code class="docutils literal notranslate"><span class="pre">482a4d6</span></code></a></p></li>
+<li><p>Renamed CTR to FINAL_CTR and updated tools to be model_tools. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/3c7aa5e6c02230a0ac154cc074a404195951eb4d"><code class="docutils literal notranslate"><span class="pre">3c7aa5e</span></code></a></p></li>
+<li><p>Added myst_nb directories to ignore and audit files produced from notebooks. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/cd335a5de7b1a8002ccd943c5aa17268726d9673"><code class="docutils literal notranslate"><span class="pre">cd335a5</span></code></a></p></li>
+<li><p>Updated envrionment-dev file. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/754b981ce9ea611652519c7fda4bd75f7a6ac747"><code class="docutils literal notranslate"><span class="pre">754b981</span></code></a></p></li>
+<li><p>Updated CTR to be FINAL_CTR. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/56f60d7c042551c5a4572a5f217106bb821cfa6d"><code class="docutils literal notranslate"><span class="pre">56f60d7</span></code></a></p></li>
+<li><p>Update to environment dev file. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/b83e96a8866ac2597be480bce83b17e2b5e14398"><code class="docutils literal notranslate"><span class="pre">b83e96a</span></code></a></p></li>
+<li><p>Removal of BENEFIT_END_ID from active lives schema. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/b74c24b38ed99ff51291fbe5a141432a540966ab"><code class="docutils literal notranslate"><span class="pre">b74c24b</span></code></a></p></li>
+<li><p>Update to nox file. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/3ccefa8960a23d9999442edc9d902e909196c985"><code class="docutils literal notranslate"><span class="pre">3ccefa8</span></code></a></p></li>
+<li><p>Need to update CTR to FINAL_CTR in test and output columns. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/5166c773cf7f7aef46f89218f4e513d30cc1478a"><code class="docutils literal notranslate"><span class="pre">5166c77</span></code></a></p></li>
+<li><p>Updated conf.py to use doc_tools. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/aa88cc17b42268717445ead70d0558f9ac3d8a78"><code class="docutils literal notranslate"><span class="pre">aa88cc1</span></code></a></p></li>
+<li><p>Added necessary np import. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/45b596bcd0a79a024124b4a04d90ce40ae72409e"><code class="docutils literal notranslate"><span class="pre">45b596b</span></code></a></p></li>
+<li><p>Removed audit files from docs as they will be generated each time docs are produced. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/64e3836578833c3dd444e5332bd0eadfd936d4ea"><code class="docutils literal notranslate"><span class="pre">64e3836</span></code></a></p></li>
+<li><p>Added aduit files. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/3fd81f075ffe58c27e7adc7427d6c77f66372d8f"><code class="docutils literal notranslate"><span class="pre">3fd81f0</span></code></a></p></li>
+<li><p>Update to test files. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/340e5710c6d517021433b7895fa9d3ca40b5950e"><code class="docutils literal notranslate"><span class="pre">340e571</span></code></a></p></li>
+<li><p>Moved extract to be under population_models test directory. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/a0bf0cd9bec0f1e57f82bd42c83c164adef3a13f"><code class="docutils literal notranslate"><span class="pre">a0bf0cd</span></code></a></p></li>
+<li><p>Moved test to specific policy or population folders. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/3f0e87f91b9bd6da2db8d395eccb75556b9fb1a5"><code class="docutils literal notranslate"><span class="pre">3f0e87f</span></code></a></p></li>
+</ul>
+</div>
+<div class="section" id="v0-4-0">
+<h2><a class="reference external" href="https://github.com/dustindall/footings-idi-model/compare/v0.3.0...v0.4.0">v0.4.0</a><a class="headerlink" href="#v0-4-0" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>14 August 2020</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>Added tests for active and disabled lives population models. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/d047430a33dc13d5626365b6c3d2d4cf3b714302"><code class="docutils literal notranslate"><span class="pre">d047430</span></code></a></p></li>
+<li><p>Added rop_deterministic_model under policy active_lives. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/c7b296c867a6cfe83fca1f4939254494a1669738"><code class="docutils literal notranslate"><span class="pre">c7b296c</span></code></a></p></li>
+<li><p>Added capability to model ROP for active lives. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/f45e8dee231ea137294ec9b785856f179eafa2d1"><code class="docutils literal notranslate"><span class="pre">f45e8de</span></code></a></p></li>
+<li><p>Pulled gross premium and benefit end through respective functions and models. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/c441c2e9304a2f98660732823fc268f3a25833fb"><code class="docutils literal notranslate"><span class="pre">c441c2e</span></code></a></p></li>
+<li><p>Added rop to alr_deterministic models. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/abb02158bb2535a5fcbbfe2221217776ee77cfcf"><code class="docutils literal notranslate"><span class="pre">abb0215</span></code></a></p></li>
+<li><p>Changed issue_dt to policy_start_dt and termination_dt to policy_end_dt. In addition, added gross_premium, premium_pay_to_dt, and benefit_end_id. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/2b34615d6158443d071214951e788b3a2e23b654"><code class="docutils literal notranslate"><span class="pre">2b34615</span></code></a></p></li>
+<li><p>Refactored dispatch model per precord to handle records. This was necessary to handle multiple extracts. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/333cb12307523cb35ada1e41e6fd3903fe7c7818"><code class="docutils literal notranslate"><span class="pre">333cb12</span></code></a></p></li>
+<li><p>Updated docs for rop_deterministic_model. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/d19c7f3e0d34760b0ec0f826d73e7f30ecf06ad2"><code class="docutils literal notranslate"><span class="pre">d19c7f3</span></code></a></p></li>
+<li><p>Removed some old non used functions from generate_policies. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/3680bb891afc26f22592811da1ed46568d126cd9"><code class="docutils literal notranslate"><span class="pre">3680bb8</span></code></a></p></li>
+<li><p>Added rider extract schema and changed name of prior active lives extract schema. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/4ca7f30c032cf69dc016cbd95fa43bcc11aae4ec"><code class="docutils literal notranslate"><span class="pre">4ca7f30</span></code></a></p></li>
+<li><p>Added rop becords to active base samples and added a new extract for top benefits. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/52f2117fae68684a40ee5e82da16940a38e77f3c"><code class="docutils literal notranslate"><span class="pre">52f2117</span></code></a></p></li>
+<li><p>Added test to test ROP rider for active lvies. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/904cd06c91df03d701d599c2dbc4ea5d63e5ab60"><code class="docutils literal notranslate"><span class="pre">904cd06</span></code></a></p></li>
+<li><p>Updated changelog. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/de0a3cf7cb5fd822a70038c84fb675778b21c8c4"><code class="docutils literal notranslate"><span class="pre">de0a3cf</span></code></a></p></li>
+<li><p>Added environment.yml and updated noxfile.py. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/f37766a5a2e2710365dc56ef5d35038dd2891f34"><code class="docutils literal notranslate"><span class="pre">f37766a</span></code></a></p></li>
+<li><p>Refactored active lives test to test against rop records. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/687663fd8cfc71289a3c1918b153222f9efceb60"><code class="docutils literal notranslate"><span class="pre">687663f</span></code></a></p></li>
+<li><p>Updated schema files. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/0a7df95db88decb999d3437a9cacb1f73ab9a8b3"><code class="docutils literal notranslate"><span class="pre">0a7df95</span></code></a></p></li>
+<li><p>Updates to documentation to handle ROP. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/1a2fd8402cae65c8222539cc446b16c1605f6ca3"><code class="docutils literal notranslate"><span class="pre">1a2fd84</span></code></a></p></li>
+<li><p>Updated generate policies to account for new active life shemas. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/a4ff27381ea654167a8ad71faa809b4e07bf4518"><code class="docutils literal notranslate"><span class="pre">a4ff273</span></code></a></p></li>
+<li><p>changed name of functions/dlr.py to functions/disabled_lives.py. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/c0276d616b756a9afd9f81ddedab74fd650e3c98"><code class="docutils literal notranslate"><span class="pre">c0276d6</span></code></a></p></li>
+<li><p>Removed COVERAGE_ID from disabled models. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/eaa87abb6cdc7fe85a2fd49ed34e23c80947b45b"><code class="docutils literal notranslate"><span class="pre">eaa87ab</span></code></a></p></li>
+<li><p>Added coverage id to output of dlr_deterministic and alr_deterministic models. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/739f39f8da303a22baabb45f9a7f26ecf50b3656"><code class="docutils literal notranslate"><span class="pre">739f39f</span></code></a></p></li>
+<li><p>Black updates. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/4894e73adb9ebfd1a76d0ffa602d003d73a223dd"><code class="docutils literal notranslate"><span class="pre">4894e73</span></code></a></p></li>
+</ul>
+</div>
+<div class="section" id="v0-3-0">
+<h2><a class="reference external" href="https://github.com/dustindall/footings-idi-model/compare/v0.2.1...v0.3.0">v0.3.0</a><a class="headerlink" href="#v0-3-0" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>28 July 2020</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>Added elim periods 360 and 720 to base table and made correcting changes to calcualate_ctr. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/7cfe7604a0a201271f45e9fbf0a01bb21a1257b8"><code class="docutils literal notranslate"><span class="pre">7cfe760</span></code></a></p></li>
+<li><p>Added additional test data. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/8dd469993e7e62019a5e1f7e2e9b59624e491451"><code class="docutils literal notranslate"><span class="pre">8dd4699</span></code></a></p></li>
+<li><p>Removed non-needed test files. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/86a7212c192a48b69a307d0a410f0bf406cc5d1b"><code class="docutils literal notranslate"><span class="pre">86a7212</span></code></a></p></li>
+<li><p>Changes to alr deterministic calc from testing. Changes to claim cost calc and frame creation. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/b3d4100ef0a320f0c062e147b7a6d12b3e4f402e"><code class="docutils literal notranslate"><span class="pre">b3d4100</span></code></a></p></li>
+<li><p>Updated changelog to read git history using auto-changelog. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/0d8572ed65ee2aae0fbd9f90feb2a9ead566a130"><code class="docutils literal notranslate"><span class="pre">0d8572e</span></code></a></p></li>
+<li><p>Refactored calculate_dates within extract generator. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/3ca40579796ed50714519a62af1dd620bcb8da5d"><code class="docutils literal notranslate"><span class="pre">3ca4057</span></code></a></p></li>
+<li><p>Updates to user_guide <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/7bc68c12724dd2fe9de1e67a726f4cc9c2cd9973"><code class="docutils literal notranslate"><span class="pre">7bc68c1</span></code></a></p></li>
+<li><p>Added model version, last commit, and run date/time to output. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/d405919228e6eb427ff68a0801b369a378494d86"><code class="docutils literal notranslate"><span class="pre">d405919</span></code></a></p></li>
+<li><p>Removal of some non needed code in ALR calculation. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/38b34d813e906f1d697ebe5d56f8896e8aaf4267"><code class="docutils literal notranslate"><span class="pre">38b34d8</span></code></a></p></li>
+<li><p>Updated changelog prior to moving to v0.2.2. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/d3a2932aff4a0c7fbb90fbfe2c1b56c07973e1eb"><code class="docutils literal notranslate"><span class="pre">d3a2932</span></code></a></p></li>
+<li><p>Fix to COLA adjustment so first year duration is set to 1 and removed diagnosis modifier for AO only contracts. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/ea6662833ecf9197489fa7b39dc73324eca05160"><code class="docutils literal notranslate"><span class="pre">ea66628</span></code></a></p></li>
+<li><p>Capped compounding cola at age 65. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/a42cb00f3e0a633b453d6705a7a3cee355d78d2d"><code class="docutils literal notranslate"><span class="pre">a42cb00</span></code></a></p></li>
+<li><p>Formating updates from black. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/5a81f8b4307adf74af906ff2ea0bc93252ea75b3"><code class="docutils literal notranslate"><span class="pre">5a81f8b</span></code></a></p></li>
+<li><p>Added changelog to noxfile. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/b04c7b8199589785cff41fcb52384ce04d27ee8a"><code class="docutils literal notranslate"><span class="pre">b04c7b8</span></code></a></p></li>
+<li><p>Updated to changelog. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/ce719d24284abba53e015ac01e86c326c14533f9"><code class="docutils literal notranslate"><span class="pre">ce719d2</span></code></a></p></li>
+<li><p>Updates to changelog. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/26e572e7b60984a2e9b0bc92083428c56e3d3427"><code class="docutils literal notranslate"><span class="pre">26e572e</span></code></a></p></li>
+<li><p>Subtracted a day from termination date for both disabled and active lives. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/0da479f221c9aeeb16a1e7d3593bb2458e0d7ae3"><code class="docutils literal notranslate"><span class="pre">0da479f</span></code></a></p></li>
+<li><p>Updates to changelog. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/6f54cf11d08fd98151e711ebe456e3b4184c785d"><code class="docutils literal notranslate"><span class="pre">6f54cf1</span></code></a></p></li>
+<li><p>Black changes. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/d210ad78fcdde3102a1ccdce8e7977c3f4283678"><code class="docutils literal notranslate"><span class="pre">d210ad7</span></code></a></p></li>
+<li><p>Fix to generate policies for active lives. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/fed20d164356750a356a370302b4d2e76fa7ae93"><code class="docutils literal notranslate"><span class="pre">fed20d1</span></code></a></p></li>
+</ul>
+</div>
+<div class="section" id="v0-2-1">
+<h2><a class="reference external" href="https://github.com/dustindall/footings-idi-model/compare/v0.2.0...v0.2.1">v0.2.1</a><a class="headerlink" href="#v0-2-1" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>13 July 2020</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>Updated arg_ to param_ for variables and added back net_benefit_method parameter. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/34a0cf270245336e31fac934d077bd67a61ea7e4"><code class="docutils literal notranslate"><span class="pre">34a0cf2</span></code></a></p></li>
+<li><p>Updates user guide and noxifle.py <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/f84a32fb97f07dbc19fe204890adb6e4c0f4891b"><code class="docutils literal notranslate"><span class="pre">f84a32f</span></code></a></p></li>
+<li><p>Fix to errors for both monthly and life benefit period. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/c5195ef233eab4a39eb21c8175c37cc816a0bb63"><code class="docutils literal notranslate"><span class="pre">c5195ef</span></code></a></p></li>
+<li><p>formatting updates. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/962314f89437dd538a1c095f77ec6a7aee0b6c02"><code class="docutils literal notranslate"><span class="pre">962314f</span></code></a></p></li>
+<li><p>Fixed bug that was preventing policies with an elimination period less than 30 days from running. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/b5b5ef4f7738b6a173b9ada40a25f6ddbb8f670f"><code class="docutils literal notranslate"><span class="pre">b5b5ef4</span></code></a></p></li>
+</ul>
+</div>
+<div class="section" id="v0-2-0">
+<h2><a class="reference external" href="https://github.com/dustindall/footings-idi-model/compare/v0.1.0...v0.2.0">v0.2.0</a><a class="headerlink" href="#v0-2-0" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>12 July 2020</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>Added termination rates, modifiers, and margin. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/bfaa98f84ea6cb7d9b1b372bd585181060c0be01"><code class="docutils literal notranslate"><span class="pre">bfaa98f</span></code></a></p></li>
+<li><p>Passing local model. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/ba814afb2d280b6db850a6109b7e9da9f4748e94"><code class="docutils literal notranslate"><span class="pre">ba814af</span></code></a></p></li>
+<li><p>Added first pass documentation. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/b17712715b1c7b986e5d47227203b5c3371f428a"><code class="docutils literal notranslate"><span class="pre">b177127</span></code></a></p></li>
+<li><p>Added incidence rates, modifiers, and margin. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/804e245ab700362c5b3755c82246816c836d610d"><code class="docutils literal notranslate"><span class="pre">804e245</span></code></a></p></li>
+<li><p>Initial commit with layout and supporting files. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/840eb97a31980e4724f6dadcc0ce67164af90991"><code class="docutils literal notranslate"><span class="pre">840eb97</span></code></a></p></li>
+<li><p>Added mortality tables. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/a29987a1cb9a730a20ff1b66bf75ca54ba062601"><code class="docutils literal notranslate"><span class="pre">a29987a</span></code></a></p></li>
+<li><p>Renamed package to footings_idi_model. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/aed136dafc8f8fb6fc86755c626f947dc13badc2"><code class="docutils literal notranslate"><span class="pre">aed136d</span></code></a></p></li>
+<li><p>Bulk changes with more documentation with  move to footings v0.6.0. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/898b0bb87d7a525367f71eccad4ea35005e40702"><code class="docutils literal notranslate"><span class="pre">898b0bb</span></code></a></p></li>
+<li><p>Added lapse rates. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/376ff6399aa32761828e658a816b29210241d617"><code class="docutils literal notranslate"><span class="pre">376ff63</span></code></a></p></li>
+<li><p>Bulk model updates after move. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/1f232a5c3a55bd0dd42b3faaad3530fede65707c"><code class="docutils literal notranslate"><span class="pre">1f232a5</span></code></a></p></li>
+<li><p>Added <strong>all</strong> to module for functions to export. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/33d8e04929d06e0efb035bc295c969ea2ace5578"><code class="docutils literal notranslate"><span class="pre">33d8e04</span></code></a></p></li>
+<li><p>Updates to docs. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/0ac0ee9dedb77ff6c84f3dd014f9c3c2e2609e81"><code class="docutils literal notranslate"><span class="pre">0ac0ee9</span></code></a></p></li>
+<li><p>Updates to documentation. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/d016b83c2d18a1baf47e41637954e2d63b706c60"><code class="docutils literal notranslate"><span class="pre">d016b83</span></code></a></p></li>
+<li><p>Update to docs. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/5814c9ca0073309d1444c97fba0f5f4fef22ee8e"><code class="docutils literal notranslate"><span class="pre">5814c9c</span></code></a></p></li>
+<li><p>Changed create_argument to create_parameter. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/48c0e5e0500fc7901b409262c0b840d590837039"><code class="docutils literal notranslate"><span class="pre">48c0e5e</span></code></a></p></li>
+<li><p>Update to docs and bumped required footings version. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/22b873a7da1b3055fce33c2bcb92c6a10a93a43d"><code class="docutils literal notranslate"><span class="pre">22b873a</span></code></a></p></li>
+<li><p>Miscellaneous updates. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/ae7bf53a111ac534a49bfa025f75eedc42264a33"><code class="docutils literal notranslate"><span class="pre">ae7bf53</span></code></a></p></li>
+<li><p>Additional updates to readthedocs.yml. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/6b604f96231e5d10161bd0b6e58aa6a654633451"><code class="docutils literal notranslate"><span class="pre">6b604f9</span></code></a></p></li>
+<li><p>Added .readthedocs.yml file. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/22a7ff31eece515343530cdb6698f934a9da2a24"><code class="docutils literal notranslate"><span class="pre">22a7ff3</span></code></a></p></li>
+<li><p>Changed readthedocs.yml file. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/45de6d2e11dcc15dbbdbac0751119d8e67bbb69e"><code class="docutils literal notranslate"><span class="pre">45de6d2</span></code></a></p></li>
+<li><p>Fix to manifest file. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/325d072a936289af5eb0497691bd170166f22aa7"><code class="docutils literal notranslate"><span class="pre">325d072</span></code></a></p></li>
+<li><p>Added interest assumption. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/6f18b5559db8719a1a67cd6b51cc62b16f7e7d28"><code class="docutils literal notranslate"><span class="pre">6f18b55</span></code></a></p></li>
+<li><p>Updated .readthedocs.yml. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/21cb7f2cc111ab91ef4da701a7a151d87e4be6d6"><code class="docutils literal notranslate"><span class="pre">21cb7f2</span></code></a></p></li>
+<li><p>Added nbsphinx to setup.cfg and remove acutary classifier. <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/19ad2986a61438943bb6e564a888b8bbbbc90880"><code class="docutils literal notranslate"><span class="pre">19ad298</span></code></a></p></li>
+</ul>
+</div>
+<div class="section" id="v0-1-0">
+<h2>v0.1.0<a class="headerlink" href="#v0-1-0" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>24 June 2020</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>Initial commit <a class="reference external" href="https://github.com/dustindall/footings-idi-model/commit/cbb5718e09469e5310f9d400a330e2d68227ed5a"><code class="docutils literal notranslate"><span class="pre">cbb5718</span></code></a></p></li>
+</ul>
+</div>
+</div>
+
+
+              </div>
+              
+              
+              <div class='prev-next-bottom'>
+                
+    <a class='left-prev' id="prev-link" href="license.html" title="previous page">License</a>
+
+              </div>
+              
+          </main>
+          
+
+      </div>
+    </div>
+
+    
+  <script src="_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    <p>
+          &copy; Copyright 2020, Dustin Tindall.<br/>
+        Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.4.3.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

@@ -1,0 +1,635 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>footings.data_dictionary &#8212; Footings IDI Model 0.6.0rc0 documentation</title>
+    
+  <link rel="stylesheet" href="../../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main">
+<div class="container-xl">
+
+    <a class="navbar-brand" href="../../index.html">
+    
+      <p class="title">Footings IDI Model</p>
+    
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar-menu" class="col-lg-9 collapse navbar-collapse">
+      <ul id="navbar-main-elements" class="navbar-nav mr-auto">
+        
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../installation.html">Installation</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../product_info.html">Product Information</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../data/index.html">Data</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../models/index.html">Models</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../assumptions.html">Assumptions</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../license.html">License</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../changelog.html">Changelog</a>
+        </li>
+        
+        
+      </ul>
+
+
+      <form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this site..." aria-label="Search this site..." autocomplete="off" >
+</form>
+      
+
+      <ul class="navbar-nav">
+        
+          <li class="nav-item">
+            <a class="nav-link" href="https://github.com/footings/footings-idi-model" target="_blank" rel="noopener">
+              <span><i class="fab fa-github-square"></i></span>
+            </a>
+          </li>
+        
+        
+      </ul>
+    </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+          <div class="col-12 col-md-3 bd-sidebar"><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+
+    <div class="bd-toc-item active">
+    
+  
+    <ul class="nav bd-sidenav">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+      </ul>
+  
+  </nav>
+          </div>
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+              
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+    </ul>
+</nav>
+
+
+              
+          </div>
+          
+
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <h1>Source code for footings.data_dictionary</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">platform</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Mapping</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">attr</span> <span class="kn">import</span> <span class="n">attrib</span><span class="p">,</span> <span class="n">attrs</span><span class="p">,</span> <span class="n">evolve</span><span class="p">,</span> <span class="n">make_class</span>
+<span class="kn">from</span> <span class="nn">attr.validators</span> <span class="kn">import</span> <span class="n">instance_of</span><span class="p">,</span> <span class="n">optional</span>
+
+<span class="kn">from</span> <span class="nn">.exceptions</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">DataDictionaryPandasDtypeConversionError</span><span class="p">,</span>
+    <span class="n">DataDictionaryValidateError</span><span class="p">,</span>
+    <span class="n">DataDictionaryValidatorsConversionError</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">.model</span> <span class="kn">import</span> <span class="n">def_parameter</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;PandasDtype&quot;</span><span class="p">,</span> <span class="s2">&quot;data_dictionary&quot;</span><span class="p">,</span> <span class="s2">&quot;def_column&quot;</span><span class="p">]</span>
+
+
+<span class="k">class</span> <span class="nc">PandasDtype</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Enum container of all valid pandas data types.</span>
+
+<span class="sd">    This was copied from the `pandera` project and modified.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">Bool</span> <span class="o">=</span> <span class="s2">&quot;bool&quot;</span>
+    <span class="n">DateTime</span> <span class="o">=</span> <span class="s2">&quot;datetime64[ns]&quot;</span>
+    <span class="n">Timedelta</span> <span class="o">=</span> <span class="s2">&quot;timedelta64[ns]&quot;</span>
+    <span class="n">Category</span> <span class="o">=</span> <span class="s2">&quot;category&quot;</span>
+    <span class="n">Float</span> <span class="o">=</span> <span class="s2">&quot;float64&quot;</span>
+    <span class="n">Float16</span> <span class="o">=</span> <span class="s2">&quot;float16&quot;</span>
+    <span class="n">Float32</span> <span class="o">=</span> <span class="s2">&quot;float32&quot;</span>
+    <span class="n">Float64</span> <span class="o">=</span> <span class="s2">&quot;float64&quot;</span>
+    <span class="n">Int</span> <span class="o">=</span> <span class="s2">&quot;int32&quot;</span> <span class="k">if</span> <span class="n">platform</span><span class="o">.</span><span class="n">system</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;Windows&quot;</span> <span class="k">else</span> <span class="s2">&quot;int64&quot;</span>
+    <span class="n">Int8</span> <span class="o">=</span> <span class="s2">&quot;int8&quot;</span>
+    <span class="n">Int16</span> <span class="o">=</span> <span class="s2">&quot;int16&quot;</span>
+    <span class="n">Int32</span> <span class="o">=</span> <span class="s2">&quot;int32&quot;</span>
+    <span class="n">Int64</span> <span class="o">=</span> <span class="s2">&quot;int64&quot;</span>
+    <span class="n">UInt8</span> <span class="o">=</span> <span class="s2">&quot;uint8&quot;</span>
+    <span class="n">UInt16</span> <span class="o">=</span> <span class="s2">&quot;uint16&quot;</span>
+    <span class="n">UInt32</span> <span class="o">=</span> <span class="s2">&quot;uint32&quot;</span>
+    <span class="n">UInt64</span> <span class="o">=</span> <span class="s2">&quot;uint64&quot;</span>
+    <span class="n">INT8</span> <span class="o">=</span> <span class="s2">&quot;Int8&quot;</span>
+    <span class="n">INT16</span> <span class="o">=</span> <span class="s2">&quot;Int16&quot;</span>
+    <span class="n">INT32</span> <span class="o">=</span> <span class="s2">&quot;Int32&quot;</span>
+    <span class="n">INT64</span> <span class="o">=</span> <span class="s2">&quot;Int64&quot;</span>
+    <span class="n">UINT8</span> <span class="o">=</span> <span class="s2">&quot;UInt8&quot;</span>
+    <span class="n">UINT16</span> <span class="o">=</span> <span class="s2">&quot;UInt16&quot;</span>
+    <span class="n">UINT32</span> <span class="o">=</span> <span class="s2">&quot;UInt32&quot;</span>
+    <span class="n">UINT64</span> <span class="o">=</span> <span class="s2">&quot;UInt64&quot;</span>
+    <span class="n">Object</span> <span class="o">=</span> <span class="s2">&quot;object&quot;</span>
+    <span class="n">Complex</span> <span class="o">=</span> <span class="s2">&quot;complex128&quot;</span>
+    <span class="n">Complex64</span> <span class="o">=</span> <span class="s2">&quot;complex64&quot;</span>
+    <span class="n">Complex128</span> <span class="o">=</span> <span class="s2">&quot;complex128&quot;</span>
+    <span class="n">Complex256</span> <span class="o">=</span> <span class="s2">&quot;complex256&quot;</span>
+    <span class="n">String</span> <span class="o">=</span> <span class="s2">&quot;string&quot;</span>
+
+
+<span class="n">PANDAS_DTYPE_STR_ALIAS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;bool&quot;</span><span class="p">:</span> <span class="n">PandasDtype</span><span class="o">.</span><span class="n">Bool</span><span class="p">,</span>
+    <span class="s2">&quot;datetime64[ns]&quot;</span><span class="p">:</span> <span class="n">PandasDtype</span><span class="o">.</span><span class="n">DateTime</span><span class="p">,</span>
+    <span class="s2">&quot;timedelta64[ns]&quot;</span><span class="p">:</span> <span class="n">PandasDtype</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">,</span>
+    <span class="s2">&quot;category&quot;</span><span class="p">:</span> <span class="n">PandasDtype</span><span class="o">.</span><span class="n">Category</span><span class="p">,</span>
+    <span class="s2">&quot;float&quot;</span><span class="p">:</span> <span class="n">PandasDtype</span><span class="o">.</span><span class="n">Float</span><span class="p">,</span>
+    <span class="s2">&quot;float16&quot;</span><span class="p">:</span> <span class="n">PandasDtype</span><span class="o">.</span><span class="n">Float16</span><span class="p">,</span>
+    <span class="s2">&quot;float32&quot;</span><span class="p">:</span> <span class="n">PandasDtype</span><span class="o">.</span><span class="n">Float32</span><span class="p">,</span>
+    <span class="s2">&quot;float64&quot;</span><span class="p">:</span> <span class="n">PandasDtype</span><span class="o">.</span><span class="n">Float64</span><span class="p">,</span>
+    <span class="s2">&quot;int&quot;</span><span class="p">:</span> <span class="n">PandasDtype</span><span class="o">.</span><span class="n">Int</span><span class="p">,</span>
+    <span class="s2">&quot;int8&quot;</span><span class="p">:</span> <span class="n">PandasDtype</span><span class="o">.</span><span class="n">Int8</span><span class="p">,</span>
+    <span class="s2">&quot;int16&quot;</span><span class="p">:</span> <span class="n">PandasDtype</span><span class="o">.</span><span class="n">Int16</span><span class="p">,</span>
+    <span class="s2">&quot;int32&quot;</span><span class="p">:</span> <span class="n">PandasDtype</span><span class="o">.</span><span class="n">Int32</span><span class="p">,</span>
+    <span class="s2">&quot;int64&quot;</span><span class="p">:</span> <span class="n">PandasDtype</span><span class="o">.</span><span class="n">Int64</span><span class="p">,</span>
+    <span class="s2">&quot;uint8&quot;</span><span class="p">:</span> <span class="n">PandasDtype</span><span class="o">.</span><span class="n">UInt8</span><span class="p">,</span>
+    <span class="s2">&quot;uint16&quot;</span><span class="p">:</span> <span class="n">PandasDtype</span><span class="o">.</span><span class="n">UInt16</span><span class="p">,</span>
+    <span class="s2">&quot;uint32&quot;</span><span class="p">:</span> <span class="n">PandasDtype</span><span class="o">.</span><span class="n">UInt32</span><span class="p">,</span>
+    <span class="s2">&quot;uint64&quot;</span><span class="p">:</span> <span class="n">PandasDtype</span><span class="o">.</span><span class="n">UInt64</span><span class="p">,</span>
+    <span class="s2">&quot;Int8&quot;</span><span class="p">:</span> <span class="n">PandasDtype</span><span class="o">.</span><span class="n">INT8</span><span class="p">,</span>
+    <span class="s2">&quot;Int16&quot;</span><span class="p">:</span> <span class="n">PandasDtype</span><span class="o">.</span><span class="n">INT16</span><span class="p">,</span>
+    <span class="s2">&quot;Int32&quot;</span><span class="p">:</span> <span class="n">PandasDtype</span><span class="o">.</span><span class="n">INT32</span><span class="p">,</span>
+    <span class="s2">&quot;Int64&quot;</span><span class="p">:</span> <span class="n">PandasDtype</span><span class="o">.</span><span class="n">INT64</span><span class="p">,</span>
+    <span class="s2">&quot;UInt8&quot;</span><span class="p">:</span> <span class="n">PandasDtype</span><span class="o">.</span><span class="n">UINT8</span><span class="p">,</span>
+    <span class="s2">&quot;UInt16&quot;</span><span class="p">:</span> <span class="n">PandasDtype</span><span class="o">.</span><span class="n">UINT16</span><span class="p">,</span>
+    <span class="s2">&quot;UInt32&quot;</span><span class="p">:</span> <span class="n">PandasDtype</span><span class="o">.</span><span class="n">UINT32</span><span class="p">,</span>
+    <span class="s2">&quot;UInt64&quot;</span><span class="p">:</span> <span class="n">PandasDtype</span><span class="o">.</span><span class="n">UINT64</span><span class="p">,</span>
+    <span class="s2">&quot;object&quot;</span><span class="p">:</span> <span class="n">PandasDtype</span><span class="o">.</span><span class="n">Object</span><span class="p">,</span>
+    <span class="s2">&quot;complex&quot;</span><span class="p">:</span> <span class="n">PandasDtype</span><span class="o">.</span><span class="n">Complex</span><span class="p">,</span>
+    <span class="s2">&quot;complex64&quot;</span><span class="p">:</span> <span class="n">PandasDtype</span><span class="o">.</span><span class="n">Complex64</span><span class="p">,</span>
+    <span class="s2">&quot;complex128&quot;</span><span class="p">:</span> <span class="n">PandasDtype</span><span class="o">.</span><span class="n">Complex128</span><span class="p">,</span>
+    <span class="s2">&quot;complex256&quot;</span><span class="p">:</span> <span class="n">PandasDtype</span><span class="o">.</span><span class="n">Complex256</span><span class="p">,</span>
+    <span class="s2">&quot;str&quot;</span><span class="p">:</span> <span class="n">PandasDtype</span><span class="o">.</span><span class="n">String</span><span class="p">,</span>
+    <span class="s2">&quot;string&quot;</span><span class="p">:</span> <span class="n">PandasDtype</span><span class="o">.</span><span class="n">String</span><span class="p">,</span>
+<span class="p">}</span>
+
+
+<span class="n">PANDAS_DTYPE_CONVERSION</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">PandasDtype</span><span class="o">.</span><span class="n">Bool</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="n">PandasDtype</span><span class="o">.</span><span class="n">DateTime</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">,</span>
+    <span class="n">PandasDtype</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">,</span>
+    <span class="n">PandasDtype</span><span class="o">.</span><span class="n">Category</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">PandasDtype</span><span class="o">.</span><span class="n">Float</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">PandasDtype</span><span class="o">.</span><span class="n">Float16</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">PandasDtype</span><span class="o">.</span><span class="n">Float32</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">PandasDtype</span><span class="o">.</span><span class="n">Float64</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">PandasDtype</span><span class="o">.</span><span class="n">Int</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">int32</span> <span class="k">if</span> <span class="n">platform</span><span class="o">.</span><span class="n">system</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;Windows&quot;</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">,</span>
+    <span class="n">PandasDtype</span><span class="o">.</span><span class="n">Int8</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">int8</span><span class="p">,</span>
+    <span class="n">PandasDtype</span><span class="o">.</span><span class="n">Int16</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">int16</span><span class="p">,</span>
+    <span class="n">PandasDtype</span><span class="o">.</span><span class="n">Int32</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">,</span>
+    <span class="n">PandasDtype</span><span class="o">.</span><span class="n">Int64</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">,</span>
+    <span class="n">PandasDtype</span><span class="o">.</span><span class="n">UInt8</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">,</span>
+    <span class="n">PandasDtype</span><span class="o">.</span><span class="n">UInt16</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">uint16</span><span class="p">,</span>
+    <span class="n">PandasDtype</span><span class="o">.</span><span class="n">UInt32</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">uint32</span><span class="p">,</span>
+    <span class="n">PandasDtype</span><span class="o">.</span><span class="n">UInt64</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">uint64</span><span class="p">,</span>
+    <span class="n">PandasDtype</span><span class="o">.</span><span class="n">INT8</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Int8Dtype</span><span class="p">,</span>
+    <span class="n">PandasDtype</span><span class="o">.</span><span class="n">INT16</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Int16Dtype</span><span class="p">,</span>
+    <span class="n">PandasDtype</span><span class="o">.</span><span class="n">INT32</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Int32Dtype</span><span class="p">,</span>
+    <span class="n">PandasDtype</span><span class="o">.</span><span class="n">INT64</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Int64Dtype</span><span class="p">,</span>
+    <span class="n">PandasDtype</span><span class="o">.</span><span class="n">UINT8</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">UInt8Dtype</span><span class="p">,</span>
+    <span class="n">PandasDtype</span><span class="o">.</span><span class="n">UINT16</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">UInt16Dtype</span><span class="p">,</span>
+    <span class="n">PandasDtype</span><span class="o">.</span><span class="n">UINT32</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">UInt32Dtype</span><span class="p">,</span>
+    <span class="n">PandasDtype</span><span class="o">.</span><span class="n">UINT64</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">UInt64Dtype</span><span class="p">,</span>
+    <span class="n">PandasDtype</span><span class="o">.</span><span class="n">Object</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">PandasDtype</span><span class="o">.</span><span class="n">Complex</span><span class="p">:</span> <span class="nb">complex</span><span class="p">,</span>
+    <span class="n">PandasDtype</span><span class="o">.</span><span class="n">Complex64</span><span class="p">:</span> <span class="nb">complex</span><span class="p">,</span>
+    <span class="n">PandasDtype</span><span class="o">.</span><span class="n">Complex128</span><span class="p">:</span> <span class="nb">complex</span><span class="p">,</span>
+    <span class="n">PandasDtype</span><span class="o">.</span><span class="n">Complex256</span><span class="p">:</span> <span class="nb">complex</span><span class="p">,</span>
+    <span class="n">PandasDtype</span><span class="o">.</span><span class="n">String</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+<span class="p">}</span>
+
+
+<span class="k">def</span> <span class="nf">converter_pandas_dtype</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">PandasDtype</span><span class="p">]):</span>
+    <span class="k">if</span> <span class="n">x</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">x_upd</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">PandasDtype</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>  <span class="c1"># try to get attribute</span>
+        <span class="k">if</span> <span class="n">x_upd</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># if attribute fails lookup string alias</span>
+            <span class="n">x_upd</span> <span class="o">=</span> <span class="n">PANDAS_DTYPE_STR_ALIAS</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">x_upd</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># if both getting attribute and string alias fail raise error.</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;The passed string [</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">] is not a built-in PandasDtype or a valid string alias.&quot;</span>
+            <span class="k">raise</span> <span class="n">DataDictionaryPandasDtypeConversionError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">x_upd</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">PandasDtype</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;The passed object is not a built-in PandasDtype or a valid string alias.&quot;</span>
+        <span class="k">raise</span> <span class="n">DataDictionaryPandasDtypeConversionError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">x</span>
+
+
+<span class="k">def</span> <span class="nf">converter_validators</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">callable</span><span class="p">]):</span>
+    <span class="k">def</span> <span class="nf">inner</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;The feature to look up a validator by string name is not implemented yet.&quot;</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="n">callable</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;The passed object needs to be a callable object.&quot;</span>
+            <span class="k">raise</span> <span class="n">DataDictionaryValidatorsConversionError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">x</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">inner</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">value</span><span class="p">]</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">inner</span><span class="p">(</span><span class="n">value</span><span class="p">)]</span>
+
+
+<span class="nd">@attrs</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">slots</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">Column</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Container for column kwargs to pass into `attrs.attrib`.</span>
+
+<span class="sd">    :param str name: The name of the column.</span>
+<span class="sd">    :param Optional[Union[str, PandasDtype]] dtype: The column data type.</span>
+<span class="sd">    :param Optional[str] description: The column description.</span>
+<span class="sd">    :param Optional[Union[List[callable], callable]] validator: Column validators.</span>
+<span class="sd">    :param Optional[Mapping] metadata: Optional metadata to attach to column.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">name</span> <span class="o">=</span> <span class="n">attrib</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">validator</span><span class="o">=</span><span class="n">instance_of</span><span class="p">(</span><span class="nb">str</span><span class="p">))</span>
+    <span class="n">dtype</span> <span class="o">=</span> <span class="n">attrib</span><span class="p">(</span>
+        <span class="nb">type</span><span class="o">=</span><span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">PandasDtype</span><span class="p">]],</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">converter</span><span class="o">=</span><span class="n">converter_pandas_dtype</span><span class="p">,</span>
+        <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">description</span> <span class="o">=</span> <span class="n">attrib</span><span class="p">(</span>
+        <span class="nb">type</span><span class="o">=</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">validator</span><span class="o">=</span><span class="n">optional</span><span class="p">(</span><span class="n">instance_of</span><span class="p">(</span><span class="nb">str</span><span class="p">)),</span>
+    <span class="p">)</span>
+    <span class="n">validator</span> <span class="o">=</span> <span class="n">attrib</span><span class="p">(</span>
+        <span class="nb">type</span><span class="o">=</span><span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">callable</span><span class="p">],</span> <span class="n">callable</span><span class="p">]],</span>
+        <span class="n">factory</span><span class="o">=</span><span class="nb">list</span><span class="p">,</span>
+        <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">converter</span><span class="o">=</span><span class="n">converter_validators</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">metadata</span> <span class="o">=</span> <span class="n">attrib</span><span class="p">(</span>
+        <span class="nb">type</span><span class="o">=</span><span class="n">Mapping</span><span class="p">,</span> <span class="n">factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">validator</span><span class="o">=</span><span class="n">instance_of</span><span class="p">(</span><span class="n">Mapping</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">string</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot; : &quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dtype</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">string</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+        <span class="n">string</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">description</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">string</span> <span class="o">+=</span> <span class="s2">&quot;    &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">description</span>
+        <span class="n">string</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">validator</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">validator</span><span class="p">:</span>
+                <span class="n">string</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+            <span class="n">string</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">string</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">)</span>
+            <span class="n">string</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="n">string</span>
+
+
+<span class="k">def</span> <span class="nf">def_column</span><span class="p">(</span>
+    <span class="n">dtype</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">PandasDtype</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">description</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">validator</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">callable</span><span class="p">],</span> <span class="n">callable</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">metadata</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Mapping</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">partial</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Define a column with a data dictionary.</span>
+
+<span class="sd">    :param Optional[Union[str, PandasDtype]] dtype: The column data type.</span>
+<span class="sd">    :param Optional[str] description: The column description.</span>
+<span class="sd">    :param Optional[Union[List[callable], callable]] validator: Column validators.</span>
+<span class="sd">    :param Optional[Mapping] metadata: Optional metadata to attach to column.</span>
+
+<span class="sd">    :return: A partially completed Column object (missing name which is added</span>
+<span class="sd">        the data dictioanry is created).</span>
+<span class="sd">    :rtype: partial</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">validator</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">validator</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="n">metadata</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">return</span> <span class="n">partial</span><span class="p">(</span>
+        <span class="n">Column</span><span class="p">,</span>
+        <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
+        <span class="n">validator</span><span class="o">=</span><span class="n">validator</span><span class="p">,</span>
+        <span class="n">metadata</span><span class="o">=</span><span class="n">metadata</span><span class="p">,</span>
+    <span class="p">)</span>
+
+
+<span class="nd">@attrs</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">slots</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">DataDictionary</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;The parent class of a container that provides information on a tabular data structure.&quot;&quot;&quot;</span>
+
+    <span class="n">__columns__</span> <span class="o">=</span> <span class="n">attrib</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">columns</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Show column names.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__columns__</span>
+
+    <span class="k">def</span> <span class="nf">list_columns</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;List all columns.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">[</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">col</span><span class="p">)</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__columns__</span><span class="p">]</span>
+
+    <span class="c1"># def __repr__(self):</span>
+    <span class="c1">#     name = self.__class__.__qualname__</span>
+    <span class="c1">#     cols = &quot;\n\t&quot;.join([repr(getattr(self, col)) for col in self.__columns__])</span>
+    <span class="c1">#     return f&quot;{name}[DataDictionary]\n\t{cols}\n&quot;</span>
+
+    <span class="k">def</span> <span class="nf">_cols_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataframe</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Test match of columns in datadictionary vs dataframe.&quot;&quot;&quot;</span>
+        <span class="n">results</span><span class="p">,</span> <span class="n">msgs</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+        <span class="n">col_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">col</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">list_columns</span><span class="p">()}</span>
+        <span class="n">cols</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">dict</span><span class="o">.</span><span class="n">fromkeys</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">col_dict</span><span class="p">)</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">dataframe</span><span class="o">.</span><span class="n">columns</span><span class="p">)))</span>
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">cols</span><span class="p">:</span>
+            <span class="n">dd_col</span> <span class="o">=</span> <span class="n">col_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="n">df_col</span> <span class="o">=</span> <span class="n">dataframe</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">dd_col</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;The column [</span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s2">] is missing from the DataDictionary but is in the dataframe.&quot;</span>
+                <span class="n">msgs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">df_col</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;The column [</span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s2">] is missing from the dataframe but is in the DataDictionary.&quot;</span>
+                <span class="n">msgs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">dd_col</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">df_col</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">results</span><span class="p">,</span> <span class="n">msgs</span>
+
+    <span class="k">def</span> <span class="nf">_types_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataframe</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Test column types in dataframe.&quot;&quot;&quot;</span>
+        <span class="n">results</span><span class="p">,</span> <span class="n">msgs</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">dd_col</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">list_columns</span><span class="p">():</span>
+            <span class="n">df_col</span> <span class="o">=</span> <span class="n">dataframe</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">dd_col</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">df_col</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">test_eq</span> <span class="o">=</span> <span class="n">dd_col</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="n">df_col</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">name</span>
+                <span class="k">if</span> <span class="n">test_eq</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+                    <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;The column [</span><span class="si">{</span><span class="n">dd_col</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">] in the DataDictionary has type [</span><span class="si">{</span><span class="n">dd_col</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2">] &quot;</span>
+                    <span class="n">msg</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;which is different from type in the dataframe passed [</span><span class="si">{</span><span class="n">df_col</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">].&quot;</span>
+                    <span class="n">msgs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+                <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">test_eq</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">results</span><span class="p">,</span> <span class="n">msgs</span>
+
+    <span class="k">def</span> <span class="nf">_validators_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataframe</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Test validators for columns in dataframe.&quot;&quot;&quot;</span>
+        <span class="n">results</span><span class="p">,</span> <span class="n">msgs</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">dd_col</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">list_columns</span><span class="p">():</span>
+            <span class="n">df_col</span> <span class="o">=</span> <span class="n">dataframe</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">dd_col</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">df_col</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">dd_col</span><span class="o">.</span><span class="n">validator</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">validator</span> <span class="ow">in</span> <span class="n">dd_col</span><span class="o">.</span><span class="n">validator</span><span class="p">:</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">validator</span><span class="p">(</span><span class="n">inst</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="o">=</span><span class="n">dd_col</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">df_col</span><span class="p">)</span>
+                        <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+                    <span class="k">except</span><span class="p">:</span>
+                        <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+                        <span class="n">msgs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                            <span class="sa">f</span><span class="s2">&quot;The column [</span><span class="si">{</span><span class="n">dd_col</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">] failed </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">validator</span><span class="p">)[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">.&quot;</span>
+                        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">results</span><span class="p">,</span> <span class="n">msgs</span>
+
+    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">dataframe</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">types</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">validators</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Validate passed dataframe types and/or validators against DataDictionary.</span>
+
+<span class="sd">        :param pd.DataFrame dataframe: The dataframe to validate.</span>
+<span class="sd">        :param bool types: Test DataDictionary types against dataframe. Default is True.</span>
+<span class="sd">        :param bool validators: Test DataDictionary validators against dataframe. Default is True.</span>
+
+<span class="sd">        :return: True if test pass.</span>
+<span class="sd">        :rtype: bool</span>
+
+<span class="sd">        :raises DataDictionaryValidateError: If any of the following rules are broken -</span>
+<span class="sd">            - All columns present in the data dictionary are in the dataframe and vice versa.</span>
+<span class="sd">            - If types is True, test the data types of the dataframe match the data dictionary.</span>
+<span class="sd">            - If validators is True, test that any attached validator pass for a column.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rets</span><span class="p">,</span> <span class="n">msgs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cols_valid</span><span class="p">(</span><span class="n">dataframe</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">_update_ret_msg</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">dataframe</span><span class="p">):</span>
+            <span class="n">ret</span><span class="p">,</span> <span class="n">msg</span> <span class="o">=</span> <span class="n">fn</span><span class="p">(</span><span class="n">dataframe</span><span class="p">)</span>
+            <span class="n">rets</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span>
+            <span class="n">msgs</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">types</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">_update_ret_msg</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_types_valid</span><span class="p">,</span> <span class="n">dataframe</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">validators</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">_update_ret_msg</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_validators_valid</span><span class="p">,</span> <span class="n">dataframe</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="n">rets</span><span class="p">):</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">msgs</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">DataDictionaryValidateError</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">msg</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="nf">def_parameter</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">column</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">add_dtype_validator</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">dtype_mapping</span><span class="p">:</span> <span class="n">Mapping</span> <span class="o">=</span> <span class="n">PANDAS_DTYPE_CONVERSION</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Define a parameter for a model from a data dictioanry column.</span>
+
+<span class="sd">        :param str column: The column name.</span>
+<span class="sd">        :param bool add_type_validator: If True, an instance_of validator is added to the parameter.</span>
+<span class="sd">        :param Mapping dtype_mapping: A conversion mapping of PandasDtypes to different types.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">col</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">col</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;The column [</span><span class="si">{</span><span class="n">column</span><span class="si">}</span><span class="s2">] does not belong to the data dictionary.&quot;</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="n">dtype</span> <span class="o">=</span> <span class="n">dtype_mapping</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">col</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+        <span class="n">validator</span> <span class="o">=</span> <span class="n">col</span><span class="o">.</span><span class="n">validator</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">add_dtype_validator</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">validator</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">instance_of</span><span class="p">(</span><span class="n">dtype</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">def_parameter</span><span class="p">(</span>
+            <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="n">col</span><span class="o">.</span><span class="n">description</span><span class="p">,</span> <span class="n">validator</span><span class="o">=</span><span class="n">validator</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">def_sensitivity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;This feature is not implemented yet.&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">def_meta</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;This feature is not implemented yet.&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">def_column</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Define a column for another data dictionary using an existing data dictioanry column.</span>
+
+<span class="sd">        :param str column: The column name.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">col</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">col</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;The column [</span><span class="si">{</span><span class="n">column</span><span class="si">}</span><span class="s2">] does not belong to the data dictionary.&quot;</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">col</span>
+
+
+<span class="k">def</span> <span class="nf">make_data_doc</span><span class="p">(</span><span class="n">cls_doc</span><span class="p">,</span> <span class="n">cols</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">cls_doc</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">doc</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">doc</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">cls_doc</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">&quot;</span>
+    <span class="n">doc</span> <span class="o">+=</span> <span class="s2">&quot;Columns</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="n">doc</span> <span class="o">+=</span> <span class="s2">&quot;-------</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">cols</span><span class="p">:</span>
+        <span class="n">doc</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="n">col</span><span class="p">)</span>
+        <span class="n">doc</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="k">return</span> <span class="n">doc</span>
+
+
+<span class="k">def</span> <span class="nf">data_dictionary</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="nb">type</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A decorator that creates a custom data dictionary object.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="bp">cls</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">partial</span><span class="p">(</span><span class="n">data_dictionary</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">make_data_dictionary</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">set_column</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+            <span class="n">col</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">Column</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">evolve</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">x</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">col</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">x</span><span class="p">)</span>
+
+        <span class="n">exclude</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">DataDictionary</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;_&quot;</span><span class="p">]</span>
+        <span class="n">cols</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">set_column</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;_&quot;</span> <span class="ow">and</span> <span class="n">x</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">exclude</span>
+        <span class="p">]</span>
+        <span class="n">attrs</span> <span class="o">=</span> <span class="p">{</span><span class="n">col</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">attrib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="n">col</span><span class="p">,</span> <span class="n">init</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">cols</span><span class="p">}</span>
+        <span class="n">orig_doc</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__doc__</span><span class="p">)</span>
+        <span class="bp">cls</span> <span class="o">=</span> <span class="n">make_class</span><span class="p">(</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
+            <span class="n">attrs</span><span class="p">,</span>
+            <span class="n">bases</span><span class="o">=</span><span class="p">(</span><span class="n">DataDictionary</span><span class="p">,),</span>
+            <span class="n">slots</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">__columns__</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">col</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">cols</span><span class="p">)</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="n">make_data_doc</span><span class="p">(</span><span class="n">orig_doc</span><span class="p">,</span> <span class="n">cols</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span>
+
+    <span class="k">return</span> <span class="n">make_data_dictionary</span><span class="p">(</span><span class="bp">cls</span><span class="p">)()</span>  <span class="c1"># note an instance is returned</span>
+</pre></div>
+
+              </div>
+              
+              
+              <div class='prev-next-bottom'>
+                
+
+              </div>
+              
+          </main>
+          
+
+      </div>
+    </div>
+
+    
+  <script src="../../_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    <p>
+          &copy; Copyright 2020, Dustin Tindall.<br/>
+        Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.4.3.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>
