@@ -1,12 +1,17 @@
+import git
 import pandas as pd
 from footings.model import def_meta, def_parameter, def_sensitivity
 from footings.validators import isin
 
-from ._version import get_versions
+try:
+    import importlib.metadata as importlib_metadata
+except ModuleNotFoundError:
+    import importlib_metadata
 
-versions = get_versions()
-MOD_VERSION = versions["version"]
-GIT_REVISION = versions["full-revisionid"]
+MOD_VERSION = importlib_metadata.version("footings_idi_model")
+
+repo = git.Repo(search_parent_directories=True)
+GIT_REVISION = repo.head.object.hexsha
 
 
 param_n_simulations = def_parameter(
