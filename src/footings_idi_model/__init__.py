@@ -1,12 +1,9 @@
+from . import assumptions, data, extract_models, policy_models
 from ._version import get_versions
-from . import (
-    data,
-    assumptions,
-    policy_models,
-    extract_models,
-)
 
-versions = get_versions()
-__version__ = versions["version"]
-__git_revision__ = versions["full-revisionid"]
-del get_versions, versions
+try:
+    import importlib.metadata as importlib_metadata
+except ModuleNotFoundError:
+    import importlib_metadata
+
+__version__ = importlib_metadata.version(__name__)

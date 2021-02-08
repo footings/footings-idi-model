@@ -5,9 +5,16 @@ import nox
 
 @nox.session(venv_backend="none")
 def run_tests(session):
-    session.run("pip", "install", "--no-deps", ".")
-    session.run("pip", "show", "footings_idi_model")
-    session.run("pytest", "-v", ".")
+    session.run("poetry", "install")
+    session.run("poetry", "run", "pip", "show", "footings")
+    session.run("poetry", "run", "pytest", "-vv")
+
+
+@nox.session(venv_backend="none")
+def run_coverage(session):
+    session.run("poetry", "install")
+    session.run("poetry", "run", "pip", "show", "footings")
+    session.run("poetry", "run", "pytest", "--cov=./", "--cov-report=xml")
 
 
 @nox.session(venv_backend="none")
@@ -16,9 +23,11 @@ def create_docs(session):
         shutil.rmtree("./docs/jupyter_execute")
     if os.path.exists("./docs/_build"):
         shutil.rmtree("./docs/_build")
-    session.run("pip", "install", "--no-deps", ".")
-    session.run("pip", "show", "footings_idi_model")
-    session.run("sphinx-build", "-E", "-v", "-b", "html", "docs", "docs/_build")
+    session.run("poetry", "install")
+    session.run("poetry", "run", "pip", "show", "footings")
+    session.run(
+        "poetry", "run", "sphinx-build", "-E", "-v", "-b", "html", "docs", "docs/_build"
+    )
 
 
 @nox.session(venv_backend="none")

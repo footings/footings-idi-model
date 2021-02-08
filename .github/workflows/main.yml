@@ -31,28 +31,22 @@ jobs:
       - uses: actions/setup-python@v2
         with:
           python-version: 3.8
-      - name: Set up Miniconda
-        uses: conda-incubator/setup-miniconda@v2
-        with:
-          auto-update-conda: true
-          python-version: 3.8
-          # environment-file: environments/footings-idi-model-dev.yml
-          # activate-environment: footings-idi-model-dev
-          auto-activate-base: True # False
-      - name: Conda info
+      - name: Install pipx
         run: |
-          conda info
-          conda list
-      - name: Install conda-lock
+          python3 -m pip install pipx
+      - name: Install poetry, nox
         run: |
-          conda install --channel conda-forge conda-lock
-      - name: Create environment and activate
+          pipx install poetry
+          pipx install nox
+      - name: Install footings
         run: |
-          conda create -n footings-idi-model-dev --file environments/footings-idi-model-linux-64.lock
-          conda activate footings-idi-model-dev
-      - name: Install footings library
+          poetry install
+      - name: Poetry show libraries
         run: |
-          pip install footings==0.10.0rc0
+          poetry show
+      - name: Pip show footings
+        run: |
+          poetry run pip show footings
       - name: Run sphinx
         run:  nox -s create_docs
       - name: Deploy docs to github pages - master
@@ -70,4 +64,4 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
           publish_dir: ./docs/_build
-          destination_dir: ./dev
+          destination_dir: ./devd

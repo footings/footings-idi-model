@@ -1,7 +1,49 @@
+[tool.poetry]
+name = "footings-idi-model"
+packages = [
+    { include = "footings-idi-model", from = "src" }
+]
+version = "v0.6.0rc0"
+description = "An example individual disability model using the footings framework."
+authors = ["Dustin Tindall <dustin.tindall@gmail.com>"]
+license = "BSD 3-Clause License"
+readme = 'README.md'
+homepage = "https://github.com/footings/footings-idi-model"
+repository = "https://github.com/footings/footings-idi-model"
+documentation = "https://footings.github.io/footings-idi-model/"
+classifiers = [
+    "License :: OSI Approved :: BSD License",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+]
+
+
+[tool.poetry.dependencies]
+python = "^3.7"
+numpy = "^1.11"
+pandas = "^1.0"
+footings = "^0.10"
+
+
+[tool.poetry.dev-dependencies]
+pytest = "^4.6"
+pytest-cov = "^2.5"
+sphinx = "^3.0"
+myst-nb = "^0.10"
+pydata-sphinx-theme = "^0.4.0"
+flake8 = "^3.7"
+black = "^19.10b"
+pre-commit = "^2.1"
+nox = ">=2020.0.0"
+toolz = "^0.11"
+dask = ">=2021.0"
+importlib-metadata = {version = "^3.0", python = "<3.8"}
+
 
 [build-system]
-requires = ["setuptools>=40.6.0", "wheel", "versioneer-518"]
-build-backend = "setuptools.build_meta"
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
 
 [tool.black]
 line-length = 90
@@ -21,3 +63,9 @@ exclude = '''
   | dist
 )/
 '''
+
+
+[tool.isort]
+profile = "black"
+src_paths = ["src", "tests"]
+known_first_party = "footings-idi-model"

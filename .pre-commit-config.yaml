@@ -3,8 +3,7 @@ repos:
     rev: 19.10b0
     hooks:
     - id: black
-      language_version: python3.8
-      args: [--line-length=90]
+      language_version: python3.7
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v2.3.0
     hooks:
@@ -17,5 +16,10 @@ repos:
     rev: 3.7.9
     hooks:
     - id: flake8
-      language_version: python3.8
-      exclude: __init__.py, _version.py, versioneer.py
+      language_version: python3.7
+      exclude: __init__.py
+  - repo: https://github.com/timothycrosley/isort
+    rev: 5.5.1
+    hooks:
+    - id: isort
+      additional_dependencies: [toml]
