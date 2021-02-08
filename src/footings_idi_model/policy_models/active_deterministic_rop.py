@@ -1,16 +1,8 @@
 import pandas as pd
-
-from footings.model import (
-    def_parameter,
-    def_meta,
-    def_intermediate,
-    step,
-    model,
-)
+from footings.model import def_intermediate, def_meta, def_parameter, model, step
 from footings.model_tools import frame_add_exposure
 
-from .active_deterministic_base import AValBasePMD, AProjBasePMD
-
+from .active_deterministic_base import AProjBasePMD, AValBasePMD
 
 STEPS = [
     "_calculate_age_issued",

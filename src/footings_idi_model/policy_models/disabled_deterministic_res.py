@@ -1,6 +1,7 @@
-from footings.model import model, step, def_parameter, def_meta
+from footings.model import def_meta, def_parameter, model, step
 from footings.model_tools import frame_add_exposure
-from .disabled_deterministic_base import DValBasePMD, STEPS
+
+from .disabled_deterministic_base import STEPS, DValBasePMD
 
 
 @model(steps=STEPS)

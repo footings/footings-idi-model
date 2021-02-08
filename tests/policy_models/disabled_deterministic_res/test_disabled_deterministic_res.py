@@ -1,11 +1,11 @@
 import os
 
-import pytest
 import pandas as pd
-
+import pytest
 from footings.audit import AuditConfig, AuditStepConfig
-from footings_idi_model.policy_models import DValResRPMD
 from footings.testing import assert_footings_files_equal
+
+from footings_idi_model.policy_models import DValResRPMD
 
 CASES = [
     (

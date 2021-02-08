@@ -1,9 +1,8 @@
+import json
 import os
 from functools import lru_cache
-import json
 
 import pandas as pd
-
 from footings.utils import once
 
 directory, filename = os.path.split(__file__)

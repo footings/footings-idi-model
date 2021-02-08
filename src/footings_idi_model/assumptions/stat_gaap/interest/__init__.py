@@ -1,7 +1,7 @@
 """Prepare interest assumptions"""
 
-import os
 import json
+import os
 from functools import lru_cache
 
 import pandas as pd

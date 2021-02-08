@@ -1,27 +1,9 @@
 import pandas as pd
-
-from footings.model import (
-    def_return,
-    def_parameter,
-    def_intermediate,
-    step,
-    model,
-)
+from footings.model import def_intermediate, def_parameter, def_return, model, step
 from footings.model_tools import convert_to_records
 from footings.parallel_tools.dask import create_dask_foreach_jig
 
-from ..shared import (
-    param_assumption_set,
-    param_valuation_dt,
-    param_net_benefit_method,
-    param_withdraw_table,
-    meta_model_version,
-    meta_last_commit,
-    meta_run_date_time,
-    modifier_interest,
-    modifier_incidence,
-    modifier_withdraw,
-)
+from ..data import ActiveLivesValOutput  # ActiveLivesBaseExtract,
 from ..policy_models import (
     AValBasePMD,
     AValCatRPMD,
@@ -30,8 +12,18 @@ from ..policy_models import (
     AValRopRPMD,
     AValSisRPMD,
 )
-from ..data import ActiveLivesValOutput  # ActiveLivesBaseExtract,
-
+from ..shared import (
+    meta_last_commit,
+    meta_model_version,
+    meta_run_date_time,
+    modifier_incidence,
+    modifier_interest,
+    modifier_withdraw,
+    param_assumption_set,
+    param_net_benefit_method,
+    param_valuation_dt,
+    param_withdraw_table,
+)
 
 models = {
     "BASE": AValBasePMD,

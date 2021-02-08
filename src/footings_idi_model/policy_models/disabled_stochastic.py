@@ -1,6 +1,5 @@
-import pandas as pd
 import numpy as np
-
+import pandas as pd
 from footings.model import model, step
 
 from ..assumptions.stat_gaap.interest import get_interest_rate

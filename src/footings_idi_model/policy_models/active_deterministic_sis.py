@@ -1,6 +1,8 @@
-from footings.model import model, def_meta
-from .active_deterministic_base import AValBasePMD, STEPS
-from .disabled_deterministic_sis import DValSisRPMD, STEPS as CC_STEPS
+from footings.model import def_meta, model
+
+from .active_deterministic_base import STEPS, AValBasePMD
+from .disabled_deterministic_sis import STEPS as CC_STEPS
+from .disabled_deterministic_sis import DValSisRPMD
 
 
 @model(steps=CC_STEPS)

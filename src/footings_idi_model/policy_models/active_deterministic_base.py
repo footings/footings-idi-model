@@ -4,40 +4,31 @@ from inspect import getfullargspec
 
 import numpy as np
 import pandas as pd
+from footings.model import def_intermediate, def_meta, def_return, model, step
+from footings.model_tools import calculate_age, create_frame, frame_add_weights
 
-from footings.model import (
-    model,
-    step,
-    def_meta,
-    def_intermediate,
-    def_return,
+from ..assumptions.get_incidence_rates import get_incidence_rates
+from ..assumptions.get_withdraw_rates import get_withdraw_rates
+from ..assumptions.stat_gaap.interest import get_interest_rate
+from ..data import (  # ActiveLivesROPRiderExtract,; ActiveLivesProjOutput,
+    ActiveLivesBaseExtract,
+    ActiveLivesValOutput,
 )
-from footings.model_tools import create_frame, calculate_age, frame_add_weights
-
-from .disabled_deterministic_base import DValBasePMD, STEPS as CC_STEPS
 from ..shared import (
+    meta_last_commit,
+    meta_model_version,
+    meta_run_date_time,
+    modifier_ctr,
+    modifier_incidence,
+    modifier_interest,
+    modifier_withdraw,
     param_assumption_set,
     param_net_benefit_method,
     param_valuation_dt,
     param_withdraw_table,
-    meta_model_version,
-    meta_last_commit,
-    meta_run_date_time,
-    modifier_interest,
-    modifier_incidence,
-    modifier_withdraw,
-    modifier_ctr,
 )
-from ..assumptions.get_withdraw_rates import get_withdraw_rates
-from ..assumptions.get_incidence_rates import get_incidence_rates
-from ..assumptions.stat_gaap.interest import get_interest_rate
-from ..data import (
-    ActiveLivesBaseExtract,
-    # ActiveLivesROPRiderExtract,
-    ActiveLivesValOutput,
-    # ActiveLivesProjOutput,
-)
-
+from .disabled_deterministic_base import STEPS as CC_STEPS
+from .disabled_deterministic_base import DValBasePMD
 
 #########################################################################################
 # Policy model parent (shared by both projection and valuation models)

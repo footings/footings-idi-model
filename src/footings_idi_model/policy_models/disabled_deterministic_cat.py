@@ -1,5 +1,6 @@
-from footings.model import model, def_meta
-from .disabled_deterministic_base import DValBasePMD, STEPS
+from footings.model import def_meta, model
+
+from .disabled_deterministic_base import STEPS, DValBasePMD
 
 
 @model(steps=STEPS)

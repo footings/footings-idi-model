@@ -1,5 +1,5 @@
 import pandas as pd
-from footings.model import def_parameter, def_meta, def_sensitivity
+from footings.model import def_meta, def_parameter, def_sensitivity
 from footings.validators import isin
 
 from ._version import get_versions

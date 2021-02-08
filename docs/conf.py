@@ -11,8 +11,10 @@
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 import os
 import sys
-from footings_idi_model import __version__ as version
+
 from footings.data_dictionary import DataDictionary
+
+from footings_idi_model import __version__ as version
 
 sys.path.insert(0, os.path.abspath("./.."))
 

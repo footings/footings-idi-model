@@ -1,4 +1,5 @@
 from footings.data_dictionary import data_dictionary, def_column
+
 from .shared import SharedOutputTerms
 
 #########################################################################################
