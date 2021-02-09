@@ -1,0 +1,61 @@
+name: tests
+
+on:
+  push:
+    branches: [dev, master]
+  pull_request:
+    branches: [dev, master]
+
+jobs:
+  pre-commit:
+    name: pre-commit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.7
+      - uses: actions/cache@v1
+        with:
+          path: ~/.cache/pre-commit
+          key: pre-commit-${{ hashFiles('.pre-commit-config.yaml') }}
+      - uses: pre-commit/action@v2.0.0
+  tests:
+    name: "Python ${{ matrix.python-version }}"
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: bash -l {0}
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.7", "3.8"]
+        os: [ubuntu-latest, macOS-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: "${{ matrix.python-version }}"
+      - name: Install pipx
+        run: |
+          if [ "$RUNNER_OS" == "Windows" ]; then
+               python -m pip install pipx
+          else
+               python3 -m pip install pipx
+          fi
+      - name: Install poetry, nox
+        run: |
+          pipx install poetry
+          pipx install nox
+      - name: Install footings-idi-model
+        run: |
+          poetry install
+      - name: Poetry show libraries
+        run: |
+          poetry show
+      - name: Pip show footings-idi-model
+        run: |
+          poetry run pip show footings-idi-model
+      - name: Run tests
+        run:  nox -s run_tests
