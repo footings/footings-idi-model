@@ -36,7 +36,7 @@ jobs:
           poetry run pip show footings-idi-model
       - name: Setup ipykernel
         run: |
-          poetry run python -m ipykernel install --name footings-idi-model --display-name "Footings IDI Model"
+          poetry run python -m ipykernel install --user --name footings-idi-model --display-name "Footings IDI Model"
       - name: Run sphinx
         run:  nox -s create_docs
       - name: Deploy docs to github pages - master
