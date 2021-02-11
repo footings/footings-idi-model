@@ -31,17 +31,11 @@ jobs:
       - name: Pip show footings-idi-model
         run: |
           poetry run pip show footings-idi-model
-      - name: Poetry activate
-        run: |
-          poetry shell
       - name: Setup ipykernel
         run: |
-          python -m ipykernel install --user --name footings-idi-model --display-name "Footings IDI Model"
-      - name: Poetry deactivate
-        run:
-          deactivate
+          poetry run python -m ipykernel install --user --name footings-idi-model --display-name "Footings IDI Model"
       - name: Run sphinx
-        run:  sphinx-build -E -v -b html docs docs/_build
+        run:  nox -s create_docs
       - name: Deploy docs to github pages - master
         if: github.ref == 'refs/heads/master'
         uses: peaceiris/actions-gh-pages@v3
