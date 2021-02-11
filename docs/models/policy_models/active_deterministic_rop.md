@@ -6,7 +6,7 @@ jupytext:
 kernelspec:
   display_name: Python 3
   language: python
-  name: python3
+  name: python38264bitfootingsidimodelylbo5op8py38venv96bbe8dde9f243b396384b5a65162388
 
 execution:
   timeout: -1
@@ -45,7 +45,7 @@ model = AValRopRPMD(
     premium_pay_to_dt=pd.Timestamp("2020-03-31"),
     gross_premium=10.0,
     gross_premium_freq="MONTH",
-    benefit_amount=10.0,
+    benefit_amount=50.0,
     valuation_dt=pd.Timestamp("2020-03-31"),
     assumption_set="stat",
     withdraw_table="01CSO",

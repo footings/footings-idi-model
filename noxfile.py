@@ -7,7 +7,7 @@ import nox
 @nox.session(venv_backend="none")
 def run_tests(session):
     session.run("poetry", "install")
-    session.run("poetry", "run", "pip", "show", "footings")
+    session.run("poetry", "run", "pip", "show", "footings-idi-model")
     session.run("poetry", "run", "pytest", "-vv")
 
 
@@ -25,7 +25,7 @@ def create_docs(session):
     if os.path.exists("./docs/_build"):
         shutil.rmtree("./docs/_build")
     session.run("poetry", "install")
-    session.run("poetry", "run", "pip", "show", "footings")
+    session.run("poetry", "run", "pip", "show", "footings-idi-model")
     session.run(
         "poetry", "run", "sphinx-build", "-E", "-v", "-b", "html", "docs", "docs/_build"
     )

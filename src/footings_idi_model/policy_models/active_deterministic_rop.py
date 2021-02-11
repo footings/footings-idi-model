@@ -38,7 +38,6 @@ class AValRopRPMD(AValBasePMD):
     - The addition of rop_return_freq, rop_return_percent and rop_claims_paid parameters.
     - The addition of steps _calculate_rop_intervals, _calculate_rop_future_claims, and
         _calculate_rop_exp_payments steps which are used in the calculation of benefit cost.
-
     """
 
     # additional parameters
@@ -85,15 +84,6 @@ class AValRopRPMD(AValBasePMD):
     )
     def _calculate_rop_future_claims(self):
         """Calculate future claims for return of premium (ROP) using the modeled disabled lives."""
-        # max_payment_dates = (
-        #     self.frame[["DURATION_YEAR", "PAYMENT_INTERVAL", "DATE_ED"]]
-        #     .groupby(["PAYMENT_INTERVAL"], as_index=False)
-        #     .transform(max)[["DATE_ED"]]
-        #     .assign(DURATION_YEAR=self.frame["DURATION_YEAR"])
-        #     .set_index(["DURATION_YEAR"])
-        #     .to_dict()
-        #     .get("DATE_ED")
-        # )
 
         def model_payments(dur_year, frame):
             return (
@@ -121,7 +111,7 @@ class AValRopRPMD(AValBasePMD):
     @step(
         name="Calculate Expected Claims",
         uses=["frame", "rop_future_claims_frame"],
-        impacts=["frame"],
+        impacts=["rop_expected_claim_payments"],
     )
     def _calculate_rop_exp_payments(self):
         """Calculate the expected claim payments for return of premium (ROP) for each active life duration."""
@@ -172,7 +162,14 @@ class AValRopRPMD(AValBasePMD):
             .sub(1)
             .astype(int)
         )
-        self.frame["GROSS_PREMIUM"] = self.gross_premium
+        if self.gross_premium_freq == "MONTH":
+            self.frame["GROSS_PREMIUM"] = self.gross_premium * 12
+        elif self.gross_premium_freq == "QUARTER":
+            self.frame["GROSS_PREMIUM"] = self.gross_premium * 4
+        elif self.gross_premium_freq == "SEMIANNUAL":
+            self.frame["GROSS_PREMIUM"] = self.gross_premium * 2
+        elif self.gross_premium_freq == "ANNUAL":
+            self.frame["GROSS_PREMIUM"] = self.gross_premium
         self.frame["EXPECTED_CLAIM_PAYMENTS"] = 0
         self.frame.loc[max_int_rows, "EXPECTED_CLAIM_PAYMENTS"] = self.frame.loc[
             max_int_rows
