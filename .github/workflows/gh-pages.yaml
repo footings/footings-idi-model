@@ -21,9 +21,9 @@ jobs:
       - name: Install poetry, nox
         run: |
           pip install poetry nox
-          poetry config virtualenvs.in-project true
       - name: Install footings-idi-model
         run: |
+          poetry config virtualenvs.in-project true
           poetry install
       - name: Poetry show libraries
         run: |
@@ -34,10 +34,6 @@ jobs:
       - name: Setup ipykernel
         run: |
           poetry run python -m ipykernel install --user --name footings-idi-model --display-name "Footings IDI Model"
-      - name: View kernel specs
-        run: |
-          ls /home/runner/.local/share/jupyter/kernels
-          cat /home/runner/.local/share/jupyter/kernels/footings-idi-model/kernel.json
       - name: Run sphinx
         run:  nox -s create_docs
       - name: Deploy docs to github pages - master
