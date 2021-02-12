@@ -33,6 +33,9 @@ jobs:
       - name: Setup ipykernel
         run: |
           poetry run python -m ipykernel install --user --name footings-idi-model --display-name "Footings IDI Model"
+      - name: View virtualenvs
+        run: |
+          ls /home/runner/.cache/pypoetry/virtualenvs
       - name: View kernel specs
         run: |
           ls /home/runner/.local/share/jupyter/kernels
