@@ -4,9 +4,9 @@ jupytext:
     extension: .md
     format_name: myst
 kernelspec:
-  display_name: Python 3
+  display_name: Footings IDI Model
   language: python
-  name: python3
+  name: footings-idi-model
 
 execution:
   timeout: -1
