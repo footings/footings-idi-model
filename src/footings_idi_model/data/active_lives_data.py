@@ -156,7 +156,7 @@ class ActiveLivesValOutput:
     ALR_ED = def_column(
         dtype="float16", description="Projected ALR amount at ending policy duration.",
     )
-    DATE_ALR = def_column(
+    ALR_DATE = def_column(
         dtype="datetime64[ns]",
         description="Projected valuation dates using val date as base.",
     )

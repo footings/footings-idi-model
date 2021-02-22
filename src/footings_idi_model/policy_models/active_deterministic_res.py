@@ -1,12 +1,19 @@
+from inspect import getfullargspec
+
+from footings.jigs import create_foreach_jig
 from footings.model import def_meta, def_parameter, model
 
 from .active_deterministic_base import STEPS, AValBasePMD
 from .disabled_deterministic_res import STEPS as CC_STEPS
 from .disabled_deterministic_res import DValResRPMD
 
+#########################################################################################
+# Prepare Claim Cost Model - Residual Rider
+#########################################################################################
+
 
 @model(steps=CC_STEPS)
-class _ActiveLifeRESClaimCostModel(DValResRPMD):
+class ActiveLifeRESClaimCostModel(DValResRPMD):
     """Base model used to calculate claim cost for active lives."""
 
     model_mode = def_meta(
@@ -14,6 +21,27 @@ class _ActiveLifeRESClaimCostModel(DValResRPMD):
         dtype=str,
         description="Mode used in CTR calculation as it varies whether policy is active or disabled.",
     )
+
+
+def _constant_params():
+    kwargs = getfullargspec(ActiveLifeRESClaimCostModel).kwonlyargs
+    kwargs.remove("incurred_dt")
+    kwargs.remove("valuation_dt")
+    return tuple(kwargs)
+
+
+claim_cost_model = create_foreach_jig(
+    ActiveLifeRESClaimCostModel,
+    iterator_name="records",
+    iterator_keys=("policy_id", "valuation_dt",),
+    pass_iterator_keys=("policy_id", "valuation_dt",),
+    constant_params=_constant_params(),
+)
+
+
+#########################################################################################
+# Valuation Policy Model - Residual Rider
+#########################################################################################
 
 
 @model(steps=STEPS)
@@ -34,9 +62,7 @@ class AValResRPMD(AValBasePMD):
 
     # meta
     claim_cost_model = def_meta(
-        meta=_ActiveLifeRESClaimCostModel,
-        dtype=callable,
-        description="The claim cost model used.",
+        meta=claim_cost_model, dtype=callable, description="The claim cost model used.",
     )
     coverage_id = def_meta(
         meta="RES",
