@@ -34,7 +34,6 @@ CASES = [
             "rop_return_freq": 10,
             "rop_return_percent": 0.5,
             "rop_claims_paid": 0,
-            "rop_future_claims_start_dt": pd.Timestamp("2005-02-10"),
         },
     ),
 ]
