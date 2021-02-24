@@ -337,10 +337,8 @@ class AValBasePMD(ALRBasePMD):
             premium = self.gross_premium
         else:
             msg = "The value for gross_premium_freq is not an available option. "
-            msg += (
-                "The value must be 'MONTH' / 'M', 'QUARTER' / 'Q', 'SEMIANNUAL' / 'S', "
-            )
-            msg += "or 'ANNUAL' / 'A'."
+            msg += "The value must be 'MONTH' / 'M', 'QUARTER' / 'Q', "
+            msg += "'SEMIANNUAL' / 'S', or 'ANNUAL' / 'A'."
             raise ValueError(msg)
 
         self.frame["GROSS_PREMIUM"] = premium
