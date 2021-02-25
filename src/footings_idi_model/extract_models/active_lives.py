@@ -157,7 +157,7 @@ class ActiveLivesValEMD:
             "SOURCE",
             "POLICY_ID",
             "COVERAGE_ID",
-            "DATE_ALR",
+            "ALR_DATE",
             "ALR",
         ]
         self.time_0 = self.projected.groupby(cols[4:6], as_index=False).head(1)[cols]

@@ -170,7 +170,7 @@ class AValBasePMD(ALRBasePMD):
         dtype=pd.DataFrame, description="The placholder for incidence rates."
     )
     modeled_claim_cost = def_intermediate(
-        dtype=list, description="The placholder for modeled disabled lives."
+        dtype=dict, description="The placholder for modeled disabled lives."
     )
 
     # return object
@@ -278,7 +278,7 @@ class AValBasePMD(ALRBasePMD):
             records=records, claim_id="NA", idi_diagnosis_grp="AG", **kwargs,
         )
         if len(errors) == 0:
-            self.modeled_claim_cost = success
+            self.modeled_claim_cost = {y: val for y, val in enumerate(success, start=1)}
         else:
             raise ModelRunError(str(errors))
 
@@ -358,7 +358,7 @@ class AValBasePMD(ALRBasePMD):
         )
 
         # add modeled claim cost (i.e., DLR)
-        self.frame["DLR"] = [df["DLR"].iat[0] for df in self.modeled_claim_cost]
+        self.frame["DLR"] = [df["DLR"].iat[0] for df in self.modeled_claim_cost.values()]
 
         # calculate benefit cost
         self.frame["BENEFIT_COST"] = (
@@ -466,6 +466,7 @@ class AValBasePMD(ALRBasePMD):
             "model_version",
             "last_commit",
             "run_date_time",
+            "coverage_id",
             "benefit_amount",
         ],
         impacts=["frame"],
@@ -480,6 +481,7 @@ class AValBasePMD(ALRBasePMD):
             SOURCE=self.__class__.__qualname__,
             COVERAGE_ID=self.coverage_id,
             BENEFIT_AMOUNT=self.benefit_amount,
+            # set column order
         )[list(ActiveLivesValOutput.columns)]
 
 
