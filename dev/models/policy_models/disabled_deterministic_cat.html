@@ -340,7 +340,7 @@ claim termination rates.</p>
 <dl class="simple">
 <dt>age_incurred<span class="classifier">int</span></dt><dd><p>The age when the claim was incurred for the claimant.</p>
 </dd>
-<dt>start_pay_date<span class="classifier">Timestamp</span></dt><dd><p>The date payments start for claimants.</p>
+<dt>start_pay_dt<span class="classifier">Timestamp</span></dt><dd><p>The date payments start for claimants.</p>
 </dd>
 <dt>ctr_table<span class="classifier">DataFrame</span></dt><dd><p>The claim termination rate (CTR) table.</p>
 </dd>
@@ -355,13 +355,13 @@ claim termination rates.</p>
 <li><p>Calculate Age Incurred - Calculate the age when claimant becomes disabled.</p></li>
 <li><p>Calculate Benefit Start Date - Calculate date benefits start which is incurred date + elimination period days.</p></li>
 <li><p>Create Projected Frame - Create projected benefit frame from valuation date to termination date by duration month.</p></li>
-<li><p>Calculate Weights - Calculate weights to assign to beginning and ending duration.</p></li>
+<li><p>Calculate Age Attained - Calculate age attained by policy duration on the frame.</p></li>
 <li><p>Get CTR Table - Get claim termination rate (CTR) table based on assumption set.</p></li>
+<li><p>Calculate Monthly Benefits - Calculate the benefit cost for each duration.</p></li>
 <li><p>Calculate Lives - Calculate the beginning, middle, and ending lives for each duration.</p></li>
-<li><p>Calculate Monthly Benefits - Calculate the monthly benefit amount for each duration.</p></li>
 <li><p>Calculate Discount Factors - Calculate beginning, middle, and ending discount factors for each duration.</p></li>
-<li><p>Calculate PVFB - Calculate present value of future benefits (PVFB).</p></li>
-<li><p>Calculate DLR - Calculate disabled life reserves (DLR).</p></li>
+<li><p>Calculate DLR - Calculate durational life reserves (ALR) for each duration.</p></li>
+<li><p>Calculate DLR - Calculate active life reserves (ALR) for each duration as of valuation date.</p></li>
 <li><p>Create Output Frame - Reduce output to only needed columns.</p></li>
 </ol>
 </dd></dl>
@@ -402,45 +402,65 @@ claim termination rates.</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="nn">~/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py</span> in <span class="ni">_run_step</span><span class="nt">(step)</span>
+<span class="g g-Whitespace">    </span><span class="mi">246</span>         <span class="k">try</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">247</span>             <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">step</span><span class="p">)()</span>
+<span class="g g-Whitespace">    </span><span class="mi">248</span>         <span class="k">except</span><span class="p">:</span>
+
+<span class="nn">~/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py</span> in <span class="ni">__call__</span><span class="nt">(self, *args, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">350</span>     <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="ne">--&gt; </span><span class="mi">351</span>         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">method</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">352</span> 
+
+<span class="nn">~/work/footings-idi-model/footings-idi-model/src/footings_idi_model/policy_models/disabled_deterministic_base.py</span> in <span class="ni">_calculate_discount</span><span class="nt">(self)</span>
+<span class="g g-Whitespace">    </span><span class="mi">261</span>         <span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">262</span>         <span class="bp">self</span><span class="o">.</span><span class="n">frame</span><span class="p">[</span><span class="s2">&quot;DISCOUNT_BD&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">calc_discount</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">263</span>             <span class="bp">self</span><span class="o">.</span><span class="n">frame</span><span class="p">[</span><span class="s2">&quot;INTEREST_RATE&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="mi">12</span><span class="p">,</span> <span class="n">t_adj</span><span class="o">=</span><span class="mi">0</span>
+
+<span class="ne">TypeError</span>: calc_discount() got an unexpected keyword argument &#39;t_adj&#39;
+
+<span class="n">During</span> <span class="n">handling</span> <span class="n">of</span> <span class="n">the</span> <span class="n">above</span> <span class="n">exception</span><span class="p">,</span> <span class="n">another</span> <span class="n">exception</span> <span class="n">occurred</span><span class="p">:</span>
+
+<span class="ne">ModelRunError</span><span class="g g-Whitespace">                             </span>Traceback (most recent call last)
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">2</span><span class="o">-</span><span class="mi">26</span><span class="n">c491dd16c9</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">output</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+<span class="nn">~/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py</span> in <span class="ni">run</span><span class="nt">(self, to_step)</span>
+<span class="g g-Whitespace">    </span><span class="mi">306</span> 
+<span class="g g-Whitespace">    </span><span class="mi">307</span>         <span class="s2">&quot;&quot;&quot;</span>
+<span class="ne">--&gt; </span><span class="mi">308</span><span class="s2">         return _run(self, to_step=to_step)</span>
+<span class="g g-Whitespace">    </span><span class="mi">309</span><span class="s2"> </span>
+<span class="g g-Whitespace">    </span><span class="mi">310</span><span class="s2"> </span>
+
+<span class="nn">~/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py</span> in <span class="ni">_run</span><span class="nt">(self, to_step)</span>
+<span class="g g-Whitespace">    </span><span class="mi">255</span><span class="s2"> </span>
+<span class="g g-Whitespace">    </span><span class="mi">256</span><span class="s2">     for step in steps:</span>
+<span class="ne">--&gt; </span><span class="mi">257</span><span class="s2">         _run_step(step)</span>
+<span class="g g-Whitespace">    </span><span class="mi">258</span><span class="s2"> </span>
+<span class="g g-Whitespace">    </span><span class="mi">259</span><span class="s2">     if to_step is not None:</span>
+
+<span class="nn">~/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py</span> in <span class="ni">_run_step</span><span class="nt">(step)</span>
+<span class="g g-Whitespace">    </span><span class="mi">252</span><span class="s2">             msg += f&quot;  Error Message = </span><span class="si">{exc_value}</span><span class="se">\n</span><span class="s2">&quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">253</span><span class="s2">             msg += f&quot;  Error Trace = {format_list(extract_tb(exc_trace))}</span><span class="se">\n</span><span class="s2">&quot;</span>
+<span class="ne">--&gt; </span><span class="mi">254</span><span class="s2">             raise ModelRunError(msg)</span>
+<span class="g g-Whitespace">    </span><span class="mi">255</span><span class="s2"> </span>
+<span class="g g-Whitespace">    </span><span class="mi">256</span><span class="s2">     for step in steps:</span>
+
+<span class="ne">ModelRunError</span>: At step [_calculate_discount], an error occured.
+<span class="s2">  Error Type = TypeError</span>
+<span class="s2">  Error Message = calc_discount() got an unexpected keyword argument &#39;t_adj&#39;</span>
+<span class="s2">  Error Trace = [&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 247, in _run_step</span><span class="se">\n</span><span class="s2">    return getattr(self, step)()</span><span class="se">\n</span><span class="s2">&#39;, &#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 351, in __call__</span><span class="se">\n</span><span class="s2">    return self.method(*args, **kwargs)</span><span class="se">\n</span><span class="s2">&#39;, &#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/src/footings_idi_model/policy_models/disabled_deterministic_base.py&quot;, line 262, in _calculate_discount</span><span class="se">\n</span><span class="s2">    self.frame[&quot;DISCOUNT_BD&quot;] = calc_discount(</span><span class="se">\n</span><span class="s2">&#39;]</span>
+</pre></div>
+</div>
+</div>
 </div>
 <p>The model returns a DataFrame of the projected reserves.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">output</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
-Int64Index: 181 entries, 0 to 180
-Data columns (total 23 columns):
- #   Column          Non-Null Count  Dtype         
----  ------          --------------  -----         
- 0   MODEL_VERSION   181 non-null    object        
- 1   LAST_COMMIT     181 non-null    object        
- 2   RUN_DATE_TIME   181 non-null    datetime64[ns]
- 3   SOURCE          181 non-null    object        
- 4   POLICY_ID       181 non-null    object        
- 5   CLAIM_ID        181 non-null    object        
- 6   COVERAGE_ID     181 non-null    object        
- 7   DATE_BD         181 non-null    datetime64[ns]
- 8   DATE_ED         181 non-null    datetime64[ns]
- 9   DURATION_YEAR   181 non-null    Int64         
- 10  DURATION_MONTH  181 non-null    Int64         
- 11  BENEFIT_AMOUNT  181 non-null    float64       
- 12  FINAL_CTR       181 non-null    float64       
- 13  LIVES_BD        181 non-null    float64       
- 14  LIVES_MD        181 non-null    float64       
- 15  LIVES_ED        181 non-null    float64       
- 16  DISCOUNT_BD     181 non-null    float64       
- 17  DISCOUNT_MD     181 non-null    float64       
- 18  DISCOUNT_ED     181 non-null    float64       
- 19  PVFB_BD         181 non-null    float64       
- 20  PVFB_ED         181 non-null    float64       
- 21  DATE_DLR        181 non-null    datetime64[ns]
- 22  DLR             181 non-null    float64       
-dtypes: Int64(2), datetime64[ns](4), float64(11), object(6)
-memory usage: 34.3+ KB
 </pre></div>
 </div>
 </div>
@@ -451,317 +471,6 @@ memory usage: 34.3+ KB
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>MODEL_VERSION</th>
-      <th>LAST_COMMIT</th>
-      <th>RUN_DATE_TIME</th>
-      <th>SOURCE</th>
-      <th>POLICY_ID</th>
-      <th>CLAIM_ID</th>
-      <th>COVERAGE_ID</th>
-      <th>DATE_BD</th>
-      <th>DATE_ED</th>
-      <th>DURATION_YEAR</th>
-      <th>...</th>
-      <th>LIVES_BD</th>
-      <th>LIVES_MD</th>
-      <th>LIVES_ED</th>
-      <th>DISCOUNT_BD</th>
-      <th>DISCOUNT_MD</th>
-      <th>DISCOUNT_ED</th>
-      <th>PVFB_BD</th>
-      <th>PVFB_ED</th>
-      <th>DATE_DLR</th>
-      <th>DLR</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>0.6.0rc0</td>
-      <td>b9884b2d7bc9097213ace01da4f44dfa5e52bb3b</td>
-      <td>2021-02-12 11:38:48.237086</td>
-      <td>DValCatRPMD</td>
-      <td>policy-1</td>
-      <td>claim-1</td>
-      <td>CAT</td>
-      <td>2020-03-02</td>
-      <td>2020-04-02</td>
-      <td>5</td>
-      <td>...</td>
-      <td>1.000000</td>
-      <td>0.998690</td>
-      <td>0.997381</td>
-      <td>1.000000</td>
-      <td>0.998769</td>
-      <td>0.997540</td>
-      <td>24969.93</td>
-      <td>24957.07</td>
-      <td>2020-03-31</td>
-      <td>25076.92</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>0.6.0rc0</td>
-      <td>b9884b2d7bc9097213ace01da4f44dfa5e52bb3b</td>
-      <td>2021-02-12 11:38:48.237086</td>
-      <td>DValCatRPMD</td>
-      <td>policy-1</td>
-      <td>claim-1</td>
-      <td>CAT</td>
-      <td>2020-04-02</td>
-      <td>2020-05-02</td>
-      <td>5</td>
-      <td>...</td>
-      <td>0.997381</td>
-      <td>0.996111</td>
-      <td>0.994841</td>
-      <td>0.997540</td>
-      <td>0.996312</td>
-      <td>0.995086</td>
-      <td>24957.07</td>
-      <td>24758.58</td>
-      <td>2020-04-30</td>
-      <td>25014.72</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>0.6.0rc0</td>
-      <td>b9884b2d7bc9097213ace01da4f44dfa5e52bb3b</td>
-      <td>2021-02-12 11:38:48.237086</td>
-      <td>DValCatRPMD</td>
-      <td>policy-1</td>
-      <td>claim-1</td>
-      <td>CAT</td>
-      <td>2020-05-02</td>
-      <td>2020-06-02</td>
-      <td>5</td>
-      <td>...</td>
-      <td>0.994841</td>
-      <td>0.993574</td>
-      <td>0.992307</td>
-      <td>0.995086</td>
-      <td>0.993861</td>
-      <td>0.992638</td>
-      <td>24758.58</td>
-      <td>24561.08</td>
-      <td>2020-05-31</td>
-      <td>24939.93</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>0.6.0rc0</td>
-      <td>b9884b2d7bc9097213ace01da4f44dfa5e52bb3b</td>
-      <td>2021-02-12 11:38:48.237086</td>
-      <td>DValCatRPMD</td>
-      <td>policy-1</td>
-      <td>claim-1</td>
-      <td>CAT</td>
-      <td>2020-06-02</td>
-      <td>2020-07-02</td>
-      <td>6</td>
-      <td>...</td>
-      <td>0.992307</td>
-      <td>0.990969</td>
-      <td>0.989630</td>
-      <td>0.992638</td>
-      <td>0.991416</td>
-      <td>0.990195</td>
-      <td>24561.08</td>
-      <td>24364.59</td>
-      <td>2020-06-30</td>
-      <td>24868.32</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>0.6.0rc0</td>
-      <td>b9884b2d7bc9097213ace01da4f44dfa5e52bb3b</td>
-      <td>2021-02-12 11:38:48.237086</td>
-      <td>DValCatRPMD</td>
-      <td>policy-1</td>
-      <td>claim-1</td>
-      <td>CAT</td>
-      <td>2020-07-02</td>
-      <td>2020-08-02</td>
-      <td>6</td>
-      <td>...</td>
-      <td>0.989630</td>
-      <td>0.988295</td>
-      <td>0.986960</td>
-      <td>0.990195</td>
-      <td>0.988977</td>
-      <td>0.987759</td>
-      <td>24364.59</td>
-      <td>24169.11</td>
-      <td>2020-07-31</td>
-      <td>24796.58</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>176</th>
-      <td>0.6.0rc0</td>
-      <td>b9884b2d7bc9097213ace01da4f44dfa5e52bb3b</td>
-      <td>2021-02-12 11:38:48.237086</td>
-      <td>DValCatRPMD</td>
-      <td>policy-1</td>
-      <td>claim-1</td>
-      <td>CAT</td>
-      <td>2034-11-02</td>
-      <td>2034-12-02</td>
-      <td>20</td>
-      <td>...</td>
-      <td>0.755674</td>
-      <td>0.755109</td>
-      <td>0.754545</td>
-      <td>0.648217</td>
-      <td>0.647420</td>
-      <td>0.646623</td>
-      <td>466.40</td>
-      <td>368.62</td>
-      <td>2034-11-30</td>
-      <td>768.25</td>
-    </tr>
-    <tr>
-      <th>177</th>
-      <td>0.6.0rc0</td>
-      <td>b9884b2d7bc9097213ace01da4f44dfa5e52bb3b</td>
-      <td>2021-02-12 11:38:48.237086</td>
-      <td>DValCatRPMD</td>
-      <td>policy-1</td>
-      <td>claim-1</td>
-      <td>CAT</td>
-      <td>2034-12-02</td>
-      <td>2035-01-02</td>
-      <td>20</td>
-      <td>...</td>
-      <td>0.754545</td>
-      <td>0.753982</td>
-      <td>0.753418</td>
-      <td>0.646623</td>
-      <td>0.645827</td>
-      <td>0.645032</td>
-      <td>368.62</td>
-      <td>271.24</td>
-      <td>2034-12-31</td>
-      <td>570.91</td>
-    </tr>
-    <tr>
-      <th>178</th>
-      <td>0.6.0rc0</td>
-      <td>b9884b2d7bc9097213ace01da4f44dfa5e52bb3b</td>
-      <td>2021-02-12 11:38:48.237086</td>
-      <td>DValCatRPMD</td>
-      <td>policy-1</td>
-      <td>claim-1</td>
-      <td>CAT</td>
-      <td>2035-01-02</td>
-      <td>2035-02-02</td>
-      <td>20</td>
-      <td>...</td>
-      <td>0.753418</td>
-      <td>0.752855</td>
-      <td>0.752293</td>
-      <td>0.645032</td>
-      <td>0.644238</td>
-      <td>0.643445</td>
-      <td>271.24</td>
-      <td>174.23</td>
-      <td>2035-01-31</td>
-      <td>372.77</td>
-    </tr>
-    <tr>
-      <th>179</th>
-      <td>0.6.0rc0</td>
-      <td>b9884b2d7bc9097213ace01da4f44dfa5e52bb3b</td>
-      <td>2021-02-12 11:38:48.237086</td>
-      <td>DValCatRPMD</td>
-      <td>policy-1</td>
-      <td>claim-1</td>
-      <td>CAT</td>
-      <td>2035-02-02</td>
-      <td>2035-03-02</td>
-      <td>20</td>
-      <td>...</td>
-      <td>0.752293</td>
-      <td>0.751731</td>
-      <td>0.751169</td>
-      <td>0.643445</td>
-      <td>0.642653</td>
-      <td>0.641862</td>
-      <td>174.23</td>
-      <td>77.61</td>
-      <td>2035-02-28</td>
-      <td>173.85</td>
-    </tr>
-    <tr>
-      <th>180</th>
-      <td>0.6.0rc0</td>
-      <td>b9884b2d7bc9097213ace01da4f44dfa5e52bb3b</td>
-      <td>2021-02-12 11:38:48.237086</td>
-      <td>DValCatRPMD</td>
-      <td>policy-1</td>
-      <td>claim-1</td>
-      <td>CAT</td>
-      <td>2035-03-02</td>
-      <td>2035-04-02</td>
-      <td>20</td>
-      <td>...</td>
-      <td>0.751169</td>
-      <td>0.750608</td>
-      <td>0.750047</td>
-      <td>0.641862</td>
-      <td>0.641072</td>
-      <td>0.640283</td>
-      <td>77.61</td>
-      <td>0.00</td>
-      <td>2035-03-31</td>
-      <td>10.42</td>
-    </tr>
-  </tbody>
-</table>
-<p>181 rows × 23 columns</p>
-</div></div></div>
 </div>
 <p>An audit of the model is ran by calling the <code class="docutils literal notranslate"><span class="pre">audit</span></code> method shown below.</p>
 <div class="cell docutils container">
@@ -771,7 +480,7 @@ memory usage: 34.3+ KB
 </div>
 </div>
 </div>
-<p>The audit file can be downloaded <a class="reference download internal" download="" href="../../_downloads/97406032cdd53381bfad62a4a8bf3995/Audit-DValCatRPMD.xlsx"><code class="xref download docutils literal notranslate"><span class="pre">here.</span></code></a></p>
+<p>The audit file can be downloaded <code class="xref download docutils literal notranslate"><span class="pre">here.</span></code></p>
 </div>
 </div>
 <div class="section" id="projection-model">
