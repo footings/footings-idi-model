@@ -5,16 +5,16 @@ from .disabled_deterministic_base import DValBasePMD
 
 STEPS = [
     "_calculate_age_incurred",
-    "_calculate_start_pay_date",
+    "_calculate_start_pay_dt",
     "_create_frame",
-    "_calculate_vd_weights",
-    "_get_ctr_table",
-    "_calculate_lives",
+    "_calculate_age_attained",
+    "_get_ctr_rates",
     "_get_sis_probability",
-    "_calculate_monthly_benefits",
+    "_calculate_benefit_cost",
+    "_calculate_lives",
     "_calculate_discount",
-    "_calculate_pvfb",
-    "_calculate_dlr",
+    "_calculate_durational_dlr",
+    "_calculate_valuation_dt_dlr",
     "_to_output",
 ]
 
@@ -47,25 +47,29 @@ class DValSisRPMD(DValBasePMD):
 
     @step(
         name="Calculate Monthly Benefits",
-        uses=["frame", "sis_probability", "benefit_amount"],
+        uses=[
+            "frame",
+            "valuation_dt",
+            "start_pay_dt",
+            "termination_dt",
+            "sis_probability",
+            "benefit_amount",
+        ],
         impacts=["frame"],
     )
-    def _calculate_monthly_benefits(self):
+    def _calculate_benefit_cost(self):
         """Calculate the monthly benefit amount for each duration."""
         self.frame = frame_add_exposure(
             self.frame,
-            begin_date=max(self.valuation_dt, self.start_pay_date),
+            begin_date=max(self.valuation_dt, self.start_pay_dt),
             end_date=self.termination_dt,
-            exposure_name="BENEFIT_FACTOR",
+            exposure_name="EXPOSURE",
             begin_duration_col="DATE_BD",
             end_duration_col="DATE_ED",
         )
         self.frame["BENEFIT_AMOUNT"] = (
-            self.frame["BENEFIT_FACTOR"]
-            .mul(self.benefit_amount)
-            .mul((1 - self.sis_probability))
-            .round(2)
-        )
+            self.frame["EXPOSURE"] * self.benefit_amount * (1 - self.sis_probability)
+        ).round(2)
 
 
 @model

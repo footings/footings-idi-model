@@ -25,12 +25,12 @@ OUTPUT_COLS = [
 
 STEPS = [
     "_calculate_age_incurred",
-    "_calculate_start_pay_date",
+    "_calculate_start_pay_dt",
     "_create_frame",
     # "_calculate_cola_adjustment",
-    "_calculate_monthly_benefits",
+    "_calculate_benefit_cost",
     "_calculate_discount",
-    "_get_ctr_table",
+    "_get_ctr_rates",
     "_merge_ctr",
     "_simulate_payments",
     "_to_output",

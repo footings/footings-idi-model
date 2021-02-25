@@ -1,4 +1,5 @@
 import pandas as pd
+from footings.actuarial_tools import calc_continuance, calc_discount, calc_pv
 from footings.model import def_intermediate, def_meta, def_return, model, step
 from footings.model_tools import (
     calculate_age,
@@ -70,15 +71,15 @@ class DLRBasePMD:
 
 STEPS = [
     "_calculate_age_incurred",
-    "_calculate_start_pay_date",
+    "_calculate_start_pay_dt",
     "_create_frame",
-    "_calculate_vd_weights",
-    "_get_ctr_table",
+    "_calculate_age_attained",
+    "_get_ctr_rates",
+    "_calculate_benefit_cost",
     "_calculate_lives",
-    "_calculate_monthly_benefits",
     "_calculate_discount",
-    "_calculate_pvfb",
-    "_calculate_dlr",
+    "_calculate_durational_dlr",
+    "_calculate_valuation_dt_dlr",
     "_to_output",
 ]
 
@@ -106,7 +107,7 @@ class DValBasePMD(DLRBasePMD):
     age_incurred = def_intermediate(
         dtype=int, description="The age when the claim was incurred for the claimant."
     )
-    start_pay_date = def_intermediate(
+    start_pay_dt = def_intermediate(
         dtype=pd.Timestamp, description="The date payments start for claimants."
     )
     ctr_table = def_intermediate(
@@ -129,13 +130,11 @@ class DValBasePMD(DLRBasePMD):
     @step(
         name="Calculate Benefit Start Date",
         uses=["incurred_dt", "elimination_period"],
-        impacts=["start_pay_date"],
+        impacts=["start_pay_dt"],
     )
-    def _calculate_start_pay_date(self):
+    def _calculate_start_pay_dt(self):
         """Calculate date benefits start which is incurred date + elimination period days."""
-        self.start_pay_date = self.incurred_dt + pd.DateOffset(
-            days=self.elimination_period
-        )
+        self.start_pay_dt = self.incurred_dt + pd.DateOffset(days=self.elimination_period)
 
     @step(
         name="Create Projected Frame",
@@ -144,36 +143,39 @@ class DValBasePMD(DLRBasePMD):
     )
     def _create_frame(self):
         """Create projected benefit frame from valuation date to termination date by duration month."""
-        fixed = {
+        kwargs_frame = {
             "frequency": "M",
             "col_date_nm": "DATE_BD",
             "duration_year": "DURATION_YEAR",
             "duration_month": "DURATION_MONTH",
         }
-
+        kwargs_wt = {
+            "as_of_dt": self.valuation_dt,
+            "begin_duration_col": "DATE_BD",
+            "end_duration_col": "DATE_ED",
+            "wt_current_name": "WT_BD",
+            "wt_next_name": "WT_ED",
+        }
+        cols = [
+            "DATE_BD",
+            "DATE_ED",
+            "DURATION_YEAR",
+            "DURATION_MONTH",
+            "WT_BD",
+            "WT_ED",
+        ]
         self.frame = (
-            create_frame(start_dt=self.incurred_dt, end_dt=self.termination_dt, **fixed)
+            create_frame(self.incurred_dt, self.termination_dt, **kwargs_frame)
             .pipe(_assign_end_date)
             .pipe(_filter_frame, self.valuation_dt)
-            .assign(
-                AGE_ATTAINED=lambda df: calculate_age(
-                    self.birth_dt, df["DATE_BD"], method="ACB"
-                ),
-            )[["DATE_BD", "DATE_ED", "AGE_ATTAINED", "DURATION_YEAR", "DURATION_MONTH",]]
-        )
+            .pipe(frame_add_weights, **kwargs_wt)
+        )[cols]
 
-    @step(
-        name="Calculate Weights", uses=["frame", "valuation_dt"], impacts=["frame"],
-    )
-    def _calculate_vd_weights(self):
-        """Calculate weights to assign to beginning and ending duration."""
-        self.frame = frame_add_weights(
-            self.frame,
-            as_of_dt=self.valuation_dt,
-            begin_duration_col="DATE_BD",
-            end_duration_col="DATE_ED",
-            wt_current_name="WT_BD",
-            wt_next_name="WT_ED",
+    @step(name="Calculate Age Attained", uses=["frame", "birth_dt"], impacts=["frame"])
+    def _calculate_age_attained(self):
+        """Calculate age attained by policy duration on the frame."""
+        self.frame["AGE_ATTAINED"] = calculate_age(
+            self.birth_dt, self.frame["DATE_BD"], method="ALB"
         )
 
     @step(
@@ -192,7 +194,7 @@ class DValBasePMD(DLRBasePMD):
         ],
         impacts=["ctr_table"],
     )
-    def _get_ctr_table(self):
+    def _get_ctr_rates(self):
         """Get claim termination rate (CTR) table based on assumption set."""
         self.ctr_table = get_ctr_table(
             assumption_set=self.assumption_set,
@@ -205,37 +207,44 @@ class DValBasePMD(DLRBasePMD):
     @step(name="Calculate Lives", uses=["frame", "ctr_table"], impacts=["frame"])
     def _calculate_lives(self):
         """Calculate the beginning, middle, and ending lives for each duration."""
+        # merge CTR
         self.frame = self.frame.merge(
             self.ctr_table[["DURATION_MONTH", "FINAL_CTR"]],
             how="left",
             on=["DURATION_MONTH"],
         )
-        self.frame["LIVES_ED"] = (1 - self.frame["FINAL_CTR"]).cumprod()
-        self.frame["LIVES_BD"] = self.frame["LIVES_ED"].shift(1, fill_value=1)
-        self.frame["LIVES_MD"] = self.frame[["LIVES_BD", "LIVES_ED"]].mean(axis=1)
-        bd_cols, ed_cols = ["WT_BD", "LIVES_BD"], ["WT_ED", "LIVES_ED"]
-        self.frame["LIVES_VD_ADJ"] = 1 / (
-            self.frame[bd_cols].prod(axis=1) + self.frame[ed_cols].prod(axis=1)
-        )
+        # calculate lives
+        lives_ed = calc_continuance(self.frame["FINAL_CTR"])
+        lives_bd = lives_ed.shift(1, fill_value=1)
+        lives_md = (lives_bd + lives_ed) / 2
+
+        # assign lives to frame
+        self.frame["LIVES_BD"] = lives_bd
+        self.frame["LIVES_MD"] = lives_md
+        self.frame["LIVES_ED"] = lives_ed
 
     @step(
         name="Calculate Monthly Benefits",
-        uses=["frame", "benefit_amount"],
+        uses=[
+            "frame",
+            "valuation_dt",
+            "start_pay_dt",
+            "termination_dt",
+            "benefit_amount",
+        ],
         impacts=["frame"],
     )
-    def _calculate_monthly_benefits(self):
-        """Calculate the monthly benefit amount for each duration."""
+    def _calculate_benefit_cost(self):
+        """Calculate the benefit cost for each duration."""
         self.frame = frame_add_exposure(
             self.frame,
-            begin_date=max(self.valuation_dt, self.start_pay_date),
+            begin_date=max(self.valuation_dt, self.start_pay_dt),
             end_date=self.termination_dt,
-            exposure_name="BENEFIT_FACTOR",
+            exposure_name="EXPOSURE",
             begin_duration_col="DATE_BD",
             end_duration_col="DATE_ED",
         )
-        self.frame["BENEFIT_AMOUNT"] = (
-            self.frame["BENEFIT_FACTOR"].mul(self.benefit_amount).round(2)
-        )
+        self.frame["BENEFIT_AMOUNT"] = self.frame["EXPOSURE"] * self.benefit_amount
 
     @step(
         name="Calculate Discount Factors",
@@ -244,51 +253,66 @@ class DValBasePMD(DLRBasePMD):
     )
     def _calculate_discount(self):
         """Calculate beginning, middle, and ending discount factors for each duration."""
-        interest_rate = get_interest_rate(self.incurred_dt) * self.interest_modifier
-        min_duration = self.frame["DURATION_MONTH"].min()
-        self.frame["DAYS_TO_ED"] = (self.frame["DURATION_MONTH"] - min_duration + 1) * 30
-        self.frame["DAYS_TO_MD"] = self.frame["DAYS_TO_ED"] - 15
-        self.frame["DISCOUNT_MD"] = 1 / (1 + interest_rate) ** (
-            self.frame["DAYS_TO_MD"] / 360
+        base_int_rate = get_interest_rate(self.incurred_dt)
+        self.frame["INTEREST_RATE_BASE"] = base_int_rate
+        self.frame["INTEREST_RATE_MODIFIER"] = self.interest_modifier
+        self.frame["INTEREST_RATE"] = (
+            self.frame["INTEREST_RATE_BASE"] * self.frame["INTEREST_RATE_MODIFIER"]
         )
-        self.frame["DISCOUNT_ED"] = 1 / (1 + interest_rate) ** (
-            self.frame["DAYS_TO_ED"] / 360
+        self.frame["DISCOUNT_BD"] = calc_discount(
+            self.frame["INTEREST_RATE"] / 12, t_adj=0
         )
-        self.frame["DISCOUNT_BD"] = self.frame["DISCOUNT_ED"].shift(1, fill_value=1)
-        bd_cols, ed_cols = ["WT_BD", "DISCOUNT_BD"], ["WT_ED", "DISCOUNT_ED"]
-        self.frame["DISCOUNT_VD_ADJ"] = 1 / (
-            self.frame[bd_cols].prod(axis=1) + self.frame[ed_cols].prod(axis=1)
+        self.frame["DISCOUNT_MD"] = calc_discount(
+            self.frame["INTEREST_RATE"] / 12, t_adj=0.5
         )
+        self.frame["DISCOUNT_ED"] = calc_discount(self.frame["INTEREST_RATE"] / 12)
 
-    @step(name="Calculate PVFB", uses=["frame"], impacts=["frame"])
-    def _calculate_pvfb(self):
-        """Calculate present value of future benefits (PVFB)."""
-        prod_columns = ["BENEFIT_AMOUNT", "LIVES_MD", "DISCOUNT_MD"]
-        self.frame["PVFB_BD"] = (
-            self.frame[prod_columns]
-            .prod(axis=1)
-            .iloc[::-1]
-            .cumsum()
-            .round(2)
-            .clip(lower=0)
-        )
+    @step(name="Calculate DLR", uses=["frame"], impacts=["frame"])
+    def _calculate_durational_dlr(self):
+        """Calculate durational life reserves (ALR) for each duration."""
+        benefit_cols = ["BENEFIT_AMOUNT", "LIVES_MD", "DISCOUNT_MD"]
+        self.frame["PVFB_BD"] = calc_pv(self.frame[benefit_cols].prod(axis=1))
         self.frame["PVFB_ED"] = self.frame["PVFB_BD"].shift(-1, fill_value=0)
-        bd, ed = ["WT_BD", "PVFB_BD"], ["WT_ED", "PVFB_ED"]
-        self.frame["PVFB_VD"] = self.frame[bd].prod(axis=1) + self.frame[ed].prod(axis=1)
 
     @step(name="Calculate DLR", uses=["frame", "valuation_dt"], impacts=["frame"])
-    def _calculate_dlr(self):
-        """Calculate disabled life reserves (DLR)."""
-        prod_cols = ["PVFB_VD", "DISCOUNT_VD_ADJ", "LIVES_VD_ADJ"]
-        self.frame["DLR"] = self.frame[prod_cols].prod(axis=1).round(2)
-        self.frame["DATE_DLR"] = [
-            self.valuation_dt + pd.DateOffset(months=period)
-            for period in range(0, self.frame.shape[0])
-        ]
+    def _calculate_valuation_dt_dlr(self):
+        """Calculate active life reserves (ALR) for each duration as of valuation date."""
+
+        def dlr_date(period):
+            return self.valuation_dt + pd.DateOffset(months=period)
+
+        self.frame["DATE_DLR"] = pd.to_datetime(
+            [dlr_date(period) for period in range(0, self.frame.shape[0])]
+        )
+
+        # calculate lives adj
+        lives_bd = self.frame[["LIVES_BD", "WT_BD"]].prod(axis=1)
+        lives_ed = self.frame[["LIVES_ED", "WT_ED"]].prod(axis=1)
+        lives_adj = 1 / (lives_bd + lives_ed)
+        self.frame["LIVES_ADJ"] = lives_adj
+
+        # calculate discount adj
+        discount_bd = self.frame[["DISCOUNT_BD", "WT_BD"]].prod(axis=1)
+        discount_ed = self.frame[["DISCOUNT_ED", "WT_ED"]].prod(axis=1)
+        discount_adj = 1 / (discount_bd + discount_ed)
+        self.frame["DISCOUNT_ADJ"] = discount_adj
+
+        # calculate DLR
+        dlr_bd = self.frame[["PVFB_BD", "WT_BD"]].prod(axis=1)
+        dlr_ed = self.frame[["PVFB_ED", "WT_ED"]].prod(axis=1)
+        self.frame["DLR"] = ((dlr_bd + dlr_ed) / discount_adj / lives_adj).round(2)
 
     @step(
         name="Create Output Frame",
-        uses=["frame", "policy_id", "run_date_time", "model_version", "last_commit"],
+        uses=[
+            "frame",
+            "policy_id",
+            "claim_id",
+            "run_date_time",
+            "model_version",
+            "last_commit",
+            "coverage_id",
+        ],
         impacts=["frame"],
     )
     def _to_output(self):

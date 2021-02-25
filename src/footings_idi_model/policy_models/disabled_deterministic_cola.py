@@ -22,16 +22,23 @@ class DValColaRPMD(DValBasePMD):
 
     @step(
         name="Calculate Monthly Benefits",
-        uses=["frame", "cola_percent", "benefit_amount"],
+        uses=[
+            "frame",
+            "valuation_dt",
+            "start_pay_dt",
+            "termination_dt",
+            "cola_percent",
+            "benefit_amount",
+        ],
         impacts=["frame"],
     )
-    def _calculate_monthly_benefits(self):
+    def _calculate_benefit_cost(self):
         """Calculate the monthly benefit amount for each duration."""
         self.frame = frame_add_exposure(
             self.frame,
-            begin_date=max(self.valuation_dt, self.start_pay_date),
+            begin_date=max(self.valuation_dt, self.start_pay_dt),
             end_date=self.termination_dt,
-            exposure_name="BENEFIT_FACTOR",
+            exposure_name="EXPOSURE",
             begin_duration_col="DATE_BD",
             end_duration_col="DATE_ED",
         )
@@ -43,12 +50,8 @@ class DValColaRPMD(DValBasePMD):
             power = self.frame["DURATION_YEAR"]
         cola = (1 + self.cola_percent) ** (power - 1)
         self.frame["BENEFIT_AMOUNT"] = (
-            self.frame["BENEFIT_FACTOR"]
-            .mul(self.benefit_amount)
-            .mul(cola)
-            .sub(self.benefit_amount)
-            .round(2)
-        )
+            self.frame["EXPOSURE"] * ((self.benefit_amount * cola) - self.benefit_amount)
+        ).round(2)
 
 
 @model
