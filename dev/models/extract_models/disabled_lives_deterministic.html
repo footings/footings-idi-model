@@ -719,35 +719,35 @@ based on the COVERAGE_ID column (i.e., whether it is base policy or rider).</p>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
-Index: 0 entries
+Int64Index: 4334 entries, 0 to 66
 Data columns (total 23 columns):
- #   Column          Non-Null Count  Dtype 
----  ------          --------------  ----- 
- 0   MODEL_VERSION   0 non-null      object
- 1   LAST_COMMIT     0 non-null      object
- 2   RUN_DATE_TIME   0 non-null      object
- 3   SOURCE          0 non-null      object
- 4   POLICY_ID       0 non-null      object
- 5   CLAIM_ID        0 non-null      object
- 6   COVERAGE_ID     0 non-null      object
- 7   DATE_BD         0 non-null      object
- 8   DATE_ED         0 non-null      object
- 9   DURATION_YEAR   0 non-null      object
- 10  DURATION_MONTH  0 non-null      object
- 11  BENEFIT_AMOUNT  0 non-null      object
- 12  FINAL_CTR       0 non-null      object
- 13  LIVES_BD        0 non-null      object
- 14  LIVES_MD        0 non-null      object
- 15  LIVES_ED        0 non-null      object
- 16  DISCOUNT_BD     0 non-null      object
- 17  DISCOUNT_MD     0 non-null      object
- 18  DISCOUNT_ED     0 non-null      object
- 19  PVFB_BD         0 non-null      object
- 20  PVFB_ED         0 non-null      object
- 21  DATE_DLR        0 non-null      object
- 22  DLR             0 non-null      object
-dtypes: object(23)
-memory usage: 0.0+ bytes
+ #   Column          Non-Null Count  Dtype         
+---  ------          --------------  -----         
+ 0   MODEL_VERSION   4334 non-null   object        
+ 1   LAST_COMMIT     4334 non-null   object        
+ 2   RUN_DATE_TIME   4334 non-null   datetime64[ns]
+ 3   SOURCE          4334 non-null   object        
+ 4   POLICY_ID       4334 non-null   object        
+ 5   CLAIM_ID        4334 non-null   object        
+ 6   COVERAGE_ID     4334 non-null   object        
+ 7   DATE_BD         4334 non-null   datetime64[ns]
+ 8   DATE_ED         4334 non-null   datetime64[ns]
+ 9   DURATION_YEAR   4334 non-null   Int64         
+ 10  DURATION_MONTH  4334 non-null   Int64         
+ 11  BENEFIT_AMOUNT  4334 non-null   float64       
+ 12  FINAL_CTR       4334 non-null   float64       
+ 13  LIVES_BD        4334 non-null   float64       
+ 14  LIVES_MD        4334 non-null   float64       
+ 15  LIVES_ED        4334 non-null   float64       
+ 16  DISCOUNT_BD     4334 non-null   float64       
+ 17  DISCOUNT_MD     4334 non-null   float64       
+ 18  DISCOUNT_ED     4334 non-null   float64       
+ 19  PVFB_BD         4334 non-null   float64       
+ 20  PVFB_ED         4334 non-null   float64       
+ 21  DATE_DLR        4334 non-null   datetime64[ns]
+ 22  DLR             4334 non-null   float64       
+dtypes: Int64(2), datetime64[ns](4), float64(11), object(6)
+memory usage: 821.1+ KB
 </pre></div>
 </div>
 </div>
@@ -801,9 +801,273 @@ memory usage: 0.0+ bytes
     </tr>
   </thead>
   <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.6.0rc0</td>
+      <td>89ce0930fc741458f9939b4377801596f197c637</td>
+      <td>2021-02-25 13:13:00.754562</td>
+      <td>DValBasePMD</td>
+      <td>M768</td>
+      <td>M768C1</td>
+      <td>BASE</td>
+      <td>2020-03-15</td>
+      <td>2020-04-15</td>
+      <td>10</td>
+      <td>...</td>
+      <td>1.000000</td>
+      <td>0.999172</td>
+      <td>0.998345</td>
+      <td>1.000000</td>
+      <td>0.998752</td>
+      <td>0.997506</td>
+      <td>20719.986514</td>
+      <td>20671.699782</td>
+      <td>2020-03-31</td>
+      <td>20650.77</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.6.0rc0</td>
+      <td>89ce0930fc741458f9939b4377801596f197c637</td>
+      <td>2021-02-25 13:13:00.754562</td>
+      <td>DValBasePMD</td>
+      <td>M768</td>
+      <td>M768C1</td>
+      <td>BASE</td>
+      <td>2020-04-15</td>
+      <td>2020-05-15</td>
+      <td>10</td>
+      <td>...</td>
+      <td>0.998345</td>
+      <td>0.997519</td>
+      <td>0.996692</td>
+      <td>0.997506</td>
+      <td>0.996262</td>
+      <td>0.995019</td>
+      <td>20671.699782</td>
+      <td>20572.320820</td>
+      <td>2020-04-30</td>
+      <td>20490.99</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.6.0rc0</td>
+      <td>89ce0930fc741458f9939b4377801596f197c637</td>
+      <td>2021-02-25 13:13:00.754562</td>
+      <td>DValBasePMD</td>
+      <td>M768</td>
+      <td>M768C1</td>
+      <td>BASE</td>
+      <td>2020-05-15</td>
+      <td>2020-06-15</td>
+      <td>10</td>
+      <td>...</td>
+      <td>0.996692</td>
+      <td>0.995868</td>
+      <td>0.995043</td>
+      <td>0.995019</td>
+      <td>0.993777</td>
+      <td>0.992537</td>
+      <td>20572.320820</td>
+      <td>20473.353763</td>
+      <td>2020-05-31</td>
+      <td>20307.92</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.6.0rc0</td>
+      <td>89ce0930fc741458f9939b4377801596f197c637</td>
+      <td>2021-02-25 13:13:00.754562</td>
+      <td>DValBasePMD</td>
+      <td>M768</td>
+      <td>M768C1</td>
+      <td>BASE</td>
+      <td>2020-06-15</td>
+      <td>2020-07-15</td>
+      <td>10</td>
+      <td>...</td>
+      <td>0.995043</td>
+      <td>0.994219</td>
+      <td>0.993396</td>
+      <td>0.992537</td>
+      <td>0.991299</td>
+      <td>0.990062</td>
+      <td>20473.353763</td>
+      <td>20374.796902</td>
+      <td>2020-06-30</td>
+      <td>20126.43</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.6.0rc0</td>
+      <td>89ce0930fc741458f9939b4377801596f197c637</td>
+      <td>2021-02-25 13:13:00.754562</td>
+      <td>DValBasePMD</td>
+      <td>M768</td>
+      <td>M768C1</td>
+      <td>BASE</td>
+      <td>2020-07-15</td>
+      <td>2020-08-15</td>
+      <td>10</td>
+      <td>...</td>
+      <td>0.993396</td>
+      <td>0.992574</td>
+      <td>0.991752</td>
+      <td>0.990062</td>
+      <td>0.988827</td>
+      <td>0.987593</td>
+      <td>20374.796902</td>
+      <td>20276.648538</td>
+      <td>2020-07-31</td>
+      <td>19946.49</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>62</th>
+      <td>0.6.0rc0</td>
+      <td>89ce0930fc741458f9939b4377801596f197c637</td>
+      <td>2021-02-25 13:13:00.754562</td>
+      <td>DValColaRPMD</td>
+      <td>M776</td>
+      <td>M776C1</td>
+      <td>COLA</td>
+      <td>2025-05-02</td>
+      <td>2025-06-02</td>
+      <td>35</td>
+      <td>...</td>
+      <td>0.883314</td>
+      <td>0.882338</td>
+      <td>0.881363</td>
+      <td>0.856581</td>
+      <td>0.855512</td>
+      <td>0.854445</td>
+      <td>344.807293</td>
+      <td>275.194921</td>
+      <td>2025-05-31</td>
+      <td>210.69</td>
+    </tr>
+    <tr>
+      <th>63</th>
+      <td>0.6.0rc0</td>
+      <td>89ce0930fc741458f9939b4377801596f197c637</td>
+      <td>2021-02-25 13:13:00.754562</td>
+      <td>DValColaRPMD</td>
+      <td>M776</td>
+      <td>M776C1</td>
+      <td>COLA</td>
+      <td>2025-06-02</td>
+      <td>2025-07-02</td>
+      <td>35</td>
+      <td>...</td>
+      <td>0.881363</td>
+      <td>0.880389</td>
+      <td>0.879416</td>
+      <td>0.854445</td>
+      <td>0.853379</td>
+      <td>0.852314</td>
+      <td>275.194921</td>
+      <td>205.909539</td>
+      <td>2025-06-30</td>
+      <td>157.74</td>
+    </tr>
+    <tr>
+      <th>64</th>
+      <td>0.6.0rc0</td>
+      <td>89ce0930fc741458f9939b4377801596f197c637</td>
+      <td>2021-02-25 13:13:00.754562</td>
+      <td>DValColaRPMD</td>
+      <td>M776</td>
+      <td>M776C1</td>
+      <td>COLA</td>
+      <td>2025-07-02</td>
+      <td>2025-08-02</td>
+      <td>35</td>
+      <td>...</td>
+      <td>0.879416</td>
+      <td>0.878444</td>
+      <td>0.877473</td>
+      <td>0.852314</td>
+      <td>0.851251</td>
+      <td>0.850188</td>
+      <td>205.909539</td>
+      <td>136.949609</td>
+      <td>2025-07-31</td>
+      <td>105.52</td>
+    </tr>
+    <tr>
+      <th>65</th>
+      <td>0.6.0rc0</td>
+      <td>89ce0930fc741458f9939b4377801596f197c637</td>
+      <td>2021-02-25 13:13:00.754562</td>
+      <td>DValColaRPMD</td>
+      <td>M776</td>
+      <td>M776C1</td>
+      <td>COLA</td>
+      <td>2025-08-02</td>
+      <td>2025-09-02</td>
+      <td>35</td>
+      <td>...</td>
+      <td>0.877473</td>
+      <td>0.876504</td>
+      <td>0.875535</td>
+      <td>0.850188</td>
+      <td>0.849128</td>
+      <td>0.848068</td>
+      <td>136.949609</td>
+      <td>68.313603</td>
+      <td>2025-08-31</td>
+      <td>54.03</td>
+    </tr>
+    <tr>
+      <th>66</th>
+      <td>0.6.0rc0</td>
+      <td>89ce0930fc741458f9939b4377801596f197c637</td>
+      <td>2021-02-25 13:13:00.754562</td>
+      <td>DValColaRPMD</td>
+      <td>M776</td>
+      <td>M776C1</td>
+      <td>COLA</td>
+      <td>2025-09-02</td>
+      <td>2025-10-02</td>
+      <td>35</td>
+      <td>...</td>
+      <td>0.875535</td>
+      <td>0.874568</td>
+      <td>0.873601</td>
+      <td>0.848068</td>
+      <td>0.847010</td>
+      <td>0.845953</td>
+      <td>68.313603</td>
+      <td>0.000000</td>
+      <td>2025-09-30</td>
+      <td>3.26</td>
+    </tr>
   </tbody>
 </table>
-<p>0 rows × 23 columns</p>
+<p>4334 rows × 23 columns</p>
 </div></div></div>
 </div>
 <div class="cell docutils container">
@@ -843,6 +1107,186 @@ memory usage: 0.0+ bytes
     </tr>
   </thead>
   <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.6.0rc0</td>
+      <td>89ce0930fc741458f9939b4377801596f197c637</td>
+      <td>2021-02-25 13:13:00.754562</td>
+      <td>DValBasePMD</td>
+      <td>M768</td>
+      <td>M768C1</td>
+      <td>BASE</td>
+      <td>2020-03-31</td>
+      <td>20650.77</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>0.6.0rc0</td>
+      <td>89ce0930fc741458f9939b4377801596f197c637</td>
+      <td>2021-02-25 13:13:00.754562</td>
+      <td>DValCatRPMD</td>
+      <td>M768</td>
+      <td>M768C1</td>
+      <td>CAT</td>
+      <td>2020-03-31</td>
+      <td>20650.77</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>0.6.0rc0</td>
+      <td>89ce0930fc741458f9939b4377801596f197c637</td>
+      <td>2021-02-25 13:13:00.754562</td>
+      <td>DValColaRPMD</td>
+      <td>M768</td>
+      <td>M768C1</td>
+      <td>COLA</td>
+      <td>2020-03-31</td>
+      <td>8569.15</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>0.6.0rc0</td>
+      <td>89ce0930fc741458f9939b4377801596f197c637</td>
+      <td>2021-02-25 13:13:00.754562</td>
+      <td>DValBasePMD</td>
+      <td>M288</td>
+      <td>M288C1</td>
+      <td>BASE</td>
+      <td>2020-03-31</td>
+      <td>1098.42</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>0.6.0rc0</td>
+      <td>89ce0930fc741458f9939b4377801596f197c637</td>
+      <td>2021-02-25 13:13:00.754562</td>
+      <td>DValBasePMD</td>
+      <td>M234</td>
+      <td>M234C1</td>
+      <td>BASE</td>
+      <td>2020-03-31</td>
+      <td>6325.85</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>0.6.0rc0</td>
+      <td>89ce0930fc741458f9939b4377801596f197c637</td>
+      <td>2021-02-25 13:13:00.754562</td>
+      <td>DValResRPMD</td>
+      <td>M234</td>
+      <td>M234C1</td>
+      <td>RES</td>
+      <td>2020-03-31</td>
+      <td>3162.93</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>0.6.0rc0</td>
+      <td>89ce0930fc741458f9939b4377801596f197c637</td>
+      <td>2021-02-25 13:13:00.754562</td>
+      <td>DValBasePMD</td>
+      <td>M344</td>
+      <td>M344C1</td>
+      <td>BASE</td>
+      <td>2020-03-31</td>
+      <td>1205.14</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>0.6.0rc0</td>
+      <td>89ce0930fc741458f9939b4377801596f197c637</td>
+      <td>2021-02-25 13:13:00.754562</td>
+      <td>DValBasePMD</td>
+      <td>M533</td>
+      <td>M533C1</td>
+      <td>BASE</td>
+      <td>2020-03-31</td>
+      <td>2637.52</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>0.6.0rc0</td>
+      <td>89ce0930fc741458f9939b4377801596f197c637</td>
+      <td>2021-02-25 13:13:00.754562</td>
+      <td>DValBasePMD</td>
+      <td>M434</td>
+      <td>M434C1</td>
+      <td>BASE</td>
+      <td>2020-03-31</td>
+      <td>14887.75</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>0.6.0rc0</td>
+      <td>89ce0930fc741458f9939b4377801596f197c637</td>
+      <td>2021-02-25 13:13:00.754562</td>
+      <td>DValBasePMD</td>
+      <td>M445</td>
+      <td>M445C1</td>
+      <td>BASE</td>
+      <td>2020-03-31</td>
+      <td>1790.18</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>0.6.0rc0</td>
+      <td>89ce0930fc741458f9939b4377801596f197c637</td>
+      <td>2021-02-25 13:13:00.754562</td>
+      <td>DValBasePMD</td>
+      <td>M221</td>
+      <td>M221C1</td>
+      <td>BASE</td>
+      <td>2020-03-31</td>
+      <td>8030.36</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>0.6.0rc0</td>
+      <td>89ce0930fc741458f9939b4377801596f197c637</td>
+      <td>2021-02-25 13:13:00.754562</td>
+      <td>DValBasePMD</td>
+      <td>M9</td>
+      <td>M9C1</td>
+      <td>BASE</td>
+      <td>2020-03-31</td>
+      <td>15030.83</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>0.6.0rc0</td>
+      <td>89ce0930fc741458f9939b4377801596f197c637</td>
+      <td>2021-02-25 13:13:00.754562</td>
+      <td>DValBasePMD</td>
+      <td>M776</td>
+      <td>M776C1</td>
+      <td>BASE</td>
+      <td>2020-03-31</td>
+      <td>5673.59</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>0.6.0rc0</td>
+      <td>89ce0930fc741458f9939b4377801596f197c637</td>
+      <td>2021-02-25 13:13:00.754562</td>
+      <td>DValSisRPMD</td>
+      <td>M776</td>
+      <td>M776C1</td>
+      <td>SIS</td>
+      <td>2020-03-31</td>
+      <td>1702.08</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>0.6.0rc0</td>
+      <td>89ce0930fc741458f9939b4377801596f197c637</td>
+      <td>2021-02-25 13:13:00.754562</td>
+      <td>DValColaRPMD</td>
+      <td>M776</td>
+      <td>M776C1</td>
+      <td>COLA</td>
+      <td>2020-03-31</td>
+      <td>4902.79</td>
+    </tr>
   </tbody>
 </table>
 </div></div></div>
@@ -854,21 +1298,7 @@ memory usage: 0.0+ bytes
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[Error(key=&quot;({&#39;policy_id&#39;: &#39;M768&#39;, &#39;coverage_id&#39;: &#39;BASE&#39;},)&quot;, error_type=&#39;ModelRunError&#39;, error_value=&#39;(\&#39;At step [_calculate_discount], an error occured.\\n  Error Type = TypeError\\n  Error Message = calc_discount() got an unexpected keyword argument \\\&#39;t_adj\\\&#39;\\n  Error Trace = [\\\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 247, in _run_step\\\\n    return getattr(self, step)()\\\\n\\\&#39;, \\\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 351, in __call__\\\\n    return self.method(*args, **kwargs)\\\\n\\\&#39;, \\\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/src/footings_idi_model/policy_models/disabled_deterministic_base.py&quot;, line 262, in _calculate_discount\\\\n    self.frame[&quot;DISCOUNT_BD&quot;] = calc_discount(\\\\n\\\&#39;]\\n\&#39;,)&#39;, error_stacktrace=&#39;[\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/jigs.py&quot;, line 84, in wrapper\\n    ret = self.model(**model_kwargs).run()\\n\&#39;, \&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 308, in run\\n    return _run(self, to_step=to_step)\\n\&#39;, \&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 257, in _run\\n    _run_step(step)\\n\&#39;, \&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 254, in _run_step\\n    raise ModelRunError(msg)\\n\&#39;]&#39;),
- Error(key=&quot;({&#39;policy_id&#39;: &#39;M768&#39;, &#39;coverage_id&#39;: &#39;CAT&#39;},)&quot;, error_type=&#39;ModelRunError&#39;, error_value=&#39;(\&#39;At step [_calculate_discount], an error occured.\\n  Error Type = TypeError\\n  Error Message = calc_discount() got an unexpected keyword argument \\\&#39;t_adj\\\&#39;\\n  Error Trace = [\\\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 247, in _run_step\\\\n    return getattr(self, step)()\\\\n\\\&#39;, \\\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 351, in __call__\\\\n    return self.method(*args, **kwargs)\\\\n\\\&#39;, \\\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/src/footings_idi_model/policy_models/disabled_deterministic_base.py&quot;, line 262, in _calculate_discount\\\\n    self.frame[&quot;DISCOUNT_BD&quot;] = calc_discount(\\\\n\\\&#39;]\\n\&#39;,)&#39;, error_stacktrace=&#39;[\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/jigs.py&quot;, line 84, in wrapper\\n    ret = self.model(**model_kwargs).run()\\n\&#39;, \&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 308, in run\\n    return _run(self, to_step=to_step)\\n\&#39;, \&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 257, in _run\\n    _run_step(step)\\n\&#39;, \&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 254, in _run_step\\n    raise ModelRunError(msg)\\n\&#39;]&#39;),
- Error(key=&quot;({&#39;policy_id&#39;: &#39;M768&#39;, &#39;coverage_id&#39;: &#39;COLA&#39;},)&quot;, error_type=&#39;ModelRunError&#39;, error_value=&#39;(\&#39;At step [_calculate_discount], an error occured.\\n  Error Type = TypeError\\n  Error Message = calc_discount() got an unexpected keyword argument \\\&#39;t_adj\\\&#39;\\n  Error Trace = [\\\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 247, in _run_step\\\\n    return getattr(self, step)()\\\\n\\\&#39;, \\\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 351, in __call__\\\\n    return self.method(*args, **kwargs)\\\\n\\\&#39;, \\\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/src/footings_idi_model/policy_models/disabled_deterministic_base.py&quot;, line 262, in _calculate_discount\\\\n    self.frame[&quot;DISCOUNT_BD&quot;] = calc_discount(\\\\n\\\&#39;]\\n\&#39;,)&#39;, error_stacktrace=&#39;[\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/jigs.py&quot;, line 84, in wrapper\\n    ret = self.model(**model_kwargs).run()\\n\&#39;, \&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 308, in run\\n    return _run(self, to_step=to_step)\\n\&#39;, \&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 257, in _run\\n    _run_step(step)\\n\&#39;, \&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 254, in _run_step\\n    raise ModelRunError(msg)\\n\&#39;]&#39;),
- Error(key=&quot;({&#39;policy_id&#39;: &#39;M288&#39;, &#39;coverage_id&#39;: &#39;BASE&#39;},)&quot;, error_type=&#39;ModelRunError&#39;, error_value=&#39;(\&#39;At step [_calculate_discount], an error occured.\\n  Error Type = TypeError\\n  Error Message = calc_discount() got an unexpected keyword argument \\\&#39;t_adj\\\&#39;\\n  Error Trace = [\\\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 247, in _run_step\\\\n    return getattr(self, step)()\\\\n\\\&#39;, \\\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 351, in __call__\\\\n    return self.method(*args, **kwargs)\\\\n\\\&#39;, \\\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/src/footings_idi_model/policy_models/disabled_deterministic_base.py&quot;, line 262, in _calculate_discount\\\\n    self.frame[&quot;DISCOUNT_BD&quot;] = calc_discount(\\\\n\\\&#39;]\\n\&#39;,)&#39;, error_stacktrace=&#39;[\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/jigs.py&quot;, line 84, in wrapper\\n    ret = self.model(**model_kwargs).run()\\n\&#39;, \&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 308, in run\\n    return _run(self, to_step=to_step)\\n\&#39;, \&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 257, in _run\\n    _run_step(step)\\n\&#39;, \&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 254, in _run_step\\n    raise ModelRunError(msg)\\n\&#39;]&#39;),
- Error(key=&quot;({&#39;policy_id&#39;: &#39;M234&#39;, &#39;coverage_id&#39;: &#39;BASE&#39;},)&quot;, error_type=&#39;ModelRunError&#39;, error_value=&#39;(\&#39;At step [_calculate_discount], an error occured.\\n  Error Type = TypeError\\n  Error Message = calc_discount() got an unexpected keyword argument \\\&#39;t_adj\\\&#39;\\n  Error Trace = [\\\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 247, in _run_step\\\\n    return getattr(self, step)()\\\\n\\\&#39;, \\\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 351, in __call__\\\\n    return self.method(*args, **kwargs)\\\\n\\\&#39;, \\\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/src/footings_idi_model/policy_models/disabled_deterministic_base.py&quot;, line 262, in _calculate_discount\\\\n    self.frame[&quot;DISCOUNT_BD&quot;] = calc_discount(\\\\n\\\&#39;]\\n\&#39;,)&#39;, error_stacktrace=&#39;[\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/jigs.py&quot;, line 84, in wrapper\\n    ret = self.model(**model_kwargs).run()\\n\&#39;, \&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 308, in run\\n    return _run(self, to_step=to_step)\\n\&#39;, \&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 257, in _run\\n    _run_step(step)\\n\&#39;, \&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 254, in _run_step\\n    raise ModelRunError(msg)\\n\&#39;]&#39;),
- Error(key=&quot;({&#39;policy_id&#39;: &#39;M234&#39;, &#39;coverage_id&#39;: &#39;RES&#39;},)&quot;, error_type=&#39;ModelRunError&#39;, error_value=&#39;(\&#39;At step [_calculate_discount], an error occured.\\n  Error Type = TypeError\\n  Error Message = calc_discount() got an unexpected keyword argument \\\&#39;t_adj\\\&#39;\\n  Error Trace = [\\\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 247, in _run_step\\\\n    return getattr(self, step)()\\\\n\\\&#39;, \\\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 351, in __call__\\\\n    return self.method(*args, **kwargs)\\\\n\\\&#39;, \\\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/src/footings_idi_model/policy_models/disabled_deterministic_base.py&quot;, line 262, in _calculate_discount\\\\n    self.frame[&quot;DISCOUNT_BD&quot;] = calc_discount(\\\\n\\\&#39;]\\n\&#39;,)&#39;, error_stacktrace=&#39;[\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/jigs.py&quot;, line 84, in wrapper\\n    ret = self.model(**model_kwargs).run()\\n\&#39;, \&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 308, in run\\n    return _run(self, to_step=to_step)\\n\&#39;, \&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 257, in _run\\n    _run_step(step)\\n\&#39;, \&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 254, in _run_step\\n    raise ModelRunError(msg)\\n\&#39;]&#39;),
- Error(key=&quot;({&#39;policy_id&#39;: &#39;M344&#39;, &#39;coverage_id&#39;: &#39;BASE&#39;},)&quot;, error_type=&#39;ModelRunError&#39;, error_value=&#39;(\&#39;At step [_calculate_discount], an error occured.\\n  Error Type = TypeError\\n  Error Message = calc_discount() got an unexpected keyword argument \\\&#39;t_adj\\\&#39;\\n  Error Trace = [\\\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 247, in _run_step\\\\n    return getattr(self, step)()\\\\n\\\&#39;, \\\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 351, in __call__\\\\n    return self.method(*args, **kwargs)\\\\n\\\&#39;, \\\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/src/footings_idi_model/policy_models/disabled_deterministic_base.py&quot;, line 262, in _calculate_discount\\\\n    self.frame[&quot;DISCOUNT_BD&quot;] = calc_discount(\\\\n\\\&#39;]\\n\&#39;,)&#39;, error_stacktrace=&#39;[\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/jigs.py&quot;, line 84, in wrapper\\n    ret = self.model(**model_kwargs).run()\\n\&#39;, \&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 308, in run\\n    return _run(self, to_step=to_step)\\n\&#39;, \&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 257, in _run\\n    _run_step(step)\\n\&#39;, \&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 254, in _run_step\\n    raise ModelRunError(msg)\\n\&#39;]&#39;),
- Error(key=&quot;({&#39;policy_id&#39;: &#39;M533&#39;, &#39;coverage_id&#39;: &#39;BASE&#39;},)&quot;, error_type=&#39;ModelRunError&#39;, error_value=&#39;(\&#39;At step [_calculate_discount], an error occured.\\n  Error Type = TypeError\\n  Error Message = calc_discount() got an unexpected keyword argument \\\&#39;t_adj\\\&#39;\\n  Error Trace = [\\\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 247, in _run_step\\\\n    return getattr(self, step)()\\\\n\\\&#39;, \\\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 351, in __call__\\\\n    return self.method(*args, **kwargs)\\\\n\\\&#39;, \\\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/src/footings_idi_model/policy_models/disabled_deterministic_base.py&quot;, line 262, in _calculate_discount\\\\n    self.frame[&quot;DISCOUNT_BD&quot;] = calc_discount(\\\\n\\\&#39;]\\n\&#39;,)&#39;, error_stacktrace=&#39;[\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/jigs.py&quot;, line 84, in wrapper\\n    ret = self.model(**model_kwargs).run()\\n\&#39;, \&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 308, in run\\n    return _run(self, to_step=to_step)\\n\&#39;, \&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 257, in _run\\n    _run_step(step)\\n\&#39;, \&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 254, in _run_step\\n    raise ModelRunError(msg)\\n\&#39;]&#39;),
- Error(key=&quot;({&#39;policy_id&#39;: &#39;M434&#39;, &#39;coverage_id&#39;: &#39;BASE&#39;},)&quot;, error_type=&#39;ModelRunError&#39;, error_value=&#39;(\&#39;At step [_calculate_discount], an error occured.\\n  Error Type = TypeError\\n  Error Message = calc_discount() got an unexpected keyword argument \\\&#39;t_adj\\\&#39;\\n  Error Trace = [\\\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 247, in _run_step\\\\n    return getattr(self, step)()\\\\n\\\&#39;, \\\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 351, in __call__\\\\n    return self.method(*args, **kwargs)\\\\n\\\&#39;, \\\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/src/footings_idi_model/policy_models/disabled_deterministic_base.py&quot;, line 262, in _calculate_discount\\\\n    self.frame[&quot;DISCOUNT_BD&quot;] = calc_discount(\\\\n\\\&#39;]\\n\&#39;,)&#39;, error_stacktrace=&#39;[\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/jigs.py&quot;, line 84, in wrapper\\n    ret = self.model(**model_kwargs).run()\\n\&#39;, \&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 308, in run\\n    return _run(self, to_step=to_step)\\n\&#39;, \&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 257, in _run\\n    _run_step(step)\\n\&#39;, \&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 254, in _run_step\\n    raise ModelRunError(msg)\\n\&#39;]&#39;),
- Error(key=&quot;({&#39;policy_id&#39;: &#39;M445&#39;, &#39;coverage_id&#39;: &#39;BASE&#39;},)&quot;, error_type=&#39;ModelRunError&#39;, error_value=&#39;(\&#39;At step [_calculate_discount], an error occured.\\n  Error Type = TypeError\\n  Error Message = calc_discount() got an unexpected keyword argument \\\&#39;t_adj\\\&#39;\\n  Error Trace = [\\\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 247, in _run_step\\\\n    return getattr(self, step)()\\\\n\\\&#39;, \\\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 351, in __call__\\\\n    return self.method(*args, **kwargs)\\\\n\\\&#39;, \\\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/src/footings_idi_model/policy_models/disabled_deterministic_base.py&quot;, line 262, in _calculate_discount\\\\n    self.frame[&quot;DISCOUNT_BD&quot;] = calc_discount(\\\\n\\\&#39;]\\n\&#39;,)&#39;, error_stacktrace=&#39;[\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/jigs.py&quot;, line 84, in wrapper\\n    ret = self.model(**model_kwargs).run()\\n\&#39;, \&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 308, in run\\n    return _run(self, to_step=to_step)\\n\&#39;, \&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 257, in _run\\n    _run_step(step)\\n\&#39;, \&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 254, in _run_step\\n    raise ModelRunError(msg)\\n\&#39;]&#39;),
- Error(key=&quot;({&#39;policy_id&#39;: &#39;M221&#39;, &#39;coverage_id&#39;: &#39;BASE&#39;},)&quot;, error_type=&#39;ModelRunError&#39;, error_value=&#39;(\&#39;At step [_calculate_discount], an error occured.\\n  Error Type = TypeError\\n  Error Message = calc_discount() got an unexpected keyword argument \\\&#39;t_adj\\\&#39;\\n  Error Trace = [\\\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 247, in _run_step\\\\n    return getattr(self, step)()\\\\n\\\&#39;, \\\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 351, in __call__\\\\n    return self.method(*args, **kwargs)\\\\n\\\&#39;, \\\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/src/footings_idi_model/policy_models/disabled_deterministic_base.py&quot;, line 262, in _calculate_discount\\\\n    self.frame[&quot;DISCOUNT_BD&quot;] = calc_discount(\\\\n\\\&#39;]\\n\&#39;,)&#39;, error_stacktrace=&#39;[\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/jigs.py&quot;, line 84, in wrapper\\n    ret = self.model(**model_kwargs).run()\\n\&#39;, \&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 308, in run\\n    return _run(self, to_step=to_step)\\n\&#39;, \&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 257, in _run\\n    _run_step(step)\\n\&#39;, \&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 254, in _run_step\\n    raise ModelRunError(msg)\\n\&#39;]&#39;),
- Error(key=&quot;({&#39;policy_id&#39;: &#39;M9&#39;, &#39;coverage_id&#39;: &#39;BASE&#39;},)&quot;, error_type=&#39;ModelRunError&#39;, error_value=&#39;(\&#39;At step [_calculate_discount], an error occured.\\n  Error Type = TypeError\\n  Error Message = calc_discount() got an unexpected keyword argument \\\&#39;t_adj\\\&#39;\\n  Error Trace = [\\\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 247, in _run_step\\\\n    return getattr(self, step)()\\\\n\\\&#39;, \\\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 351, in __call__\\\\n    return self.method(*args, **kwargs)\\\\n\\\&#39;, \\\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/src/footings_idi_model/policy_models/disabled_deterministic_base.py&quot;, line 262, in _calculate_discount\\\\n    self.frame[&quot;DISCOUNT_BD&quot;] = calc_discount(\\\\n\\\&#39;]\\n\&#39;,)&#39;, error_stacktrace=&#39;[\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/jigs.py&quot;, line 84, in wrapper\\n    ret = self.model(**model_kwargs).run()\\n\&#39;, \&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 308, in run\\n    return _run(self, to_step=to_step)\\n\&#39;, \&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 257, in _run\\n    _run_step(step)\\n\&#39;, \&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 254, in _run_step\\n    raise ModelRunError(msg)\\n\&#39;]&#39;),
- Error(key=&quot;({&#39;policy_id&#39;: &#39;M776&#39;, &#39;coverage_id&#39;: &#39;BASE&#39;},)&quot;, error_type=&#39;ModelRunError&#39;, error_value=&#39;(\&#39;At step [_calculate_discount], an error occured.\\n  Error Type = TypeError\\n  Error Message = calc_discount() got an unexpected keyword argument \\\&#39;t_adj\\\&#39;\\n  Error Trace = [\\\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 247, in _run_step\\\\n    return getattr(self, step)()\\\\n\\\&#39;, \\\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 351, in __call__\\\\n    return self.method(*args, **kwargs)\\\\n\\\&#39;, \\\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/src/footings_idi_model/policy_models/disabled_deterministic_base.py&quot;, line 262, in _calculate_discount\\\\n    self.frame[&quot;DISCOUNT_BD&quot;] = calc_discount(\\\\n\\\&#39;]\\n\&#39;,)&#39;, error_stacktrace=&#39;[\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/jigs.py&quot;, line 84, in wrapper\\n    ret = self.model(**model_kwargs).run()\\n\&#39;, \&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 308, in run\\n    return _run(self, to_step=to_step)\\n\&#39;, \&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 257, in _run\\n    _run_step(step)\\n\&#39;, \&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 254, in _run_step\\n    raise ModelRunError(msg)\\n\&#39;]&#39;),
- Error(key=&quot;({&#39;policy_id&#39;: &#39;M776&#39;, &#39;coverage_id&#39;: &#39;SIS&#39;},)&quot;, error_type=&#39;ModelRunError&#39;, error_value=&#39;(\&#39;At step [_calculate_discount], an error occured.\\n  Error Type = TypeError\\n  Error Message = calc_discount() got an unexpected keyword argument \\\&#39;t_adj\\\&#39;\\n  Error Trace = [\\\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 247, in _run_step\\\\n    return getattr(self, step)()\\\\n\\\&#39;, \\\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 351, in __call__\\\\n    return self.method(*args, **kwargs)\\\\n\\\&#39;, \\\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/src/footings_idi_model/policy_models/disabled_deterministic_base.py&quot;, line 262, in _calculate_discount\\\\n    self.frame[&quot;DISCOUNT_BD&quot;] = calc_discount(\\\\n\\\&#39;]\\n\&#39;,)&#39;, error_stacktrace=&#39;[\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/jigs.py&quot;, line 84, in wrapper\\n    ret = self.model(**model_kwargs).run()\\n\&#39;, \&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 308, in run\\n    return _run(self, to_step=to_step)\\n\&#39;, \&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 257, in _run\\n    _run_step(step)\\n\&#39;, \&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 254, in _run_step\\n    raise ModelRunError(msg)\\n\&#39;]&#39;),
- Error(key=&quot;({&#39;policy_id&#39;: &#39;M776&#39;, &#39;coverage_id&#39;: &#39;COLA&#39;},)&quot;, error_type=&#39;ModelRunError&#39;, error_value=&#39;(\&#39;At step [_calculate_discount], an error occured.\\n  Error Type = TypeError\\n  Error Message = calc_discount() got an unexpected keyword argument \\\&#39;t_adj\\\&#39;\\n  Error Trace = [\\\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 247, in _run_step\\\\n    return getattr(self, step)()\\\\n\\\&#39;, \\\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 351, in __call__\\\\n    return self.method(*args, **kwargs)\\\\n\\\&#39;, \\\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/src/footings_idi_model/policy_models/disabled_deterministic_base.py&quot;, line 262, in _calculate_discount\\\\n    self.frame[&quot;DISCOUNT_BD&quot;] = calc_discount(\\\\n\\\&#39;]\\n\&#39;,)&#39;, error_stacktrace=&#39;[\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/jigs.py&quot;, line 84, in wrapper\\n    ret = self.model(**model_kwargs).run()\\n\&#39;, \&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 308, in run\\n    return _run(self, to_step=to_step)\\n\&#39;, \&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 257, in _run\\n    _run_step(step)\\n\&#39;, \&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 254, in _run_step\\n    raise ModelRunError(msg)\\n\&#39;]&#39;)]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[]
 </pre></div>
 </div>
 </div>

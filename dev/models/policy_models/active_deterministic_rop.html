@@ -440,65 +440,46 @@ rop_return_freq, rop_return_percent and rop_claims_paid parameters.</p>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="nn">~/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py</span> in <span class="ni">_run_step</span><span class="nt">(step)</span>
-<span class="g g-Whitespace">    </span><span class="mi">246</span>         <span class="k">try</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">247</span>             <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">step</span><span class="p">)()</span>
-<span class="g g-Whitespace">    </span><span class="mi">248</span>         <span class="k">except</span><span class="p">:</span>
-
-<span class="nn">~/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py</span> in <span class="ni">__call__</span><span class="nt">(self, *args, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">350</span>     <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="ne">--&gt; </span><span class="mi">351</span>         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">method</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">352</span> 
-
-<span class="nn">~/work/footings-idi-model/footings-idi-model/src/footings_idi_model/policy_models/active_deterministic_base.py</span> in <span class="ni">_calculate_discount</span><span class="nt">(self)</span>
-<span class="g g-Whitespace">    </span><span class="mi">398</span>         <span class="p">)</span>
-<span class="ne">--&gt; </span><span class="mi">399</span>         <span class="bp">self</span><span class="o">.</span><span class="n">frame</span><span class="p">[</span><span class="s2">&quot;DISCOUNT_BD&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">calc_discount</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frame</span><span class="p">[</span><span class="s2">&quot;INTEREST_RATE&quot;</span><span class="p">],</span> <span class="n">t_adj</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">400</span>         <span class="bp">self</span><span class="o">.</span><span class="n">frame</span><span class="p">[</span><span class="s2">&quot;DISCOUNT_MD&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">calc_discount</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frame</span><span class="p">[</span><span class="s2">&quot;INTEREST_RATE&quot;</span><span class="p">],</span> <span class="n">t_adj</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
-
-<span class="ne">TypeError</span>: calc_discount() got an unexpected keyword argument &#39;t_adj&#39;
-
-<span class="n">During</span> <span class="n">handling</span> <span class="n">of</span> <span class="n">the</span> <span class="n">above</span> <span class="n">exception</span><span class="p">,</span> <span class="n">another</span> <span class="n">exception</span> <span class="n">occurred</span><span class="p">:</span>
-
-<span class="ne">ModelRunError</span><span class="g g-Whitespace">                             </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">2</span><span class="o">-</span><span class="mi">26</span><span class="n">c491dd16c9</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">output</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
-
-<span class="nn">~/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py</span> in <span class="ni">run</span><span class="nt">(self, to_step)</span>
-<span class="g g-Whitespace">    </span><span class="mi">306</span> 
-<span class="g g-Whitespace">    </span><span class="mi">307</span>         <span class="s2">&quot;&quot;&quot;</span>
-<span class="ne">--&gt; </span><span class="mi">308</span><span class="s2">         return _run(self, to_step=to_step)</span>
-<span class="g g-Whitespace">    </span><span class="mi">309</span><span class="s2"> </span>
-<span class="g g-Whitespace">    </span><span class="mi">310</span><span class="s2"> </span>
-
-<span class="nn">~/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py</span> in <span class="ni">_run</span><span class="nt">(self, to_step)</span>
-<span class="g g-Whitespace">    </span><span class="mi">255</span><span class="s2"> </span>
-<span class="g g-Whitespace">    </span><span class="mi">256</span><span class="s2">     for step in steps:</span>
-<span class="ne">--&gt; </span><span class="mi">257</span><span class="s2">         _run_step(step)</span>
-<span class="g g-Whitespace">    </span><span class="mi">258</span><span class="s2"> </span>
-<span class="g g-Whitespace">    </span><span class="mi">259</span><span class="s2">     if to_step is not None:</span>
-
-<span class="nn">~/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py</span> in <span class="ni">_run_step</span><span class="nt">(step)</span>
-<span class="g g-Whitespace">    </span><span class="mi">252</span><span class="s2">             msg += f&quot;  Error Message = </span><span class="si">{exc_value}</span><span class="se">\n</span><span class="s2">&quot;</span>
-<span class="g g-Whitespace">    </span><span class="mi">253</span><span class="s2">             msg += f&quot;  Error Trace = {format_list(extract_tb(exc_trace))}</span><span class="se">\n</span><span class="s2">&quot;</span>
-<span class="ne">--&gt; </span><span class="mi">254</span><span class="s2">             raise ModelRunError(msg)</span>
-<span class="g g-Whitespace">    </span><span class="mi">255</span><span class="s2"> </span>
-<span class="g g-Whitespace">    </span><span class="mi">256</span><span class="s2">     for step in steps:</span>
-
-<span class="ne">ModelRunError</span>: At step [_calculate_discount], an error occured.
-<span class="s2">  Error Type = TypeError</span>
-<span class="s2">  Error Message = calc_discount() got an unexpected keyword argument &#39;t_adj&#39;</span>
-<span class="s2">  Error Trace = [&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 247, in _run_step</span><span class="se">\n</span><span class="s2">    return getattr(self, step)()</span><span class="se">\n</span><span class="s2">&#39;, &#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/model.py&quot;, line 351, in __call__</span><span class="se">\n</span><span class="s2">    return self.method(*args, **kwargs)</span><span class="se">\n</span><span class="s2">&#39;, &#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/src/footings_idi_model/policy_models/active_deterministic_base.py&quot;, line 399, in _calculate_discount</span><span class="se">\n</span><span class="s2">    self.frame[&quot;DISCOUNT_BD&quot;] = calc_discount(self.frame[&quot;INTEREST_RATE&quot;], t_adj=0)</span><span class="se">\n</span><span class="s2">&#39;]</span>
-</pre></div>
-</div>
-</div>
 </div>
 <p>The model returns a DataFrame of the projected reserves.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">output</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+Int64Index: 16 entries, 4 to 19
+Data columns (total 24 columns):
+ #   Column                Non-Null Count  Dtype         
+---  ------                --------------  -----         
+ 0   MODEL_VERSION         16 non-null     object        
+ 1   LAST_COMMIT           16 non-null     object        
+ 2   RUN_DATE_TIME         16 non-null     datetime64[ns]
+ 3   SOURCE                16 non-null     object        
+ 4   POLICY_ID             16 non-null     object        
+ 5   COVERAGE_ID           16 non-null     object        
+ 6   DATE_BD               16 non-null     datetime64[ns]
+ 7   DATE_ED               16 non-null     datetime64[ns]
+ 8   DURATION_YEAR         16 non-null     Int64         
+ 9   LIVES_BD              16 non-null     float64       
+ 10  LIVES_MD              16 non-null     float64       
+ 11  LIVES_ED              16 non-null     float64       
+ 12  DISCOUNT_BD           16 non-null     float64       
+ 13  DISCOUNT_MD           16 non-null     float64       
+ 14  DISCOUNT_ED           16 non-null     float64       
+ 15  BENEFIT_AMOUNT        16 non-null     float64       
+ 16  FINAL_INCIDENCE_RATE  16 non-null     int64         
+ 17  BENEFIT_COST          16 non-null     float64       
+ 18  PVFB                  16 non-null     float64       
+ 19  PVFNB                 16 non-null     float64       
+ 20  ALR_BD                16 non-null     float64       
+ 21  ALR_ED                16 non-null     float64       
+ 22  ALR_DATE              16 non-null     datetime64[ns]
+ 23  ALR                   16 non-null     float64       
+dtypes: Int64(1), datetime64[ns](4), float64(13), int64(1), object(5)
+memory usage: 3.1+ KB
 </pre></div>
 </div>
 </div>
@@ -509,6 +490,437 @@ rop_return_freq, rop_return_percent and rop_claims_paid parameters.</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>MODEL_VERSION</th>
+      <th>LAST_COMMIT</th>
+      <th>RUN_DATE_TIME</th>
+      <th>SOURCE</th>
+      <th>POLICY_ID</th>
+      <th>COVERAGE_ID</th>
+      <th>DATE_BD</th>
+      <th>DATE_ED</th>
+      <th>DURATION_YEAR</th>
+      <th>LIVES_BD</th>
+      <th>...</th>
+      <th>DISCOUNT_ED</th>
+      <th>BENEFIT_AMOUNT</th>
+      <th>FINAL_INCIDENCE_RATE</th>
+      <th>BENEFIT_COST</th>
+      <th>PVFB</th>
+      <th>PVFNB</th>
+      <th>ALR_BD</th>
+      <th>ALR_ED</th>
+      <th>ALR_DATE</th>
+      <th>ALR</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>4</th>
+      <td>0.6.0rc0</td>
+      <td>89ce0930fc741458f9939b4377801596f197c637</td>
+      <td>2021-02-25 13:13:58.472904</td>
+      <td>AValRopRPMD</td>
+      <td>policy-1</td>
+      <td>ROP</td>
+      <td>2019-06-02</td>
+      <td>2020-06-02</td>
+      <td>5</td>
+      <td>0.987588</td>
+      <td>...</td>
+      <td>0.862609</td>
+      <td>50.0</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>730.303961</td>
+      <td>541.138694</td>
+      <td>215.582975</td>
+      <td>274.157977</td>
+      <td>2020-03-31</td>
+      <td>264.08</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0.6.0rc0</td>
+      <td>89ce0930fc741458f9939b4377801596f197c637</td>
+      <td>2021-02-25 13:13:58.472904</td>
+      <td>AValRopRPMD</td>
+      <td>policy-1</td>
+      <td>ROP</td>
+      <td>2020-06-02</td>
+      <td>2021-06-02</td>
+      <td>6</td>
+      <td>0.983993</td>
+      <td>...</td>
+      <td>0.837484</td>
+      <td>50.0</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>730.303961</td>
+      <td>497.598335</td>
+      <td>274.157977</td>
+      <td>334.801367</td>
+      <td>2021-03-31</td>
+      <td>324.36</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>0.6.0rc0</td>
+      <td>89ce0930fc741458f9939b4377801596f197c637</td>
+      <td>2021-02-25 13:13:58.472904</td>
+      <td>AValRopRPMD</td>
+      <td>policy-1</td>
+      <td>ROP</td>
+      <td>2021-06-02</td>
+      <td>2022-06-02</td>
+      <td>7</td>
+      <td>0.980146</td>
+      <td>...</td>
+      <td>0.813092</td>
+      <td>50.0</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>730.303961</td>
+      <td>455.480013</td>
+      <td>334.801367</td>
+      <td>397.648970</td>
+      <td>2022-03-31</td>
+      <td>386.83</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>0.6.0rc0</td>
+      <td>89ce0930fc741458f9939b4377801596f197c637</td>
+      <td>2021-02-25 13:13:58.472904</td>
+      <td>AValRopRPMD</td>
+      <td>policy-1</td>
+      <td>ROP</td>
+      <td>2022-06-02</td>
+      <td>2023-06-02</td>
+      <td>8</td>
+      <td>0.975970</td>
+      <td>...</td>
+      <td>0.789409</td>
+      <td>50.0</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>730.303961</td>
+      <td>414.748324</td>
+      <td>397.648970</td>
+      <td>462.863475</td>
+      <td>2023-03-31</td>
+      <td>451.64</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>0.6.0rc0</td>
+      <td>89ce0930fc741458f9939b4377801596f197c637</td>
+      <td>2021-02-25 13:13:58.472904</td>
+      <td>AValRopRPMD</td>
+      <td>policy-1</td>
+      <td>ROP</td>
+      <td>2023-06-02</td>
+      <td>2024-06-02</td>
+      <td>9</td>
+      <td>0.971383</td>
+      <td>...</td>
+      <td>0.766417</td>
+      <td>50.0</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>730.303961</td>
+      <td>375.371458</td>
+      <td>462.863475</td>
+      <td>530.623505</td>
+      <td>2024-03-31</td>
+      <td>518.96</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>0.6.0rc0</td>
+      <td>89ce0930fc741458f9939b4377801596f197c637</td>
+      <td>2021-02-25 13:13:58.472904</td>
+      <td>AValRopRPMD</td>
+      <td>policy-1</td>
+      <td>ROP</td>
+      <td>2024-06-02</td>
+      <td>2025-06-02</td>
+      <td>10</td>
+      <td>0.966322</td>
+      <td>...</td>
+      <td>0.744094</td>
+      <td>50.0</td>
+      <td>0</td>
+      <td>600.0</td>
+      <td>730.303961</td>
+      <td>337.321172</td>
+      <td>530.623505</td>
+      <td>0.000000</td>
+      <td>2025-03-31</td>
+      <td>91.34</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>0.6.0rc0</td>
+      <td>89ce0930fc741458f9939b4377801596f197c637</td>
+      <td>2021-02-25 13:13:58.472904</td>
+      <td>AValRopRPMD</td>
+      <td>policy-1</td>
+      <td>ROP</td>
+      <td>2025-06-02</td>
+      <td>2026-06-02</td>
+      <td>11</td>
+      <td>0.960689</td>
+      <td>...</td>
+      <td>0.722421</td>
+      <td>50.0</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>293.735993</td>
+      <td>300.571614</td>
+      <td>0.000000</td>
+      <td>41.531074</td>
+      <td>2026-03-31</td>
+      <td>34.38</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>0.6.0rc0</td>
+      <td>89ce0930fc741458f9939b4377801596f197c637</td>
+      <td>2021-02-25 13:13:58.472904</td>
+      <td>AValRopRPMD</td>
+      <td>policy-1</td>
+      <td>ROP</td>
+      <td>2026-06-02</td>
+      <td>2027-06-02</td>
+      <td>12</td>
+      <td>0.954425</td>
+      <td>...</td>
+      <td>0.701380</td>
+      <td>50.0</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>293.735993</td>
+      <td>265.100442</td>
+      <td>41.531074</td>
+      <td>94.573185</td>
+      <td>2027-03-31</td>
+      <td>85.44</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>0.6.0rc0</td>
+      <td>89ce0930fc741458f9939b4377801596f197c637</td>
+      <td>2021-02-25 13:13:58.472904</td>
+      <td>AValRopRPMD</td>
+      <td>policy-1</td>
+      <td>ROP</td>
+      <td>2027-06-02</td>
+      <td>2028-06-02</td>
+      <td>13</td>
+      <td>0.947496</td>
+      <td>...</td>
+      <td>0.680951</td>
+      <td>50.0</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>293.735993</td>
+      <td>230.886946</td>
+      <td>94.573185</td>
+      <td>149.710154</td>
+      <td>2028-03-31</td>
+      <td>140.22</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>0.6.0rc0</td>
+      <td>89ce0930fc741458f9939b4377801596f197c637</td>
+      <td>2021-02-25 13:13:58.472904</td>
+      <td>AValRopRPMD</td>
+      <td>policy-1</td>
+      <td>ROP</td>
+      <td>2028-06-02</td>
+      <td>2029-06-02</td>
+      <td>14</td>
+      <td>0.939963</td>
+      <td>...</td>
+      <td>0.661118</td>
+      <td>50.0</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>293.735993</td>
+      <td>197.911116</td>
+      <td>149.710154</td>
+      <td>207.098294</td>
+      <td>2029-03-31</td>
+      <td>197.22</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>0.6.0rc0</td>
+      <td>89ce0930fc741458f9939b4377801596f197c637</td>
+      <td>2021-02-25 13:13:58.472904</td>
+      <td>AValRopRPMD</td>
+      <td>policy-1</td>
+      <td>ROP</td>
+      <td>2029-06-02</td>
+      <td>2030-06-02</td>
+      <td>15</td>
+      <td>0.931851</td>
+      <td>...</td>
+      <td>0.641862</td>
+      <td>50.0</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>293.735993</td>
+      <td>166.150269</td>
+      <td>207.098294</td>
+      <td>266.935351</td>
+      <td>2030-03-31</td>
+      <td>256.64</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>0.6.0rc0</td>
+      <td>89ce0930fc741458f9939b4377801596f197c637</td>
+      <td>2021-02-25 13:13:58.472904</td>
+      <td>AValRopRPMD</td>
+      <td>policy-1</td>
+      <td>ROP</td>
+      <td>2030-06-02</td>
+      <td>2031-06-02</td>
+      <td>16</td>
+      <td>0.923073</td>
+      <td>...</td>
+      <td>0.623167</td>
+      <td>50.0</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>293.735993</td>
+      <td>135.580607</td>
+      <td>266.935351</td>
+      <td>329.479577</td>
+      <td>2031-03-31</td>
+      <td>318.71</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>0.6.0rc0</td>
+      <td>89ce0930fc741458f9939b4377801596f197c637</td>
+      <td>2021-02-25 13:13:58.472904</td>
+      <td>AValRopRPMD</td>
+      <td>policy-1</td>
+      <td>ROP</td>
+      <td>2031-06-02</td>
+      <td>2032-06-02</td>
+      <td>17</td>
+      <td>0.913473</td>
+      <td>...</td>
+      <td>0.605016</td>
+      <td>50.0</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>293.735993</td>
+      <td>106.180903</td>
+      <td>329.479577</td>
+      <td>395.052197</td>
+      <td>2032-03-31</td>
+      <td>383.77</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>0.6.0rc0</td>
+      <td>89ce0930fc741458f9939b4377801596f197c637</td>
+      <td>2021-02-25 13:13:58.472904</td>
+      <td>AValRopRPMD</td>
+      <td>policy-1</td>
+      <td>ROP</td>
+      <td>2032-06-02</td>
+      <td>2033-06-02</td>
+      <td>18</td>
+      <td>0.902886</td>
+      <td>...</td>
+      <td>0.587395</td>
+      <td>50.0</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>293.735993</td>
+      <td>77.934353</td>
+      <td>395.052197</td>
+      <td>464.036534</td>
+      <td>2033-03-31</td>
+      <td>452.16</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>0.6.0rc0</td>
+      <td>89ce0930fc741458f9939b4377801596f197c637</td>
+      <td>2021-02-25 13:13:58.472904</td>
+      <td>AValRopRPMD</td>
+      <td>policy-1</td>
+      <td>ROP</td>
+      <td>2033-06-02</td>
+      <td>2034-06-02</td>
+      <td>19</td>
+      <td>0.891167</td>
+      <td>...</td>
+      <td>0.570286</td>
+      <td>50.0</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>293.735993</td>
+      <td>50.828360</td>
+      <td>464.036534</td>
+      <td>536.835213</td>
+      <td>2034-03-31</td>
+      <td>524.30</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>0.6.0rc0</td>
+      <td>89ce0930fc741458f9939b4377801596f197c637</td>
+      <td>2021-02-25 13:13:58.472904</td>
+      <td>AValRopRPMD</td>
+      <td>policy-1</td>
+      <td>ROP</td>
+      <td>2034-06-02</td>
+      <td>2035-06-02</td>
+      <td>20</td>
+      <td>0.878272</td>
+      <td>...</td>
+      <td>0.553676</td>
+      <td>50.0</td>
+      <td>0</td>
+      <td>600.0</td>
+      <td>293.735993</td>
+      <td>24.853450</td>
+      <td>536.835213</td>
+      <td>0.000000</td>
+      <td>2035-03-31</td>
+      <td>92.41</td>
+    </tr>
+  </tbody>
+</table>
+<p>16 rows × 24 columns</p>
+</div></div></div>
 </div>
 <p>An audit of the model is ran by calling the <code class="docutils literal notranslate"><span class="pre">audit</span></code> method shown below.</p>
 <div class="cell docutils container">
@@ -518,7 +930,7 @@ rop_return_freq, rop_return_percent and rop_claims_paid parameters.</p>
 </div>
 </div>
 </div>
-<p>The audit file can be downloaded <code class="xref download docutils literal notranslate"><span class="pre">here.</span></code></p>
+<p>The audit file can be downloaded <a class="reference download internal" download="" href="../../_downloads/a05c9736522987ae5a1cc5751558fd65/Audit-AValRopRPMD.xlsx"><code class="xref download docutils literal notranslate"><span class="pre">here.</span></code></a></p>
 </div>
 </div>
 <div class="section" id="projection-model">
