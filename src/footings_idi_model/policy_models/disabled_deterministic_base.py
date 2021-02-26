@@ -1,12 +1,14 @@
 import pandas as pd
-from footings.actuarial_tools import calc_continuance, calc_discount, calc_pv
-from footings.model import def_intermediate, def_meta, def_return, model, step
-from footings.model_tools import (
+from footings.actuarial_tools import (
+    calc_continuance,
+    calc_discount,
+    calc_pv,
     calculate_age,
     create_frame,
     frame_add_exposure,
     frame_add_weights,
 )
+from footings.model import def_intermediate, def_meta, def_return, model, step
 
 from ..assumptions.get_claim_term_rates import get_ctr_table
 from ..assumptions.stat_gaap.interest import get_interest_rate

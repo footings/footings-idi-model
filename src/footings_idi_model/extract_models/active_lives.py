@@ -1,6 +1,6 @@
 import pandas as pd
+from footings.actuarial_tools import convert_to_records
 from footings.model import def_intermediate, def_parameter, def_return, model, step
-from footings.model_tools import convert_to_records
 from footings.parallel_tools.dask import create_dask_foreach_jig
 
 from ..data import ActiveLivesValOutput  # ActiveLivesBaseExtract,

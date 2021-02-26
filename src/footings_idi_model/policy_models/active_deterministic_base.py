@@ -8,16 +8,14 @@ from footings.actuarial_tools import (
     calc_interpolation,
     calc_pv,
     calc_pvfnb,
-)
-from footings.exceptions import ModelRunError
-from footings.jigs import create_foreach_jig
-from footings.model import def_intermediate, def_meta, def_return, model, step
-from footings.model_tools import (
     calculate_age,
     convert_to_records,
     create_frame,
     frame_add_weights,
 )
+from footings.exceptions import ModelRunError
+from footings.jigs import create_foreach_jig
+from footings.model import def_intermediate, def_meta, def_return, model, step
 
 from ..assumptions.get_incidence_rates import get_incidence_rates
 from ..assumptions.get_withdraw_rates import get_withdraw_rates
