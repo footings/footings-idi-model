@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Active - Deterministic - Residual Rider &#8212; Footings IDI Model 0.6.0rc0 documentation</title>
+    <title>Active - Deterministic - Residual Rider &#8212; Footings IDI Model 0.6.0 documentation</title>
     
   <link rel="stylesheet" href="../../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
@@ -135,6 +135,12 @@
         
           
             
+                <li class="">
+                    <a href="../extract_models/index.html">Extract Models</a>
+                </li>
+            
+          
+            
   
                 <li class="active">
                     <a href="index.html">Policy Models</a>
@@ -189,12 +195,6 @@
                         </li>
                     
                     </ul>
-                </li>
-            
-          
-            
-                <li class="">
-                    <a href="../extract_models/index.html">Extract Models</a>
                 </li>
             
           
@@ -368,7 +368,7 @@ calculates the benefit as the benefit amount x residual benefit percent.</p>
 </dd>
 <dt>incidence_rates<span class="classifier">DataFrame</span></dt><dd><p>The placholder for incidence rates.</p>
 </dd>
-<dt>modeled_disabled_lives<span class="classifier">dict</span></dt><dd><p>The placholder for modeled disabled lives.</p>
+<dt>modeled_claim_cost<span class="classifier">dict</span></dt><dd><p>The placholder for modeled disabled lives.</p>
 </dd>
 </dl>
 <p class="rubric">Returns</p>
@@ -380,20 +380,17 @@ calculates the benefit as the benefit amount x residual benefit percent.</p>
 <ol class="arabic simple">
 <li><p>Calculate Issue Age - Calculate the age policy issued.</p></li>
 <li><p>Create Projectetd Frame - Create projected benefit frame from policy start date to policy end date by duration year.</p></li>
-<li><p>Calculate Weights - Calculate weights to assign to beginning and ending duration.</p></li>
 <li><p>Calculate Age Attained - Calculate age attained by policy duration on the frame.</p></li>
 <li><p>Calculate Benefit Term Date - Calculate benefit termination date if active individual were to become disabled for each policy duration.</p></li>
-<li><p>Get Withdraw Rates - Get withdraw rates and multiply by incidence sensitivity to form final rate.</p></li>
-<li><p>Merge Withdraw Rates - Merge withdraw rates into frame.</p></li>
-<li><p>Calculate Lives - Calculate the beginning, middle, and ending lives for each duration using withdraw rates.</p></li>
-<li><p>Get Incidence Rate - Get incidence rates and multiply by incidence sensitivity to form final rate.</p></li>
-<li><p>Merge Incidence Rate - Merge incidence rates into frame.</p></li>
 <li><p>Model Claim Cost - Model claim cost for active live if policy holder were to become disabled for each policy duration</p></li>
+<li><p>Get Incidence Rate - Get incidence rates and multiply by incidence sensitivity to form final rate.</p></li>
+<li><p>Get Withdraw Rates - Get withdraw rates and multiply by incidence sensitivity to form final rate.</p></li>
+<li><p>Calculate Premiums - None</p></li>
 <li><p>Calculate Benefit Cost - Calculate benefit cost by multiplying disabled claim cost by final incidence rate.</p></li>
+<li><p>Calculate Lives - Calculate the beginning, middle, and ending lives for each duration using withdraw rates.</p></li>
 <li><p>Calculate Discount Factors - Calculate beginning, middle, and ending discount factors for each duration.</p></li>
-<li><p>Calculate PVFB - Calculate present value of future benefits (PVFB).</p></li>
-<li><p>Calculate PVNFB - Calculate present value net future benefits (PVNFB).</p></li>
-<li><p>Calculate ALR - Calculate active life reserves (ALR) from issue.</p></li>
+<li><p>Calculate Durational ALR - Calculate active life reserves (ALR) for each duration.</p></li>
+<li><p>Calculate Valuation Date ALR - Calculate active life reserves (ALR) for each duration as of valuation date.</p></li>
 <li><p>Create Output Frame - Reduce output to only needed columns.</p></li>
 </ol>
 </dd></dl>
@@ -476,7 +473,7 @@ Data columns (total 24 columns):
  19  PVFNB                 16 non-null     float64       
  20  ALR_BD                16 non-null     float64       
  21  ALR_ED                16 non-null     float64       
- 22  DATE_ALR              16 non-null     datetime64[ns]
+ 22  ALR_DATE              16 non-null     datetime64[ns]
  23  ALR                   16 non-null     float64       
 dtypes: Int64(1), datetime64[ns](4), float64(14), object(5)
 memory usage: 3.1+ KB
@@ -528,16 +525,16 @@ memory usage: 3.1+ KB
       <th>PVFNB</th>
       <th>ALR_BD</th>
       <th>ALR_ED</th>
-      <th>DATE_ALR</th>
+      <th>ALR_DATE</th>
       <th>ALR</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>4</th>
-      <td>0.6.0rc0</td>
-      <td>393095ada0ab0bb19131401b0ecf4b9e3206e14d</td>
-      <td>2021-02-08 12:06:16.899916</td>
+      <td>0.6.0</td>
+      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
+      <td>2021-02-26 12:01:54.844523</td>
       <td>AValResRPMD</td>
       <td>policy-1</td>
       <td>RES</td>
@@ -549,19 +546,19 @@ memory usage: 3.1+ KB
       <td>0.862609</td>
       <td>100.0</td>
       <td>0.007967</td>
-      <td>31.66</td>
-      <td>360.80</td>
-      <td>342.29</td>
-      <td>20.83</td>
-      <td>21.71</td>
+      <td>31.576347</td>
+      <td>360.176722</td>
+      <td>341.607924</td>
+      <td>21.162007</td>
+      <td>22.153593</td>
       <td>2020-03-31</td>
-      <td>21.56</td>
+      <td>21.98</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>0.6.0rc0</td>
-      <td>393095ada0ab0bb19131401b0ecf4b9e3206e14d</td>
-      <td>2021-02-08 12:06:16.899916</td>
+      <td>0.6.0</td>
+      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
+      <td>2021-02-26 12:01:54.844523</td>
       <td>AValResRPMD</td>
       <td>policy-1</td>
       <td>RES</td>
@@ -573,19 +570,19 @@ memory usage: 3.1+ KB
       <td>0.837484</td>
       <td>100.0</td>
       <td>0.008640</td>
-      <td>33.51</td>
-      <td>333.48</td>
-      <td>314.75</td>
-      <td>21.71</td>
-      <td>20.78</td>
+      <td>33.422365</td>
+      <td>332.925933</td>
+      <td>314.121936</td>
+      <td>22.153593</td>
+      <td>21.312104</td>
       <td>2021-03-31</td>
-      <td>20.94</td>
+      <td>21.46</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>0.6.0rc0</td>
-      <td>393095ada0ab0bb19131401b0ecf4b9e3206e14d</td>
-      <td>2021-02-08 12:06:16.899916</td>
+      <td>0.6.0</td>
+      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
+      <td>2021-02-26 12:01:54.844523</td>
       <td>AValResRPMD</td>
       <td>policy-1</td>
       <td>RES</td>
@@ -597,19 +594,19 @@ memory usage: 3.1+ KB
       <td>0.813092</td>
       <td>100.0</td>
       <td>0.009378</td>
-      <td>35.32</td>
-      <td>305.51</td>
-      <td>288.11</td>
-      <td>20.78</td>
-      <td>18.02</td>
+      <td>35.235154</td>
+      <td>305.027829</td>
+      <td>287.533646</td>
+      <td>21.312104</td>
+      <td>18.611398</td>
       <td>2022-03-31</td>
-      <td>18.50</td>
+      <td>19.08</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>0.6.0rc0</td>
-      <td>393095ada0ab0bb19131401b0ecf4b9e3206e14d</td>
-      <td>2021-02-08 12:06:16.899916</td>
+      <td>0.6.0</td>
+      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
+      <td>2021-02-26 12:01:54.844523</td>
       <td>AValResRPMD</td>
       <td>policy-1</td>
       <td>RES</td>
@@ -621,19 +618,19 @@ memory usage: 3.1+ KB
       <td>0.789409</td>
       <td>100.0</td>
       <td>0.010159</td>
-      <td>36.94</td>
-      <td>277.00</td>
-      <td>262.35</td>
-      <td>18.02</td>
-      <td>13.62</td>
+      <td>36.859723</td>
+      <td>276.589840</td>
+      <td>261.820704</td>
+      <td>18.611398</td>
+      <td>14.180018</td>
       <td>2023-03-31</td>
-      <td>14.38</td>
+      <td>14.94</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>0.6.0rc0</td>
-      <td>393095ada0ab0bb19131401b0ecf4b9e3206e14d</td>
-      <td>2021-02-08 12:06:16.899916</td>
+      <td>0.6.0</td>
+      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
+      <td>2021-02-26 12:01:54.844523</td>
       <td>AValResRPMD</td>
       <td>policy-1</td>
       <td>RES</td>
@@ -645,19 +642,19 @@ memory usage: 3.1+ KB
       <td>0.766417</td>
       <td>100.0</td>
       <td>0.010993</td>
-      <td>38.34</td>
-      <td>248.19</td>
-      <td>237.44</td>
-      <td>13.62</td>
-      <td>7.72</td>
+      <td>38.261908</td>
+      <td>247.836537</td>
+      <td>236.963030</td>
+      <td>14.180018</td>
+      <td>8.181862</td>
       <td>2024-03-31</td>
-      <td>8.74</td>
+      <td>9.21</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>0.6.0rc0</td>
-      <td>393095ada0ab0bb19131401b0ecf4b9e3206e14d</td>
-      <td>2021-02-08 12:06:16.899916</td>
+      <td>0.6.0</td>
+      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
+      <td>2021-02-26 12:01:54.844523</td>
       <td>AValResRPMD</td>
       <td>policy-1</td>
       <td>RES</td>
@@ -669,19 +666,19 @@ memory usage: 3.1+ KB
       <td>0.744094</td>
       <td>100.0</td>
       <td>0.011891</td>
-      <td>39.50</td>
-      <td>219.29</td>
-      <td>213.37</td>
-      <td>7.72</td>
-      <td>0.56</td>
+      <td>39.420154</td>
+      <td>219.002327</td>
+      <td>212.942793</td>
+      <td>8.181862</td>
+      <td>0.805804</td>
       <td>2025-03-31</td>
-      <td>1.79</td>
+      <td>2.08</td>
     </tr>
     <tr>
       <th>10</th>
-      <td>0.6.0rc0</td>
-      <td>393095ada0ab0bb19131401b0ecf4b9e3206e14d</td>
-      <td>2021-02-08 12:06:16.899916</td>
+      <td>0.6.0</td>
+      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
+      <td>2021-02-26 12:01:54.844523</td>
       <td>AValResRPMD</td>
       <td>policy-1</td>
       <td>RES</td>
@@ -693,19 +690,19 @@ memory usage: 3.1+ KB
       <td>0.722421</td>
       <td>100.0</td>
       <td>0.012832</td>
-      <td>40.24</td>
-      <td>190.55</td>
-      <td>190.13</td>
-      <td>0.56</td>
-      <td>0.00</td>
+      <td>40.166564</td>
+      <td>190.319699</td>
+      <td>189.743676</td>
+      <td>0.805804</td>
+      <td>0.000000</td>
       <td>2026-03-31</td>
-      <td>0.10</td>
+      <td>0.14</td>
     </tr>
     <tr>
       <th>11</th>
-      <td>0.6.0rc0</td>
-      <td>393095ada0ab0bb19131401b0ecf4b9e3206e14d</td>
-      <td>2021-02-08 12:06:16.899916</td>
+      <td>0.6.0</td>
+      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
+      <td>2021-02-26 12:01:54.844523</td>
       <td>AValResRPMD</td>
       <td>policy-1</td>
       <td>RES</td>
@@ -717,19 +714,19 @@ memory usage: 3.1+ KB
       <td>0.701380</td>
       <td>100.0</td>
       <td>0.013837</td>
-      <td>40.52</td>
-      <td>162.30</td>
-      <td>167.69</td>
-      <td>0.00</td>
-      <td>0.00</td>
+      <td>40.452499</td>
+      <td>162.120393</td>
+      <td>167.351573</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
       <td>2027-03-31</td>
       <td>0.00</td>
     </tr>
     <tr>
       <th>12</th>
-      <td>0.6.0rc0</td>
-      <td>393095ada0ab0bb19131401b0ecf4b9e3206e14d</td>
-      <td>2021-02-08 12:06:16.899916</td>
+      <td>0.6.0</td>
+      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
+      <td>2021-02-26 12:01:54.844523</td>
       <td>AValResRPMD</td>
       <td>policy-1</td>
       <td>RES</td>
@@ -741,19 +738,19 @@ memory usage: 3.1+ KB
       <td>0.680951</td>
       <td>100.0</td>
       <td>0.014907</td>
-      <td>40.22</td>
-      <td>134.87</td>
-      <td>146.05</td>
-      <td>0.00</td>
-      <td>0.00</td>
+      <td>40.156691</td>
+      <td>134.737472</td>
+      <td>145.753411</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
       <td>2028-03-31</td>
       <td>0.00</td>
     </tr>
     <tr>
       <th>13</th>
-      <td>0.6.0rc0</td>
-      <td>393095ada0ab0bb19131401b0ecf4b9e3206e14d</td>
-      <td>2021-02-08 12:06:16.899916</td>
+      <td>0.6.0</td>
+      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
+      <td>2021-02-26 12:01:54.844523</td>
       <td>AValResRPMD</td>
       <td>policy-1</td>
       <td>RES</td>
@@ -765,19 +762,19 @@ memory usage: 3.1+ KB
       <td>0.661118</td>
       <td>100.0</td>
       <td>0.016019</td>
-      <td>39.12</td>
-      <td>108.64</td>
-      <td>125.19</td>
-      <td>0.00</td>
-      <td>0.00</td>
+      <td>39.071341</td>
+      <td>108.547187</td>
+      <td>124.936557</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
       <td>2029-03-31</td>
       <td>0.00</td>
     </tr>
     <tr>
       <th>14</th>
-      <td>0.6.0rc0</td>
-      <td>393095ada0ab0bb19131401b0ecf4b9e3206e14d</td>
-      <td>2021-02-08 12:06:16.899916</td>
+      <td>0.6.0</td>
+      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
+      <td>2021-02-26 12:01:54.844523</td>
       <td>AValResRPMD</td>
       <td>policy-1</td>
       <td>RES</td>
@@ -789,19 +786,19 @@ memory usage: 3.1+ KB
       <td>0.641862</td>
       <td>100.0</td>
       <td>0.017184</td>
-      <td>37.14</td>
-      <td>84.08</td>
-      <td>105.10</td>
-      <td>0.00</td>
-      <td>0.00</td>
+      <td>37.102529</td>
+      <td>84.012040</td>
+      <td>104.886694</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
       <td>2030-03-31</td>
       <td>0.00</td>
     </tr>
     <tr>
       <th>15</th>
-      <td>0.6.0rc0</td>
-      <td>393095ada0ab0bb19131401b0ecf4b9e3206e14d</td>
-      <td>2021-02-08 12:06:16.899916</td>
+      <td>0.6.0</td>
+      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
+      <td>2021-02-26 12:01:54.844523</td>
       <td>AValResRPMD</td>
       <td>policy-1</td>
       <td>RES</td>
@@ -813,19 +810,19 @@ memory usage: 3.1+ KB
       <td>0.623167</td>
       <td>100.0</td>
       <td>0.018414</td>
-      <td>34.14</td>
-      <td>61.64</td>
-      <td>85.76</td>
-      <td>0.00</td>
-      <td>0.00</td>
+      <td>34.107297</td>
+      <td>61.595937</td>
+      <td>85.588797</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
       <td>2031-03-31</td>
       <td>0.00</td>
     </tr>
     <tr>
       <th>16</th>
-      <td>0.6.0rc0</td>
-      <td>393095ada0ab0bb19131401b0ecf4b9e3206e14d</td>
-      <td>2021-02-08 12:06:16.899916</td>
+      <td>0.6.0</td>
+      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
+      <td>2021-02-26 12:01:54.844523</td>
       <td>AValResRPMD</td>
       <td>policy-1</td>
       <td>RES</td>
@@ -837,19 +834,19 @@ memory usage: 3.1+ KB
       <td>0.605016</td>
       <td>100.0</td>
       <td>0.019708</td>
-      <td>29.93</td>
-      <td>41.81</td>
-      <td>67.16</td>
-      <td>0.00</td>
-      <td>0.00</td>
+      <td>29.903123</td>
+      <td>41.787858</td>
+      <td>67.029467</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
       <td>2032-03-31</td>
       <td>0.00</td>
     </tr>
     <tr>
       <th>17</th>
-      <td>0.6.0rc0</td>
-      <td>393095ada0ab0bb19131401b0ecf4b9e3206e14d</td>
-      <td>2021-02-08 12:06:16.899916</td>
+      <td>0.6.0</td>
+      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
+      <td>2021-02-26 12:01:54.844523</td>
       <td>AValResRPMD</td>
       <td>policy-1</td>
       <td>RES</td>
@@ -861,19 +858,19 @@ memory usage: 3.1+ KB
       <td>0.587395</td>
       <td>100.0</td>
       <td>0.021045</td>
-      <td>24.26</td>
-      <td>25.12</td>
-      <td>49.30</td>
-      <td>0.00</td>
-      <td>0.00</td>
+      <td>24.247241</td>
+      <td>25.112536</td>
+      <td>49.198094</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
       <td>2033-03-31</td>
       <td>0.00</td>
     </tr>
     <tr>
       <th>18</th>
-      <td>0.6.0rc0</td>
-      <td>393095ada0ab0bb19131401b0ecf4b9e3206e14d</td>
-      <td>2021-02-08 12:06:16.899916</td>
+      <td>0.6.0</td>
+      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
+      <td>2021-02-26 12:01:54.844523</td>
       <td>AValResRPMD</td>
       <td>policy-1</td>
       <td>RES</td>
@@ -885,19 +882,19 @@ memory usage: 3.1+ KB
       <td>0.570286</td>
       <td>100.0</td>
       <td>0.022403</td>
-      <td>16.84</td>
-      <td>12.15</td>
-      <td>32.15</td>
-      <td>0.00</td>
-      <td>0.00</td>
+      <td>16.836323</td>
+      <td>12.146232</td>
+      <td>32.086729</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
       <td>2034-03-31</td>
       <td>0.00</td>
     </tr>
     <tr>
       <th>19</th>
-      <td>0.6.0rc0</td>
-      <td>393095ada0ab0bb19131401b0ecf4b9e3206e14d</td>
-      <td>2021-02-08 12:06:16.899916</td>
+      <td>0.6.0</td>
+      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
+      <td>2021-02-26 12:01:54.844523</td>
       <td>AValResRPMD</td>
       <td>policy-1</td>
       <td>RES</td>
@@ -909,11 +906,11 @@ memory usage: 3.1+ KB
       <td>0.553676</td>
       <td>100.0</td>
       <td>0.023750</td>
-      <td>7.20</td>
-      <td>3.52</td>
-      <td>15.72</td>
-      <td>0.00</td>
-      <td>0.00</td>
+      <td>7.200555</td>
+      <td>3.525104</td>
+      <td>15.689389</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
       <td>2035-03-31</td>
       <td>0.00</td>
     </tr>

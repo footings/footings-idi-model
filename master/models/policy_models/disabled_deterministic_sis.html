@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Disabled - Deterministic - SIS Rider &#8212; Footings IDI Model 0.6.0rc0 documentation</title>
+    <title>Disabled - Deterministic - SIS Rider &#8212; Footings IDI Model 0.6.0 documentation</title>
     
   <link rel="stylesheet" href="../../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
@@ -40,7 +40,7 @@
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Extract Models" href="../extract_models/index.html" />
+    <link rel="next" title="Assumptions" href="../../assumptions.html" />
     <link rel="prev" title="Disabled - Deterministic - Residual Rider" href="disabled_deterministic_res.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -135,6 +135,12 @@
         
           
             
+                <li class="">
+                    <a href="../extract_models/index.html">Extract Models</a>
+                </li>
+            
+          
+            
   
                 <li class="active">
                     <a href="index.html">Policy Models</a>
@@ -189,12 +195,6 @@
                         </li>
                     
                     </ul>
-                </li>
-            
-          
-            
-                <li class="">
-                    <a href="../extract_models/index.html">Extract Models</a>
                 </li>
             
           
@@ -342,7 +342,7 @@ to the (1 - SIS prbability) x benefit amount.</p>
 <dl class="simple">
 <dt>age_incurred<span class="classifier">int</span></dt><dd><p>The age when the claim was incurred for the claimant.</p>
 </dd>
-<dt>start_pay_date<span class="classifier">Timestamp</span></dt><dd><p>The date payments start for claimants.</p>
+<dt>start_pay_dt<span class="classifier">Timestamp</span></dt><dd><p>The date payments start for claimants.</p>
 </dd>
 <dt>ctr_table<span class="classifier">DataFrame</span></dt><dd><p>The claim termination rate (CTR) table.</p>
 </dd>
@@ -359,14 +359,14 @@ to the (1 - SIS prbability) x benefit amount.</p>
 <li><p>Calculate Age Incurred - Calculate the age when claimant becomes disabled.</p></li>
 <li><p>Calculate Benefit Start Date - Calculate date benefits start which is incurred date + elimination period days.</p></li>
 <li><p>Create Projected Frame - Create projected benefit frame from valuation date to termination date by duration month.</p></li>
-<li><p>Calculate Weights - Calculate weights to assign to beginning and ending duration.</p></li>
+<li><p>Calculate Age Attained - Calculate age attained by policy duration on the frame.</p></li>
 <li><p>Get CTR Table - Get claim termination rate (CTR) table based on assumption set.</p></li>
-<li><p>Calculate Lives - Calculate the beginning, middle, and ending lives for each duration.</p></li>
 <li><p>Get SIS Probability - Get SIS probability.</p></li>
 <li><p>Calculate Monthly Benefits - Calculate the monthly benefit amount for each duration.</p></li>
+<li><p>Calculate Lives - Calculate the beginning, middle, and ending lives for each duration.</p></li>
 <li><p>Calculate Discount Factors - Calculate beginning, middle, and ending discount factors for each duration.</p></li>
-<li><p>Calculate PVFB - Calculate present value of future benefits (PVFB).</p></li>
-<li><p>Calculate DLR - Calculate disabled life reserves (DLR).</p></li>
+<li><p>Calculate DLR - Calculate durational life reserves (ALR) for each duration.</p></li>
+<li><p>Calculate DLR - Calculate active life reserves (ALR) for each duration as of valuation date.</p></li>
 <li><p>Create Output Frame - Reduce output to only needed columns.</p></li>
 </ol>
 </dd></dl>
@@ -501,9 +501,9 @@ memory usage: 34.3+ KB
   <tbody>
     <tr>
       <th>0</th>
-      <td>0.6.0rc0</td>
-      <td>393095ada0ab0bb19131401b0ecf4b9e3206e14d</td>
-      <td>2021-02-08 12:07:03.184603</td>
+      <td>0.6.0</td>
+      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
+      <td>2021-02-26 12:02:33.000505</td>
       <td>DValSisRPMD</td>
       <td>policy-1</td>
       <td>claim-1</td>
@@ -516,18 +516,18 @@ memory usage: 34.3+ KB
       <td>0.998690</td>
       <td>0.997381</td>
       <td>1.000000</td>
-      <td>0.998769</td>
-      <td>0.997540</td>
-      <td>7490.98</td>
-      <td>7487.12</td>
+      <td>0.998752</td>
+      <td>0.997506</td>
+      <td>7472.241168</td>
+      <td>7468.381059</td>
       <td>2020-03-31</td>
-      <td>7523.08</td>
+      <td>7432.95</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>0.6.0rc0</td>
-      <td>393095ada0ab0bb19131401b0ecf4b9e3206e14d</td>
-      <td>2021-02-08 12:07:03.184603</td>
+      <td>0.6.0</td>
+      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
+      <td>2021-02-26 12:02:33.000505</td>
       <td>DValSisRPMD</td>
       <td>policy-1</td>
       <td>claim-1</td>
@@ -539,19 +539,19 @@ memory usage: 34.3+ KB
       <td>0.997381</td>
       <td>0.996111</td>
       <td>0.994841</td>
-      <td>0.997540</td>
-      <td>0.996312</td>
-      <td>0.995086</td>
-      <td>7487.12</td>
-      <td>7427.58</td>
+      <td>0.997506</td>
+      <td>0.996262</td>
+      <td>0.995019</td>
+      <td>7468.381059</td>
+      <td>7408.837845</td>
       <td>2020-04-30</td>
-      <td>7504.42</td>
+      <td>7340.09</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.6.0rc0</td>
-      <td>393095ada0ab0bb19131401b0ecf4b9e3206e14d</td>
-      <td>2021-02-08 12:07:03.184603</td>
+      <td>0.6.0</td>
+      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
+      <td>2021-02-26 12:02:33.000505</td>
       <td>DValSisRPMD</td>
       <td>policy-1</td>
       <td>claim-1</td>
@@ -563,19 +563,19 @@ memory usage: 34.3+ KB
       <td>0.994841</td>
       <td>0.993574</td>
       <td>0.992307</td>
-      <td>0.995086</td>
-      <td>0.993861</td>
-      <td>0.992638</td>
-      <td>7427.58</td>
-      <td>7368.33</td>
+      <td>0.995019</td>
+      <td>0.993777</td>
+      <td>0.992537</td>
+      <td>7408.837845</td>
+      <td>7349.594372</td>
       <td>2020-05-31</td>
-      <td>7481.98</td>
+      <td>7244.76</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.6.0rc0</td>
-      <td>393095ada0ab0bb19131401b0ecf4b9e3206e14d</td>
-      <td>2021-02-08 12:07:03.184603</td>
+      <td>0.6.0</td>
+      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
+      <td>2021-02-26 12:02:33.000505</td>
       <td>DValSisRPMD</td>
       <td>policy-1</td>
       <td>claim-1</td>
@@ -587,19 +587,19 @@ memory usage: 34.3+ KB
       <td>0.992307</td>
       <td>0.990969</td>
       <td>0.989630</td>
-      <td>0.992638</td>
-      <td>0.991416</td>
-      <td>0.990195</td>
-      <td>7368.33</td>
-      <td>7309.38</td>
+      <td>0.992537</td>
+      <td>0.991299</td>
+      <td>0.990062</td>
+      <td>7349.594372</td>
+      <td>7290.653605</td>
       <td>2020-06-30</td>
-      <td>7460.50</td>
+      <td>7149.47</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.6.0rc0</td>
-      <td>393095ada0ab0bb19131401b0ecf4b9e3206e14d</td>
-      <td>2021-02-08 12:07:03.184603</td>
+      <td>0.6.0</td>
+      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
+      <td>2021-02-26 12:02:33.000505</td>
       <td>DValSisRPMD</td>
       <td>policy-1</td>
       <td>claim-1</td>
@@ -611,13 +611,13 @@ memory usage: 34.3+ KB
       <td>0.989630</td>
       <td>0.988295</td>
       <td>0.986960</td>
-      <td>0.990195</td>
-      <td>0.988977</td>
-      <td>0.987759</td>
-      <td>7309.38</td>
-      <td>7250.74</td>
+      <td>0.990062</td>
+      <td>0.988827</td>
+      <td>0.987593</td>
+      <td>7290.653605</td>
+      <td>7232.018458</td>
       <td>2020-07-31</td>
-      <td>7438.98</td>
+      <td>7055.21</td>
     </tr>
     <tr>
       <th>...</th>
@@ -645,9 +645,9 @@ memory usage: 34.3+ KB
     </tr>
     <tr>
       <th>176</th>
-      <td>0.6.0rc0</td>
-      <td>393095ada0ab0bb19131401b0ecf4b9e3206e14d</td>
-      <td>2021-02-08 12:07:03.184603</td>
+      <td>0.6.0</td>
+      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
+      <td>2021-02-26 12:02:33.000505</td>
       <td>DValSisRPMD</td>
       <td>policy-1</td>
       <td>claim-1</td>
@@ -656,22 +656,22 @@ memory usage: 34.3+ KB
       <td>2034-12-02</td>
       <td>20</td>
       <td>...</td>
-      <td>0.755674</td>
-      <td>0.755109</td>
-      <td>0.754545</td>
-      <td>0.648217</td>
-      <td>0.647420</td>
-      <td>0.646623</td>
-      <td>139.92</td>
-      <td>110.59</td>
+      <td>0.756533</td>
+      <td>0.755991</td>
+      <td>0.755450</td>
+      <td>0.644390</td>
+      <td>0.643586</td>
+      <td>0.642783</td>
+      <td>139.261773</td>
+      <td>110.069042</td>
       <td>2034-11-30</td>
-      <td>230.48</td>
+      <td>54.38</td>
     </tr>
     <tr>
       <th>177</th>
-      <td>0.6.0rc0</td>
-      <td>393095ada0ab0bb19131401b0ecf4b9e3206e14d</td>
-      <td>2021-02-08 12:07:03.184603</td>
+      <td>0.6.0</td>
+      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
+      <td>2021-02-26 12:02:33.000505</td>
       <td>DValSisRPMD</td>
       <td>policy-1</td>
       <td>claim-1</td>
@@ -680,22 +680,22 @@ memory usage: 34.3+ KB
       <td>2035-01-02</td>
       <td>20</td>
       <td>...</td>
-      <td>0.754545</td>
-      <td>0.753982</td>
-      <td>0.753418</td>
-      <td>0.646623</td>
-      <td>0.645827</td>
-      <td>0.645032</td>
-      <td>110.59</td>
-      <td>81.37</td>
+      <td>0.755450</td>
+      <td>0.754909</td>
+      <td>0.754368</td>
+      <td>0.642783</td>
+      <td>0.641981</td>
+      <td>0.641180</td>
+      <td>110.069042</td>
+      <td>80.990806</td>
       <td>2034-12-31</td>
-      <td>171.27</td>
+      <td>40.09</td>
     </tr>
     <tr>
       <th>178</th>
-      <td>0.6.0rc0</td>
-      <td>393095ada0ab0bb19131401b0ecf4b9e3206e14d</td>
-      <td>2021-02-08 12:07:03.184603</td>
+      <td>0.6.0</td>
+      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
+      <td>2021-02-26 12:02:33.000505</td>
       <td>DValSisRPMD</td>
       <td>policy-1</td>
       <td>claim-1</td>
@@ -704,22 +704,22 @@ memory usage: 34.3+ KB
       <td>2035-02-02</td>
       <td>20</td>
       <td>...</td>
-      <td>0.753418</td>
-      <td>0.752855</td>
-      <td>0.752293</td>
-      <td>0.645032</td>
-      <td>0.644238</td>
-      <td>0.643445</td>
-      <td>81.37</td>
-      <td>52.27</td>
+      <td>0.754368</td>
+      <td>0.753828</td>
+      <td>0.753288</td>
+      <td>0.641180</td>
+      <td>0.640380</td>
+      <td>0.639581</td>
+      <td>80.990806</td>
+      <td>52.026617</td>
       <td>2035-01-31</td>
-      <td>111.83</td>
+      <td>25.97</td>
     </tr>
     <tr>
       <th>179</th>
-      <td>0.6.0rc0</td>
-      <td>393095ada0ab0bb19131401b0ecf4b9e3206e14d</td>
-      <td>2021-02-08 12:07:03.184603</td>
+      <td>0.6.0</td>
+      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
+      <td>2021-02-26 12:02:33.000505</td>
       <td>DValSisRPMD</td>
       <td>policy-1</td>
       <td>claim-1</td>
@@ -728,22 +728,22 @@ memory usage: 34.3+ KB
       <td>2035-03-02</td>
       <td>20</td>
       <td>...</td>
-      <td>0.752293</td>
-      <td>0.751731</td>
-      <td>0.751169</td>
-      <td>0.643445</td>
-      <td>0.642653</td>
-      <td>0.641862</td>
-      <td>52.27</td>
-      <td>23.28</td>
+      <td>0.753288</td>
+      <td>0.752748</td>
+      <td>0.752209</td>
+      <td>0.639581</td>
+      <td>0.638783</td>
+      <td>0.637986</td>
+      <td>52.026617</td>
+      <td>23.176026</td>
       <td>2035-02-28</td>
-      <td>52.15</td>
+      <td>12.02</td>
     </tr>
     <tr>
       <th>180</th>
-      <td>0.6.0rc0</td>
-      <td>393095ada0ab0bb19131401b0ecf4b9e3206e14d</td>
-      <td>2021-02-08 12:07:03.184603</td>
+      <td>0.6.0</td>
+      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
+      <td>2021-02-26 12:02:33.000505</td>
       <td>DValSisRPMD</td>
       <td>policy-1</td>
       <td>claim-1</td>
@@ -752,16 +752,16 @@ memory usage: 34.3+ KB
       <td>2035-04-02</td>
       <td>20</td>
       <td>...</td>
-      <td>0.751169</td>
-      <td>0.750608</td>
-      <td>0.750047</td>
-      <td>0.641862</td>
-      <td>0.641072</td>
-      <td>0.640283</td>
-      <td>23.28</td>
-      <td>0.00</td>
+      <td>0.752209</td>
+      <td>0.751647</td>
+      <td>0.751086</td>
+      <td>0.637986</td>
+      <td>0.637190</td>
+      <td>0.636395</td>
+      <td>23.176026</td>
+      <td>0.000000</td>
       <td>2035-03-31</td>
-      <td>3.13</td>
+      <td>0.71</td>
     </tr>
   </tbody>
 </table>
@@ -799,7 +799,7 @@ memory usage: 34.3+ KB
               <div class='prev-next-bottom'>
                 
     <a class='left-prev' id="prev-link" href="disabled_deterministic_res.html" title="previous page">Disabled - Deterministic - Residual Rider</a>
-    <a class='right-next' id="next-link" href="../extract_models/index.html" title="next page">Extract Models</a>
+    <a class='right-next' id="next-link" href="../../assumptions.html" title="next page">Assumptions</a>
 
               </div>
               

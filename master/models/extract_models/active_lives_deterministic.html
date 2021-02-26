@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Active Lives - Deterministic &#8212; Footings IDI Model 0.6.0rc0 documentation</title>
+    <title>Active Lives - Deterministic &#8212; Footings IDI Model 0.6.0 documentation</title>
     
   <link rel="stylesheet" href="../../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
@@ -40,7 +40,7 @@
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Assumptions" href="../../assumptions.html" />
+    <link rel="next" title="Policy Models" href="../policy_models/index.html" />
     <link rel="prev" title="Disabled Lives - Deterministic" href="disabled_lives_deterministic.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -135,12 +135,6 @@
         
           
             
-                <li class="">
-                    <a href="../policy_models/index.html">Policy Models</a>
-                </li>
-            
-          
-            
   
                 <li class="active">
                     <a href="index.html">Extract Models</a>
@@ -155,6 +149,12 @@
                         </li>
                     
                     </ul>
+                </li>
+            
+          
+            
+                <li class="">
+                    <a href="../policy_models/index.html">Policy Models</a>
                 </li>
             
           
@@ -662,36 +662,36 @@ based on the COVERAGE_ID column (i.e., whether it is base policy or rider).</p>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
-Int64Index: 207 entries, 2 to 34
+Int64Index: 110 entries, 2 to 34
 Data columns (total 24 columns):
  #   Column                Non-Null Count  Dtype         
 ---  ------                --------------  -----         
- 0   MODEL_VERSION         207 non-null    object        
- 1   LAST_COMMIT           207 non-null    object        
- 2   RUN_DATE_TIME         207 non-null    datetime64[ns]
- 3   SOURCE                207 non-null    object        
- 4   POLICY_ID             207 non-null    object        
- 5   COVERAGE_ID           207 non-null    object        
- 6   DATE_BD               207 non-null    datetime64[ns]
- 7   DATE_ED               207 non-null    datetime64[ns]
- 8   DURATION_YEAR         207 non-null    Int64         
- 9   LIVES_BD              207 non-null    float64       
- 10  LIVES_MD              207 non-null    float64       
- 11  LIVES_ED              207 non-null    float64       
- 12  DISCOUNT_BD           207 non-null    float64       
- 13  DISCOUNT_MD           207 non-null    float64       
- 14  DISCOUNT_ED           207 non-null    float64       
- 15  BENEFIT_AMOUNT        207 non-null    int64         
- 16  FINAL_INCIDENCE_RATE  207 non-null    float64       
- 17  BENEFIT_COST          207 non-null    float64       
- 18  PVFB                  207 non-null    float64       
- 19  PVFNB                 207 non-null    float64       
- 20  ALR_BD                207 non-null    float64       
- 21  ALR_ED                207 non-null    float64       
- 22  DATE_ALR              207 non-null    datetime64[ns]
- 23  ALR                   207 non-null    float64       
+ 0   MODEL_VERSION         110 non-null    object        
+ 1   LAST_COMMIT           110 non-null    object        
+ 2   RUN_DATE_TIME         110 non-null    datetime64[ns]
+ 3   SOURCE                110 non-null    object        
+ 4   POLICY_ID             110 non-null    object        
+ 5   COVERAGE_ID           110 non-null    object        
+ 6   DATE_BD               110 non-null    datetime64[ns]
+ 7   DATE_ED               110 non-null    datetime64[ns]
+ 8   DURATION_YEAR         110 non-null    Int64         
+ 9   LIVES_BD              110 non-null    float64       
+ 10  LIVES_MD              110 non-null    float64       
+ 11  LIVES_ED              110 non-null    float64       
+ 12  DISCOUNT_BD           110 non-null    float64       
+ 13  DISCOUNT_MD           110 non-null    float64       
+ 14  DISCOUNT_ED           110 non-null    float64       
+ 15  BENEFIT_AMOUNT        110 non-null    int64         
+ 16  FINAL_INCIDENCE_RATE  110 non-null    float64       
+ 17  BENEFIT_COST          110 non-null    float64       
+ 18  PVFB                  110 non-null    float64       
+ 19  PVFNB                 110 non-null    float64       
+ 20  ALR_BD                110 non-null    float64       
+ 21  ALR_ED                110 non-null    float64       
+ 22  ALR_DATE              110 non-null    datetime64[ns]
+ 23  ALR                   110 non-null    float64       
 dtypes: Int64(1), datetime64[ns](4), float64(13), int64(1), object(5)
-memory usage: 40.6+ KB
+memory usage: 21.6+ KB
 </pre></div>
 </div>
 </div>
@@ -740,16 +740,16 @@ memory usage: 40.6+ KB
       <th>PVFNB</th>
       <th>ALR_BD</th>
       <th>ALR_ED</th>
-      <th>DATE_ALR</th>
+      <th>ALR_DATE</th>
       <th>ALR</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>2</th>
-      <td>0.6.0rc0</td>
-      <td>393095ada0ab0bb19131401b0ecf4b9e3206e14d</td>
-      <td>2021-02-08 12:04:20.574634</td>
+      <td>0.6.0</td>
+      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
+      <td>2021-02-26 12:00:30.884797</td>
       <td>AValBasePMD</td>
       <td>M1</td>
       <td>BASE</td>
@@ -761,19 +761,19 @@ memory usage: 40.6+ KB
       <td>0.915142</td>
       <td>100</td>
       <td>0.002228</td>
-      <td>30.83</td>
-      <td>773.93</td>
-      <td>747.15</td>
-      <td>28.41</td>
-      <td>41.22</td>
+      <td>30.688392</td>
+      <td>771.757218</td>
+      <td>744.950418</td>
+      <td>28.513421</td>
+      <td>41.433103</td>
       <td>2020-03-31</td>
-      <td>29.29</td>
+      <td>29.40</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.6.0rc0</td>
-      <td>393095ada0ab0bb19131401b0ecf4b9e3206e14d</td>
-      <td>2021-02-08 12:04:20.574634</td>
+      <td>0.6.0</td>
+      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
+      <td>2021-02-26 12:00:30.884797</td>
       <td>AValBasePMD</td>
       <td>M1</td>
       <td>BASE</td>
@@ -785,19 +785,19 @@ memory usage: 40.6+ KB
       <td>0.888487</td>
       <td>100</td>
       <td>0.002365</td>
-      <td>32.36</td>
-      <td>745.39</td>
-      <td>707.67</td>
-      <td>41.22</td>
-      <td>52.85</td>
+      <td>32.215403</td>
+      <td>743.349226</td>
+      <td>705.584669</td>
+      <td>41.433103</td>
+      <td>53.215541</td>
       <td>2021-03-31</td>
-      <td>42.02</td>
+      <td>42.24</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.6.0rc0</td>
-      <td>393095ada0ab0bb19131401b0ecf4b9e3206e14d</td>
-      <td>2021-02-08 12:04:20.574634</td>
+      <td>0.6.0</td>
+      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
+      <td>2021-02-26 12:00:30.884797</td>
       <td>AValBasePMD</td>
       <td>M1</td>
       <td>BASE</td>
@@ -809,19 +809,19 @@ memory usage: 40.6+ KB
       <td>0.862609</td>
       <td>100</td>
       <td>0.002525</td>
-      <td>34.08</td>
-      <td>716.35</td>
-      <td>669.39</td>
-      <td>52.85</td>
-      <td>63.09</td>
+      <td>33.930135</td>
+      <td>714.439130</td>
+      <td>667.420148</td>
+      <td>53.215541</td>
+      <td>63.638171</td>
       <td>2022-03-31</td>
-      <td>53.55</td>
+      <td>53.93</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>0.6.0rc0</td>
-      <td>393095ada0ab0bb19131401b0ecf4b9e3206e14d</td>
-      <td>2021-02-08 12:04:20.574634</td>
+      <td>0.6.0</td>
+      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
+      <td>2021-02-26 12:00:30.884797</td>
       <td>AValBasePMD</td>
       <td>M1</td>
       <td>BASE</td>
@@ -833,19 +833,19 @@ memory usage: 40.6+ KB
       <td>0.837484</td>
       <td>100</td>
       <td>0.002684</td>
-      <td>35.70</td>
-      <td>686.71</td>
-      <td>632.29</td>
-      <td>63.09</td>
-      <td>71.99</td>
+      <td>35.552118</td>
+      <td>684.924097</td>
+      <td>630.423907</td>
+      <td>63.638171</td>
+      <td>72.756460</td>
       <td>2023-03-31</td>
-      <td>63.70</td>
+      <td>64.26</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>0.6.0rc0</td>
-      <td>393095ada0ab0bb19131401b0ecf4b9e3206e14d</td>
-      <td>2021-02-08 12:04:20.574634</td>
+      <td>0.6.0</td>
+      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
+      <td>2021-02-26 12:00:30.884797</td>
       <td>AValBasePMD</td>
       <td>M1</td>
       <td>BASE</td>
@@ -857,13 +857,13 @@ memory usage: 40.6+ KB
       <td>0.813092</td>
       <td>100</td>
       <td>0.002875</td>
-      <td>37.58</td>
-      <td>656.61</td>
-      <td>596.32</td>
-      <td>71.99</td>
-      <td>79.25</td>
+      <td>37.431773</td>
+      <td>654.950537</td>
+      <td>594.564492</td>
+      <td>72.756460</td>
+      <td>80.272694</td>
       <td>2024-03-31</td>
-      <td>72.49</td>
+      <td>73.27</td>
     </tr>
     <tr>
       <th>...</th>
@@ -891,12 +891,12 @@ memory usage: 40.6+ KB
     </tr>
     <tr>
       <th>30</th>
-      <td>0.6.0rc0</td>
-      <td>393095ada0ab0bb19131401b0ecf4b9e3206e14d</td>
-      <td>2021-02-08 12:04:20.574634</td>
-      <td>AValRopRPMD</td>
+      <td>0.6.0</td>
+      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
+      <td>2021-02-26 12:00:30.884797</td>
+      <td>AValBasePMD</td>
       <td>M5</td>
-      <td>ROP</td>
+      <td>BASE</td>
       <td>2033-01-29</td>
       <td>2034-01-29</td>
       <td>31</td>
@@ -905,22 +905,22 @@ memory usage: 40.6+ KB
       <td>0.399987</td>
       <td>100</td>
       <td>0.002235</td>
-      <td>0.00</td>
-      <td>4.10</td>
-      <td>1.20</td>
-      <td>7.04</td>
-      <td>7.90</td>
+      <td>7.870480</td>
+      <td>9.125713</td>
+      <td>17.379452</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
       <td>2033-03-31</td>
-      <td>7.19</td>
+      <td>0.00</td>
     </tr>
     <tr>
       <th>31</th>
-      <td>0.6.0rc0</td>
-      <td>393095ada0ab0bb19131401b0ecf4b9e3206e14d</td>
-      <td>2021-02-08 12:04:20.574634</td>
-      <td>AValRopRPMD</td>
+      <td>0.6.0</td>
+      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
+      <td>2021-02-26 12:00:30.884797</td>
+      <td>AValBasePMD</td>
       <td>M5</td>
-      <td>ROP</td>
+      <td>BASE</td>
       <td>2034-01-29</td>
       <td>2035-01-29</td>
       <td>32</td>
@@ -929,22 +929,22 @@ memory usage: 40.6+ KB
       <td>0.388337</td>
       <td>100</td>
       <td>0.002310</td>
-      <td>0.00</td>
-      <td>4.10</td>
-      <td>0.94</td>
-      <td>7.90</td>
-      <td>8.78</td>
+      <td>6.823165</td>
+      <td>6.195054</td>
+      <td>13.630099</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
       <td>2034-03-31</td>
-      <td>8.05</td>
+      <td>0.00</td>
     </tr>
     <tr>
       <th>32</th>
-      <td>0.6.0rc0</td>
-      <td>393095ada0ab0bb19131401b0ecf4b9e3206e14d</td>
-      <td>2021-02-08 12:04:20.574634</td>
-      <td>AValRopRPMD</td>
+      <td>0.6.0</td>
+      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
+      <td>2021-02-26 12:00:30.884797</td>
+      <td>AValBasePMD</td>
       <td>M5</td>
-      <td>ROP</td>
+      <td>BASE</td>
       <td>2035-01-29</td>
       <td>2036-01-29</td>
       <td>33</td>
@@ -953,22 +953,22 @@ memory usage: 40.6+ KB
       <td>0.377026</td>
       <td>100</td>
       <td>0.002396</td>
-      <td>0.00</td>
-      <td>4.10</td>
-      <td>0.69</td>
-      <td>8.78</td>
-      <td>9.68</td>
+      <td>5.541476</td>
+      <td>3.749720</td>
+      <td>10.020200</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
       <td>2035-03-31</td>
-      <td>8.93</td>
+      <td>0.00</td>
     </tr>
     <tr>
       <th>33</th>
-      <td>0.6.0rc0</td>
-      <td>393095ada0ab0bb19131401b0ecf4b9e3206e14d</td>
-      <td>2021-02-08 12:04:20.574634</td>
-      <td>AValRopRPMD</td>
+      <td>0.6.0</td>
+      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
+      <td>2021-02-26 12:00:30.884797</td>
+      <td>AValBasePMD</td>
       <td>M5</td>
-      <td>ROP</td>
+      <td>BASE</td>
       <td>2036-01-29</td>
       <td>2037-01-29</td>
       <td>34</td>
@@ -977,22 +977,22 @@ memory usage: 40.6+ KB
       <td>0.366045</td>
       <td>100</td>
       <td>0.002483</td>
-      <td>0.00</td>
-      <td>4.10</td>
-      <td>0.45</td>
-      <td>9.68</td>
-      <td>10.60</td>
+      <td>3.903249</td>
+      <td>1.839635</td>
+      <td>6.546987</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
       <td>2036-03-31</td>
-      <td>9.84</td>
+      <td>0.00</td>
     </tr>
     <tr>
       <th>34</th>
-      <td>0.6.0rc0</td>
-      <td>393095ada0ab0bb19131401b0ecf4b9e3206e14d</td>
-      <td>2021-02-08 12:04:20.574634</td>
-      <td>AValRopRPMD</td>
+      <td>0.6.0</td>
+      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
+      <td>2021-02-26 12:00:30.884797</td>
+      <td>AValBasePMD</td>
       <td>M5</td>
-      <td>ROP</td>
+      <td>BASE</td>
       <td>2037-01-29</td>
       <td>2038-01-29</td>
       <td>35</td>
@@ -1001,17 +1001,17 @@ memory usage: 40.6+ KB
       <td>0.355383</td>
       <td>100</td>
       <td>0.002558</td>
-      <td>12.90</td>
-      <td>4.10</td>
-      <td>0.22</td>
-      <td>10.60</td>
-      <td>0.00</td>
+      <td>1.718610</td>
+      <td>0.546657</td>
+      <td>3.207779</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
       <td>2037-03-31</td>
-      <td>8.80</td>
+      <td>0.00</td>
     </tr>
   </tbody>
 </table>
-<p>207 rows × 24 columns</p>
+<p>110 rows × 24 columns</p>
 </div></div></div>
 </div>
 <div class="cell docutils container">
@@ -1045,107 +1045,63 @@ memory usage: 40.6+ KB
       <th>SOURCE</th>
       <th>POLICY_ID</th>
       <th>COVERAGE_ID</th>
-      <th>DATE_ALR</th>
+      <th>ALR_DATE</th>
       <th>ALR</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>2</th>
-      <td>0.6.0rc0</td>
-      <td>393095ada0ab0bb19131401b0ecf4b9e3206e14d</td>
-      <td>2021-02-08 12:04:20.574634</td>
+      <td>0.6.0</td>
+      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
+      <td>2021-02-26 12:00:30.884797</td>
       <td>AValBasePMD</td>
       <td>M1</td>
       <td>BASE</td>
       <td>2020-03-31</td>
-      <td>29.29</td>
+      <td>29.40</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.6.0rc0</td>
-      <td>393095ada0ab0bb19131401b0ecf4b9e3206e14d</td>
-      <td>2021-02-08 12:04:20.574634</td>
-      <td>AValRopRPMD</td>
-      <td>M1</td>
-      <td>ROP</td>
-      <td>2020-03-31</td>
-      <td>0.30</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>0.6.0rc0</td>
-      <td>393095ada0ab0bb19131401b0ecf4b9e3206e14d</td>
-      <td>2021-02-08 12:04:20.574634</td>
+      <td>0.6.0</td>
+      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
+      <td>2021-02-26 12:00:30.884797</td>
       <td>AValBasePMD</td>
       <td>M2</td>
       <td>BASE</td>
       <td>2020-03-31</td>
-      <td>26.55</td>
+      <td>26.80</td>
     </tr>
     <tr>
       <th>12</th>
-      <td>0.6.0rc0</td>
-      <td>393095ada0ab0bb19131401b0ecf4b9e3206e14d</td>
-      <td>2021-02-08 12:04:20.574634</td>
+      <td>0.6.0</td>
+      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
+      <td>2021-02-26 12:00:30.884797</td>
       <td>AValBasePMD</td>
       <td>M3</td>
       <td>BASE</td>
       <td>2020-03-31</td>
-      <td>185.94</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>0.6.0rc0</td>
-      <td>393095ada0ab0bb19131401b0ecf4b9e3206e14d</td>
-      <td>2021-02-08 12:04:20.574634</td>
-      <td>AValRopRPMD</td>
-      <td>M3</td>
-      <td>ROP</td>
-      <td>2020-03-31</td>
-      <td>0.00</td>
+      <td>188.82</td>
     </tr>
     <tr>
       <th>10</th>
-      <td>0.6.0rc0</td>
-      <td>393095ada0ab0bb19131401b0ecf4b9e3206e14d</td>
-      <td>2021-02-08 12:04:20.574634</td>
+      <td>0.6.0</td>
+      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
+      <td>2021-02-26 12:00:30.884797</td>
       <td>AValBasePMD</td>
       <td>M4</td>
       <td>BASE</td>
       <td>2020-03-31</td>
-      <td>75.70</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>0.6.0rc0</td>
-      <td>393095ada0ab0bb19131401b0ecf4b9e3206e14d</td>
-      <td>2021-02-08 12:04:20.574634</td>
-      <td>AValRopRPMD</td>
-      <td>M4</td>
-      <td>ROP</td>
-      <td>2020-03-31</td>
-      <td>0.00</td>
+      <td>77.35</td>
     </tr>
     <tr>
       <th>17</th>
-      <td>0.6.0rc0</td>
-      <td>393095ada0ab0bb19131401b0ecf4b9e3206e14d</td>
-      <td>2021-02-08 12:04:20.574634</td>
+      <td>0.6.0</td>
+      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
+      <td>2021-02-26 12:00:30.884797</td>
       <td>AValBasePMD</td>
       <td>M5</td>
       <td>BASE</td>
-      <td>2020-03-31</td>
-      <td>0.00</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>0.6.0rc0</td>
-      <td>393095ada0ab0bb19131401b0ecf4b9e3206e14d</td>
-      <td>2021-02-08 12:04:20.574634</td>
-      <td>AValRopRPMD</td>
-      <td>M5</td>
-      <td>ROP</td>
       <td>2020-03-31</td>
       <td>0.00</td>
     </tr>
@@ -1160,7 +1116,10 @@ memory usage: 40.6+ KB
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[Error(key=&quot;({&#39;policy_id&#39;: &#39;M1&#39;, &#39;coverage_id&#39;: &#39;ROP&#39;},)&quot;, error_type=&#39;TypeError&#39;, error_value=&#39;(&quot;__init__() got an unexpected keyword argument \&#39;rop_future_claims_start_dt\&#39;&quot;,)&#39;, error_stacktrace=&#39;[\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/jigs.py&quot;, line 84, in wrapper\\n    ret = self.model(**model_kwargs).run()\\n\&#39;]&#39;),
+ Error(key=&quot;({&#39;policy_id&#39;: &#39;M3&#39;, &#39;coverage_id&#39;: &#39;ROP&#39;},)&quot;, error_type=&#39;TypeError&#39;, error_value=&#39;(&quot;__init__() got an unexpected keyword argument \&#39;rop_future_claims_start_dt\&#39;&quot;,)&#39;, error_stacktrace=&#39;[\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/jigs.py&quot;, line 84, in wrapper\\n    ret = self.model(**model_kwargs).run()\\n\&#39;]&#39;),
+ Error(key=&quot;({&#39;policy_id&#39;: &#39;M4&#39;, &#39;coverage_id&#39;: &#39;ROP&#39;},)&quot;, error_type=&#39;TypeError&#39;, error_value=&#39;(&quot;__init__() got an unexpected keyword argument \&#39;rop_future_claims_start_dt\&#39;&quot;,)&#39;, error_stacktrace=&#39;[\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/jigs.py&quot;, line 84, in wrapper\\n    ret = self.model(**model_kwargs).run()\\n\&#39;]&#39;),
+ Error(key=&quot;({&#39;policy_id&#39;: &#39;M5&#39;, &#39;coverage_id&#39;: &#39;ROP&#39;},)&quot;, error_type=&#39;TypeError&#39;, error_value=&#39;(&quot;__init__() got an unexpected keyword argument \&#39;rop_future_claims_start_dt\&#39;&quot;,)&#39;, error_stacktrace=&#39;[\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/jigs.py&quot;, line 84, in wrapper\\n    ret = self.model(**model_kwargs).run()\\n\&#39;]&#39;)]
 </pre></div>
 </div>
 </div>
@@ -1196,7 +1155,7 @@ memory usage: 40.6+ KB
               <div class='prev-next-bottom'>
                 
     <a class='left-prev' id="prev-link" href="disabled_lives_deterministic.html" title="previous page">Disabled Lives - Deterministic</a>
-    <a class='right-next' id="next-link" href="../../assumptions.html" title="next page">Assumptions</a>
+    <a class='right-next' id="next-link" href="../policy_models/index.html" title="next page">Policy Models</a>
 
               </div>
               
