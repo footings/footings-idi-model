@@ -3,7 +3,7 @@ name = "footings-idi-model"
 packages = [
     { include = "footings_idi_model", from = "src" }
 ]
-version = "v0.6.0rc0"
+version = "0.6.0"
 description = "An example individual disability model using the footings framework."
 authors = ["Dustin Tindall <dustin.tindall@gmail.com>"]
 license = "BSD 3-Clause License"
