@@ -1,6 +1,6 @@
 
-Data
-====
+Input/Ouput
+===========
 
 .. toctree::
    :maxdepth: 3

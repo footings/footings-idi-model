@@ -3,20 +3,12 @@
 Assumptions
 ===========
 
-Assumptions are split into two segments -
 
-- Statuatory and GAAP Assumptions (STAT/GAAP)
-- Best Estimate Assumptions
+.. autodata:: footings_idi_model.assumptions.idi_assumptions.BEST
+    :annotation:
 
-Key assumptions include -
+.. autodata:: footings_idi_model.assumptions.idi_assumptions.GAAP
+    :annotation:
 
-- **Incidence Rates** - probability of becoming disabled for active lives
-- **Claim Termination Rates** - probablily of going off claim when disabled
-
-
-STAT/GAAP
----------
-
-
-Best Estimate
--------------
+.. autodata:: footings_idi_model.assumptions.idi_assumptions.STAT
+    :annotation:

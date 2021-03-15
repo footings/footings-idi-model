@@ -18,6 +18,7 @@ execution:
 
 ```{eval-rst}
 .. autodata:: footings_idi_model.data.ActiveLivesBaseExtract
+   :no-value:
 ```
 
 ### Sample Data
@@ -38,6 +39,7 @@ base_extract
 
 ```{eval-rst}
 .. autodata:: footings_idi_model.data.ActiveLivesROPRiderExtract
+   :no-value:
 ```
 
 ### Sample Data
@@ -57,6 +59,7 @@ rider_extract
 
 ```{eval-rst}
 .. autodata:: footings_idi_model.data.DisabledLivesBaseExtract
+   :no-value:
 ```
 
 ### Sample Data
@@ -77,6 +80,7 @@ base_extract
 
 ```{eval-rst}
 .. autodata:: footings_idi_model.data.DisabledLivesRiderExtract
+   :no-value:
 ```
 
 ### Sample Data

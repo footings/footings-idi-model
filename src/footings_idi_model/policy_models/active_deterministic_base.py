@@ -17,8 +17,7 @@ from footings.exceptions import ModelRunError
 from footings.jigs import create_foreach_jig
 from footings.model import def_intermediate, def_meta, def_return, model, step
 
-from ..assumptions.get_incidence_rates import get_incidence_rates
-from ..assumptions.get_withdraw_rates import get_withdraw_rates
+from ..assumptions import idi_assumptions
 from ..assumptions.stat_gaap.interest import get_interest_rate
 from ..data import (  # ActiveLivesROPRiderExtract,; ActiveLivesProjOutput,
     ActiveLivesBaseExtract,
@@ -31,11 +30,11 @@ from ..shared import (
     modifier_ctr,
     modifier_incidence,
     modifier_interest,
-    modifier_withdraw,
+    modifier_lapse,
     param_assumption_set,
+    param_lapse_table,
     param_net_benefit_method,
     param_valuation_dt,
-    param_withdraw_table,
 )
 from .disabled_deterministic_base import STEPS as CC_STEPS
 from .disabled_deterministic_base import DValBasePMD
@@ -53,7 +52,7 @@ class ALRBasePMD:
     valuation_dt = param_valuation_dt
     assumption_set = param_assumption_set
     net_benefit_method = param_net_benefit_method
-    withdraw_table = param_withdraw_table
+    lapse_table = param_lapse_table
     policy_id = ActiveLivesBaseExtract.def_parameter("POLICY_ID")
     coverage_id = ActiveLivesBaseExtract.def_parameter("COVERAGE_ID")
     gender = ActiveLivesBaseExtract.def_parameter("GENDER")
@@ -76,7 +75,7 @@ class ALRBasePMD:
     ctr_modifier = modifier_ctr
     interest_modifier = modifier_interest
     incidence_modifier = modifier_incidence
-    withdraw_modifier = modifier_withdraw
+    lapse_modifier = modifier_lapse
 
     # meta
     model_version = meta_model_version
@@ -126,8 +125,9 @@ STEPS = [
     "_calculate_age_attained",
     "_calculate_termination_dt",
     "_model_claim_cost",
-    "_get_incidence_rate",
-    "_get_withdraw_rates",
+    "_get_incidence_rates",
+    "_get_mortality_rates",
+    "_get_lapse_rates",
     "_calculate_premiums",
     "_calculate_benefit_cost",
     "_calculate_lives",
@@ -161,8 +161,11 @@ class AValBasePMD(ALRBasePMD):
     age_issued = def_intermediate(
         dtype=date, description="The calculate age policy was issued."
     )
-    withdraw_rates = def_intermediate(
-        dtype=pd.DataFrame, description="The placholder for withdraw rates."
+    lapse_rates = def_intermediate(
+        dtype=pd.DataFrame, description="The placholder for lapse rates."
+    )
+    mortality_rates = def_intermediate(
+        dtype=pd.DataFrame, description="The placholder for lapse rates."
     )
     incidence_rates = def_intermediate(
         dtype=pd.DataFrame, description="The placholder for incidence rates."
@@ -174,7 +177,10 @@ class AValBasePMD(ALRBasePMD):
     # return object
     frame = def_return(dtype=pd.DataFrame, description="The frame of projected reserves.")
 
-    # steps
+    #####################################################################################
+    # Step: Calculate Issue Age
+    #####################################################################################
+
     @step(
         name="Calculate Issue Age",
         uses=["birth_dt", "policy_start_dt"],
@@ -183,6 +189,10 @@ class AValBasePMD(ALRBasePMD):
     def _calculate_age_issued(self):
         """Calculate the age policy issued."""
         self.age_issued = calculate_age(self.birth_dt, self.policy_start_dt, method="ALB")
+
+    #####################################################################################
+    # Step: Create Projectetd Frame
+    #####################################################################################
 
     @step(
         name="Create Projectetd Frame",
@@ -210,12 +220,20 @@ class AValBasePMD(ALRBasePMD):
             .query("DATE_BD <= @self.policy_end_dt")
         )[["DATE_BD", "DATE_ED", "DURATION_YEAR", "WT_BD", "WT_ED"]]
 
+    #####################################################################################
+    # Step: Calculate Age Attained
+    #####################################################################################
+
     @step(name="Calculate Age Attained", uses=["frame", "birth_dt"], impacts=["frame"])
     def _calculate_age_attained(self):
         """Calculate age attained by policy duration on the frame."""
         self.frame["AGE_ATTAINED"] = calculate_age(
             self.birth_dt, self.frame["DATE_BD"], method="ALB"
         )
+
+    #####################################################################################
+    # Step: Calculate Benefit Term Date
+    #####################################################################################
 
     @step(
         name="Calculate Benefit Term Date",
@@ -247,6 +265,10 @@ class AValBasePMD(ALRBasePMD):
                     day=self.birth_dt.day,
                 )
             )
+
+    #####################################################################################
+    # Step: Model Claim Cost
+    #####################################################################################
 
     @step(
         name="Model Claim Cost",
@@ -280,44 +302,54 @@ class AValBasePMD(ALRBasePMD):
         else:
             raise ModelRunError(str(errors))
 
-    @step(
-        name="Get Incidence Rate",
-        uses=[
-            "idi_contract",
-            "idi_occupation_class",
-            "idi_market",
-            "idi_benefit_period",
-            "tobacco_usage",
-            "elimination_period",
-            "gender",
-            "incidence_modifier",
-        ],
-        impacts=["incidence_rates"],
-    )
-    def _get_incidence_rate(self):
-        """Get incidence rates and multiply by incidence sensitivity to form final rate."""
-        self.incidence_rates = get_incidence_rates(
-            assumption_set=self.assumption_set, model_object=self
-        ).assign(
-            INCIDENCE_MODIFIER=self.incidence_modifier,
-            FINAL_INCIDENCE_RATE=lambda df: df.INCIDENCE_RATE * df.INCIDENCE_MODIFIER,
-        )
+    #####################################################################################
+    # Step: Get Incidence Rate
+    #####################################################################################
 
     @step(
-        name="Get Withdraw Rates",
-        uses=["assumption_set", "withdraw_table", "withdraw_modifier"],
-        impacts=["withdraw_rates"],
+        name="Get Incidence Rate",
+        uses=[],  # idi_assumptions.uses("incidence_rate", "assumption_set"),
+        impacts=["incidence_rates"],
     )
-    def _get_withdraw_rates(self):
-        """Get withdraw rates and multiply by incidence sensitivity to form final rate."""
-        self.withdraw_rates = get_withdraw_rates(
-            assumption_set=self.assumption_set,
-            table_name=self.withdraw_table,
-            gender=self.gender,
-        ).assign(
-            WITHDRAW_MODIFIER=self.withdraw_modifier,
-            FINAL_WITHDRAW_RATE=lambda df: df.WITHDRAW_RATE * df.WITHDRAW_MODIFIER,
+    def _get_incidence_rates(self):
+        """Get incidence rates and multiply by incidence sensitivity to form final rate."""
+        self.incidence_rates = idi_assumptions.get(
+            set=self.assumption_set, assumption="incidence_rate", **self
         )
+
+    #####################################################################################
+    # Step: Get Mortality Rates
+    #####################################################################################
+
+    @step(
+        name="Get Mortality Rates",
+        uses=[],  # assumptions.uses("mortality_rate", "assumption_set"),
+        impacts=["mortality_rates"],
+    )
+    def _get_mortality_rates(self):
+        """Get lapse rates and multiply by incidence sensitivity to form final rate."""
+        self.mortality_rates = idi_assumptions.get(
+            set=self.assumption_set, assumption="mortality_rate", **self
+        )
+
+    #####################################################################################
+    # Step: Get Lapse Rates
+    #####################################################################################
+
+    @step(
+        name="Get Lapse Rates",
+        uses=[],  # assumptions.uses("lapse_rate", "assumption_set"),
+        impacts=["lapse_rates"],
+    )
+    def _get_lapse_rates(self):
+        """Get lapse rates and multiply by incidence sensitivity to form final rate."""
+        self.lapse_rates = idi_assumptions.get(
+            set=self.assumption_set, assumption="lapse_rate", **self
+        )
+
+    #####################################################################################
+    # Step: Calculate Premiums
+    #####################################################################################
 
     @step(
         name="Calculate Premiums",
@@ -341,6 +373,10 @@ class AValBasePMD(ALRBasePMD):
 
         self.frame["GROSS_PREMIUM"] = premium
 
+    #####################################################################################
+    # Step: Calculate Benefit Cost
+    #####################################################################################
+
     @step(
         name="Calculate Benefit Cost",
         uses=["frame", "modeled_claim_cost", "incidence_rates"],
@@ -363,12 +399,16 @@ class AValBasePMD(ALRBasePMD):
             self.frame["DLR"] * self.frame["FINAL_INCIDENCE_RATE"]
         )
 
-    @step(name="Calculate Lives", uses=["frame", "withdraw_rates"], impacts=["frame"])
+    #####################################################################################
+    # Step: Calculate Lives
+    #####################################################################################
+
+    @step(name="Calculate Lives", uses=["frame", "lapse_rates"], impacts=["frame"])
     def _calculate_lives(self):
-        """Calculate the beginning, middle, and ending lives for each duration using withdraw rates."""
-        # merge withdraw rates
+        """Calculate the beginning, middle, and ending lives for each duration using lapse rates."""
+        # merge lapse rates
         self.frame = self.frame.merge(
-            self.withdraw_rates[["AGE_ATTAINED", "FINAL_WITHDRAW_RATE"]],
+            self.lapse_rates[["AGE_ATTAINED", "FINAL_WITHDRAW_RATE"]],
             how="left",
             on=["AGE_ATTAINED"],
         )
@@ -382,6 +422,10 @@ class AValBasePMD(ALRBasePMD):
         self.frame["LIVES_BD"] = lives_bd
         self.frame["LIVES_MD"] = lives_md
         self.frame["LIVES_ED"] = lives_ed
+
+    #####################################################################################
+    # Step: Calculate Discount Factors
+    #####################################################################################
 
     @step(
         name="Calculate Discount Factors", uses=["frame"], impacts=["frame"],
@@ -397,6 +441,10 @@ class AValBasePMD(ALRBasePMD):
         self.frame["DISCOUNT_BD"] = calc_discount(self.frame["INTEREST_RATE"], t_adj=0)
         self.frame["DISCOUNT_MD"] = calc_discount(self.frame["INTEREST_RATE"], t_adj=0.5)
         self.frame["DISCOUNT_ED"] = calc_discount(self.frame["INTEREST_RATE"])
+
+    #####################################################################################
+    # Step: Calculate Durational ALR
+    #####################################################################################
 
     @step(
         name="Calculate Durational ALR",
@@ -428,6 +476,10 @@ class AValBasePMD(ALRBasePMD):
         self.frame["ALR_BD"] = alr_bd
         self.frame["ALR_ED"] = alr_bd.shift(-1, fill_value=0)
 
+    #####################################################################################
+    # Step: Calculate Valuation Date ALR
+    #####################################################################################
+
     @step(
         name="Calculate Valuation Date ALR",
         uses=["frame", "valuation_dt"],
@@ -455,6 +507,10 @@ class AValBasePMD(ALRBasePMD):
             wt_1=self.frame["WT_ED"],
             method="linear",
         ).round(2)
+
+    #####################################################################################
+    # Step: Create Output Frame
+    #####################################################################################
 
     @step(
         name="Create Output Frame",

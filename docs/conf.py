@@ -12,6 +12,7 @@
 import os
 import sys
 
+from footings.assumption_registry import AssumptionRegistry
 from footings.data_dictionary import DataDictionary
 
 from footings_idi_model import __version__ as version
@@ -40,6 +41,7 @@ extensions = [
     "sphinx.ext.viewcode",
     "sphinx.ext.napoleon",
     "myst_nb",
+    "autodocsumm",
 ]
 
 # autosummary settings
@@ -56,6 +58,7 @@ napoleon_custom_sections = [
     "Returns",
     "Steps",
     "Columns",
+    "Assumption Sets",
 ]
 
 # myst_nb settings
@@ -95,13 +98,14 @@ html_theme_options = {
 }
 
 
-def exclude_data_dict_sigs(app, what, name, obj, options, signature, return_annotation):
+def exclude_sigs(app, what, name, obj, options, signature, return_annotation):
+    if isinstance(obj, AssumptionRegistry):
+        return None, None
     if isinstance(obj, DataDictionary):
         return None, None
-    if issubclass(obj, DataDictionary):
-        return None, None
+
     return signature, return_annotation
 
 
 def setup(app):
-    app.connect("autodoc-process-signature", exclude_data_dict_sigs)
+    app.connect("autodoc-process-signature", exclude_sigs)
