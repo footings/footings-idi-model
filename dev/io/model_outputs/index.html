@@ -1,0 +1,340 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Model Output &#8212; Footings IDI Model 0.6.0 documentation</title>
+    
+  <link rel="stylesheet" href="../../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Changelog" href="../../changelog.html" />
+    <link rel="prev" title="Model Input (Extracts)" href="../model_input/index.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main">
+<div class="container-xl">
+
+    <a class="navbar-brand" href="../../index.html">
+    
+      <p class="title">Footings IDI Model</p>
+    
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar-menu" class="col-lg-9 collapse navbar-collapse">
+      <ul id="navbar-main-elements" class="navbar-nav mr-auto">
+        
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../product_info.html">Product Information</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../user_guide.html">User Guide</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../models/index.html">Models</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../assumptions.html">Assumptions</a>
+        </li>
+        
+        <li class="nav-item active">
+            <a class="nav-link" href="../index.html">Input/Ouput</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../changelog.html">Changelog</a>
+        </li>
+        
+        
+      </ul>
+
+
+      <form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this site..." aria-label="Search this site..." autocomplete="off" >
+</form>
+      
+
+      <ul class="navbar-nav">
+        
+          <li class="nav-item">
+            <a class="nav-link" href="https://github.com/footings/footings-idi-model" target="_blank" rel="noopener">
+              <span><i class="fab fa-github-square"></i></span>
+            </a>
+          </li>
+        
+        
+      </ul>
+    </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+          <div class="col-12 col-md-3 bd-sidebar"><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+
+    <div class="bd-toc-item active">
+    
+  
+    <ul class="nav bd-sidenav">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+          
+            
+                <li class="">
+                    <a href="../model_input/index.html">Model Input (Extracts)</a>
+                </li>
+            
+          
+            
+                <li class="active">
+                    <a href="">Model Output</a>
+                </li>
+            
+          
+        
+        
+        
+        
+      </ul>
+  
+  </nav>
+          </div>
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+              
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#active-lives-valuation" class="nav-link">Active Lives - Valuation</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#disabled-lives-valuation" class="nav-link">Disabled Lives - Valuation</a>
+        </li>
+    
+    </ul>
+</nav>
+
+
+              
+          </div>
+          
+
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <div class="section" id="model-output">
+<h1>Model Output<a class="headerlink" href="#model-output" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="active-lives-valuation">
+<h2>Active Lives - Valuation<a class="headerlink" href="#active-lives-valuation" title="Permalink to this headline">¶</a></h2>
+<dl class="py data">
+<dt id="footings_idi_model.data.ActiveLivesValOutput">
+<code class="sig-name descname">ActiveLivesValOutput</code><a class="headerlink" href="#footings_idi_model.data.ActiveLivesValOutput" title="Permalink to this definition">¶</a></dt>
+<dd><p>Active lives valuation output.</p>
+<p class="rubric">Columns</p>
+<dl class="simple">
+<dt>MODEL_VERSION<span class="classifier">PandasDtype.String</span></dt><dd><p>The model version generated by versioneer.</p>
+</dd>
+<dt>LAST_COMMIT<span class="classifier">PandasDtype.String</span></dt><dd><p>The last git commit.</p>
+</dd>
+<dt>RUN_DATE_TIME<span class="classifier">PandasDtype.DateTime</span></dt><dd><p>The run date and time.</p>
+</dd>
+<dt>SOURCE<span class="classifier">PandasDtype.String</span></dt><dd><p>The underlying policy model used.</p>
+</dd>
+<dt>POLICY_ID<span class="classifier">PandasDtype.String</span></dt><dd><p>The policy ID of the policy holder.</p>
+</dd>
+<dt>COVERAGE_ID<span class="classifier">PandasDtype.String</span></dt><dd><p>The coverage ID of the policy holder.</p>
+</dd>
+<dt>DATE_BD<span class="classifier">PandasDtype.DateTime</span></dt><dd><p>Projected begining policy duration date.</p>
+</dd>
+<dt>DATE_ED<span class="classifier">PandasDtype.DateTime</span></dt><dd><p>Projected ending policy duration date.</p>
+</dd>
+<dt>DURATION_YEAR<span class="classifier">PandasDtype.Int</span></dt><dd><p>Projected policy duration year.</p>
+</dd>
+<dt>LIVES_BD<span class="classifier">PandasDtype.Float16</span></dt><dd><p>Projected average lives inforce begining policy duration.</p>
+</dd>
+<dt>LIVES_MD<span class="classifier">PandasDtype.Float16</span></dt><dd><p>Projected average lives inforce mid-point of policy duration.</p>
+</dd>
+<dt>LIVES_ED<span class="classifier">PandasDtype.Float16</span></dt><dd><p>Projected average lives inforce ending policy duration.</p>
+</dd>
+<dt>DISCOUNT_BD<span class="classifier">PandasDtype.Float16</span></dt><dd><p>Discount factor used begining policy duration.</p>
+</dd>
+<dt>DISCOUNT_MD<span class="classifier">PandasDtype.Float16</span></dt><dd><p>Discount factor used mid-point of policy duration.</p>
+</dd>
+<dt>DISCOUNT_ED<span class="classifier">PandasDtype.Float16</span></dt><dd><p>Discount factor used ending policy duration.</p>
+</dd>
+<dt>BENEFIT_AMOUNT<span class="classifier">PandasDtype.Float16</span></dt><dd><p>Projected benefit amount.</p>
+</dd>
+<dt>FINAL_INCIDENCE_RATE<span class="classifier">PandasDtype.Float16</span></dt><dd><p>Final incidence rate with margin and sensitivites applied.</p>
+</dd>
+<dt>BENEFIT_COST<span class="classifier">PandasDtype.Float16</span></dt><dd><p>Projected benefit cost (PV future benefits x incidence rate).</p>
+</dd>
+<dt>PVFB<span class="classifier">PandasDtype.Float16</span></dt><dd><p>Present value of future benefits.</p>
+</dd>
+<dt>PVFNB<span class="classifier">PandasDtype.Float16</span></dt><dd><p>Present value of future bet benefits.</p>
+</dd>
+<dt>ALR_BD<span class="classifier">PandasDtype.Float16</span></dt><dd><p>Projected ALR amount at begining policy duration.</p>
+</dd>
+<dt>ALR_ED<span class="classifier">PandasDtype.Float16</span></dt><dd><p>Projected ALR amount at ending policy duration.</p>
+</dd>
+<dt>ALR_DATE<span class="classifier">PandasDtype.DateTime</span></dt><dd><p>Projected valuation dates using val date as base.</p>
+</dd>
+<dt>ALR<span class="classifier">PandasDtype.Float16</span></dt><dd><p>Projected ALR amount as of projected valuation date.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="disabled-lives-valuation">
+<h2>Disabled Lives - Valuation<a class="headerlink" href="#disabled-lives-valuation" title="Permalink to this headline">¶</a></h2>
+<dl class="py data">
+<dt id="footings_idi_model.data.DisabledLivesValOutput">
+<code class="sig-name descname">DisabledLivesValOutput</code><a class="headerlink" href="#footings_idi_model.data.DisabledLivesValOutput" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disabled lives valuation output.</p>
+<p class="rubric">Columns</p>
+<dl class="simple">
+<dt>MODEL_VERSION<span class="classifier">PandasDtype.String</span></dt><dd><p>The model version generated by versioneer.</p>
+</dd>
+<dt>LAST_COMMIT<span class="classifier">PandasDtype.String</span></dt><dd><p>The last git commit.</p>
+</dd>
+<dt>RUN_DATE_TIME<span class="classifier">PandasDtype.DateTime</span></dt><dd><p>The run date and time.</p>
+</dd>
+<dt>SOURCE<span class="classifier">PandasDtype.String</span></dt><dd><p>The underlying policy model used.</p>
+</dd>
+<dt>POLICY_ID<span class="classifier">PandasDtype.String</span></dt><dd><p>The policy ID of the disabled claimant.</p>
+</dd>
+<dt>CLAIM_ID<span class="classifier">PandasDtype.String</span></dt><dd><p>The claim ID of the disabled claimant.</p>
+</dd>
+<dt>COVERAGE_ID<span class="classifier">PandasDtype.String</span></dt><dd><p>The coverage ID of the disabled claimant.</p>
+</dd>
+<dt>DATE_BD<span class="classifier">PandasDtype.DateTime</span></dt><dd><p>Projected begining claim duration date.</p>
+</dd>
+<dt>DATE_ED<span class="classifier">PandasDtype.DateTime</span></dt><dd><p>Projected ending claim duration date.</p>
+</dd>
+<dt>DURATION_YEAR<span class="classifier">PandasDtype.Int</span></dt><dd><p>Projected claim duration year.</p>
+</dd>
+<dt>DURATION_MONTH<span class="classifier">PandasDtype.Int</span></dt><dd><p>Projected claim duration month.</p>
+</dd>
+<dt>BENEFIT_AMOUNT<span class="classifier">PandasDtype.Float16</span></dt><dd><p>Projected benefit amount.</p>
+</dd>
+<dt>FINAL_CTR<span class="classifier">PandasDtype.Float16</span></dt><dd><p>Final claim termination rate with margin and sensitivites applied.</p>
+</dd>
+<dt>LIVES_BD<span class="classifier">PandasDtype.Float16</span></dt><dd><p>Projected average lives inforce begining claim duration.</p>
+</dd>
+<dt>LIVES_MD<span class="classifier">PandasDtype.Float16</span></dt><dd><p>Projected average lives inforce mid-point of claim duration.</p>
+</dd>
+<dt>LIVES_ED<span class="classifier">PandasDtype.Float16</span></dt><dd><p>Projected average lives inforce ending claim duration.</p>
+</dd>
+<dt>DISCOUNT_BD<span class="classifier">PandasDtype.Float16</span></dt><dd><p>Discount factor used begining claim duration.</p>
+</dd>
+<dt>DISCOUNT_MD<span class="classifier">PandasDtype.Float16</span></dt><dd><p>Discount factor used mid-point of claim duration.</p>
+</dd>
+<dt>DISCOUNT_ED<span class="classifier">PandasDtype.Float16</span></dt><dd><p>Discount factor used ending claim duration.</p>
+</dd>
+<dt>PVFB_BD<span class="classifier">PandasDtype.Float16</span></dt><dd><p>Present value of future benefits begining claim duration.</p>
+</dd>
+<dt>PVFB_ED<span class="classifier">PandasDtype.Float16</span></dt><dd><p>Present value of future benefit ending claim duration.</p>
+</dd>
+<dt>DATE_DLR<span class="classifier">PandasDtype.DateTime</span></dt><dd><p>Projected valuation dates using val date as base.</p>
+</dd>
+<dt>DLR<span class="classifier">PandasDtype.Float16</span></dt><dd><p>Projected DLR amount as of projected valuation date.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+
+
+              </div>
+              
+              
+              <div class='prev-next-bottom'>
+                
+    <a class='left-prev' id="prev-link" href="../model_input/index.html" title="previous page">Model Input (Extracts)</a>
+    <a class='right-next' id="next-link" href="../../changelog.html" title="next page">Changelog</a>
+
+              </div>
+              
+          </main>
+          
+
+      </div>
+    </div>
+
+    
+  <script src="../../_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    <p>
+          &copy; Copyright 2020, Dustin Tindall.<br/>
+        Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.4.3.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

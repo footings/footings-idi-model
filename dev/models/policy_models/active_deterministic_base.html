@@ -64,15 +64,11 @@
         
         
         <li class="nav-item ">
-            <a class="nav-link" href="../../installation.html">Installation</a>
-        </li>
-        
-        <li class="nav-item ">
             <a class="nav-link" href="../../product_info.html">Product Information</a>
         </li>
         
         <li class="nav-item ">
-            <a class="nav-link" href="../../data/index.html">Data</a>
+            <a class="nav-link" href="../../user_guide.html">User Guide</a>
         </li>
         
         <li class="nav-item active">
@@ -84,7 +80,7 @@
         </li>
         
         <li class="nav-item ">
-            <a class="nav-link" href="../../license.html">License</a>
+            <a class="nav-link" href="../../io/index.html">Input/Ouput</a>
         </li>
         
         <li class="nav-item ">
@@ -125,8 +121,6 @@
     
   
     <ul class="nav bd-sidenav">
-        
-        
         
         
         
@@ -271,7 +265,7 @@
 <h3>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h3>
 <dl class="py class">
 <dt id="footings_idi_model.policy_models.AValBasePMD">
-<em class="property">class </em><code class="sig-name descname">AValBasePMD</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span></em>, <em class="sig-param"><span class="n">valuation_dt</span><span class="p">:</span> <span class="n">pandas._libs.tslibs.timestamps.Timestamp</span></em>, <em class="sig-param"><span class="n">assumption_set</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">net_benefit_method</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">withdraw_table</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">policy_id</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">gender</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">birth_dt</span><span class="p">:</span> <span class="n">pandas._libs.tslibs.timestamps.Timestamp</span></em>, <em class="sig-param"><span class="n">tobacco_usage</span><span class="p">:</span> <span class="n">bool</span></em>, <em class="sig-param"><span class="n">policy_start_dt</span><span class="p">:</span> <span class="n">pandas._libs.tslibs.timestamps.Timestamp</span></em>, <em class="sig-param"><span class="n">policy_end_dt</span><span class="p">:</span> <span class="n">pandas._libs.tslibs.timestamps.Timestamp</span></em>, <em class="sig-param"><span class="n">elimination_period</span><span class="p">:</span> <span class="n">numpy.int64</span></em>, <em class="sig-param"><span class="n">idi_market</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">idi_contract</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">idi_benefit_period</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">idi_occupation_class</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">cola_percent</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">premium_pay_to_dt</span><span class="p">:</span> <span class="n">pandas._libs.tslibs.timestamps.Timestamp</span></em>, <em class="sig-param"><span class="n">gross_premium</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">gross_premium_freq</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">benefit_amount</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">ctr_modifier</span><span class="p">:</span> <span class="n">float</span> <span class="o">=</span> <span class="default_value">1.0</span></em>, <em class="sig-param"><span class="n">interest_modifier</span><span class="p">:</span> <span class="n">float</span> <span class="o">=</span> <span class="default_value">1.0</span></em>, <em class="sig-param"><span class="n">incidence_modifier</span><span class="o">=</span><span class="default_value">1.0</span></em>, <em class="sig-param"><span class="n">withdraw_modifier</span><span class="o">=</span><span class="default_value">1.0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#footings_idi_model.policy_models.AValBasePMD" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">AValBasePMD</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span></em>, <em class="sig-param"><span class="n">valuation_dt</span><span class="p">:</span> <span class="n">pandas._libs.tslibs.timestamps.Timestamp</span></em>, <em class="sig-param"><span class="n">assumption_set</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">net_benefit_method</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">lapse_table</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">policy_id</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">gender</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">birth_dt</span><span class="p">:</span> <span class="n">pandas._libs.tslibs.timestamps.Timestamp</span></em>, <em class="sig-param"><span class="n">tobacco_usage</span><span class="p">:</span> <span class="n">bool</span></em>, <em class="sig-param"><span class="n">policy_start_dt</span><span class="p">:</span> <span class="n">pandas._libs.tslibs.timestamps.Timestamp</span></em>, <em class="sig-param"><span class="n">policy_end_dt</span><span class="p">:</span> <span class="n">pandas._libs.tslibs.timestamps.Timestamp</span></em>, <em class="sig-param"><span class="n">elimination_period</span><span class="p">:</span> <span class="n">numpy.int64</span></em>, <em class="sig-param"><span class="n">idi_market</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">idi_contract</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">idi_benefit_period</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">idi_occupation_class</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">cola_percent</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">premium_pay_to_dt</span><span class="p">:</span> <span class="n">pandas._libs.tslibs.timestamps.Timestamp</span></em>, <em class="sig-param"><span class="n">gross_premium</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">gross_premium_freq</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">benefit_amount</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">ctr_modifier</span><span class="p">:</span> <span class="n">float</span> <span class="o">=</span> <span class="default_value">1.0</span></em>, <em class="sig-param"><span class="n">interest_modifier</span><span class="p">:</span> <span class="n">float</span> <span class="o">=</span> <span class="default_value">1.0</span></em>, <em class="sig-param"><span class="n">incidence_modifier</span><span class="o">=</span><span class="default_value">1.0</span></em>, <em class="sig-param"><span class="n">lapse_modifier</span><span class="o">=</span><span class="default_value">1.0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#footings_idi_model.policy_models.AValBasePMD" title="Permalink to this definition">¶</a></dt>
 <dd><p>The active life reserve (ALR) valuation model for the base policy.</p>
 <p class="rubric">Parameters</p>
 <dl>
@@ -295,7 +289,7 @@
 </ul>
 </div></blockquote>
 </dd>
-<dt>withdraw_table<span class="classifier">str</span></dt><dd><p>Table name for withdraw rates.</p>
+<dt>lapse_table<span class="classifier">str</span></dt><dd><p>Table name for withdraw rates.</p>
 </dd>
 <dt>policy_id<span class="classifier">str</span></dt><dd><p>The policy ID of the policy holder.</p>
 </dd>
@@ -338,7 +332,7 @@
 </dd>
 <dt>incidence_modifier</dt><dd><p>The incidence rate modifier.</p>
 </dd>
-<dt>withdraw_modifier</dt><dd><p>The withdraw rate modifier</p>
+<dt>lapse_modifier</dt><dd><p>The withdraw rate modifier</p>
 </dd>
 </dl>
 <p class="rubric">Meta</p>
@@ -358,7 +352,9 @@
 <dl class="simple">
 <dt>age_issued<span class="classifier">date</span></dt><dd><p>The calculate age policy was issued.</p>
 </dd>
-<dt>withdraw_rates<span class="classifier">DataFrame</span></dt><dd><p>The placholder for withdraw rates.</p>
+<dt>lapse_rates<span class="classifier">DataFrame</span></dt><dd><p>The placholder for lapse rates.</p>
+</dd>
+<dt>mortality_rates<span class="classifier">DataFrame</span></dt><dd><p>The placholder for lapse rates.</p>
 </dd>
 <dt>incidence_rates<span class="classifier">DataFrame</span></dt><dd><p>The placholder for incidence rates.</p>
 </dd>
@@ -378,10 +374,11 @@
 <li><p>Calculate Benefit Term Date - Calculate benefit termination date if active individual were to become disabled for each policy duration.</p></li>
 <li><p>Model Claim Cost - Model claim cost for active live if policy holder were to become disabled for each policy duration</p></li>
 <li><p>Get Incidence Rate - Get incidence rates and multiply by incidence sensitivity to form final rate.</p></li>
-<li><p>Get Withdraw Rates - Get withdraw rates and multiply by incidence sensitivity to form final rate.</p></li>
+<li><p>Get Mortality Rates - Get lapse rates and multiply by incidence sensitivity to form final rate.</p></li>
+<li><p>Get Lapse Rates - Get lapse rates and multiply by incidence sensitivity to form final rate.</p></li>
 <li><p>Calculate Premiums - None</p></li>
 <li><p>Calculate Benefit Cost - Calculate benefit cost by multiplying disabled claim cost by final incidence rate.</p></li>
-<li><p>Calculate Lives - Calculate the beginning, middle, and ending lives for each duration using withdraw rates.</p></li>
+<li><p>Calculate Lives - Calculate the beginning, middle, and ending lives for each duration using lapse rates.</p></li>
 <li><p>Calculate Discount Factors - Calculate beginning, middle, and ending discount factors for each duration.</p></li>
 <li><p>Calculate Durational ALR - Calculate active life reserves (ALR) for each duration.</p></li>
 <li><p>Calculate Valuation Date ALR - Calculate active life reserves (ALR) for each duration as of valuation date.</p></li>
@@ -422,6 +419,20 @@
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="n">eb68fefea8b6</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">from</span> <span class="nn">footings_idi_model.policy_models</span> <span class="kn">import</span> <span class="n">AValBasePMD</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> 
+<span class="ne">----&gt; </span><span class="mi">4</span> <span class="n">model</span> <span class="o">=</span> <span class="n">AValBasePMD</span><span class="p">(</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span>     <span class="n">policy_id</span><span class="o">=</span><span class="s2">&quot;policy-1&quot;</span><span class="p">,</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span>     <span class="n">gender</span><span class="o">=</span><span class="s2">&quot;M&quot;</span><span class="p">,</span>
+
+<span class="ne">TypeError</span>: __init__() got an unexpected keyword argument &#39;withdraw_table&#39;
+</pre></div>
+</div>
+</div>
 </div>
 <p>To run the model call the <code class="docutils literal notranslate"><span class="pre">run</span></code> method.</p>
 <div class="cell docutils container">
@@ -438,41 +449,6 @@
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
-Int64Index: 16 entries, 4 to 19
-Data columns (total 24 columns):
- #   Column                Non-Null Count  Dtype         
----  ------                --------------  -----         
- 0   MODEL_VERSION         16 non-null     object        
- 1   LAST_COMMIT           16 non-null     object        
- 2   RUN_DATE_TIME         16 non-null     datetime64[ns]
- 3   SOURCE                16 non-null     object        
- 4   POLICY_ID             16 non-null     object        
- 5   COVERAGE_ID           16 non-null     object        
- 6   DATE_BD               16 non-null     datetime64[ns]
- 7   DATE_ED               16 non-null     datetime64[ns]
- 8   DURATION_YEAR         16 non-null     Int64         
- 9   LIVES_BD              16 non-null     float64       
- 10  LIVES_MD              16 non-null     float64       
- 11  LIVES_ED              16 non-null     float64       
- 12  DISCOUNT_BD           16 non-null     float64       
- 13  DISCOUNT_MD           16 non-null     float64       
- 14  DISCOUNT_ED           16 non-null     float64       
- 15  BENEFIT_AMOUNT        16 non-null     float64       
- 16  FINAL_INCIDENCE_RATE  16 non-null     float64       
- 17  BENEFIT_COST          16 non-null     float64       
- 18  PVFB                  16 non-null     float64       
- 19  PVFNB                 16 non-null     float64       
- 20  ALR_BD                16 non-null     float64       
- 21  ALR_ED                16 non-null     float64       
- 22  ALR_DATE              16 non-null     datetime64[ns]
- 23  ALR                   16 non-null     float64       
-dtypes: Int64(1), datetime64[ns](4), float64(14), object(5)
-memory usage: 3.1+ KB
-</pre></div>
-</div>
-</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -480,437 +456,6 @@ memory usage: 3.1+ KB
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>MODEL_VERSION</th>
-      <th>LAST_COMMIT</th>
-      <th>RUN_DATE_TIME</th>
-      <th>SOURCE</th>
-      <th>POLICY_ID</th>
-      <th>COVERAGE_ID</th>
-      <th>DATE_BD</th>
-      <th>DATE_ED</th>
-      <th>DURATION_YEAR</th>
-      <th>LIVES_BD</th>
-      <th>...</th>
-      <th>DISCOUNT_ED</th>
-      <th>BENEFIT_AMOUNT</th>
-      <th>FINAL_INCIDENCE_RATE</th>
-      <th>BENEFIT_COST</th>
-      <th>PVFB</th>
-      <th>PVFNB</th>
-      <th>ALR_BD</th>
-      <th>ALR_ED</th>
-      <th>ALR_DATE</th>
-      <th>ALR</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>4</th>
-      <td>0.6.0</td>
-      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
-      <td>2021-02-26 11:45:00.691138</td>
-      <td>AValBasePMD</td>
-      <td>policy-1</td>
-      <td>BASE</td>
-      <td>2019-06-02</td>
-      <td>2020-06-02</td>
-      <td>5</td>
-      <td>0.987588</td>
-      <td>...</td>
-      <td>0.862609</td>
-      <td>100.0</td>
-      <td>0.007967</td>
-      <td>63.152615</td>
-      <td>720.352739</td>
-      <td>683.215195</td>
-      <td>42.323955</td>
-      <td>44.307144</td>
-      <td>2020-03-31</td>
-      <td>43.97</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>0.6.0</td>
-      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
-      <td>2021-02-26 11:45:00.691138</td>
-      <td>AValBasePMD</td>
-      <td>policy-1</td>
-      <td>BASE</td>
-      <td>2020-06-02</td>
-      <td>2021-06-02</td>
-      <td>6</td>
-      <td>0.983993</td>
-      <td>...</td>
-      <td>0.837484</td>
-      <td>100.0</td>
-      <td>0.008640</td>
-      <td>66.844643</td>
-      <td>665.851230</td>
-      <td>628.243272</td>
-      <td>44.307144</td>
-      <td>42.624190</td>
-      <td>2021-03-31</td>
-      <td>42.91</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>0.6.0</td>
-      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
-      <td>2021-02-26 11:45:00.691138</td>
-      <td>AValBasePMD</td>
-      <td>policy-1</td>
-      <td>BASE</td>
-      <td>2021-06-02</td>
-      <td>2022-06-02</td>
-      <td>7</td>
-      <td>0.980146</td>
-      <td>...</td>
-      <td>0.813092</td>
-      <td>100.0</td>
-      <td>0.009378</td>
-      <td>70.470309</td>
-      <td>610.055095</td>
-      <td>575.066742</td>
-      <td>42.624190</td>
-      <td>37.222717</td>
-      <td>2022-03-31</td>
-      <td>38.15</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>0.6.0</td>
-      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
-      <td>2021-02-26 11:45:00.691138</td>
-      <td>AValBasePMD</td>
-      <td>policy-1</td>
-      <td>BASE</td>
-      <td>2022-06-02</td>
-      <td>2023-06-02</td>
-      <td>8</td>
-      <td>0.975970</td>
-      <td>...</td>
-      <td>0.789409</td>
-      <td>100.0</td>
-      <td>0.010159</td>
-      <td>73.719344</td>
-      <td>553.179116</td>
-      <td>523.640908</td>
-      <td>37.222717</td>
-      <td>28.359994</td>
-      <td>2023-03-31</td>
-      <td>29.89</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>0.6.0</td>
-      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
-      <td>2021-02-26 11:45:00.691138</td>
-      <td>AValBasePMD</td>
-      <td>policy-1</td>
-      <td>BASE</td>
-      <td>2023-06-02</td>
-      <td>2024-06-02</td>
-      <td>9</td>
-      <td>0.971383</td>
-      <td>...</td>
-      <td>0.766417</td>
-      <td>100.0</td>
-      <td>0.010993</td>
-      <td>76.523706</td>
-      <td>495.672589</td>
-      <td>473.925607</td>
-      <td>28.359994</td>
-      <td>16.363730</td>
-      <td>2024-03-31</td>
-      <td>18.43</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>0.6.0</td>
-      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
-      <td>2021-02-26 11:45:00.691138</td>
-      <td>AValBasePMD</td>
-      <td>policy-1</td>
-      <td>BASE</td>
-      <td>2024-06-02</td>
-      <td>2025-06-02</td>
-      <td>10</td>
-      <td>0.966322</td>
-      <td>...</td>
-      <td>0.744094</td>
-      <td>100.0</td>
-      <td>0.011891</td>
-      <td>78.840308</td>
-      <td>438.004252</td>
-      <td>425.885180</td>
-      <td>16.363730</td>
-      <td>1.611553</td>
-      <td>2025-03-31</td>
-      <td>4.15</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>0.6.0</td>
-      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
-      <td>2021-02-26 11:45:00.691138</td>
-      <td>AValBasePMD</td>
-      <td>policy-1</td>
-      <td>BASE</td>
-      <td>2025-06-02</td>
-      <td>2026-06-02</td>
-      <td>11</td>
-      <td>0.960689</td>
-      <td>...</td>
-      <td>0.722421</td>
-      <td>100.0</td>
-      <td>0.012832</td>
-      <td>80.333127</td>
-      <td>380.638997</td>
-      <td>379.486990</td>
-      <td>1.611553</td>
-      <td>0.000000</td>
-      <td>2026-03-31</td>
-      <td>0.28</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>0.6.0</td>
-      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
-      <td>2021-02-26 11:45:00.691138</td>
-      <td>AValBasePMD</td>
-      <td>policy-1</td>
-      <td>BASE</td>
-      <td>2026-06-02</td>
-      <td>2027-06-02</td>
-      <td>12</td>
-      <td>0.954425</td>
-      <td>...</td>
-      <td>0.701380</td>
-      <td>100.0</td>
-      <td>0.013837</td>
-      <td>80.904860</td>
-      <td>324.240384</td>
-      <td>334.702826</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>2027-03-31</td>
-      <td>0.00</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>0.6.0</td>
-      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
-      <td>2021-02-26 11:45:00.691138</td>
-      <td>AValBasePMD</td>
-      <td>policy-1</td>
-      <td>BASE</td>
-      <td>2027-06-02</td>
-      <td>2028-06-02</td>
-      <td>13</td>
-      <td>0.947496</td>
-      <td>...</td>
-      <td>0.680951</td>
-      <td>100.0</td>
-      <td>0.014907</td>
-      <td>80.313232</td>
-      <td>269.474636</td>
-      <td>291.506544</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>2028-03-31</td>
-      <td>0.00</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>0.6.0</td>
-      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
-      <td>2021-02-26 11:45:00.691138</td>
-      <td>AValBasePMD</td>
-      <td>policy-1</td>
-      <td>BASE</td>
-      <td>2028-06-02</td>
-      <td>2029-06-02</td>
-      <td>14</td>
-      <td>0.939963</td>
-      <td>...</td>
-      <td>0.661118</td>
-      <td>100.0</td>
-      <td>0.016019</td>
-      <td>78.142521</td>
-      <td>217.094164</td>
-      <td>249.872876</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>2029-03-31</td>
-      <td>0.00</td>
-    </tr>
-    <tr>
-      <th>14</th>
-      <td>0.6.0</td>
-      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
-      <td>2021-02-26 11:45:00.691138</td>
-      <td>AValBasePMD</td>
-      <td>policy-1</td>
-      <td>BASE</td>
-      <td>2029-06-02</td>
-      <td>2030-06-02</td>
-      <td>15</td>
-      <td>0.931851</td>
-      <td>...</td>
-      <td>0.641862</td>
-      <td>100.0</td>
-      <td>0.017184</td>
-      <td>74.205059</td>
-      <td>168.023969</td>
-      <td>209.773187</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>2030-03-31</td>
-      <td>0.00</td>
-    </tr>
-    <tr>
-      <th>15</th>
-      <td>0.6.0</td>
-      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
-      <td>2021-02-26 11:45:00.691138</td>
-      <td>AValBasePMD</td>
-      <td>policy-1</td>
-      <td>BASE</td>
-      <td>2030-06-02</td>
-      <td>2031-06-02</td>
-      <td>16</td>
-      <td>0.923073</td>
-      <td>...</td>
-      <td>0.623167</td>
-      <td>100.0</td>
-      <td>0.018414</td>
-      <td>68.214594</td>
-      <td>123.191764</td>
-      <td>171.177431</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>2031-03-31</td>
-      <td>0.00</td>
-    </tr>
-    <tr>
-      <th>16</th>
-      <td>0.6.0</td>
-      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
-      <td>2021-02-26 11:45:00.691138</td>
-      <td>AValBasePMD</td>
-      <td>policy-1</td>
-      <td>BASE</td>
-      <td>2031-06-02</td>
-      <td>2032-06-02</td>
-      <td>17</td>
-      <td>0.913473</td>
-      <td>...</td>
-      <td>0.605016</td>
-      <td>100.0</td>
-      <td>0.019708</td>
-      <td>59.806049</td>
-      <td>83.575606</td>
-      <td>134.058805</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>2032-03-31</td>
-      <td>0.00</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>0.6.0</td>
-      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
-      <td>2021-02-26 11:45:00.691138</td>
-      <td>AValBasePMD</td>
-      <td>policy-1</td>
-      <td>BASE</td>
-      <td>2032-06-02</td>
-      <td>2033-06-02</td>
-      <td>18</td>
-      <td>0.902886</td>
-      <td>...</td>
-      <td>0.587395</td>
-      <td>100.0</td>
-      <td>0.021045</td>
-      <td>48.494481</td>
-      <td>50.225072</td>
-      <td>98.396095</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>2033-03-31</td>
-      <td>0.00</td>
-    </tr>
-    <tr>
-      <th>18</th>
-      <td>0.6.0</td>
-      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
-      <td>2021-02-26 11:45:00.691138</td>
-      <td>AValBasePMD</td>
-      <td>policy-1</td>
-      <td>BASE</td>
-      <td>2033-06-02</td>
-      <td>2034-06-02</td>
-      <td>19</td>
-      <td>0.891167</td>
-      <td>...</td>
-      <td>0.570286</td>
-      <td>100.0</td>
-      <td>0.022403</td>
-      <td>33.672646</td>
-      <td>24.292463</td>
-      <td>64.173396</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>2034-03-31</td>
-      <td>0.00</td>
-    </tr>
-    <tr>
-      <th>19</th>
-      <td>0.6.0</td>
-      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
-      <td>2021-02-26 11:45:00.691138</td>
-      <td>AValBasePMD</td>
-      <td>policy-1</td>
-      <td>BASE</td>
-      <td>2034-06-02</td>
-      <td>2035-06-02</td>
-      <td>20</td>
-      <td>0.878272</td>
-      <td>...</td>
-      <td>0.553676</td>
-      <td>100.0</td>
-      <td>0.023750</td>
-      <td>14.401111</td>
-      <td>7.050208</td>
-      <td>31.378748</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>2035-03-31</td>
-      <td>0.00</td>
-    </tr>
-  </tbody>
-</table>
-<p>16 rows × 24 columns</p>
-</div></div></div>
 </div>
 <p>An audit of the model is ran by calling the <code class="docutils literal notranslate"><span class="pre">audit</span></code> method shown below.</p>
 <div class="cell docutils container">
@@ -920,7 +465,7 @@ memory usage: 3.1+ KB
 </div>
 </div>
 </div>
-<p>The audit file can be downloaded <a class="reference download internal" download="" href="../../_downloads/881174c869d1233c1ce4faaf81729b7e/Audit-AValBasePMD.xlsx"><code class="xref download docutils literal notranslate"><span class="pre">here.</span></code></a></p>
+<p>The audit file can be downloaded <code class="xref download docutils literal notranslate"><span class="pre">here.</span></code></p>
 </div>
 </div>
 <div class="section" id="projection-model">

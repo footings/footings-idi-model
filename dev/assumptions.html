@@ -40,7 +40,7 @@
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="License" href="license.html" />
+    <link rel="next" title="Input/Ouput" href="io/index.html" />
     <link rel="prev" title="Disabled - Deterministic - SIS Rider" href="models/policy_models/disabled_deterministic_sis.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -64,15 +64,11 @@
         
         
         <li class="nav-item ">
-            <a class="nav-link" href="installation.html">Installation</a>
-        </li>
-        
-        <li class="nav-item ">
             <a class="nav-link" href="product_info.html">Product Information</a>
         </li>
         
         <li class="nav-item ">
-            <a class="nav-link" href="data/index.html">Data</a>
+            <a class="nav-link" href="user_guide.html">User Guide</a>
         </li>
         
         <li class="nav-item ">
@@ -84,7 +80,7 @@
         </li>
         
         <li class="nav-item ">
-            <a class="nav-link" href="license.html">License</a>
+            <a class="nav-link" href="io/index.html">Input/Ouput</a>
         </li>
         
         <li class="nav-item ">
@@ -133,8 +129,6 @@
         
         
         
-        
-        
           
         
         
@@ -151,20 +145,9 @@
           
           <div class="d-none d-xl-block col-xl-2 bd-toc">
               
-<div class="tocsection onthispage pt-5 pb-3">
-    <i class="fas fa-list"></i> On this page
-</div>
 
 <nav id="bd-toc-nav">
     <ul class="nav section-nav flex-column">
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#stat-gaap" class="nav-link">STAT/GAAP</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#best-estimate" class="nav-link">Best Estimate</a>
-        </li>
     
     </ul>
 </nav>
@@ -181,22 +164,125 @@
                 
   <div class="section" id="assumptions">
 <h1>Assumptions<a class="headerlink" href="#assumptions" title="Permalink to this headline">¶</a></h1>
-<p>Assumptions are split into two segments -</p>
-<ul class="simple">
-<li><p>Statuatory and GAAP Assumptions (STAT/GAAP)</p></li>
-<li><p>Best Estimate Assumptions</p></li>
-</ul>
-<p>Key assumptions include -</p>
-<ul class="simple">
-<li><p><strong>Incidence Rates</strong> - probability of becoming disabled for active lives</p></li>
-<li><p><strong>Claim Termination Rates</strong> - probablily of going off claim when disabled</p></li>
-</ul>
-<div class="section" id="stat-gaap">
-<h2>STAT/GAAP<a class="headerlink" href="#stat-gaap" title="Permalink to this headline">¶</a></h2>
+<dl class="py data">
+<dt id="footings_idi_model.assumptions.idi_assumptions.BEST">
+<code class="sig-name descname">BEST</code><a class="headerlink" href="#footings_idi_model.assumptions.idi_assumptions.BEST" title="Permalink to this definition">¶</a></dt>
+<dd><p>Best estimate assumption set.</p>
+<p class="rubric">Assumptions</p>
+<dl class="simple">
+<dt><strong>Claim Termination Rate (CTR) [get(‘claim_term_rate’, *args, **kwargs)] :</strong></dt><dd><p>Not implemented yet.</p>
+</dd>
+<dt><strong>Incidence Rate [get(‘incidence_rate’, *args, **kwargs)] :</strong></dt><dd><p>Not implemented yet.</p>
+</dd>
+<dt><strong>Mortality Rate [get(‘mortality_rate’, *args, **kwargs)] :</strong></dt><dd><p>Not implemented yet.</p>
+</dd>
+<dt><strong>Lapse Rate [get(‘lapse_rate’, *args, **kwargs)] :</strong></dt><dd><p>Not implemented yet.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py data">
+<dt id="footings_idi_model.assumptions.idi_assumptions.GAAP">
+<code class="sig-name descname">GAAP</code><a class="headerlink" href="#footings_idi_model.assumptions.idi_assumptions.GAAP" title="Permalink to this definition">¶</a></dt>
+<dd><p>GAAP assumption set.</p>
+<p class="rubric">Assumptions</p>
+<dl>
+<dt><strong>Claim Termination Rate (CTR) - Select [get(‘ctr_select’, *args, **kwargs)] :</strong></dt><dd><p>The claim termination rate (ctr) is the probability that a person goes off disability.</p>
+<blockquote>
+<div><p>The CTR does not distinguish terminations between recoveries or mortality. In addition, the CTR
+is split into select rates (duration years 1 - 10) and ultimate rates (years 11+).</p>
+<p>The select rate formula is -</p>
+<div class="line-block">
+<div class="line">Base rate (table lookup by IDI occupation class / gender / elimination period / age incurred / duration)</div>
+<div class="line">x Benefit period modifier (table lookup by IDI benefit period / cola flag / duration year)</div>
+<div class="line">x Cause modifier (table lookup by IDI contract type / gender / duration year / DLR vs ALR)</div>
+<div class="line">x Contract modifier (table lookup by IDI contract type / duration year)</div>
+<div class="line">x Diagnosis modifier (table lookup by diagnosis / duration year)</div>
+<div class="line">x 1 - Margin adjustment (5% in duration year 1 and 15%  in durations 2+)</div>
 </div>
-<div class="section" id="best-estimate">
-<h2>Best Estimate<a class="headerlink" href="#best-estimate" title="Permalink to this headline">¶</a></h2>
+</div></blockquote>
+</dd>
+<dt><strong>Claim Termination Rate (CTR) - Ultimate [get(‘ctr_ultimate’, *args, **kwargs)] :</strong></dt><dd><p>The claim termination rate (ctr) is the probability that a person goes off disability.</p>
+<blockquote>
+<div><p>The CTR does not distinguish terminations between recoveries or mortality. In addition, the CTR
+is split into select rates (duration years 1 - 10) and ultimate rates (years 11+).</p>
+<p>The ultimate rate formula is -</p>
+<div class="line-block">
+<div class="line">Base rate (table lookup by IDI occupation class / gender / age attained)</div>
+<div class="line">x 1 - Margin adjustment (15% in all durations)</div>
 </div>
+</div></blockquote>
+</dd>
+<dt><strong>Incidence Rate [get(‘incidence_rate’, *args, **kwargs)] :</strong></dt><dd><p>Incidence rate is the probability of a policy holder becoming disabled.</p>
+<blockquote>
+<div><p>The incidence rate formula is -</p>
+<div class="line-block">
+<div class="line">Base rate (table lookup by Acc vs Sick / IDI occupation class / gender / elimination period / age attained)</div>
+<div class="line">x Benefit period modifier (table lookup by IDI occupation class / IDI benefit period / elimination period)</div>
+<div class="line">x Contract modifier (table lookup by IDI contract)</div>
+<div class="line">x Market modifier (table lookup by IDI market)</div>
+<div class="line">x Tobacco modifier (table lookup by IDI occupation class / gender / elimination period / tobacco usage)</div>
+</div>
+</div></blockquote>
+</dd>
+<dt><strong>Mortality Rate [get(‘mortality_rate’, *args, **kwargs)] :</strong></dt><dd><p>Specify mortality table.</p>
+</dd>
+<dt><strong>Lapse Rate [get(‘lapse_rate’, *args, **kwargs)] :</strong></dt><dd><p>Specify lapse table.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py data">
+<dt id="footings_idi_model.assumptions.idi_assumptions.STAT">
+<code class="sig-name descname">STAT</code><a class="headerlink" href="#footings_idi_model.assumptions.idi_assumptions.STAT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stat assumption set.</p>
+<p class="rubric">Assumptions</p>
+<dl>
+<dt><strong>Claim Termination Rate (CTR) - Select [get(‘ctr_select’, *args, **kwargs)] :</strong></dt><dd><p>The claim termination rate (ctr) is the probability that a person goes off disability.</p>
+<blockquote>
+<div><p>The CTR does not distinguish terminations between recoveries or mortality. In addition, the CTR
+is split into select rates (duration years 1 - 10) and ultimate rates (years 11+).</p>
+<p>The select rate formula is -</p>
+<div class="line-block">
+<div class="line">Base rate (table lookup by IDI occupation class / gender / elimination period / age incurred / duration)</div>
+<div class="line">x Benefit period modifier (table lookup by IDI benefit period / cola flag / duration year)</div>
+<div class="line">x Cause modifier (table lookup by IDI contract type / gender / duration year / DLR vs ALR)</div>
+<div class="line">x Contract modifier (table lookup by IDI contract type / duration year)</div>
+<div class="line">x Diagnosis modifier (table lookup by diagnosis / duration year)</div>
+<div class="line">x 1 - Margin adjustment (5% in duration year 1 and 15%  in durations 2+)</div>
+</div>
+</div></blockquote>
+</dd>
+<dt><strong>Claim Termination Rate (CTR) - Ultimate [get(‘ctr_ultimate’, *args, **kwargs)] :</strong></dt><dd><p>The claim termination rate (ctr) is the probability that a person goes off disability.</p>
+<blockquote>
+<div><p>The CTR does not distinguish terminations between recoveries or mortality. In addition, the CTR
+is split into select rates (duration years 1 - 10) and ultimate rates (years 11+).</p>
+<p>The ultimate rate formula is -</p>
+<div class="line-block">
+<div class="line">Base rate (table lookup by IDI occupation class / gender / age attained)</div>
+<div class="line">x 1 - Margin adjustment (15% in all durations)</div>
+</div>
+</div></blockquote>
+</dd>
+<dt><strong>Incidence Rate [get(‘incidence_rate’, *args, **kwargs)] :</strong></dt><dd><p>Incidence rate is the probability of a policy holder becoming disabled.</p>
+<blockquote>
+<div><p>The incidence rate formula is -</p>
+<div class="line-block">
+<div class="line">Base rate (table lookup by Acc vs Sick / IDI occupation class / gender / elimination period / age attained)</div>
+<div class="line">x Benefit period modifier (table lookup by IDI occupation class / IDI benefit period / elimination period)</div>
+<div class="line">x Contract modifier (table lookup by IDI contract)</div>
+<div class="line">x Market modifier (table lookup by IDI market)</div>
+<div class="line">x Tobacco modifier (table lookup by IDI occupation class / gender / elimination period / tobacco usage)</div>
+</div>
+</div></blockquote>
+</dd>
+<dt><strong>Mortality Rate [get(‘mortality_rate’, *args, **kwargs)] :</strong></dt><dd><p>Specify mortality table.</p>
+</dd>
+<dt><strong>Lapse Rate [get(‘lapse_rate’, *args, **kwargs)] :</strong></dt><dd><p>Specify lapse table.</p>
+</dd>
+</dl>
+</dd></dl>
+
 </div>
 
 
@@ -206,7 +292,7 @@
               <div class='prev-next-bottom'>
                 
     <a class='left-prev' id="prev-link" href="models/policy_models/disabled_deterministic_sis.html" title="previous page">Disabled - Deterministic - SIS Rider</a>
-    <a class='right-next' id="next-link" href="license.html" title="next page">License</a>
+    <a class='right-next' id="next-link" href="io/index.html" title="next page">Input/Ouput</a>
 
               </div>
               
