@@ -41,7 +41,6 @@ extensions = [
     "sphinx.ext.viewcode",
     "sphinx.ext.napoleon",
     "myst_nb",
-    "autodocsumm",
 ]
 
 # autosummary settings
