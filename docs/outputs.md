@@ -1,5 +1,18 @@
+---
+jupytext:
+  text_representation:
+    extension: .md
+    format_name: myst
+kernelspec:
+  display_name: Footings IDI Model
+  language: python
+  name: footings-idi-model
 
-# Model Output
+execution:
+  timeout: -1
+---
+
+# Output
 
 ## Active Lives - Valuation
 

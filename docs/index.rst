@@ -74,8 +74,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
    product_info.rst
    user_guide.md
+   extracts.md
    models/index.rst
-   assumptions.rst
-   io/index.rst
+   assumptions.md
+   outputs.md
    scenarios.md
    changelog.md

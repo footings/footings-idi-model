@@ -56,20 +56,20 @@ doe exist in industry.*
     and protect an individual from inflation while on claim. The adjustment comes through as a percentage
     increase that compounds each year while on claim.
 
-- **Social Insurance Supplemental (SIS) - Planned**
+- **Social Insurance Supplemental (SIS) - Available**
 
     A SIS rider provides a benefit when the policy holder is not receiving a
     `Social Security disability (SSD) <https://www.ssa.gov/disability/>`_ benefit or a partial benefit when the
     SSD benefit is less than the SIS rider coverage.
 
-- **Catastrophic Disability (CAT) - Planned**
+- **Catastrophic Disability (CAT) - Available**
 
     A CAT rider provides an additional benefit amount if the disabiling event meets the catastriophic criteria.
     This is also referred as a long term care (LTC) rider as the criteria of catastrophic is usually not being
     able to perform `2 of the 6 activies of daily life <https://www.investopedia.com/terms/a/adl.asp>`_ which
     is typically the benefit trigger for LTC insurance.
 
-- **Residual Benefit (RES) - Planned**
+- **Residual Benefit (RES) - Available**
 
     A residual benefit rider provides a partial benefit if the policy holder is still able to work at some capacity.
     As an example, if an individual loses 50% of their income due to a accident or sickness event, this rider benefit

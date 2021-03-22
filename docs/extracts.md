@@ -12,7 +12,7 @@ execution:
   timeout: -1
 ---
 
-# Model Input (Extracts)
+# Extracts
 
 ## Active Lives - Base
 
@@ -29,7 +29,7 @@ tags: [hide-input]
 ---
 import pandas as pd
 base_extract = pd.read_csv(
-  "../../models/extract_models/active-lives-sample-base.csv",
+  "./models/extract_models/active-lives-sample-base.csv",
   parse_dates=["BIRTH_DT", "POLICY_START_DT", "PREMIUM_PAY_TO_DT", "POLICY_END_DT"]
 )
 base_extract
@@ -50,7 +50,7 @@ tags: [hide-input]
 ---
 import pandas as pd
 rider_extract = pd.read_csv(
-  "../../models/extract_models/active-lives-sample-riders-rop.csv",
+  "./models/extract_models/active-lives-sample-riders-rop.csv",
 )
 rider_extract
 ```
@@ -70,7 +70,7 @@ tags: [hide-input]
 ---
 import pandas as pd
 base_extract = pd.read_csv(
-  "../../models/extract_models/disabled-lives-sample-base.csv",
+  "./models/extract_models/disabled-lives-sample-base.csv",
   parse_dates=["BIRTH_DT", "INCURRED_DT", "TERMINATION_DT"]
 )
 base_extract
@@ -91,7 +91,7 @@ tags: [hide-input]
 ---
 import pandas as pd
 rider_extract = pd.read_csv(
-  "../../models/extract_models/disabled-lives-sample-riders.csv",
+  "./models/extract_models/disabled-lives-sample-riders.csv",
 )
 rider_extract
 ```
