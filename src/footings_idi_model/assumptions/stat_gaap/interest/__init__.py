@@ -1,5 +1,3 @@
-"""Prepare interest assumptions"""
-
 import json
 import os
 from functools import lru_cache
@@ -24,6 +22,11 @@ def _get_interest_rate():
     return interest_dict
 
 
-def get_interest_rate(incurred_dt: pd.Timestamp):
-    """Get the valuation interest rate based of the incurred date."""
+def get_al_interest_rate(policy_start_dt: pd.Timestamp):
+    """Get the valuation interest rate based on the policy start date."""
+    return _get_interest_rate()[policy_start_dt.year]
+
+
+def get_dl_interest_rate(incurred_dt: pd.Timestamp):
+    """Get the valuation interest rate based on the disability incurred date."""
     return _get_interest_rate()[incurred_dt.year]

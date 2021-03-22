@@ -5,7 +5,7 @@ import pytest
 from footings.audit import AuditConfig, AuditStepConfig
 from footings.testing import assert_footings_files_equal
 
-from footings_idi_model.extract_models import DisabledLivesValEMD
+from footings_idi_model.models import DisabledLivesValEMD
 
 # import ray
 
@@ -43,7 +43,7 @@ CASES = [
             "base_extract": base_extract,
             "rider_extract": rider_extract,
             "valuation_dt": pd.Timestamp("2020-03-31"),
-            "assumption_set": "stat",
+            "assumption_set": "STAT",
         },
     ),
 ]

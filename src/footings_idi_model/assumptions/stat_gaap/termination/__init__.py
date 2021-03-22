@@ -1,6 +1,5 @@
 import json
 import os
-from functools import lru_cache
 
 import numpy as np
 import pandas as pd
@@ -42,7 +41,7 @@ def get_cause_modifier():
 
 
 @once
-def get_select_ctr():
+def get_base_select_ctr():
     """Get select CTR"""
     file = os.path.join(directory, "2013-idi-base-ctr-select.csv")
     dtypes = {
@@ -54,7 +53,7 @@ def get_select_ctr():
 
 
 @once
-def get_ultimate_ctr():
+def get_base_ultimate_ctr():
     """Get ultimate CTR"""
     file = os.path.join(directory, "2013-idi-base-ctr-ultimate.csv")
     dtypes = {"IDI_OCCUPATION_CLASS": "category", "GENDER": "category"}
@@ -79,19 +78,18 @@ def margin_to_table_select(margin):
     return tbl
 
 
-@lru_cache(maxsize=None)
-def make_select_rates(
-    idi_benefit_period,
-    idi_contract,
-    idi_diagnosis_grp,
-    idi_occupation_class,
-    gender,
-    elimination_period,
-    age_incurred,
-    cola_flag,
-    model_mode,
+def get_ctr_select(
+    idi_benefit_period: str,
+    idi_contract: str,
+    idi_diagnosis_grp: str,
+    idi_occupation_class: str,
+    gender: str,
+    elimination_period: int,
+    age_incurred: int,
+    cola_percent: str,
+    model_mode: str,
 ):
-    """ """
+    """Generate ctr select rates."""
 
     def _make_query(*args):
         return " and ".join(args)
@@ -107,6 +105,8 @@ def make_select_rates(
         else:
             raise ValueError(f"The model_mode [{model_mode}] is not recognized.")
 
+    cola_flag = "N" if cola_percent == 0 else "Y"
+
     bp_query = "IDI_BENEFIT_PERIOD==@idi_benefit_period"
     ct_query = "IDI_CONTRACT==@idi_contract"
     dg_query = "IDI_DIAGNOSIS_GRP==@idi_diagnosis_grp"
@@ -116,7 +116,7 @@ def make_select_rates(
     ai_query = "AGE_INCURRED==@age_incurred"
     ca_query = "COLA_FLAG==@cola_flag"
 
-    select_tbl = get_select_ctr().query(
+    select_tbl = get_base_select_ctr().query(
         _make_query(oc_query, gd_query, ep_query, ai_query)
     )
     bp_tbl = get_benefit_period_modifier().query(_make_query(bp_query, ca_query))
@@ -133,13 +133,13 @@ def make_select_rates(
         "DURATION_YEAR",
         "DURATION_MONTH",
         "PERIOD",
-        "SELECT_CTR",
+        "BASE_SELECT_CTR",
         "BENEFIT_PERIOD_MODIFIER",
         "CONTRACT_MODIFIER",
         "DIAGNOSIS_MODIFIER",
         "CAUSE_MODIFIER",
         "MARGIN_SELECT",
-        "FINAL_SELECT_CTR",
+        "SELECT_CTR",
     ]
 
     rate_tbl = (
@@ -149,7 +149,7 @@ def make_select_rates(
         .merge(cause_tbl, how="left", on=["DURATION_YEAR", "GENDER", "IDI_CONTRACT"])
         .merge(margin_tbl, how="left", on=["DURATION_YEAR"])
         .assign(
-            FINAL_SELECT_CTR=lambda df: df.SELECT_CTR
+            SELECT_CTR=lambda df: df.BASE_SELECT_CTR
             * df.BENEFIT_PERIOD_MODIFIER
             * df.CONTRACT_MODIFIER
             * df.CAUSE_MODIFIER
@@ -160,62 +160,16 @@ def make_select_rates(
     return rate_tbl
 
 
-@lru_cache(maxsize=None)
-def make_ultimate_rates(idi_occupation_class, gender):
-    """ """
+def get_ctr_ultimate(idi_occupation_class, gender):
+    """Generate ctr ultimate rates."""
     query = "IDI_OCCUPATION_CLASS==@idi_occupation_class and GENDER==@gender"
-    ultimate_tbl = get_ultimate_ctr().query(query)
     margin = get_margin()["DURATION_2+"]
-    rate_tbl = ultimate_tbl.assign(
-        MARGIN_ULTIMATE=1 - margin,
-        FINAL_ULTIMATE_CTR=lambda df: df.ULTIMATE_CTR * df.MARGIN_ULTIMATE,
-    )
-    return rate_tbl[
-        ["AGE_ATTAINED", "ULTIMATE_CTR", "MARGIN_ULTIMATE", "FINAL_ULTIMATE_CTR"]
-    ]
-
-
-def _stat_gaap_ctr(
-    frame,
-    idi_benefit_period,
-    idi_contract,
-    idi_diagnosis_grp,
-    idi_occupation_class,
-    gender,
-    elimination_period,
-    age_incurred,
-    cola_percent,
-    model_mode,
-):
-    cola_flag = "N" if cola_percent == 0 else "Y"
-    select_tbl = make_select_rates(
-        idi_benefit_period=idi_benefit_period,
-        idi_contract=idi_contract,
-        idi_diagnosis_grp=idi_diagnosis_grp,
-        idi_occupation_class=idi_occupation_class,
-        gender=gender,
-        elimination_period=elimination_period,
-        age_incurred=age_incurred,
-        cola_flag=cola_flag,
-        model_mode=model_mode,
-    )
-    ultimate_tbl = make_ultimate_rates(
-        idi_occupation_class=idi_occupation_class, gender=gender
-    )
     tbl = (
-        frame[["AGE_ATTAINED", "DURATION_YEAR", "DURATION_MONTH"]]
-        .merge(select_tbl, how="left", on=["DURATION_YEAR", "DURATION_MONTH"])
-        .merge(ultimate_tbl, how="left", on=["AGE_ATTAINED"])
+        get_base_ultimate_ctr()
+        .query(query)
+        .assign(
+            MARGIN_ULTIMATE=1 - margin,
+            ULTIMATE_CTR=lambda df: df.BASE_ULTIMATE_CTR * df.MARGIN_ULTIMATE,
+        )
     )
-    condlist = [
-        tbl.PERIOD == "M",
-        tbl.PERIOD == "Y",
-        tbl.PERIOD.isna(),
-    ]
-    choicelist = [
-        tbl.FINAL_SELECT_CTR,
-        1 - (1 - tbl.FINAL_SELECT_CTR) ** (1 / 12),
-        1 - (1 - tbl.FINAL_ULTIMATE_CTR) ** (1 / 12),
-    ]
-    tbl["CTR"] = np.select(condlist, choicelist)
-    return tbl
+    return tbl[["AGE_ATTAINED", "BASE_ULTIMATE_CTR", "MARGIN_ULTIMATE", "ULTIMATE_CTR"]]

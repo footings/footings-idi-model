@@ -17,13 +17,13 @@ execution:
 ## Active Lives - Valuation
 
 ```{eval-rst}
-.. autodata:: footings_idi_model.data.ActiveLivesValOutput
+.. autodata:: footings_idi_model.outputs.ActiveLivesValOutput
    :no-value:
 ```
 
 ## Disabled Lives - Valuation
 
 ```{eval-rst}
-.. autodata:: footings_idi_model.data.DisabledLivesValOutput
+.. autodata:: footings_idi_model.outputs.DisabledLivesValOutput
    :no-value:
 ```

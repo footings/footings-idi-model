@@ -229,7 +229,7 @@
       ]
     },
     "parameter.valuation_dt": "2020-03-31 00:00:00",
-    "parameter.assumption_set": "stat",
+    "parameter.assumption_set": "STAT",
     "parameter.net_benefit_method": "NLP",
     "parameter.withdraw_table": "01CSO",
     "sensitivity.interest_modifier": 1.0,

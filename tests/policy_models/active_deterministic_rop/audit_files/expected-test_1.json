@@ -2,7 +2,7 @@
   "name": "AValRopRPMD",
   "instantiation": {
     "parameter.valuation_dt": "2005-02-10 00:00:00",
-    "parameter.assumption_set": "stat",
+    "parameter.assumption_set": "STAT",
     "parameter.net_benefit_method": "PT2",
     "parameter.withdraw_table": "01CSO",
     "parameter.policy_id": "M1",

@@ -2,7 +2,7 @@
   "name": "DValColaRPMD",
   "instantiation": {
     "parameter.valuation_dt": "2005-02-10 00:00:00",
-    "parameter.assumption_set": "stat",
+    "parameter.assumption_set": "STAT",
     "parameter.policy_id": "M1",
     "parameter.claim_id": "M1C1",
     "parameter.gender": "M",
@@ -11289,7 +11289,7 @@
             1.0,
             1.0
           ],
-          "FINAL_CTR": [
+          "CTR": [
             0.0,
             0.0,
             0.0,
@@ -18655,7 +18655,7 @@
             81.14,
             81.14
           ],
-          "FINAL_CTR": [
+          "CTR": [
             0.0,
             0.0,
             0.0,
@@ -23687,7 +23687,7 @@
             81.14,
             81.14
           ],
-          "FINAL_CTR": [
+          "CTR": [
             0.0,
             0.0,
             0.0,
@@ -31034,7 +31034,7 @@
             81.14,
             81.14
           ],
-          "FINAL_CTR": [
+          "CTR": [
             0.0,
             0.0,
             0.0,
@@ -39154,7 +39154,7 @@
             81.14,
             81.14
           ],
-          "FINAL_CTR": [
+          "CTR": [
             0.0,
             0.0,
             0.0,
@@ -49981,7 +49981,7 @@
             81.14,
             81.14
           ],
-          "FINAL_CTR": [
+          "CTR": [
             0.0,
             0.0,
             0.0,
@@ -58865,7 +58865,7 @@
         81.14,
         81.14
       ],
-      "FINAL_CTR": [
+      "CTR": [
         0.0,
         0.0,
         0.0,

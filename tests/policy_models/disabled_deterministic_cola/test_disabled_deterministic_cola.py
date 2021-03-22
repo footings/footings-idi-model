@@ -5,14 +5,14 @@ import pytest
 from footings.audit import AuditConfig, AuditStepConfig
 from footings.testing import assert_footings_files_equal
 
-from footings_idi_model.policy_models import DValColaRPMD
+from footings_idi_model.models import DValColaRPMD
 
 CASES = [
     (
         "test_1",
         {
             "valuation_dt": pd.Timestamp("2005-02-10"),
-            "assumption_set": "stat",
+            "assumption_set": "STAT",
             "policy_id": "M1",
             "claim_id": "M1C1",
             "gender": "M",

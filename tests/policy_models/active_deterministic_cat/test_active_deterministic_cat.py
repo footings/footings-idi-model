@@ -5,14 +5,14 @@ import pytest
 from footings.audit import AuditConfig, AuditStepConfig
 from footings.testing import assert_footings_files_equal
 
-from footings_idi_model.policy_models import AValCatRPMD
+from footings_idi_model.models import AValCatRPMD
 
 CASES = [
     (
         "test_1",
         {
             "valuation_dt": pd.Timestamp("2005-02-10"),
-            "assumption_set": "stat",
+            "assumption_set": "STAT",
             "net_benefit_method": "PT2",
             "withdraw_table": "01CSO",
             "policy_id": "M1",

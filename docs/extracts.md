@@ -17,7 +17,7 @@ execution:
 ## Active Lives - Base
 
 ```{eval-rst}
-.. autodata:: footings_idi_model.data.ActiveLivesBaseExtract
+.. autodata:: footings_idi_model.extracts.ActiveLivesBaseExtract
    :no-value:
 ```
 
@@ -38,7 +38,7 @@ base_extract
 ## Active Lives - ROP Rider
 
 ```{eval-rst}
-.. autodata:: footings_idi_model.data.ActiveLivesROPRiderExtract
+.. autodata:: footings_idi_model.extracts.ActiveLivesROPRiderExtract
    :no-value:
 ```
 
@@ -58,7 +58,7 @@ rider_extract
 ## Disabled Lives - Base
 
 ```{eval-rst}
-.. autodata:: footings_idi_model.data.DisabledLivesBaseExtract
+.. autodata:: footings_idi_model.extracts.DisabledLivesBaseExtract
    :no-value:
 ```
 
@@ -79,7 +79,7 @@ base_extract
 ## Disabled Lives - Rider
 
 ```{eval-rst}
-.. autodata:: footings_idi_model.data.DisabledLivesRiderExtract
+.. autodata:: footings_idi_model.extracts.DisabledLivesRiderExtract
    :no-value:
 ```
 

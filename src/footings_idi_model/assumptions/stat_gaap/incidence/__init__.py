@@ -118,14 +118,14 @@ def get_margin_adjustment():
     return 1 + margin_temp["DURATION_1+"]
 
 
-def _stat_gaap_incidence(
-    idi_contract,
-    idi_occupation_class,
-    idi_market,
-    idi_benefit_period,
-    tobacco_usage,
-    elimination_period,
-    gender,
+def get_incidence_rate(
+    idi_contract: str,
+    idi_occupation_class: str,
+    idi_market: str,
+    idi_benefit_period: str,
+    tobacco_usage: str,
+    elimination_period: int,
+    gender: str,
 ):
 
     prod_cols = [
