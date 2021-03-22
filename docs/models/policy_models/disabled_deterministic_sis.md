@@ -20,14 +20,14 @@ execution:
 ### Documentation
 
 ```{eval-rst}
-.. autoclass:: footings_idi_model.policy_models.DValSisRPMD
+.. autoclass:: footings_idi_model.models.DValSisRPMD
 ```
 
 ### Usage
 
 ```{code-cell} ipython3
 import pandas as pd
-from footings_idi_model.policy_models import DValSisRPMD
+from footings_idi_model.models import DValSisRPMD
 
 model = DValSisRPMD(
     policy_id="policy-1",
@@ -44,7 +44,7 @@ model = DValSisRPMD(
     cola_percent=0.0,
     benefit_amount=200.0,
     valuation_dt=pd.Timestamp("2020-03-31"),
-    assumption_set="stat",
+    assumption_set="STAT",
 )
 ```
 

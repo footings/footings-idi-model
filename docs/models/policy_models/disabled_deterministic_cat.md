@@ -20,14 +20,14 @@ execution:
 ### Documentation
 
 ```{eval-rst}
-.. autoclass:: footings_idi_model.policy_models.DValCatRPMD
+.. autoclass:: footings_idi_model.models.DValCatRPMD
 ```
 
 ### Usage
 
 ```{code-cell} ipython3
 import pandas as pd
-from footings_idi_model.policy_models import DValCatRPMD
+from footings_idi_model.models import DValCatRPMD
 
 model = DValCatRPMD(
     policy_id="policy-1",
@@ -44,7 +44,7 @@ model = DValCatRPMD(
     cola_percent=0.0,
     benefit_amount=200.0,
     valuation_dt=pd.Timestamp("2020-03-31"),
-    assumption_set="stat",
+    assumption_set="STAT",
 )
 ```
 
