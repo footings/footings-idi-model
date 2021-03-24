@@ -88,6 +88,7 @@ def get_ctr_select(
     age_incurred: int,
     cola_percent: str,
     model_mode: str,
+    modifier_ctr: float,
 ):
     """Generate ctr select rates."""
 
@@ -149,18 +150,20 @@ def get_ctr_select(
         .merge(cause_tbl, how="left", on=["DURATION_YEAR", "GENDER", "IDI_CONTRACT"])
         .merge(margin_tbl, how="left", on=["DURATION_YEAR"])
         .assign(
+            MODIFIER_CTR=modifier_ctr,
             SELECT_CTR=lambda df: df.BASE_SELECT_CTR
             * df.BENEFIT_PERIOD_MODIFIER
             * df.CONTRACT_MODIFIER
             * df.CAUSE_MODIFIER
             * df.DIAGNOSIS_MODIFIER
-            * df.MARGIN_SELECT,
+            * df.MARGIN_SELECT
+            * df.MODIFIER_CTR,
         )
     )[col_order]
     return rate_tbl
 
 
-def get_ctr_ultimate(idi_occupation_class, gender):
+def get_ctr_ultimate(idi_occupation_class: str, gender: str, modifier_ctr: float):
     """Generate ctr ultimate rates."""
     query = "IDI_OCCUPATION_CLASS==@idi_occupation_class and GENDER==@gender"
     margin = get_margin()["DURATION_2+"]
@@ -169,7 +172,10 @@ def get_ctr_ultimate(idi_occupation_class, gender):
         .query(query)
         .assign(
             MARGIN_ULTIMATE=1 - margin,
-            ULTIMATE_CTR=lambda df: df.BASE_ULTIMATE_CTR * df.MARGIN_ULTIMATE,
+            MODIFIER_CTR=modifier_ctr,
+            ULTIMATE_CTR=lambda df: df.BASE_ULTIMATE_CTR
+            * df.MARGIN_ULTIMATE
+            * df.MODIFIER_CTR,
         )
     )
     return tbl[["AGE_ATTAINED", "BASE_ULTIMATE_CTR", "MARGIN_ULTIMATE", "ULTIMATE_CTR"]]

@@ -14,7 +14,6 @@ CASES = [
             "valuation_dt": pd.Timestamp("2005-02-10"),
             "assumption_set": "STAT",
             "net_benefit_method": "PT2",
-            "withdraw_table": "01CSO",
             "policy_id": "M1",
             "gender": "M",
             "birth_dt": pd.Timestamp("1970-02-10"),

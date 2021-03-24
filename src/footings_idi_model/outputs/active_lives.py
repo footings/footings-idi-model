@@ -47,7 +47,7 @@ class ActiveLivesValOutput:
         dtype="float16", description="Discount factor used ending policy duration."
     )
     BENEFIT_AMOUNT = def_column(dtype="float16", description="Projected benefit amount.")
-    FINAL_INCIDENCE_RATE = def_column(
+    INCIDENCE_RATE = def_column(
         dtype="float16",
         description="Final incidence rate with margin and sensitivites applied.",
     )

@@ -19,14 +19,14 @@ execution:
 ### Documentation
 
 ```{eval-rst}
-.. autoclass:: footings_idi_model.extract_models.ActiveLivesValEMD
+.. autoclass:: footings_idi_model.models.ActiveLivesValEMD
 ```
 
 ### Usage
 
 ```{code-cell} ipython3
 import pandas as pd
-from footings_idi_model.extract_models import ActiveLivesValEMD
+from footings_idi_model.models import ActiveLivesValEMD
 ```
 
 ```{code-cell} ipython3
@@ -51,7 +51,7 @@ model = ActiveLivesValEMD(
     rider_rop_extract=rider_rop_extract,
     valuation_dt=pd.Timestamp("2020-03-31"),
     withdraw_table="01CSO",
-    assumption_set="stat",
+    assumption_set="STAT",
     net_benefit_method="NLP",
 )
 ```

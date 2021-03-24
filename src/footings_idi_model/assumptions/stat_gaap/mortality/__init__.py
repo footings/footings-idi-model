@@ -14,13 +14,17 @@ WITHDRAW_TABLES = {
 
 
 @lru_cache(maxsize=4)
-def get_withdraw_table(table_name, gender):
-    """Get withdraw rates."""
+def get_mortality_rates(table_name: str, gender: str, modifier_mortality: float):
+    """Get mortality rates."""
     file = WITHDRAW_TABLES.get(table_name, None)
     if file is None:
         raise ValueError(f"The table [{table_name}] is not known. See documentation.")
     return (
         pd.read_csv(file)
-        .rename(columns={"MORTALITY_RATE": "WITHDRAW_RATE"})
+        .rename(columns={"MORTALITY_RATE": "BASE_MORTALITY_RATE"})
         .query("GENDER==@gender")
+        .assign(
+            MODIFIER_MORTALITY=modifier_mortality,
+            MORTALITY_RATE=lambda df: df.BASE_MORTALITY_RATE * df.MODIFIER_MORTALITY,
+        )
     )

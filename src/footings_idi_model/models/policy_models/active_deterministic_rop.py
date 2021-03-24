@@ -63,7 +63,7 @@ class AValRopRPMD(AValBasePMD):
         """Calculate benefit cost for each duration."""
 
         # set payment intervals
-        self.frame["FINAL_INCIDENCE_RATE"] = 0
+        self.frame["INCIDENCE_RATE"] = 0
         self.frame["ROP_INTERVAL"] = (
             self.frame["DURATION_YEAR"].subtract(1).div(self.rop_return_freq).astype(int)
         )

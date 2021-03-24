@@ -20,14 +20,14 @@ execution:
 ### Documentation
 
 ```{eval-rst}
-.. autoclass:: footings_idi_model.policy_models.AValRopRPMD
+.. autoclass:: footings_idi_model.models.AValRopRPMD
 ```
 
 ### Usage
 
 ```{code-cell} ipython3
 import pandas as pd
-from footings_idi_model.policy_models import AValRopRPMD
+from footings_idi_model.models import AValRopRPMD
 
 model = AValRopRPMD(
     policy_id="policy-1",
@@ -47,8 +47,7 @@ model = AValRopRPMD(
     gross_premium_freq="MONTH",
     benefit_amount=50.0,
     valuation_dt=pd.Timestamp("2020-03-31"),
-    assumption_set="stat",
-    withdraw_table="01CSO",
+    assumption_set="STAT",
     net_benefit_method="NLP",
     rop_return_freq=10,
     rop_return_percent=0.5,

@@ -18,11 +18,9 @@ from ..shared import (
     meta_run_date_time,
     modifier_incidence,
     modifier_interest,
-    modifier_withdraw,
     param_assumption_set,
     param_net_benefit_method,
     param_valuation_dt,
-    param_withdraw_table,
 )
 
 models = {
@@ -42,7 +40,6 @@ foreach_model = create_dask_foreach_jig(
     pass_iterator_keys=("policy_id",),
     constant_params=(
         "valuation_dt",
-        "withdraw_table",
         "assumption_set",
         "net_benefit_method",
         "interest_modifier",
@@ -71,12 +68,10 @@ class ActiveLivesValEMD:
     valuation_dt = param_valuation_dt
     assumption_set = param_assumption_set
     net_benefit_method = param_net_benefit_method
-    withdraw_table = param_withdraw_table
 
     # sensitivities
     interest_modifier = modifier_interest
     incidence_modifier = modifier_incidence
-    withdraw_modifier = modifier_withdraw
 
     # meta
     model_version = meta_model_version
@@ -126,7 +121,7 @@ class ActiveLivesValEMD:
 
     @step(
         name="Run Records with Policy Models",
-        uses=["records", "valuation_dt", "assumption_set", "withdraw_table"],
+        uses=["records", "valuation_dt", "assumption_set"],
         impacts=["projected", "errors"],
     )
     def _run_foreach(self):
@@ -135,7 +130,6 @@ class ActiveLivesValEMD:
         projected, errors = foreach_model(
             records=self.records,
             valuation_dt=self.valuation_dt,
-            withdraw_table=self.withdraw_table,
             assumption_set=self.assumption_set,
             net_benefit_method=self.net_benefit_method,
             interest_modifier=self.interest_modifier,
@@ -175,12 +169,10 @@ class ActiveLivesProjEMD:
     valuation_dt = param_valuation_dt
     assumption_set = param_assumption_set
     net_benefit_method = param_net_benefit_method
-    withdraw_table = param_withdraw_table
 
     # sensitivities
     interest_modifier = modifier_interest
     incidence_modifier = modifier_incidence
-    withdraw_modifier = modifier_withdraw
 
     # meta
     model_version = meta_model_version

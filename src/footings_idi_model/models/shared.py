@@ -58,24 +58,6 @@ param_net_benefit_method = def_parameter(
     validator=isin(["NLP", "PT1", "PT2"]),
 )
 
-param_withdraw_table = def_parameter(
-    dtype=str,
-    description="Table name for withdraw rates.",
-    validator=isin(["01CSO", "17CSO", "58CSO", "80CSO"]),
-)
-
-param_lapse_table = def_parameter(
-    dtype=str,
-    description="Table name for withdraw rates.",
-    validator=isin(["01CSO", "17CSO", "58CSO", "80CSO"]),
-)
-
-param_mortality_table = def_parameter(
-    dtype=str,
-    description="Table name for withdraw rates.",
-    validator=isin(["01CSO", "17CSO", "58CSO", "80CSO"]),
-)
-
 param_volume_tbl = def_parameter(
     dtype=pd.DataFrame,
     description="The volume table to use with refence to the distribution of policies by attributes.",
@@ -107,7 +89,6 @@ modifier_incidence = def_sensitivity(
     default=1.0, description="The incidence rate modifier."
 )
 
-modifier_withdraw = def_sensitivity(default=1.0, description="The withdraw rate modifier")
 modifier_lapse = def_sensitivity(default=1.0, description="The withdraw rate modifier")
 modifier_mortality = def_sensitivity(
     default=1.0, description="The withdraw rate modifier"

@@ -25,7 +25,6 @@ CASES = [
             "idi_benefit_period": "TO67",
             "idi_occupation_class": "M",
             "cola_percent": 0.0,
-            "withdraw_table": "01CSO",
             "premium_pay_to_dt": pd.Timestamp("2005-02-10"),
             "gross_premium": 10.0,
             "gross_premium_freq": "MONTH",

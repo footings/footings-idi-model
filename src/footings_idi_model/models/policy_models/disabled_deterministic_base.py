@@ -52,8 +52,8 @@ class DLRBasePMD:
     benefit_amount = DisabledLivesBaseExtract.def_parameter("BENEFIT_AMOUNT")
 
     # sensitivities
-    ctr_modifier = modifier_ctr
-    interest_modifier = modifier_interest
+    modifier_ctr = modifier_ctr
+    modifier_interest = modifier_interest
 
     # meta
     model_version = meta_model_version
@@ -286,7 +286,7 @@ class DValBasePMD(DLRBasePMD):
         base_int_rate = assumption_func(**get_kws(assumption_func, self))
 
         self.frame["INTEREST_RATE_BASE"] = base_int_rate
-        self.frame["INTEREST_RATE_MODIFIER"] = self.interest_modifier
+        self.frame["INTEREST_RATE_MODIFIER"] = self.modifier_interest
         self.frame["INTEREST_RATE"] = (
             self.frame["INTEREST_RATE_BASE"] * self.frame["INTEREST_RATE_MODIFIER"]
         )

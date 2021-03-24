@@ -29,8 +29,8 @@ from ..shared import (
     modifier_incidence,
     modifier_interest,
     modifier_lapse,
+    modifier_mortality,
     param_assumption_set,
-    param_lapse_table,
     param_net_benefit_method,
     param_valuation_dt,
 )
@@ -50,7 +50,6 @@ class ALRBasePMD:
     valuation_dt = param_valuation_dt
     assumption_set = param_assumption_set
     net_benefit_method = param_net_benefit_method
-    lapse_table = param_lapse_table
     policy_id = ActiveLivesBaseExtract.def_parameter("POLICY_ID")
     coverage_id = ActiveLivesBaseExtract.def_parameter("COVERAGE_ID")
     gender = ActiveLivesBaseExtract.def_parameter("GENDER")
@@ -70,10 +69,11 @@ class ALRBasePMD:
     benefit_amount = ActiveLivesBaseExtract.def_parameter("BENEFIT_AMOUNT")
 
     # sensitivities
-    ctr_modifier = modifier_ctr
-    interest_modifier = modifier_interest
-    incidence_modifier = modifier_incidence
-    lapse_modifier = modifier_lapse
+    modifier_ctr = modifier_ctr
+    modifier_interest = modifier_interest
+    modifier_incidence = modifier_incidence
+    modifier_lapse = modifier_lapse
+    modifier_mortality = modifier_mortality
 
     # meta
     model_version = meta_model_version
@@ -311,7 +311,7 @@ class AValBasePMD(ALRBasePMD):
     )
     def _get_incidence_rates(self):
         """Get incidence rates and multiply by incidence sensitivity to form final rate."""
-        assumption_func = idi_assumptions.get(self.assumption_set, "incidence_rate")
+        assumption_func = idi_assumptions.get(self.assumption_set, "incidence_rates")
         self.incidence_rates = assumption_func(**get_kws(assumption_func, self))
 
     #####################################################################################
@@ -325,7 +325,7 @@ class AValBasePMD(ALRBasePMD):
     )
     def _get_mortality_rates(self):
         """Get lapse rates and multiply by incidence sensitivity to form final rate."""
-        assumption_func = idi_assumptions.get(self.assumption_set, "mortality_rate")
+        assumption_func = idi_assumptions.get(self.assumption_set, "mortality_rates")
         self.mortality_rates = assumption_func(**get_kws(assumption_func, self))
 
     #####################################################################################
@@ -339,7 +339,7 @@ class AValBasePMD(ALRBasePMD):
     )
     def _get_lapse_rates(self):
         """Get lapse rates and multiply by incidence sensitivity to form final rate."""
-        assumption_func = idi_assumptions.get(self.assumption_set, "lapse_rate")
+        assumption_func = idi_assumptions.get(self.assumption_set, "lapse_rates")
         self.lapse_rates = assumption_func(**get_kws(assumption_func, self))
 
     #####################################################################################
@@ -352,6 +352,7 @@ class AValBasePMD(ALRBasePMD):
         impacts=["frame"],
     )
     def _calculate_premiums(self):
+        """Calculate premiums for each duration."""
         if self.gross_premium_freq == "MONTH" or self.gross_premium_freq == "M":
             premium = self.gross_premium * 12
         elif self.gross_premium_freq == "QUARTER" or self.gross_premium_freq == "Q":
@@ -373,7 +374,9 @@ class AValBasePMD(ALRBasePMD):
         impacts=["frame"],
     )
     def _calculate_benefit_cost(self):
-        """Calculate benefit cost by multiplying disabled claim cost by final incidence rate."""
+        """Calculate benefit cost by multiplying disabled claim cost by final incidence
+        rate for each duration.
+        """
         # merge final incidence rate
         self.frame = self.frame.merge(
             self.incidence_rates[["AGE_ATTAINED", "INCIDENCE_RATE"]],
@@ -400,12 +403,14 @@ class AValBasePMD(ALRBasePMD):
             how="left",
             on=["AGE_ATTAINED"],
         )
+
         # merge lapse rates
         self.frame = self.frame.merge(
-            self.lapse_rates[["AGE_ATTAINED", "LAPSE_RATE"]],
+            self.lapse_rates[["DURATION_YEAR", "LAPSE_RATE"]],
             how="left",
-            on=["AGE_ATTAINED"],
+            on=["DURATION_YEAR"],
         )
+        self.frame["LAPSE_RATE"] = self.frame["LAPSE_RATE"].ffill()
 
         # calculate lives
         lives_ed = calc_continuance(
@@ -438,7 +443,7 @@ class AValBasePMD(ALRBasePMD):
         base_int_rate = assumption_func(**get_kws(assumption_func, self))
 
         self.frame["INTEREST_RATE_BASE"] = base_int_rate
-        self.frame["INTEREST_RATE_MODIFIER"] = self.interest_modifier
+        self.frame["INTEREST_RATE_MODIFIER"] = self.modifier_interest
         self.frame["INTEREST_RATE"] = (
             self.frame["INTEREST_RATE_BASE"] * self.frame["INTEREST_RATE_MODIFIER"]
         )

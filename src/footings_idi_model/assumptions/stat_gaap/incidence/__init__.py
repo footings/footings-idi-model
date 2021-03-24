@@ -118,7 +118,7 @@ def get_margin_adjustment():
     return 1 + margin_temp["DURATION_1+"]
 
 
-def get_incidence_rate(
+def get_incidence_rates(
     idi_contract: str,
     idi_occupation_class: str,
     idi_market: str,
@@ -126,6 +126,7 @@ def get_incidence_rate(
     tobacco_usage: str,
     elimination_period: int,
     gender: str,
+    modifier_incidence: float,
 ):
 
     prod_cols = [
@@ -135,6 +136,7 @@ def get_incidence_rate(
         "MARKET_MODIFIER",
         "TOBACCO_MODIFIER",
         "MARGIN_ADJUSTMENT",
+        "MODIFIER_INCIDENCE",
     ]
 
     frame = get_base_incidence(
@@ -153,6 +155,7 @@ def get_incidence_rate(
         idi_occupation_class, gender, tobacco_usage
     )
     frame["MARGIN_ADJUSTMENT"] = get_margin_adjustment()
+    frame["MODIFIER_INCIDENCE"] = modifier_incidence
     frame["INCIDENCE_RATE"] = frame[prod_cols].prod(axis=1).div(1000)
 
     return frame[
@@ -171,6 +174,7 @@ def get_incidence_rate(
             "MARKET_MODIFIER",
             "TOBACCO_MODIFIER",
             "MARGIN_ADJUSTMENT",
+            "MODIFIER_INCIDENCE",
             "INCIDENCE_RATE",
         ]
     ]
