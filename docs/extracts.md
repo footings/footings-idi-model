@@ -28,11 +28,11 @@ execution:
 tags: [hide-input]
 ---
 import pandas as pd
-base_extract = pd.read_csv(
+extract_base = pd.read_csv(
   "./models/extract_models/active-lives-sample-base.csv",
   parse_dates=["BIRTH_DT", "POLICY_START_DT", "PREMIUM_PAY_TO_DT", "POLICY_END_DT"]
 )
-base_extract
+extract_base
 ```
 
 ## Active Lives - ROP Rider
@@ -49,10 +49,10 @@ base_extract
 tags: [hide-input]
 ---
 import pandas as pd
-rider_extract = pd.read_csv(
+extract_riders = pd.read_csv(
   "./models/extract_models/active-lives-sample-riders-rop.csv",
 )
-rider_extract
+extract_riders
 ```
 
 ## Disabled Lives - Base
@@ -69,11 +69,11 @@ rider_extract
 tags: [hide-input]
 ---
 import pandas as pd
-base_extract = pd.read_csv(
+extract_base = pd.read_csv(
   "./models/extract_models/disabled-lives-sample-base.csv",
   parse_dates=["BIRTH_DT", "INCURRED_DT", "TERMINATION_DT"]
 )
-base_extract
+extract_base
 ```
 
 ## Disabled Lives - Rider
@@ -90,8 +90,8 @@ base_extract
 tags: [hide-input]
 ---
 import pandas as pd
-rider_extract = pd.read_csv(
+extract_riders = pd.read_csv(
   "./models/extract_models/disabled-lives-sample-riders.csv",
 )
-rider_extract
+extract_riders
 ```

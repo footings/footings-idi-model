@@ -30,27 +30,23 @@ from footings_idi_model.models import ActiveLivesValEMD
 ```
 
 ```{code-cell} ipython3
-base_extract = pd.read_csv(
+extract_base = pd.read_csv(
   "active-lives-sample-base.csv",
   parse_dates=["BIRTH_DT", "POLICY_START_DT", "PREMIUM_PAY_TO_DT", "POLICY_END_DT"]
 )
-base_extract
+extract_base
 ```
 
 ```{code-cell} ipython3
-rider_rop_extract = pd.read_csv(
-  "active-lives-sample-riders-rop.csv",
-  parse_dates=["ROP_FUTURE_CLAIMS_START_DT"]
-)
-rider_rop_extract
+extract_riders = pd.read_csv("active-lives-sample-riders.csv")
+extract_riders
 ```
 
 ```{code-cell} ipython3
 model = ActiveLivesValEMD(
-    base_extract=base_extract,
-    rider_rop_extract=rider_rop_extract,
+    extract_base=extract_base,
+    extract_riders=extract_riders,
     valuation_dt=pd.Timestamp("2020-03-31"),
-    withdraw_table="01CSO",
     assumption_set="STAT",
     net_benefit_method="NLP",
 )
