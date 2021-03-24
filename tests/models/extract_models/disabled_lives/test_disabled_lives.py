@@ -9,6 +9,8 @@ from footings_idi_model.models import DisabledLivesValEMD
 
 # import ray
 
+directory, filename = os.path.split(__file__)
+
 
 @pytest.fixture
 def shutdown_only():
@@ -25,23 +27,18 @@ def tempdir(tmpdir_factory):
     return tmpdir_factory.mktemp(dir_name)
 
 
-base_extract_file = os.path.join(
-    "tests", "extract_models", "disabled_lives", "disabled-lives-sample-base.csv"
-)
-base_extract = pd.read_csv(
-    base_extract_file, parse_dates=["BIRTH_DT", "INCURRED_DT", "TERMINATION_DT"]
-)
-rider_extract_file = os.path.join(
-    "tests", "extract_models", "disabled_lives", "disabled-lives-sample-riders.csv"
-)
-rider_extract = pd.read_csv(rider_extract_file)
+DT_COLS = ["BIRTH_DT", "INCURRED_DT", "TERMINATION_DT"]
+extract_base_file = os.path.join(directory, "disabled-lives-sample-base.csv")
+extract_base = pd.read_csv(extract_base_file, parse_dates=DT_COLS)
+extract_rider_file = os.path.join(directory, "disabled-lives-sample-riders.csv")
+extract_rider = pd.read_csv(extract_rider_file)
 
 CASES = [
     (
         "test_1",
         {
-            "base_extract": base_extract,
-            "rider_extract": rider_extract,
+            "extract_base": extract_base,
+            "extract_rider": extract_rider,
             "valuation_dt": pd.Timestamp("2020-03-31"),
             "assumption_set": "STAT",
         },
@@ -54,9 +51,7 @@ def test_disabled_lives_deterministic(case, tempdir, shutdown_only):
     # ray.init(num_cpus=1)
     name, parameters = case
     test_file = tempdir.join(f"test-{name}.json")
-    expected_file = os.path.join(
-        os.path.dirname(__file__), "audit_files", f"expected-{name}.json",
-    )
+    expected_file = os.path.join(directory, "audit_files", f"expected-{name}.json",)
     config = AuditConfig(
         show_signature=False,
         show_docstring=False,
