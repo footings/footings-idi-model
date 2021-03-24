@@ -2,6 +2,7 @@ import pandas as pd
 from footings.actuarial_tools import convert_to_records
 from footings.model import def_intermediate, def_parameter, def_return, model, step
 from footings.parallel_tools.dask import create_dask_foreach_jig
+from footings.utils import get_kws
 
 from ...outputs import ActiveLivesValOutput
 from ..policy_models import (
@@ -16,8 +17,11 @@ from ..shared import (
     meta_last_commit,
     meta_model_version,
     meta_run_date_time,
+    modifier_ctr,
     modifier_incidence,
     modifier_interest,
+    modifier_lapse,
+    modifier_mortality,
     param_assumption_set,
     param_net_benefit_method,
     param_valuation_dt,
@@ -32,20 +36,24 @@ models = {
     "SIS": AValSisRPMD,
 }
 
+FOREACH_PARAMS = (
+    "valuation_dt",
+    "assumption_set",
+    "net_benefit_method",
+    "modifier_ctr",
+    "modifier_incidence",
+    "modifier_interest",
+    "modifier_lapse",
+    "modifier_mortality",
+)
+
 foreach_model = create_dask_foreach_jig(
     models,
     iterator_name="records",
     iterator_keys=("policy_id", "coverage_id",),
     mapped_keys=("coverage_id",),
     pass_iterator_keys=("policy_id",),
-    constant_params=(
-        "valuation_dt",
-        "assumption_set",
-        "net_benefit_method",
-        "interest_modifier",
-        "incidence_modifier",
-        "withdraw_modifier",
-    ),
+    constant_params=FOREACH_PARAMS,
     success_wrap=pd.concat,
 )
 
@@ -59,19 +67,22 @@ class ActiveLivesValEMD:
     """
 
     # parameters
-    base_extract = def_parameter(
-        dtype=pd.DataFrame, description="The base active lives extract."
+    extract_base = def_parameter(
+        dtype=pd.DataFrame, description="The active lives base extract."
     )
-    rider_rop_extract = def_parameter(
-        dtype=pd.DataFrame, description="The ROP rider active lives extract."
+    extract_riders = def_parameter(
+        dtype=pd.DataFrame, description="The active lives rider extract."
     )
     valuation_dt = param_valuation_dt
     assumption_set = param_assumption_set
     net_benefit_method = param_net_benefit_method
 
     # sensitivities
-    interest_modifier = modifier_interest
-    incidence_modifier = modifier_incidence
+    modifier_ctr = modifier_ctr
+    modifier_incidence = modifier_incidence
+    modifier_interest = modifier_interest
+    modifier_lapse = modifier_lapse
+    modifier_mortality = modifier_mortality
 
     # meta
     model_version = meta_model_version
@@ -92,24 +103,26 @@ class ActiveLivesValEMD:
     )
     errors = def_return(dtype=list, description="Any errors captured.")
 
-    @step(name="Create Records from Extract", uses=["base_extract"], impacts=["records"])
+    @step(
+        name="Create Records from Extract",
+        uses=["extract_base", "extract_riders"],
+        impacts=["records"],
+    )
     def _create_records(self):
         """Turn extract into a list of records for each row in extract."""
-        records = convert_to_records(self.base_extract, column_case="lower")
-        idx_cols = ["policy_id", "coverage_id"]
-
-        rider_records = (
-            self.rider_rop_extract.rename(columns=str.lower)
-            .set_index(idx_cols)
-            .to_dict(orient="index")
-        )
+        records = convert_to_records(self.extract_base, column_case="lower")
+        rider_data = self.extract_riders.copy()
+        rider_data.columns = [col.lower() for col in rider_data.columns]
+        rider_data = rider_data.pivot(
+            index=["policy_id", "coverage_id"], columns="rider_attribute", values="value"
+        ).to_dict(orient="index")
 
         def update_record(record):
             key = (
                 record["policy_id"],
                 record["coverage_id"],
             )
-            kwargs_add = rider_records.get(key, None)
+            kwargs_add = rider_data.get(key, None)
             if kwargs_add is not None:
                 return {**record, **kwargs_add}
             return record
@@ -121,21 +134,12 @@ class ActiveLivesValEMD:
 
     @step(
         name="Run Records with Policy Models",
-        uses=["records", "valuation_dt", "assumption_set"],
+        uses=["records"] + list(FOREACH_PARAMS),
         impacts=["projected", "errors"],
     )
     def _run_foreach(self):
         """Foreach record run through respective policy model based on COVERAGE_ID value."""
-
-        projected, errors = foreach_model(
-            records=self.records,
-            valuation_dt=self.valuation_dt,
-            assumption_set=self.assumption_set,
-            net_benefit_method=self.net_benefit_method,
-            interest_modifier=self.interest_modifier,
-            incidence_modifier=self.incidence_modifier,
-            withdraw_modifier=self.withdraw_modifier,
-        )
+        projected, errors = foreach_model(**get_kws(foreach_model, self))
         if isinstance(projected, list):
             projected = pd.DataFrame(columns=list(ActiveLivesValOutput.columns))
         self.projected = projected
@@ -160,19 +164,22 @@ class ActiveLivesValEMD:
 @model
 class ActiveLivesProjEMD:
     # parameters
-    base_extract = def_parameter(
-        dtype=pd.DataFrame, description="The base active lives extract."
+    extract_base = def_parameter(
+        dtype=pd.DataFrame, description="The active lives base extract."
     )
-    rider_extract = def_parameter(
-        dtype=pd.DataFrame, description="The rider active lives extract."
+    extract_riders = def_parameter(
+        dtype=pd.DataFrame, description="The active lives rider extract."
     )
     valuation_dt = param_valuation_dt
     assumption_set = param_assumption_set
     net_benefit_method = param_net_benefit_method
 
     # sensitivities
-    interest_modifier = modifier_interest
-    incidence_modifier = modifier_incidence
+    modifier_ctr = modifier_ctr
+    modifier_interest = modifier_interest
+    modifier_incidence = modifier_incidence
+    modifier_lapse = modifier_lapse
+    modifier_mortality = modifier_mortality
 
     # meta
     model_version = meta_model_version

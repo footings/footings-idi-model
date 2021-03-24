@@ -7,8 +7,8 @@ from footings.data_dictionary import data_dictionary, def_column
 
 @data_dictionary
 class DisabledLivesBaseExtract:
-    """
-    Base policy extract for disabled lives. A unique record is represented by POLICY_ID + CLAIM_ID + COVERAGE_ID.
+    """Base policy extract for disabled lives. A unique record is represented by
+    POLICY_ID + CLAIM_ID + COVERAGE_ID.
     """
 
     POLICY_ID = def_column(
@@ -72,9 +72,8 @@ class DisabledLivesBaseExtract:
 
 @data_dictionary
 class DisabledLivesRiderExtract:
-    """
-    Rider policy extract for disabled lives. A unique record is represented by POLICY_ID + CLAIM_ID + COVERAGE_ID
-    + RIDER_ATTRIBUTE.
+    """Rider policy extract for disabled lives. A unique record is represented by
+    POLICY_ID + CLAIM_ID + COVERAGE_ID + RIDER_ATTRIBUTE.
     """
 
     POLICY_ID = DisabledLivesBaseExtract.def_column("POLICY_ID")

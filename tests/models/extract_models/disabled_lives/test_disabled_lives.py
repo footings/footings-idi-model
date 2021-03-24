@@ -30,15 +30,15 @@ def tempdir(tmpdir_factory):
 DT_COLS = ["BIRTH_DT", "INCURRED_DT", "TERMINATION_DT"]
 extract_base_file = os.path.join(directory, "disabled-lives-sample-base.csv")
 extract_base = pd.read_csv(extract_base_file, parse_dates=DT_COLS)
-extract_rider_file = os.path.join(directory, "disabled-lives-sample-riders.csv")
-extract_rider = pd.read_csv(extract_rider_file)
+extract_riders_file = os.path.join(directory, "disabled-lives-sample-riders.csv")
+extract_riders = pd.read_csv(extract_riders_file)
 
 CASES = [
     (
         "test_1",
         {
             "extract_base": extract_base,
-            "extract_rider": extract_rider,
+            "extract_riders": extract_riders,
             "valuation_dt": pd.Timestamp("2020-03-31"),
             "assumption_set": "STAT",
         },

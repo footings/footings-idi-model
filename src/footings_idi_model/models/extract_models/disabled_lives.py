@@ -2,6 +2,7 @@ import pandas as pd
 from footings.actuarial_tools import convert_to_records
 from footings.model import def_intermediate, def_parameter, def_return, model, step
 from footings.parallel_tools.dask import create_dask_foreach_jig
+from footings.utils import get_kws
 
 from ...outputs import DisabledLivesValOutput
 from ..policy_models import (
@@ -29,18 +30,20 @@ models = {
     "SIS": DValSisRPMD,
 }
 
+FOREACH_PARAMS = (
+    "valuation_dt",
+    "assumption_set",
+    "modifier_interest",
+    "modifier_ctr",
+)
+
 foreach_model = create_dask_foreach_jig(
     models,
     iterator_name="records",
     iterator_keys=("policy_id", "coverage_id",),
     mapped_keys=("coverage_id",),
     pass_iterator_keys=("policy_id",),
-    constant_params=(
-        "valuation_dt",
-        "assumption_set",
-        "interest_modifier",
-        "ctr_modifier",
-    ),
+    constant_params=FOREACH_PARAMS,
     success_wrap=pd.concat,
 )
 
@@ -54,18 +57,18 @@ class DisabledLivesValEMD:
     """
 
     # parameters
-    base_extract = def_parameter(
-        dtype=pd.DataFrame, description="The base policy extract for disabled lives."
+    extract_base = def_parameter(
+        dtype=pd.DataFrame, description="The disabled lives base extract."
     )
-    rider_extract = def_parameter(
-        dtype=pd.DataFrame, description="The rider extract for disabled lives."
+    extract_riders = def_parameter(
+        dtype=pd.DataFrame, description="The disabled lives rider extract."
     )
     valuation_dt = param_valuation_dt
     assumption_set = param_assumption_set
 
     # sensitivities
-    ctr_modifier = modifier_ctr
-    interest_modifier = modifier_interest
+    modifier_ctr = modifier_ctr
+    modifier_interest = modifier_interest
 
     # meta
     model_version = meta_model_version
@@ -88,18 +91,21 @@ class DisabledLivesValEMD:
 
     @step(
         name="Create Records from Extracts",
-        uses=["base_extract", "rider_extract"],
+        uses=["extract_base", "extract_riders"],
         impacts=["records"],
     )
     def _create_records(self):
         """Turn extract into a list of records for each row in extract."""
-        frame = self.base_extract.copy()
+        frame = self.extract_base.copy()
         del frame["IDI_MARKET"]
         del frame["TOBACCO_USAGE"]
         records = convert_to_records(frame, column_case="lower")
-        idx_cols = ["POLICY_ID", "CLAIM_ID", "COVERAGE_ID"]
-        rider_data = self.rider_extract.pivot(
-            index=idx_cols, columns="RIDER_ATTRIBUTE", values="VALUE"
+        rider_data = self.extract_riders.copy()
+        rider_data.columns = [col.lower() for col in rider_data.columns]
+        rider_data = rider_data.pivot(
+            index=["policy_id", "claim_id", "coverage_id"],
+            columns="rider_attribute",
+            values="value",
         ).to_dict(orient="index")
 
         def update_record(record):
@@ -120,18 +126,12 @@ class DisabledLivesValEMD:
 
     @step(
         name="Run Records with Policy Models",
-        uses=["records", "valuation_dt", "assumption_set"],
+        uses=["records"] + list(FOREACH_PARAMS),
         impacts=["projected", "errors"],
     )
     def _run_foreach(self):
         """Foreach record run through respective policy model based on COVERAGE_ID value."""
-        projected, errors = foreach_model(
-            records=self.records,
-            valuation_dt=self.valuation_dt,
-            assumption_set=self.assumption_set,
-            interest_modifier=self.interest_modifier,
-            ctr_modifier=self.ctr_modifier,
-        )
+        projected, errors = foreach_model(**get_kws(foreach_model, self))
         if isinstance(projected, list):
             projected = pd.DataFrame(columns=list(DisabledLivesValOutput.columns))
         self.projected = projected
@@ -156,11 +156,21 @@ class DisabledLivesValEMD:
 
 @model
 class DisabledLivesProjEMD:
-    extract = def_parameter(dtype=pd.DataFrame, description="The disabled lives extract.")
+    # parameters
+    extract_base = def_parameter(
+        dtype=pd.DataFrame, description="The base policy extract for disabled lives."
+    )
+    extract_riders = def_parameter(
+        dtype=pd.DataFrame, description="The rider extract for disabled lives."
+    )
     valuation_dt = param_valuation_dt
     assumption_set = param_assumption_set
-    ctr_modifier = modifier_ctr
-    interest_modifier = modifier_interest
+
+    # sensitivities
+    modifier_ctr = modifier_ctr
+    modifier_interest = modifier_interest
+
+    # meta
     model_version = meta_model_version
     last_commit = meta_last_commit
     run_date_time = meta_run_date_time
