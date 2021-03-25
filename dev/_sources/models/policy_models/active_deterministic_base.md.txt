@@ -20,14 +20,14 @@ execution:
 ### Documentation
 
 ```{eval-rst}
-.. autoclass:: footings_idi_model.policy_models.AValBasePMD
+.. autoclass:: footings_idi_model.models.AValBasePMD
 ```
 
 ### Usage
 
 ```{code-cell} ipython3
 import pandas as pd
-from footings_idi_model.policy_models import AValBasePMD
+from footings_idi_model.models import AValBasePMD
 
 model = AValBasePMD(
     policy_id="policy-1",
@@ -47,8 +47,7 @@ model = AValBasePMD(
     gross_premium_freq="MONTH",
     benefit_amount=100.0,
     valuation_dt=pd.Timestamp("2020-03-31"),
-    assumption_set="stat",
-    withdraw_table="01CSO",
+    assumption_set="STAT",
     net_benefit_method="NLP",
 )
 ```

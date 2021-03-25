@@ -71,6 +71,10 @@
             <a class="nav-link" href="../../user_guide.html">User Guide</a>
         </li>
         
+        <li class="nav-item ">
+            <a class="nav-link" href="../../extracts.html">Extracts</a>
+        </li>
+        
         <li class="nav-item active">
             <a class="nav-link" href="../index.html">Models</a>
         </li>
@@ -80,7 +84,11 @@
         </li>
         
         <li class="nav-item ">
-            <a class="nav-link" href="../../io/index.html">Input/Ouput</a>
+            <a class="nav-link" href="../../outputs.html">Output</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../scenarios.html">Scenarios</a>
         </li>
         
         <li class="nav-item ">
@@ -121,6 +129,8 @@
     
   
     <ul class="nav bd-sidenav">
+        
+        
         
         
         
@@ -200,6 +210,8 @@
         
         
         
+        
+        
       </ul>
   
   </nav>
@@ -264,8 +276,8 @@
 <div class="section" id="documentation">
 <h3>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h3>
 <dl class="py class">
-<dt id="footings_idi_model.policy_models.DValBasePMD">
-<em class="property">class </em><code class="sig-name descname">DValBasePMD</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span></em>, <em class="sig-param"><span class="n">valuation_dt</span><span class="p">:</span> <span class="n">pandas._libs.tslibs.timestamps.Timestamp</span></em>, <em class="sig-param"><span class="n">assumption_set</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">policy_id</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">claim_id</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">gender</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">birth_dt</span><span class="p">:</span> <span class="n">pandas._libs.tslibs.timestamps.Timestamp</span></em>, <em class="sig-param"><span class="n">incurred_dt</span><span class="p">:</span> <span class="n">pandas._libs.tslibs.timestamps.Timestamp</span></em>, <em class="sig-param"><span class="n">termination_dt</span><span class="p">:</span> <span class="n">pandas._libs.tslibs.timestamps.Timestamp</span></em>, <em class="sig-param"><span class="n">elimination_period</span><span class="p">:</span> <span class="n">numpy.int64</span></em>, <em class="sig-param"><span class="n">idi_contract</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">idi_benefit_period</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">idi_diagnosis_grp</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">idi_occupation_class</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">cola_percent</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">benefit_amount</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">ctr_modifier</span><span class="p">:</span> <span class="n">float</span> <span class="o">=</span> <span class="default_value">1.0</span></em>, <em class="sig-param"><span class="n">interest_modifier</span><span class="p">:</span> <span class="n">float</span> <span class="o">=</span> <span class="default_value">1.0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#footings_idi_model.policy_models.DValBasePMD" title="Permalink to this definition">¶</a></dt>
+<dt id="footings_idi_model.models.DValBasePMD">
+<em class="property">class </em><code class="sig-name descname">DValBasePMD</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span></em>, <em class="sig-param"><span class="n">valuation_dt</span><span class="p">:</span> <span class="n">pandas._libs.tslibs.timestamps.Timestamp</span></em>, <em class="sig-param"><span class="n">assumption_set</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">policy_id</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">claim_id</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">gender</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">birth_dt</span><span class="p">:</span> <span class="n">pandas._libs.tslibs.timestamps.Timestamp</span></em>, <em class="sig-param"><span class="n">incurred_dt</span><span class="p">:</span> <span class="n">pandas._libs.tslibs.timestamps.Timestamp</span></em>, <em class="sig-param"><span class="n">termination_dt</span><span class="p">:</span> <span class="n">pandas._libs.tslibs.timestamps.Timestamp</span></em>, <em class="sig-param"><span class="n">elimination_period</span><span class="p">:</span> <span class="n">numpy.int64</span></em>, <em class="sig-param"><span class="n">idi_contract</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">idi_benefit_period</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">idi_diagnosis_grp</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">idi_occupation_class</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">cola_percent</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">benefit_amount</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">modifier_ctr</span><span class="p">:</span> <span class="n">float</span> <span class="o">=</span> <span class="default_value">1.0</span></em>, <em class="sig-param"><span class="n">modifier_interest</span><span class="p">:</span> <span class="n">float</span> <span class="o">=</span> <span class="default_value">1.0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#footings_idi_model.models.DValBasePMD" title="Permalink to this definition">¶</a></dt>
 <dd><p>The disabled life reserve (DLR) valuation model for the base policy.</p>
 <p class="rubric">Parameters</p>
 <dl>
@@ -309,9 +321,9 @@
 </dl>
 <p class="rubric">Sensitivities</p>
 <dl class="simple">
-<dt>ctr_modifier<span class="classifier">float</span></dt><dd><p>Modifier for CTR.</p>
+<dt>modifier_ctr<span class="classifier">float</span></dt><dd><p>Modifier for CTR.</p>
 </dd>
-<dt>interest_modifier<span class="classifier">float</span></dt><dd><p>Interest rate modifier.</p>
+<dt>modifier_interest<span class="classifier">float</span></dt><dd><p>Interest rate modifier.</p>
 </dd>
 </dl>
 <p class="rubric">Meta</p>
@@ -351,8 +363,8 @@
 <li><p>Calculate Monthly Benefits - Calculate the benefit cost for each duration.</p></li>
 <li><p>Calculate Lives - Calculate the beginning, middle, and ending lives for each duration.</p></li>
 <li><p>Calculate Discount Factors - Calculate beginning, middle, and ending discount factors for each duration.</p></li>
-<li><p>Calculate DLR - Calculate durational life reserves (ALR) for each duration.</p></li>
-<li><p>Calculate DLR - Calculate active life reserves (ALR) for each duration as of valuation date.</p></li>
+<li><p>Calculate PVFB - Calculate present value of future benefits (PVFB) for each duration.</p></li>
+<li><p>Calculate DLR - Calculate disabled life reserves (DLR) for each duration as of valuation date.</p></li>
 <li><p>Create Output Frame - Reduce output to only needed columns.</p></li>
 </ol>
 </dd></dl>
@@ -363,7 +375,7 @@
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">footings_idi_model.policy_models</span> <span class="kn">import</span> <span class="n">DValBasePMD</span>
+<span class="kn">from</span> <span class="nn">footings_idi_model.models</span> <span class="kn">import</span> <span class="n">DValBasePMD</span>
 
 <span class="n">model</span> <span class="o">=</span> <span class="n">DValBasePMD</span><span class="p">(</span>
     <span class="n">policy_id</span><span class="o">=</span><span class="s2">&quot;policy-1&quot;</span><span class="p">,</span>
@@ -380,7 +392,7 @@
     <span class="n">cola_percent</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
     <span class="n">benefit_amount</span><span class="o">=</span><span class="mf">200.0</span><span class="p">,</span>
     <span class="n">valuation_dt</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="s2">&quot;2020-03-31&quot;</span><span class="p">),</span>
-    <span class="n">assumption_set</span><span class="o">=</span><span class="s2">&quot;stat&quot;</span><span class="p">,</span>
+    <span class="n">assumption_set</span><span class="o">=</span><span class="s2">&quot;STAT&quot;</span><span class="p">,</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -419,7 +431,7 @@ Data columns (total 23 columns):
  9   DURATION_YEAR   181 non-null    Int64         
  10  DURATION_MONTH  181 non-null    Int64         
  11  BENEFIT_AMOUNT  181 non-null    float64       
- 12  FINAL_CTR       181 non-null    float64       
+ 12  CTR             181 non-null    float64       
  13  LIVES_BD        181 non-null    float64       
  14  LIVES_MD        181 non-null    float64       
  15  LIVES_ED        181 non-null    float64       
@@ -488,8 +500,8 @@ memory usage: 34.3+ KB
     <tr>
       <th>0</th>
       <td>0.6.0</td>
-      <td>7e67d7cde66658e090c86ab2e5fa6c431d068f24</td>
-      <td>2021-03-16 09:32:24.641087</td>
+      <td>440fba5ef2439861d22d0b2289698e849a985c5d</td>
+      <td>2021-03-25 11:14:01.848656</td>
       <td>DValBasePMD</td>
       <td>policy-1</td>
       <td>claim-1</td>
@@ -507,13 +519,13 @@ memory usage: 34.3+ KB
       <td>24907.469142</td>
       <td>24894.598893</td>
       <td>2020-03-31</td>
-      <td>24776.49</td>
+      <td>25017.89</td>
     </tr>
     <tr>
       <th>1</th>
       <td>0.6.0</td>
-      <td>7e67d7cde66658e090c86ab2e5fa6c431d068f24</td>
-      <td>2021-03-16 09:32:24.641087</td>
+      <td>440fba5ef2439861d22d0b2289698e849a985c5d</td>
+      <td>2021-03-25 11:14:01.848656</td>
       <td>DValBasePMD</td>
       <td>policy-1</td>
       <td>claim-1</td>
@@ -531,13 +543,13 @@ memory usage: 34.3+ KB
       <td>24894.598893</td>
       <td>24696.121514</td>
       <td>2020-04-30</td>
-      <td>24466.97</td>
+      <td>24957.65</td>
     </tr>
     <tr>
       <th>2</th>
       <td>0.6.0</td>
-      <td>7e67d7cde66658e090c86ab2e5fa6c431d068f24</td>
-      <td>2021-03-16 09:32:24.641087</td>
+      <td>440fba5ef2439861d22d0b2289698e849a985c5d</td>
+      <td>2021-03-25 11:14:01.848656</td>
       <td>DValBasePMD</td>
       <td>policy-1</td>
       <td>claim-1</td>
@@ -555,13 +567,13 @@ memory usage: 34.3+ KB
       <td>24696.121514</td>
       <td>24498.643272</td>
       <td>2020-05-31</td>
-      <td>24149.18</td>
+      <td>24884.70</td>
     </tr>
     <tr>
       <th>3</th>
       <td>0.6.0</td>
-      <td>7e67d7cde66658e090c86ab2e5fa6c431d068f24</td>
-      <td>2021-03-16 09:32:24.641087</td>
+      <td>440fba5ef2439861d22d0b2289698e849a985c5d</td>
+      <td>2021-03-25 11:14:01.848656</td>
       <td>DValBasePMD</td>
       <td>policy-1</td>
       <td>claim-1</td>
@@ -579,13 +591,13 @@ memory usage: 34.3+ KB
       <td>24498.643272</td>
       <td>24302.174048</td>
       <td>2020-06-30</td>
-      <td>23831.57</td>
+      <td>24818.44</td>
     </tr>
     <tr>
       <th>4</th>
       <td>0.6.0</td>
-      <td>7e67d7cde66658e090c86ab2e5fa6c431d068f24</td>
-      <td>2021-03-16 09:32:24.641087</td>
+      <td>440fba5ef2439861d22d0b2289698e849a985c5d</td>
+      <td>2021-03-25 11:14:01.848656</td>
       <td>DValBasePMD</td>
       <td>policy-1</td>
       <td>claim-1</td>
@@ -603,7 +615,7 @@ memory usage: 34.3+ KB
       <td>24302.174048</td>
       <td>24106.723558</td>
       <td>2020-07-31</td>
-      <td>23517.36</td>
+      <td>24752.26</td>
     </tr>
     <tr>
       <th>...</th>
@@ -632,8 +644,8 @@ memory usage: 34.3+ KB
     <tr>
       <th>176</th>
       <td>0.6.0</td>
-      <td>7e67d7cde66658e090c86ab2e5fa6c431d068f24</td>
-      <td>2021-03-16 09:32:24.641087</td>
+      <td>440fba5ef2439861d22d0b2289698e849a985c5d</td>
+      <td>2021-03-25 11:14:01.848656</td>
       <td>DValBasePMD</td>
       <td>policy-1</td>
       <td>claim-1</td>
@@ -651,13 +663,13 @@ memory usage: 34.3+ KB
       <td>464.201274</td>
       <td>366.892171</td>
       <td>2034-11-30</td>
-      <td>181.25</td>
+      <td>653.76</td>
     </tr>
     <tr>
       <th>177</th>
       <td>0.6.0</td>
-      <td>7e67d7cde66658e090c86ab2e5fa6c431d068f24</td>
-      <td>2021-03-16 09:32:24.641087</td>
+      <td>440fba5ef2439861d22d0b2289698e849a985c5d</td>
+      <td>2021-03-25 11:14:01.848656</td>
       <td>DValBasePMD</td>
       <td>policy-1</td>
       <td>claim-1</td>
@@ -675,13 +687,13 @@ memory usage: 34.3+ KB
       <td>366.892171</td>
       <td>269.964719</td>
       <td>2034-12-31</td>
-      <td>133.64</td>
+      <td>485.29</td>
     </tr>
     <tr>
       <th>178</th>
       <td>0.6.0</td>
-      <td>7e67d7cde66658e090c86ab2e5fa6c431d068f24</td>
-      <td>2021-03-16 09:32:24.641087</td>
+      <td>440fba5ef2439861d22d0b2289698e849a985c5d</td>
+      <td>2021-03-25 11:14:01.848656</td>
       <td>DValBasePMD</td>
       <td>policy-1</td>
       <td>claim-1</td>
@@ -699,13 +711,13 @@ memory usage: 34.3+ KB
       <td>269.964719</td>
       <td>173.417421</td>
       <td>2035-01-31</td>
-      <td>86.57</td>
+      <td>316.53</td>
     </tr>
     <tr>
       <th>179</th>
       <td>0.6.0</td>
-      <td>7e67d7cde66658e090c86ab2e5fa6c431d068f24</td>
-      <td>2021-03-16 09:32:24.641087</td>
+      <td>440fba5ef2439861d22d0b2289698e849a985c5d</td>
+      <td>2021-03-25 11:14:01.848656</td>
       <td>DValBasePMD</td>
       <td>policy-1</td>
       <td>claim-1</td>
@@ -723,13 +735,13 @@ memory usage: 34.3+ KB
       <td>173.417421</td>
       <td>77.248786</td>
       <td>2035-02-28</td>
-      <td>40.06</td>
+      <td>147.46</td>
     </tr>
     <tr>
       <th>180</th>
       <td>0.6.0</td>
-      <td>7e67d7cde66658e090c86ab2e5fa6c431d068f24</td>
-      <td>2021-03-16 09:32:24.641087</td>
+      <td>440fba5ef2439861d22d0b2289698e849a985c5d</td>
+      <td>2021-03-25 11:14:01.848656</td>
       <td>DValBasePMD</td>
       <td>policy-1</td>
       <td>claim-1</td>
@@ -747,7 +759,7 @@ memory usage: 34.3+ KB
       <td>77.248786</td>
       <td>0.000000</td>
       <td>2035-03-31</td>
-      <td>2.38</td>
+      <td>8.83</td>
     </tr>
   </tbody>
 </table>

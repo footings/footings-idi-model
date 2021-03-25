@@ -71,6 +71,10 @@
             <a class="nav-link" href="../../user_guide.html">User Guide</a>
         </li>
         
+        <li class="nav-item ">
+            <a class="nav-link" href="../../extracts.html">Extracts</a>
+        </li>
+        
         <li class="nav-item active">
             <a class="nav-link" href="../index.html">Models</a>
         </li>
@@ -80,7 +84,11 @@
         </li>
         
         <li class="nav-item ">
-            <a class="nav-link" href="../../io/index.html">Input/Ouput</a>
+            <a class="nav-link" href="../../outputs.html">Output</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../scenarios.html">Scenarios</a>
         </li>
         
         <li class="nav-item ">
@@ -127,6 +135,8 @@
         
         
         
+        
+        
           
             
   
@@ -152,6 +162,8 @@
                 </li>
             
           
+        
+        
         
         
         
@@ -224,16 +236,16 @@
 <div class="section" id="documentation">
 <h3>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h3>
 <dl class="py class">
-<dt id="footings_idi_model.extract_models.ActiveLivesValEMD">
-<em class="property">class </em><code class="sig-name descname">ActiveLivesValEMD</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span></em>, <em class="sig-param"><span class="n">base_extract</span><span class="p">:</span> <span class="n">pandas.core.frame.DataFrame</span></em>, <em class="sig-param"><span class="n">rider_rop_extract</span><span class="p">:</span> <span class="n">pandas.core.frame.DataFrame</span></em>, <em class="sig-param"><span class="n">valuation_dt</span><span class="p">:</span> <span class="n">pandas._libs.tslibs.timestamps.Timestamp</span></em>, <em class="sig-param"><span class="n">assumption_set</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">net_benefit_method</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">withdraw_table</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">interest_modifier</span><span class="p">:</span> <span class="n">float</span> <span class="o">=</span> <span class="default_value">1.0</span></em>, <em class="sig-param"><span class="n">incidence_modifier</span><span class="o">=</span><span class="default_value">1.0</span></em>, <em class="sig-param"><span class="n">withdraw_modifier</span><span class="o">=</span><span class="default_value">1.0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#footings_idi_model.extract_models.ActiveLivesValEMD" title="Permalink to this definition">¶</a></dt>
+<dt id="footings_idi_model.models.ActiveLivesValEMD">
+<em class="property">class </em><code class="sig-name descname">ActiveLivesValEMD</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span></em>, <em class="sig-param"><span class="n">extract_base</span><span class="p">:</span> <span class="n">pandas.core.frame.DataFrame</span></em>, <em class="sig-param"><span class="n">extract_riders</span><span class="p">:</span> <span class="n">pandas.core.frame.DataFrame</span></em>, <em class="sig-param"><span class="n">valuation_dt</span><span class="p">:</span> <span class="n">pandas._libs.tslibs.timestamps.Timestamp</span></em>, <em class="sig-param"><span class="n">assumption_set</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">net_benefit_method</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">modifier_ctr</span><span class="p">:</span> <span class="n">float</span> <span class="o">=</span> <span class="default_value">1.0</span></em>, <em class="sig-param"><span class="n">modifier_incidence</span><span class="o">=</span><span class="default_value">1.0</span></em>, <em class="sig-param"><span class="n">modifier_interest</span><span class="p">:</span> <span class="n">float</span> <span class="o">=</span> <span class="default_value">1.0</span></em>, <em class="sig-param"><span class="n">modifier_lapse</span><span class="o">=</span><span class="default_value">1.0</span></em>, <em class="sig-param"><span class="n">modifier_mortality</span><span class="o">=</span><span class="default_value">1.0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#footings_idi_model.models.ActiveLivesValEMD" title="Permalink to this definition">¶</a></dt>
 <dd><p>Active lives deterministic valuation extract model.</p>
 <p>This model takes an extract of policies and runs them through the respective Policy Models
 based on the COVERAGE_ID column (i.e., whether it is base policy or rider).</p>
 <p class="rubric">Parameters</p>
 <dl>
-<dt>base_extract<span class="classifier">DataFrame</span></dt><dd><p>The base active lives extract.</p>
+<dt>extract_base<span class="classifier">DataFrame</span></dt><dd><p>The active lives base extract.</p>
 </dd>
-<dt>rider_rop_extract<span class="classifier">DataFrame</span></dt><dd><p>The ROP rider active lives extract.</p>
+<dt>extract_riders<span class="classifier">DataFrame</span></dt><dd><p>The active lives rider extract.</p>
 </dd>
 <dt>valuation_dt<span class="classifier">Timestamp</span></dt><dd><p>The valuation date which reserves are based.</p>
 </dd>
@@ -255,16 +267,18 @@ based on the COVERAGE_ID column (i.e., whether it is base policy or rider).</p>
 </ul>
 </div></blockquote>
 </dd>
-<dt>withdraw_table<span class="classifier">str</span></dt><dd><p>Table name for withdraw rates.</p>
-</dd>
 </dl>
 <p class="rubric">Sensitivities</p>
 <dl class="simple">
-<dt>interest_modifier<span class="classifier">float</span></dt><dd><p>Interest rate modifier.</p>
+<dt>modifier_ctr<span class="classifier">float</span></dt><dd><p>Modifier for CTR.</p>
 </dd>
-<dt>incidence_modifier</dt><dd><p>The incidence rate modifier.</p>
+<dt>modifier_incidence</dt><dd><p>The incidence rate modifier.</p>
 </dd>
-<dt>withdraw_modifier</dt><dd><p>The withdraw rate modifier</p>
+<dt>modifier_interest<span class="classifier">float</span></dt><dd><p>Interest rate modifier.</p>
+</dd>
+<dt>modifier_lapse</dt><dd><p>The withdraw rate modifier</p>
+</dd>
+<dt>modifier_mortality</dt><dd><p>The withdraw rate modifier</p>
 </dd>
 </dl>
 <p class="rubric">Meta</p>
@@ -304,18 +318,18 @@ based on the COVERAGE_ID column (i.e., whether it is base policy or rider).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">footings_idi_model.extract_models</span> <span class="kn">import</span> <span class="n">ActiveLivesValEMD</span>
+<span class="kn">from</span> <span class="nn">footings_idi_model.models</span> <span class="kn">import</span> <span class="n">ActiveLivesValEMD</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">base_extract</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">extract_base</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
   <span class="s2">&quot;active-lives-sample-base.csv&quot;</span><span class="p">,</span>
   <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;BIRTH_DT&quot;</span><span class="p">,</span> <span class="s2">&quot;POLICY_START_DT&quot;</span><span class="p">,</span> <span class="s2">&quot;PREMIUM_PAY_TO_DT&quot;</span><span class="p">,</span> <span class="s2">&quot;POLICY_END_DT&quot;</span><span class="p">]</span>
 <span class="p">)</span>
-<span class="n">base_extract</span>
+<span class="n">extract_base</span>
 </pre></div>
 </div>
 </div>
@@ -544,11 +558,8 @@ based on the COVERAGE_ID column (i.e., whether it is base policy or rider).</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rider_rop_extract</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
-  <span class="s2">&quot;active-lives-sample-riders-rop.csv&quot;</span><span class="p">,</span>
-  <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ROP_FUTURE_CLAIMS_START_DT&quot;</span><span class="p">]</span>
-<span class="p">)</span>
-<span class="n">rider_rop_extract</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">extract_riders</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;active-lives-sample-riders.csv&quot;</span><span class="p">)</span>
+<span class="n">extract_riders</span>
 </pre></div>
 </div>
 </div>
@@ -573,10 +584,8 @@ based on the COVERAGE_ID column (i.e., whether it is base policy or rider).</p>
       <th></th>
       <th>POLICY_ID</th>
       <th>COVERAGE_ID</th>
-      <th>ROP_RETURN_FREQ</th>
-      <th>ROP_RETURN_PERCENT</th>
-      <th>ROP_CLAIMS_PAID</th>
-      <th>ROP_FUTURE_CLAIMS_START_DT</th>
+      <th>RIDER_ATTRIBUTE</th>
+      <th>VALUE</th>
     </tr>
   </thead>
   <tbody>
@@ -584,37 +593,85 @@ based on the COVERAGE_ID column (i.e., whether it is base policy or rider).</p>
       <th>0</th>
       <td>M1</td>
       <td>ROP</td>
-      <td>10</td>
-      <td>0.8</td>
-      <td>0</td>
-      <td>2020-03-31</td>
+      <td>rop_return_freq</td>
+      <td>10.0</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>M3</td>
+      <td>M1</td>
       <td>ROP</td>
-      <td>7</td>
-      <td>0.5</td>
-      <td>0</td>
-      <td>2020-03-31</td>
+      <td>rop_return_percent</td>
+      <td>0.8</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>M4</td>
+      <td>M1</td>
       <td>ROP</td>
-      <td>10</td>
-      <td>0.5</td>
-      <td>1000</td>
-      <td>2020-03-31</td>
+      <td>rop_claims_paid</td>
+      <td>0.0</td>
     </tr>
     <tr>
       <th>3</th>
+      <td>M3</td>
+      <td>ROP</td>
+      <td>rop_return_freq</td>
+      <td>7.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>M3</td>
+      <td>ROP</td>
+      <td>rop_return_percent</td>
+      <td>0.5</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>M3</td>
+      <td>ROP</td>
+      <td>rop_claims_paid</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>M4</td>
+      <td>ROP</td>
+      <td>rop_return_freq</td>
+      <td>10.0</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>M4</td>
+      <td>ROP</td>
+      <td>rop_return_percent</td>
+      <td>0.5</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>M4</td>
+      <td>ROP</td>
+      <td>rop_claims_paid</td>
+      <td>1000.0</td>
+    </tr>
+    <tr>
+      <th>9</th>
       <td>M5</td>
       <td>ROP</td>
-      <td>7</td>
+      <td>rop_return_freq</td>
+      <td>7.0</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>M5</td>
+      <td>ROP</td>
+      <td>rop_return_percent</td>
       <td>0.8</td>
-      <td>0</td>
-      <td>2020-03-31</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>M5</td>
+      <td>ROP</td>
+      <td>rop_claims_paid</td>
+      <td>0.0</td>
     </tr>
   </tbody>
 </table>
@@ -623,11 +680,10 @@ based on the COVERAGE_ID column (i.e., whether it is base policy or rider).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">ActiveLivesValEMD</span><span class="p">(</span>
-    <span class="n">base_extract</span><span class="o">=</span><span class="n">base_extract</span><span class="p">,</span>
-    <span class="n">rider_rop_extract</span><span class="o">=</span><span class="n">rider_rop_extract</span><span class="p">,</span>
+    <span class="n">extract_base</span><span class="o">=</span><span class="n">extract_base</span><span class="p">,</span>
+    <span class="n">extract_riders</span><span class="o">=</span><span class="n">extract_riders</span><span class="p">,</span>
     <span class="n">valuation_dt</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="s2">&quot;2020-03-31&quot;</span><span class="p">),</span>
-    <span class="n">withdraw_table</span><span class="o">=</span><span class="s2">&quot;01CSO&quot;</span><span class="p">,</span>
-    <span class="n">assumption_set</span><span class="o">=</span><span class="s2">&quot;stat&quot;</span><span class="p">,</span>
+    <span class="n">assumption_set</span><span class="o">=</span><span class="s2">&quot;STAT&quot;</span><span class="p">,</span>
     <span class="n">net_benefit_method</span><span class="o">=</span><span class="s2">&quot;NLP&quot;</span><span class="p">,</span>
 <span class="p">)</span>
 </pre></div>
@@ -646,6 +702,40 @@ based on the COVERAGE_ID column (i.e., whether it is base policy or rider).</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/pandas/core/series.py:726: RuntimeWarning: divide by zero encountered in log
+  result = getattr(ufunc, method)(*inputs, **kwargs)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/pandas/core/series.py:726: RuntimeWarning: divide by zero encountered in log
+  result = getattr(ufunc, method)(*inputs, **kwargs)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/pandas/core/series.py:726: RuntimeWarning: divide by zero encountered in log
+  result = getattr(ufunc, method)(*inputs, **kwargs)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/pandas/core/series.py:726: RuntimeWarning: divide by zero encountered in log
+  result = getattr(ufunc, method)(*inputs, **kwargs)
+/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/pandas/core/series.py:726: RuntimeWarning: divide by zero encountered in log
+  result = getattr(ufunc, method)(*inputs, **kwargs)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/pandas/core/series.py:726: RuntimeWarning: divide by zero encountered in log
+  result = getattr(ufunc, method)(*inputs, **kwargs)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/pandas/core/series.py:726: RuntimeWarning: divide by zero encountered in log
+  result = getattr(ufunc, method)(*inputs, **kwargs)
+/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/pandas/core/series.py:726: RuntimeWarning: divide by zero encountered in log
+  result = getattr(ufunc, method)(*inputs, **kwargs)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/pandas/core/series.py:726: RuntimeWarning: divide by zero encountered in log
+  result = getattr(ufunc, method)(*inputs, **kwargs)
+</pre></div>
+</div>
+</div>
 </div>
 <p>Note the <code class="docutils literal notranslate"><span class="pre">time0</span></code> and <code class="docutils literal notranslate"><span class="pre">projected</span></code> have the same columns with <code class="docutils literal notranslate"><span class="pre">time0</span></code> being a subset of the <code class="docutils literal notranslate"><span class="pre">projected</span></code> frame.</p>
 <div class="cell docutils container">
@@ -656,36 +746,36 @@ based on the COVERAGE_ID column (i.e., whether it is base policy or rider).</p>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
-Index: 0 entries
+Int64Index: 207 entries, 2 to 34
 Data columns (total 24 columns):
- #   Column                Non-Null Count  Dtype 
----  ------                --------------  ----- 
- 0   MODEL_VERSION         0 non-null      object
- 1   LAST_COMMIT           0 non-null      object
- 2   RUN_DATE_TIME         0 non-null      object
- 3   SOURCE                0 non-null      object
- 4   POLICY_ID             0 non-null      object
- 5   COVERAGE_ID           0 non-null      object
- 6   DATE_BD               0 non-null      object
- 7   DATE_ED               0 non-null      object
- 8   DURATION_YEAR         0 non-null      object
- 9   LIVES_BD              0 non-null      object
- 10  LIVES_MD              0 non-null      object
- 11  LIVES_ED              0 non-null      object
- 12  DISCOUNT_BD           0 non-null      object
- 13  DISCOUNT_MD           0 non-null      object
- 14  DISCOUNT_ED           0 non-null      object
- 15  BENEFIT_AMOUNT        0 non-null      object
- 16  FINAL_INCIDENCE_RATE  0 non-null      object
- 17  BENEFIT_COST          0 non-null      object
- 18  PVFB                  0 non-null      object
- 19  PVFNB                 0 non-null      object
- 20  ALR_BD                0 non-null      object
- 21  ALR_ED                0 non-null      object
- 22  ALR_DATE              0 non-null      object
- 23  ALR                   0 non-null      object
-dtypes: object(24)
-memory usage: 0.0+ bytes
+ #   Column          Non-Null Count  Dtype         
+---  ------          --------------  -----         
+ 0   MODEL_VERSION   207 non-null    object        
+ 1   LAST_COMMIT     207 non-null    object        
+ 2   RUN_DATE_TIME   207 non-null    datetime64[ns]
+ 3   SOURCE          207 non-null    object        
+ 4   POLICY_ID       207 non-null    object        
+ 5   COVERAGE_ID     207 non-null    object        
+ 6   DATE_BD         207 non-null    datetime64[ns]
+ 7   DATE_ED         207 non-null    datetime64[ns]
+ 8   DURATION_YEAR   207 non-null    Int64         
+ 9   LIVES_BD        207 non-null    float64       
+ 10  LIVES_MD        207 non-null    float64       
+ 11  LIVES_ED        207 non-null    float64       
+ 12  DISCOUNT_BD     207 non-null    float64       
+ 13  DISCOUNT_MD     207 non-null    float64       
+ 14  DISCOUNT_ED     207 non-null    float64       
+ 15  BENEFIT_AMOUNT  207 non-null    int64         
+ 16  INCIDENCE_RATE  207 non-null    float64       
+ 17  BENEFIT_COST    206 non-null    float64       
+ 18  PVFB            207 non-null    float64       
+ 19  PVFNB           207 non-null    float64       
+ 20  ALR_BD          207 non-null    float64       
+ 21  ALR_ED          207 non-null    float64       
+ 22  ALR_DATE        207 non-null    datetime64[ns]
+ 23  ALR             207 non-null    float64       
+dtypes: Int64(1), datetime64[ns](4), float64(13), int64(1), object(5)
+memory usage: 40.6+ KB
 </pre></div>
 </div>
 </div>
@@ -728,7 +818,7 @@ memory usage: 0.0+ bytes
       <th>...</th>
       <th>DISCOUNT_ED</th>
       <th>BENEFIT_AMOUNT</th>
-      <th>FINAL_INCIDENCE_RATE</th>
+      <th>INCIDENCE_RATE</th>
       <th>BENEFIT_COST</th>
       <th>PVFB</th>
       <th>PVFNB</th>
@@ -739,9 +829,273 @@ memory usage: 0.0+ bytes
     </tr>
   </thead>
   <tbody>
+    <tr>
+      <th>2</th>
+      <td>0.6.0</td>
+      <td>440fba5ef2439861d22d0b2289698e849a985c5d</td>
+      <td>2021-03-25 11:12:01.268901</td>
+      <td>AValBasePMD</td>
+      <td>M1</td>
+      <td>BASE</td>
+      <td>2020-03-06</td>
+      <td>2021-03-06</td>
+      <td>3</td>
+      <td>0.997402</td>
+      <td>...</td>
+      <td>0.915142</td>
+      <td>100</td>
+      <td>0.002228</td>
+      <td>30.688392</td>
+      <td>773.833863</td>
+      <td>746.848211</td>
+      <td>28.703659</td>
+      <td>41.720113</td>
+      <td>2020-03-31</td>
+      <td>29.45</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.6.0</td>
+      <td>440fba5ef2439861d22d0b2289698e849a985c5d</td>
+      <td>2021-03-25 11:12:01.268901</td>
+      <td>AValBasePMD</td>
+      <td>M1</td>
+      <td>BASE</td>
+      <td>2021-03-06</td>
+      <td>2022-03-06</td>
+      <td>4</td>
+      <td>0.995975</td>
+      <td>...</td>
+      <td>0.888487</td>
+      <td>100</td>
+      <td>0.002365</td>
+      <td>32.215403</td>
+      <td>745.408331</td>
+      <td>707.382176</td>
+      <td>41.720113</td>
+      <td>53.600038</td>
+      <td>2021-03-31</td>
+      <td>42.44</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.6.0</td>
+      <td>440fba5ef2439861d22d0b2289698e849a985c5d</td>
+      <td>2021-03-25 11:12:01.268901</td>
+      <td>AValBasePMD</td>
+      <td>M1</td>
+      <td>BASE</td>
+      <td>2022-03-06</td>
+      <td>2023-03-06</td>
+      <td>5</td>
+      <td>0.994452</td>
+      <td>...</td>
+      <td>0.862609</td>
+      <td>100</td>
+      <td>0.002525</td>
+      <td>33.930135</td>
+      <td>716.479136</td>
+      <td>669.120430</td>
+      <td>53.600038</td>
+      <td>64.120353</td>
+      <td>2022-03-31</td>
+      <td>54.26</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0.6.0</td>
+      <td>440fba5ef2439861d22d0b2289698e849a985c5d</td>
+      <td>2021-03-25 11:12:01.268901</td>
+      <td>AValBasePMD</td>
+      <td>M1</td>
+      <td>BASE</td>
+      <td>2023-03-06</td>
+      <td>2024-03-06</td>
+      <td>6</td>
+      <td>0.992811</td>
+      <td>...</td>
+      <td>0.837484</td>
+      <td>100</td>
+      <td>0.002684</td>
+      <td>35.552118</td>
+      <td>686.943074</td>
+      <td>632.029939</td>
+      <td>64.120353</td>
+      <td>73.336151</td>
+      <td>2023-03-31</td>
+      <td>64.71</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>0.6.0</td>
+      <td>440fba5ef2439861d22d0b2289698e849a985c5d</td>
+      <td>2021-03-25 11:12:01.268901</td>
+      <td>AValBasePMD</td>
+      <td>M1</td>
+      <td>BASE</td>
+      <td>2024-03-06</td>
+      <td>2025-03-06</td>
+      <td>7</td>
+      <td>0.991034</td>
+      <td>...</td>
+      <td>0.813092</td>
+      <td>100</td>
+      <td>0.002875</td>
+      <td>37.431773</td>
+      <td>656.946344</td>
+      <td>596.079170</td>
+      <td>73.336151</td>
+      <td>80.948847</td>
+      <td>2024-03-31</td>
+      <td>73.83</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>0.6.0</td>
+      <td>440fba5ef2439861d22d0b2289698e849a985c5d</td>
+      <td>2021-03-25 11:12:01.268901</td>
+      <td>AValRopRPMD</td>
+      <td>M5</td>
+      <td>ROP</td>
+      <td>2033-01-29</td>
+      <td>2034-01-29</td>
+      <td>31</td>
+      <td>0.921102</td>
+      <td>...</td>
+      <td>0.399987</td>
+      <td>100</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>214.558780</td>
+      <td>150.518335</td>
+      <td>168.757613</td>
+      <td>264.151963</td>
+      <td>2033-03-31</td>
+      <td>182.07</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>0.6.0</td>
+      <td>440fba5ef2439861d22d0b2289698e849a985c5d</td>
+      <td>2021-03-25 11:12:01.268901</td>
+      <td>AValRopRPMD</td>
+      <td>M5</td>
+      <td>ROP</td>
+      <td>2034-01-29</td>
+      <td>2035-01-29</td>
+      <td>32</td>
+      <td>0.913448</td>
+      <td>...</td>
+      <td>0.388337</td>
+      <td>100</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>214.558780</td>
+      <td>118.046290</td>
+      <td>264.151963</td>
+      <td>363.484402</td>
+      <td>2034-03-31</td>
+      <td>278.83</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>0.6.0</td>
+      <td>440fba5ef2439861d22d0b2289698e849a985c5d</td>
+      <td>2021-03-25 11:12:01.268901</td>
+      <td>AValRopRPMD</td>
+      <td>M5</td>
+      <td>ROP</td>
+      <td>2035-01-29</td>
+      <td>2036-01-29</td>
+      <td>33</td>
+      <td>0.905227</td>
+      <td>...</td>
+      <td>0.377026</td>
+      <td>100</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>214.558780</td>
+      <td>86.782017</td>
+      <td>363.484402</td>
+      <td>467.074761</td>
+      <td>2035-03-31</td>
+      <td>379.26</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>0.6.0</td>
+      <td>440fba5ef2439861d22d0b2289698e849a985c5d</td>
+      <td>2021-03-25 11:12:01.268901</td>
+      <td>AValRopRPMD</td>
+      <td>M5</td>
+      <td>ROP</td>
+      <td>2036-01-29</td>
+      <td>2037-01-29</td>
+      <td>34</td>
+      <td>0.896410</td>
+      <td>...</td>
+      <td>0.366045</td>
+      <td>100</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>214.558780</td>
+      <td>56.701535</td>
+      <td>467.074761</td>
+      <td>575.287050</td>
+      <td>2036-03-31</td>
+      <td>483.86</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>0.6.0</td>
+      <td>440fba5ef2439861d22d0b2289698e849a985c5d</td>
+      <td>2021-03-25 11:12:01.268901</td>
+      <td>AValRopRPMD</td>
+      <td>M5</td>
+      <td>ROP</td>
+      <td>2037-01-29</td>
+      <td>2038-01-29</td>
+      <td>35</td>
+      <td>0.886962</td>
+      <td>...</td>
+      <td>0.355383</td>
+      <td>100</td>
+      <td>0.000000</td>
+      <td>672.000000</td>
+      <td>214.558780</td>
+      <td>27.781635</td>
+      <td>575.287050</td>
+      <td>0.000000</td>
+      <td>2037-03-31</td>
+      <td>0.00</td>
+    </tr>
   </tbody>
 </table>
-<p>0 rows × 24 columns</p>
+<p>207 rows × 24 columns</p>
 </div></div></div>
 </div>
 <div class="cell docutils container">
@@ -780,6 +1134,105 @@ memory usage: 0.0+ bytes
     </tr>
   </thead>
   <tbody>
+    <tr>
+      <th>2</th>
+      <td>0.6.0</td>
+      <td>440fba5ef2439861d22d0b2289698e849a985c5d</td>
+      <td>2021-03-25 11:12:01.268901</td>
+      <td>AValBasePMD</td>
+      <td>M1</td>
+      <td>BASE</td>
+      <td>2020-03-31</td>
+      <td>29.45</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.6.0</td>
+      <td>440fba5ef2439861d22d0b2289698e849a985c5d</td>
+      <td>2021-03-25 11:12:01.268901</td>
+      <td>AValRopRPMD</td>
+      <td>M1</td>
+      <td>ROP</td>
+      <td>2020-03-31</td>
+      <td>174.05</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.6.0</td>
+      <td>440fba5ef2439861d22d0b2289698e849a985c5d</td>
+      <td>2021-03-25 11:12:01.268901</td>
+      <td>AValBasePMD</td>
+      <td>M2</td>
+      <td>BASE</td>
+      <td>2020-03-31</td>
+      <td>26.68</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>0.6.0</td>
+      <td>440fba5ef2439861d22d0b2289698e849a985c5d</td>
+      <td>2021-03-25 11:12:01.268901</td>
+      <td>AValBasePMD</td>
+      <td>M3</td>
+      <td>BASE</td>
+      <td>2020-03-31</td>
+      <td>188.23</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>0.6.0</td>
+      <td>440fba5ef2439861d22d0b2289698e849a985c5d</td>
+      <td>2021-03-25 11:12:01.268901</td>
+      <td>AValRopRPMD</td>
+      <td>M3</td>
+      <td>ROP</td>
+      <td>2020-03-31</td>
+      <td>339.68</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>0.6.0</td>
+      <td>440fba5ef2439861d22d0b2289698e849a985c5d</td>
+      <td>2021-03-25 11:12:01.268901</td>
+      <td>AValBasePMD</td>
+      <td>M4</td>
+      <td>BASE</td>
+      <td>2020-03-31</td>
+      <td>77.36</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>0.6.0</td>
+      <td>440fba5ef2439861d22d0b2289698e849a985c5d</td>
+      <td>2021-03-25 11:12:01.268901</td>
+      <td>AValRopRPMD</td>
+      <td>M4</td>
+      <td>ROP</td>
+      <td>2020-03-31</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>0.6.0</td>
+      <td>440fba5ef2439861d22d0b2289698e849a985c5d</td>
+      <td>2021-03-25 11:12:01.268901</td>
+      <td>AValBasePMD</td>
+      <td>M5</td>
+      <td>BASE</td>
+      <td>2020-03-31</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>0.6.0</td>
+      <td>440fba5ef2439861d22d0b2289698e849a985c5d</td>
+      <td>2021-03-25 11:12:01.268901</td>
+      <td>AValRopRPMD</td>
+      <td>M5</td>
+      <td>ROP</td>
+      <td>2020-03-31</td>
+      <td>277.58</td>
+    </tr>
   </tbody>
 </table>
 </div></div></div>
@@ -791,15 +1244,7 @@ memory usage: 0.0+ bytes
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[Error(key=&quot;({&#39;policy_id&#39;: &#39;M1&#39;, &#39;coverage_id&#39;: &#39;BASE&#39;},)&quot;, error_type=&#39;TypeError&#39;, error_value=&#39;(&quot;__init__() got an unexpected keyword argument \&#39;withdraw_table\&#39;&quot;,)&#39;, error_stacktrace=&#39;[\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/jigs.py&quot;, line 84, in wrapper\\n    ret = self.model(**model_kwargs).run()\\n\&#39;]&#39;),
- Error(key=&quot;({&#39;policy_id&#39;: &#39;M1&#39;, &#39;coverage_id&#39;: &#39;ROP&#39;},)&quot;, error_type=&#39;TypeError&#39;, error_value=&#39;(&quot;__init__() got an unexpected keyword argument \&#39;rop_future_claims_start_dt\&#39;&quot;,)&#39;, error_stacktrace=&#39;[\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/jigs.py&quot;, line 84, in wrapper\\n    ret = self.model(**model_kwargs).run()\\n\&#39;]&#39;),
- Error(key=&quot;({&#39;policy_id&#39;: &#39;M2&#39;, &#39;coverage_id&#39;: &#39;BASE&#39;},)&quot;, error_type=&#39;TypeError&#39;, error_value=&#39;(&quot;__init__() got an unexpected keyword argument \&#39;withdraw_table\&#39;&quot;,)&#39;, error_stacktrace=&#39;[\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/jigs.py&quot;, line 84, in wrapper\\n    ret = self.model(**model_kwargs).run()\\n\&#39;]&#39;),
- Error(key=&quot;({&#39;policy_id&#39;: &#39;M3&#39;, &#39;coverage_id&#39;: &#39;BASE&#39;},)&quot;, error_type=&#39;TypeError&#39;, error_value=&#39;(&quot;__init__() got an unexpected keyword argument \&#39;withdraw_table\&#39;&quot;,)&#39;, error_stacktrace=&#39;[\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/jigs.py&quot;, line 84, in wrapper\\n    ret = self.model(**model_kwargs).run()\\n\&#39;]&#39;),
- Error(key=&quot;({&#39;policy_id&#39;: &#39;M3&#39;, &#39;coverage_id&#39;: &#39;ROP&#39;},)&quot;, error_type=&#39;TypeError&#39;, error_value=&#39;(&quot;__init__() got an unexpected keyword argument \&#39;rop_future_claims_start_dt\&#39;&quot;,)&#39;, error_stacktrace=&#39;[\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/jigs.py&quot;, line 84, in wrapper\\n    ret = self.model(**model_kwargs).run()\\n\&#39;]&#39;),
- Error(key=&quot;({&#39;policy_id&#39;: &#39;M4&#39;, &#39;coverage_id&#39;: &#39;BASE&#39;},)&quot;, error_type=&#39;TypeError&#39;, error_value=&#39;(&quot;__init__() got an unexpected keyword argument \&#39;withdraw_table\&#39;&quot;,)&#39;, error_stacktrace=&#39;[\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/jigs.py&quot;, line 84, in wrapper\\n    ret = self.model(**model_kwargs).run()\\n\&#39;]&#39;),
- Error(key=&quot;({&#39;policy_id&#39;: &#39;M4&#39;, &#39;coverage_id&#39;: &#39;ROP&#39;},)&quot;, error_type=&#39;TypeError&#39;, error_value=&#39;(&quot;__init__() got an unexpected keyword argument \&#39;rop_future_claims_start_dt\&#39;&quot;,)&#39;, error_stacktrace=&#39;[\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/jigs.py&quot;, line 84, in wrapper\\n    ret = self.model(**model_kwargs).run()\\n\&#39;]&#39;),
- Error(key=&quot;({&#39;policy_id&#39;: &#39;M5&#39;, &#39;coverage_id&#39;: &#39;BASE&#39;},)&quot;, error_type=&#39;TypeError&#39;, error_value=&#39;(&quot;__init__() got an unexpected keyword argument \&#39;withdraw_table\&#39;&quot;,)&#39;, error_stacktrace=&#39;[\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/jigs.py&quot;, line 84, in wrapper\\n    ret = self.model(**model_kwargs).run()\\n\&#39;]&#39;),
- Error(key=&quot;({&#39;policy_id&#39;: &#39;M5&#39;, &#39;coverage_id&#39;: &#39;ROP&#39;},)&quot;, error_type=&#39;TypeError&#39;, error_value=&#39;(&quot;__init__() got an unexpected keyword argument \&#39;rop_future_claims_start_dt\&#39;&quot;,)&#39;, error_stacktrace=&#39;[\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/jigs.py&quot;, line 84, in wrapper\\n    ret = self.model(**model_kwargs).run()\\n\&#39;]&#39;)]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[]
 </pre></div>
 </div>
 </div>
@@ -808,6 +1253,40 @@ memory usage: 0.0+ bytes
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">audit</span><span class="p">(</span><span class="s2">&quot;Audit-ActiveLivesValEMD.xlsx&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/pandas/core/series.py:726: RuntimeWarning: divide by zero encountered in log
+  result = getattr(ufunc, method)(*inputs, **kwargs)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/pandas/core/series.py:726: RuntimeWarning: divide by zero encountered in log
+  result = getattr(ufunc, method)(*inputs, **kwargs)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/pandas/core/series.py:726: RuntimeWarning: divide by zero encountered in log
+  result = getattr(ufunc, method)(*inputs, **kwargs)
+/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/pandas/core/series.py:726: RuntimeWarning: divide by zero encountered in log
+  result = getattr(ufunc, method)(*inputs, **kwargs)
+/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/pandas/core/series.py:726: RuntimeWarning: divide by zero encountered in log
+  result = getattr(ufunc, method)(*inputs, **kwargs)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/pandas/core/series.py:726: RuntimeWarning: divide by zero encountered in log
+  result = getattr(ufunc, method)(*inputs, **kwargs)
+/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/pandas/core/series.py:726: RuntimeWarning: divide by zero encountered in log
+  result = getattr(ufunc, method)(*inputs, **kwargs)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/pandas/core/series.py:726: RuntimeWarning: divide by zero encountered in log
+  result = getattr(ufunc, method)(*inputs, **kwargs)
+/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/pandas/core/series.py:726: RuntimeWarning: divide by zero encountered in log
+  result = getattr(ufunc, method)(*inputs, **kwargs)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/pandas/core/series.py:726: RuntimeWarning: divide by zero encountered in log
+  result = getattr(ufunc, method)(*inputs, **kwargs)
 </pre></div>
 </div>
 </div>

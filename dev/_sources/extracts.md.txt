@@ -12,12 +12,12 @@ execution:
   timeout: -1
 ---
 
-# Model Input (Extracts)
+# Extracts
 
 ## Active Lives - Base
 
 ```{eval-rst}
-.. autodata:: footings_idi_model.data.ActiveLivesBaseExtract
+.. autodata:: footings_idi_model.extracts.ActiveLivesBaseExtract
    :no-value:
 ```
 
@@ -28,17 +28,17 @@ execution:
 tags: [hide-input]
 ---
 import pandas as pd
-base_extract = pd.read_csv(
-  "../../models/extract_models/active-lives-sample-base.csv",
+extract_base = pd.read_csv(
+  "./models/extract_models/active-lives-sample-base.csv",
   parse_dates=["BIRTH_DT", "POLICY_START_DT", "PREMIUM_PAY_TO_DT", "POLICY_END_DT"]
 )
-base_extract
+extract_base
 ```
 
 ## Active Lives - ROP Rider
 
 ```{eval-rst}
-.. autodata:: footings_idi_model.data.ActiveLivesROPRiderExtract
+.. autodata:: footings_idi_model.extracts.ActiveLivesROPRiderExtract
    :no-value:
 ```
 
@@ -49,16 +49,16 @@ base_extract
 tags: [hide-input]
 ---
 import pandas as pd
-rider_extract = pd.read_csv(
-  "../../models/extract_models/active-lives-sample-riders-rop.csv",
+extract_riders = pd.read_csv(
+  "./models/extract_models/active-lives-sample-riders-rop.csv",
 )
-rider_extract
+extract_riders
 ```
 
 ## Disabled Lives - Base
 
 ```{eval-rst}
-.. autodata:: footings_idi_model.data.DisabledLivesBaseExtract
+.. autodata:: footings_idi_model.extracts.DisabledLivesBaseExtract
    :no-value:
 ```
 
@@ -69,17 +69,17 @@ rider_extract
 tags: [hide-input]
 ---
 import pandas as pd
-base_extract = pd.read_csv(
-  "../../models/extract_models/disabled-lives-sample-base.csv",
+extract_base = pd.read_csv(
+  "./models/extract_models/disabled-lives-sample-base.csv",
   parse_dates=["BIRTH_DT", "INCURRED_DT", "TERMINATION_DT"]
 )
-base_extract
+extract_base
 ```
 
 ## Disabled Lives - Rider
 
 ```{eval-rst}
-.. autodata:: footings_idi_model.data.DisabledLivesRiderExtract
+.. autodata:: footings_idi_model.extracts.DisabledLivesRiderExtract
    :no-value:
 ```
 
@@ -90,8 +90,8 @@ base_extract
 tags: [hide-input]
 ---
 import pandas as pd
-rider_extract = pd.read_csv(
-  "../../models/extract_models/disabled-lives-sample-riders.csv",
+extract_riders = pd.read_csv(
+  "./models/extract_models/disabled-lives-sample-riders.csv",
 )
-rider_extract
+extract_riders
 ```
