@@ -20,14 +20,14 @@ execution:
 ### Documentation
 
 ```{eval-rst}
-.. autoclass:: footings_idi_model.policy_models.AValCatRPMD
+.. autoclass:: footings_idi_model.models.AValCatRPMD
 ```
 
 ### Usage
 
 ```{code-cell} ipython3
 import pandas as pd
-from footings_idi_model.policy_models import AValCatRPMD
+from footings_idi_model.models import AValCatRPMD
 
 model = AValCatRPMD(
     policy_id="policy-1",
@@ -47,8 +47,7 @@ model = AValCatRPMD(
     gross_premium_freq="MONTH",
     benefit_amount=100.0,
     valuation_dt=pd.Timestamp("2020-03-31"),
-    assumption_set="stat",
-    withdraw_table="01CSO",
+    assumption_set="STAT",
     net_benefit_method="NLP",
 )
 ```

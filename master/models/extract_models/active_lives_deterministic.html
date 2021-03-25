@@ -7,7 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Active Lives - Deterministic &#8212; Footings IDI Model 0.6.0 documentation</title>
     
-  <link rel="stylesheet" href="../../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+  <link href="../../_static/css/theme.css" rel="stylesheet" />
+  <link href="../../_static/css/index.f6b7ca918bee2f46fd9abac01cfb07d5.css" rel="stylesheet" />
 
     
   <link rel="stylesheet"
@@ -19,10 +20,6 @@
 
     
       
-  <link rel="stylesheet"
-    href="../../_static/vendor/open-sans_all/1.44.1/index.css">
-  <link rel="stylesheet"
-    href="../../_static/vendor/lato_latin-ext/1.44.1/index.css">
 
     
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -30,7 +27,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
     
-  <link rel="preload" as="script" href="../../_static/js/index.d3f166471bb80abb5163.js">
+  <link rel="preload" as="script" href="../../_static/js/index.1e043a052b0af929e4d8.js">
 
     <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
@@ -47,69 +44,84 @@
   </head>
   <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
     
-    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main">
-<div class="container-xl">
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
 
+
+    
     <a class="navbar-brand" href="../../index.html">
-    
       <p class="title">Footings IDI Model</p>
-    
     </a>
+    
+
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
 
+    
     <div id="navbar-menu" class="col-lg-9 collapse navbar-collapse">
       <ul id="navbar-main-elements" class="navbar-nav mr-auto">
-        
-        
-        <li class="nav-item ">
-            <a class="nav-link" href="../../installation.html">Installation</a>
-        </li>
-        
-        <li class="nav-item ">
-            <a class="nav-link" href="../../product_info.html">Product Information</a>
-        </li>
-        
-        <li class="nav-item ">
-            <a class="nav-link" href="../../data/index.html">Data</a>
-        </li>
-        
-        <li class="nav-item active">
-            <a class="nav-link" href="../index.html">Models</a>
-        </li>
-        
-        <li class="nav-item ">
-            <a class="nav-link" href="../../assumptions.html">Assumptions</a>
-        </li>
-        
-        <li class="nav-item ">
-            <a class="nav-link" href="../../license.html">License</a>
-        </li>
-        
-        <li class="nav-item ">
-            <a class="nav-link" href="../../changelog.html">Changelog</a>
-        </li>
-        
+        <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../product_info.html">
+  Product Information
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../user_guide.html">
+  User Guide
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../extracts.html">
+  Extracts
+ </a>
+</li>
+
+<li class="toctree-l1 current active nav-item">
+ <a class="reference internal nav-link" href="../index.html">
+  Models
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../assumptions.html">
+  Assumptions
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../outputs.html">
+  Output
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../scenarios.html">
+  Scenarios
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../changelog.html">
+  Changelog
+ </a>
+</li>
+
         
       </ul>
-
 
       <form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
   <i class="icon fas fa-search"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this site..." aria-label="Search this site..." autocomplete="off" >
 </form>
-      
-
-      <ul class="navbar-nav">
-        
-          <li class="nav-item">
-            <a class="nav-link" href="https://github.com/footings/footings-idi-model" target="_blank" rel="noopener">
-              <span><i class="fab fa-github-square"></i></span>
-            </a>
-          </li>
-        
-        
+      <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/footings/footings-idi-model" rel="noopener" target="_blank" title="GitHub">
+            <span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label>
+          </a>
+        </li>
       </ul>
     </div>
 </div>
@@ -119,57 +131,38 @@
     <div class="container-xl">
       <div class="row">
           
-          <div class="col-12 col-md-3 bd-sidebar"><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
-
-    <div class="bd-toc-item active">
-    
-  
-    <ul class="nav bd-sidenav">
-        
-        
-        
-        
-        
-        
-        
-        
-          
             
-  
-                <li class="active">
-                    <a href="index.html">Extract Models</a>
-                    <ul>
-                    
-                        <li class="">
-                            <a href="disabled_lives_deterministic.html">Disabled Lives - Deterministic</a>
-                        </li>
-                    
-                        <li class="active">
-                            <a href="">Active Lives - Deterministic</a>
-                        </li>
-                    
-                    </ul>
-                </li>
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar"><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    <ul class="current nav bd-sidenav">
+ <li class="toctree-l2 current active">
+  <a class="reference internal" href="index.html">
+   Extract Models
+  </a>
+  <ul class="current">
+   <li class="toctree-l3">
+    <a class="reference internal" href="disabled_lives_deterministic.html">
+     Disabled Lives - Deterministic
+    </a>
+   </li>
+   <li class="toctree-l3 current active">
+    <a class="current reference internal" href="#">
+     Active Lives - Deterministic
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l2">
+  <a class="reference internal" href="../policy_models/index.html">
+   Policy Models
+  </a>
+ </li>
+</ul>
+  </div>
+</nav>
+            </div>
             
-          
-            
-                <li class="">
-                    <a href="../policy_models/index.html">Policy Models</a>
-                </li>
-            
-          
-        
-        
-        
-        
-        
-        
-        
-        
-      </ul>
-  
-  </nav>
-          </div>
           
 
           
@@ -180,37 +173,43 @@
 </div>
 
 <nav id="bd-toc-nav">
-    <ul class="nav section-nav flex-column">
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#valuation-model" class="nav-link">Valuation Model</a><ul class="nav section-nav flex-column">
-                
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#documentation" class="nav-link">Documentation</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#usage" class="nav-link">Usage</a>
-        </li>
-    
-            </ul>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#projection-model" class="nav-link">Projection Model</a><ul class="nav section-nav flex-column">
-                
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#id1" class="nav-link">Documentation</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#id2" class="nav-link">Usage</a>
-        </li>
-    
-            </ul>
-        </li>
-    
-    </ul>
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#valuation-model">
+   Valuation Model
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#documentation">
+     Documentation
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#usage">
+     Usage
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#projection-model">
+   Projection Model
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     Documentation
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id2">
+     Usage
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
 </nav>
 
 
@@ -218,6 +217,9 @@
           </div>
           
 
+          
+          
+            
           
           <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
               
@@ -230,16 +232,16 @@
 <div class="section" id="documentation">
 <h3>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h3>
 <dl class="py class">
-<dt id="footings_idi_model.extract_models.ActiveLivesValEMD">
-<em class="property">class </em><code class="sig-name descname">ActiveLivesValEMD</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span></em>, <em class="sig-param"><span class="n">base_extract</span><span class="p">:</span> <span class="n">pandas.core.frame.DataFrame</span></em>, <em class="sig-param"><span class="n">rider_rop_extract</span><span class="p">:</span> <span class="n">pandas.core.frame.DataFrame</span></em>, <em class="sig-param"><span class="n">valuation_dt</span><span class="p">:</span> <span class="n">pandas._libs.tslibs.timestamps.Timestamp</span></em>, <em class="sig-param"><span class="n">assumption_set</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">net_benefit_method</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">withdraw_table</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">interest_modifier</span><span class="p">:</span> <span class="n">float</span> <span class="o">=</span> <span class="default_value">1.0</span></em>, <em class="sig-param"><span class="n">incidence_modifier</span><span class="o">=</span><span class="default_value">1.0</span></em>, <em class="sig-param"><span class="n">withdraw_modifier</span><span class="o">=</span><span class="default_value">1.0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#footings_idi_model.extract_models.ActiveLivesValEMD" title="Permalink to this definition">¶</a></dt>
+<dt id="footings_idi_model.models.ActiveLivesValEMD">
+<em class="property">class </em><code class="sig-name descname">ActiveLivesValEMD</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span></em>, <em class="sig-param"><span class="n">extract_base</span><span class="p">:</span> <span class="n">pandas.core.frame.DataFrame</span></em>, <em class="sig-param"><span class="n">extract_riders</span><span class="p">:</span> <span class="n">pandas.core.frame.DataFrame</span></em>, <em class="sig-param"><span class="n">valuation_dt</span><span class="p">:</span> <span class="n">pandas._libs.tslibs.timestamps.Timestamp</span></em>, <em class="sig-param"><span class="n">assumption_set</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">net_benefit_method</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">modifier_ctr</span><span class="p">:</span> <span class="n">float</span> <span class="o">=</span> <span class="default_value">1.0</span></em>, <em class="sig-param"><span class="n">modifier_incidence</span><span class="o">=</span><span class="default_value">1.0</span></em>, <em class="sig-param"><span class="n">modifier_interest</span><span class="p">:</span> <span class="n">float</span> <span class="o">=</span> <span class="default_value">1.0</span></em>, <em class="sig-param"><span class="n">modifier_lapse</span><span class="o">=</span><span class="default_value">1.0</span></em>, <em class="sig-param"><span class="n">modifier_mortality</span><span class="o">=</span><span class="default_value">1.0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#footings_idi_model.models.ActiveLivesValEMD" title="Permalink to this definition">¶</a></dt>
 <dd><p>Active lives deterministic valuation extract model.</p>
 <p>This model takes an extract of policies and runs them through the respective Policy Models
 based on the COVERAGE_ID column (i.e., whether it is base policy or rider).</p>
 <p class="rubric">Parameters</p>
 <dl>
-<dt>base_extract<span class="classifier">DataFrame</span></dt><dd><p>The base active lives extract.</p>
+<dt>extract_base<span class="classifier">DataFrame</span></dt><dd><p>The active lives base extract.</p>
 </dd>
-<dt>rider_rop_extract<span class="classifier">DataFrame</span></dt><dd><p>The ROP rider active lives extract.</p>
+<dt>extract_riders<span class="classifier">DataFrame</span></dt><dd><p>The active lives rider extract.</p>
 </dd>
 <dt>valuation_dt<span class="classifier">Timestamp</span></dt><dd><p>The valuation date which reserves are based.</p>
 </dd>
@@ -261,16 +263,18 @@ based on the COVERAGE_ID column (i.e., whether it is base policy or rider).</p>
 </ul>
 </div></blockquote>
 </dd>
-<dt>withdraw_table<span class="classifier">str</span></dt><dd><p>Table name for withdraw rates.</p>
-</dd>
 </dl>
 <p class="rubric">Sensitivities</p>
 <dl class="simple">
-<dt>interest_modifier<span class="classifier">float</span></dt><dd><p>Interest rate modifier.</p>
+<dt>modifier_ctr<span class="classifier">float</span></dt><dd><p>Modifier for CTR.</p>
 </dd>
-<dt>incidence_modifier</dt><dd><p>The incidence rate modifier.</p>
+<dt>modifier_incidence</dt><dd><p>The incidence rate modifier.</p>
 </dd>
-<dt>withdraw_modifier</dt><dd><p>The withdraw rate modifier</p>
+<dt>modifier_interest<span class="classifier">float</span></dt><dd><p>Interest rate modifier.</p>
+</dd>
+<dt>modifier_lapse</dt><dd><p>The withdraw rate modifier</p>
+</dd>
+<dt>modifier_mortality</dt><dd><p>The withdraw rate modifier</p>
 </dd>
 </dl>
 <p class="rubric">Meta</p>
@@ -310,18 +314,18 @@ based on the COVERAGE_ID column (i.e., whether it is base policy or rider).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">footings_idi_model.extract_models</span> <span class="kn">import</span> <span class="n">ActiveLivesValEMD</span>
+<span class="kn">from</span> <span class="nn">footings_idi_model.models</span> <span class="kn">import</span> <span class="n">ActiveLivesValEMD</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">base_extract</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">extract_base</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
   <span class="s2">&quot;active-lives-sample-base.csv&quot;</span><span class="p">,</span>
   <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;BIRTH_DT&quot;</span><span class="p">,</span> <span class="s2">&quot;POLICY_START_DT&quot;</span><span class="p">,</span> <span class="s2">&quot;PREMIUM_PAY_TO_DT&quot;</span><span class="p">,</span> <span class="s2">&quot;POLICY_END_DT&quot;</span><span class="p">]</span>
 <span class="p">)</span>
-<span class="n">base_extract</span>
+<span class="n">extract_base</span>
 </pre></div>
 </div>
 </div>
@@ -550,11 +554,8 @@ based on the COVERAGE_ID column (i.e., whether it is base policy or rider).</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rider_rop_extract</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
-  <span class="s2">&quot;active-lives-sample-riders-rop.csv&quot;</span><span class="p">,</span>
-  <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ROP_FUTURE_CLAIMS_START_DT&quot;</span><span class="p">]</span>
-<span class="p">)</span>
-<span class="n">rider_rop_extract</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">extract_riders</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;active-lives-sample-riders.csv&quot;</span><span class="p">)</span>
+<span class="n">extract_riders</span>
 </pre></div>
 </div>
 </div>
@@ -579,10 +580,8 @@ based on the COVERAGE_ID column (i.e., whether it is base policy or rider).</p>
       <th></th>
       <th>POLICY_ID</th>
       <th>COVERAGE_ID</th>
-      <th>ROP_RETURN_FREQ</th>
-      <th>ROP_RETURN_PERCENT</th>
-      <th>ROP_CLAIMS_PAID</th>
-      <th>ROP_FUTURE_CLAIMS_START_DT</th>
+      <th>RIDER_ATTRIBUTE</th>
+      <th>VALUE</th>
     </tr>
   </thead>
   <tbody>
@@ -590,37 +589,85 @@ based on the COVERAGE_ID column (i.e., whether it is base policy or rider).</p>
       <th>0</th>
       <td>M1</td>
       <td>ROP</td>
-      <td>10</td>
-      <td>0.8</td>
-      <td>0</td>
-      <td>2020-03-31</td>
+      <td>rop_return_freq</td>
+      <td>10.0</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>M3</td>
+      <td>M1</td>
       <td>ROP</td>
-      <td>7</td>
-      <td>0.5</td>
-      <td>0</td>
-      <td>2020-03-31</td>
+      <td>rop_return_percent</td>
+      <td>0.8</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>M4</td>
+      <td>M1</td>
       <td>ROP</td>
-      <td>10</td>
-      <td>0.5</td>
-      <td>1000</td>
-      <td>2020-03-31</td>
+      <td>rop_claims_paid</td>
+      <td>0.0</td>
     </tr>
     <tr>
       <th>3</th>
+      <td>M3</td>
+      <td>ROP</td>
+      <td>rop_return_freq</td>
+      <td>7.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>M3</td>
+      <td>ROP</td>
+      <td>rop_return_percent</td>
+      <td>0.5</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>M3</td>
+      <td>ROP</td>
+      <td>rop_claims_paid</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>M4</td>
+      <td>ROP</td>
+      <td>rop_return_freq</td>
+      <td>10.0</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>M4</td>
+      <td>ROP</td>
+      <td>rop_return_percent</td>
+      <td>0.5</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>M4</td>
+      <td>ROP</td>
+      <td>rop_claims_paid</td>
+      <td>1000.0</td>
+    </tr>
+    <tr>
+      <th>9</th>
       <td>M5</td>
       <td>ROP</td>
-      <td>7</td>
+      <td>rop_return_freq</td>
+      <td>7.0</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>M5</td>
+      <td>ROP</td>
+      <td>rop_return_percent</td>
       <td>0.8</td>
-      <td>0</td>
-      <td>2020-03-31</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>M5</td>
+      <td>ROP</td>
+      <td>rop_claims_paid</td>
+      <td>0.0</td>
     </tr>
   </tbody>
 </table>
@@ -629,11 +676,10 @@ based on the COVERAGE_ID column (i.e., whether it is base policy or rider).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">ActiveLivesValEMD</span><span class="p">(</span>
-    <span class="n">base_extract</span><span class="o">=</span><span class="n">base_extract</span><span class="p">,</span>
-    <span class="n">rider_rop_extract</span><span class="o">=</span><span class="n">rider_rop_extract</span><span class="p">,</span>
+    <span class="n">extract_base</span><span class="o">=</span><span class="n">extract_base</span><span class="p">,</span>
+    <span class="n">extract_riders</span><span class="o">=</span><span class="n">extract_riders</span><span class="p">,</span>
     <span class="n">valuation_dt</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="s2">&quot;2020-03-31&quot;</span><span class="p">),</span>
-    <span class="n">withdraw_table</span><span class="o">=</span><span class="s2">&quot;01CSO&quot;</span><span class="p">,</span>
-    <span class="n">assumption_set</span><span class="o">=</span><span class="s2">&quot;stat&quot;</span><span class="p">,</span>
+    <span class="n">assumption_set</span><span class="o">=</span><span class="s2">&quot;STAT&quot;</span><span class="p">,</span>
     <span class="n">net_benefit_method</span><span class="o">=</span><span class="s2">&quot;NLP&quot;</span><span class="p">,</span>
 <span class="p">)</span>
 </pre></div>
@@ -652,6 +698,38 @@ based on the COVERAGE_ID column (i.e., whether it is base policy or rider).</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/pandas/core/series.py:726: RuntimeWarning: divide by zero encountered in log
+  result = getattr(ufunc, method)(*inputs, **kwargs)
+/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/pandas/core/series.py:726: RuntimeWarning: divide by zero encountered in log
+  result = getattr(ufunc, method)(*inputs, **kwargs)
+/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/pandas/core/series.py:726: RuntimeWarning: divide by zero encountered in log
+  result = getattr(ufunc, method)(*inputs, **kwargs)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/pandas/core/series.py:726: RuntimeWarning: divide by zero encountered in log
+  result = getattr(ufunc, method)(*inputs, **kwargs)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/pandas/core/series.py:726: RuntimeWarning: divide by zero encountered in log
+  result = getattr(ufunc, method)(*inputs, **kwargs)
+/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/pandas/core/series.py:726: RuntimeWarning: divide by zero encountered in log
+  result = getattr(ufunc, method)(*inputs, **kwargs)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/pandas/core/series.py:726: RuntimeWarning: divide by zero encountered in log
+  result = getattr(ufunc, method)(*inputs, **kwargs)
+/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/pandas/core/series.py:726: RuntimeWarning: divide by zero encountered in log
+  result = getattr(ufunc, method)(*inputs, **kwargs)
+/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/pandas/core/series.py:726: RuntimeWarning: divide by zero encountered in log
+  result = getattr(ufunc, method)(*inputs, **kwargs)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/pandas/core/series.py:726: RuntimeWarning: divide by zero encountered in log
+  result = getattr(ufunc, method)(*inputs, **kwargs)
+</pre></div>
+</div>
+</div>
 </div>
 <p>Note the <code class="docutils literal notranslate"><span class="pre">time0</span></code> and <code class="docutils literal notranslate"><span class="pre">projected</span></code> have the same columns with <code class="docutils literal notranslate"><span class="pre">time0</span></code> being a subset of the <code class="docutils literal notranslate"><span class="pre">projected</span></code> frame.</p>
 <div class="cell docutils container">
@@ -662,36 +740,36 @@ based on the COVERAGE_ID column (i.e., whether it is base policy or rider).</p>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
-Int64Index: 110 entries, 2 to 34
+Int64Index: 207 entries, 2 to 34
 Data columns (total 24 columns):
- #   Column                Non-Null Count  Dtype         
----  ------                --------------  -----         
- 0   MODEL_VERSION         110 non-null    object        
- 1   LAST_COMMIT           110 non-null    object        
- 2   RUN_DATE_TIME         110 non-null    datetime64[ns]
- 3   SOURCE                110 non-null    object        
- 4   POLICY_ID             110 non-null    object        
- 5   COVERAGE_ID           110 non-null    object        
- 6   DATE_BD               110 non-null    datetime64[ns]
- 7   DATE_ED               110 non-null    datetime64[ns]
- 8   DURATION_YEAR         110 non-null    Int64         
- 9   LIVES_BD              110 non-null    float64       
- 10  LIVES_MD              110 non-null    float64       
- 11  LIVES_ED              110 non-null    float64       
- 12  DISCOUNT_BD           110 non-null    float64       
- 13  DISCOUNT_MD           110 non-null    float64       
- 14  DISCOUNT_ED           110 non-null    float64       
- 15  BENEFIT_AMOUNT        110 non-null    int64         
- 16  FINAL_INCIDENCE_RATE  110 non-null    float64       
- 17  BENEFIT_COST          110 non-null    float64       
- 18  PVFB                  110 non-null    float64       
- 19  PVFNB                 110 non-null    float64       
- 20  ALR_BD                110 non-null    float64       
- 21  ALR_ED                110 non-null    float64       
- 22  ALR_DATE              110 non-null    datetime64[ns]
- 23  ALR                   110 non-null    float64       
+ #   Column          Non-Null Count  Dtype         
+---  ------          --------------  -----         
+ 0   MODEL_VERSION   207 non-null    object        
+ 1   LAST_COMMIT     207 non-null    object        
+ 2   RUN_DATE_TIME   207 non-null    datetime64[ns]
+ 3   SOURCE          207 non-null    object        
+ 4   POLICY_ID       207 non-null    object        
+ 5   COVERAGE_ID     207 non-null    object        
+ 6   DATE_BD         207 non-null    datetime64[ns]
+ 7   DATE_ED         207 non-null    datetime64[ns]
+ 8   DURATION_YEAR   207 non-null    Int64         
+ 9   LIVES_BD        207 non-null    float64       
+ 10  LIVES_MD        207 non-null    float64       
+ 11  LIVES_ED        207 non-null    float64       
+ 12  DISCOUNT_BD     207 non-null    float64       
+ 13  DISCOUNT_MD     207 non-null    float64       
+ 14  DISCOUNT_ED     207 non-null    float64       
+ 15  BENEFIT_AMOUNT  207 non-null    int64         
+ 16  INCIDENCE_RATE  207 non-null    float64       
+ 17  BENEFIT_COST    206 non-null    float64       
+ 18  PVFB            207 non-null    float64       
+ 19  PVFNB           207 non-null    float64       
+ 20  ALR_BD          207 non-null    float64       
+ 21  ALR_ED          207 non-null    float64       
+ 22  ALR_DATE        207 non-null    datetime64[ns]
+ 23  ALR             207 non-null    float64       
 dtypes: Int64(1), datetime64[ns](4), float64(13), int64(1), object(5)
-memory usage: 21.6+ KB
+memory usage: 40.6+ KB
 </pre></div>
 </div>
 </div>
@@ -734,7 +812,7 @@ memory usage: 21.6+ KB
       <th>...</th>
       <th>DISCOUNT_ED</th>
       <th>BENEFIT_AMOUNT</th>
-      <th>FINAL_INCIDENCE_RATE</th>
+      <th>INCIDENCE_RATE</th>
       <th>BENEFIT_COST</th>
       <th>PVFB</th>
       <th>PVFNB</th>
@@ -748,8 +826,8 @@ memory usage: 21.6+ KB
     <tr>
       <th>2</th>
       <td>0.6.0</td>
-      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
-      <td>2021-02-26 12:00:30.884797</td>
+      <td>5d026f4756f03f9cb797de5a8f0c3c6d2b349ccb</td>
+      <td>2021-03-25 11:27:59.453717</td>
       <td>AValBasePMD</td>
       <td>M1</td>
       <td>BASE</td>
@@ -762,18 +840,18 @@ memory usage: 21.6+ KB
       <td>100</td>
       <td>0.002228</td>
       <td>30.688392</td>
-      <td>771.757218</td>
-      <td>744.950418</td>
-      <td>28.513421</td>
-      <td>41.433103</td>
+      <td>773.833863</td>
+      <td>746.848211</td>
+      <td>28.703659</td>
+      <td>41.720113</td>
       <td>2020-03-31</td>
-      <td>29.40</td>
+      <td>29.45</td>
     </tr>
     <tr>
       <th>3</th>
       <td>0.6.0</td>
-      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
-      <td>2021-02-26 12:00:30.884797</td>
+      <td>5d026f4756f03f9cb797de5a8f0c3c6d2b349ccb</td>
+      <td>2021-03-25 11:27:59.453717</td>
       <td>AValBasePMD</td>
       <td>M1</td>
       <td>BASE</td>
@@ -786,18 +864,18 @@ memory usage: 21.6+ KB
       <td>100</td>
       <td>0.002365</td>
       <td>32.215403</td>
-      <td>743.349226</td>
-      <td>705.584669</td>
-      <td>41.433103</td>
-      <td>53.215541</td>
+      <td>745.408331</td>
+      <td>707.382176</td>
+      <td>41.720113</td>
+      <td>53.600038</td>
       <td>2021-03-31</td>
-      <td>42.24</td>
+      <td>42.44</td>
     </tr>
     <tr>
       <th>4</th>
       <td>0.6.0</td>
-      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
-      <td>2021-02-26 12:00:30.884797</td>
+      <td>5d026f4756f03f9cb797de5a8f0c3c6d2b349ccb</td>
+      <td>2021-03-25 11:27:59.453717</td>
       <td>AValBasePMD</td>
       <td>M1</td>
       <td>BASE</td>
@@ -810,18 +888,18 @@ memory usage: 21.6+ KB
       <td>100</td>
       <td>0.002525</td>
       <td>33.930135</td>
-      <td>714.439130</td>
-      <td>667.420148</td>
-      <td>53.215541</td>
-      <td>63.638171</td>
+      <td>716.479136</td>
+      <td>669.120430</td>
+      <td>53.600038</td>
+      <td>64.120353</td>
       <td>2022-03-31</td>
-      <td>53.93</td>
+      <td>54.26</td>
     </tr>
     <tr>
       <th>5</th>
       <td>0.6.0</td>
-      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
-      <td>2021-02-26 12:00:30.884797</td>
+      <td>5d026f4756f03f9cb797de5a8f0c3c6d2b349ccb</td>
+      <td>2021-03-25 11:27:59.453717</td>
       <td>AValBasePMD</td>
       <td>M1</td>
       <td>BASE</td>
@@ -834,18 +912,18 @@ memory usage: 21.6+ KB
       <td>100</td>
       <td>0.002684</td>
       <td>35.552118</td>
-      <td>684.924097</td>
-      <td>630.423907</td>
-      <td>63.638171</td>
-      <td>72.756460</td>
+      <td>686.943074</td>
+      <td>632.029939</td>
+      <td>64.120353</td>
+      <td>73.336151</td>
       <td>2023-03-31</td>
-      <td>64.26</td>
+      <td>64.71</td>
     </tr>
     <tr>
       <th>6</th>
       <td>0.6.0</td>
-      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
-      <td>2021-02-26 12:00:30.884797</td>
+      <td>5d026f4756f03f9cb797de5a8f0c3c6d2b349ccb</td>
+      <td>2021-03-25 11:27:59.453717</td>
       <td>AValBasePMD</td>
       <td>M1</td>
       <td>BASE</td>
@@ -858,12 +936,12 @@ memory usage: 21.6+ KB
       <td>100</td>
       <td>0.002875</td>
       <td>37.431773</td>
-      <td>654.950537</td>
-      <td>594.564492</td>
-      <td>72.756460</td>
-      <td>80.272694</td>
+      <td>656.946344</td>
+      <td>596.079170</td>
+      <td>73.336151</td>
+      <td>80.948847</td>
       <td>2024-03-31</td>
-      <td>73.27</td>
+      <td>73.83</td>
     </tr>
     <tr>
       <th>...</th>
@@ -892,11 +970,11 @@ memory usage: 21.6+ KB
     <tr>
       <th>30</th>
       <td>0.6.0</td>
-      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
-      <td>2021-02-26 12:00:30.884797</td>
-      <td>AValBasePMD</td>
+      <td>5d026f4756f03f9cb797de5a8f0c3c6d2b349ccb</td>
+      <td>2021-03-25 11:27:59.453717</td>
+      <td>AValRopRPMD</td>
       <td>M5</td>
-      <td>BASE</td>
+      <td>ROP</td>
       <td>2033-01-29</td>
       <td>2034-01-29</td>
       <td>31</td>
@@ -904,23 +982,23 @@ memory usage: 21.6+ KB
       <td>...</td>
       <td>0.399987</td>
       <td>100</td>
-      <td>0.002235</td>
-      <td>7.870480</td>
-      <td>9.125713</td>
-      <td>17.379452</td>
       <td>0.000000</td>
       <td>0.000000</td>
+      <td>214.558780</td>
+      <td>150.518335</td>
+      <td>168.757613</td>
+      <td>264.151963</td>
       <td>2033-03-31</td>
-      <td>0.00</td>
+      <td>182.07</td>
     </tr>
     <tr>
       <th>31</th>
       <td>0.6.0</td>
-      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
-      <td>2021-02-26 12:00:30.884797</td>
-      <td>AValBasePMD</td>
+      <td>5d026f4756f03f9cb797de5a8f0c3c6d2b349ccb</td>
+      <td>2021-03-25 11:27:59.453717</td>
+      <td>AValRopRPMD</td>
       <td>M5</td>
-      <td>BASE</td>
+      <td>ROP</td>
       <td>2034-01-29</td>
       <td>2035-01-29</td>
       <td>32</td>
@@ -928,23 +1006,23 @@ memory usage: 21.6+ KB
       <td>...</td>
       <td>0.388337</td>
       <td>100</td>
-      <td>0.002310</td>
-      <td>6.823165</td>
-      <td>6.195054</td>
-      <td>13.630099</td>
       <td>0.000000</td>
       <td>0.000000</td>
+      <td>214.558780</td>
+      <td>118.046290</td>
+      <td>264.151963</td>
+      <td>363.484402</td>
       <td>2034-03-31</td>
-      <td>0.00</td>
+      <td>278.83</td>
     </tr>
     <tr>
       <th>32</th>
       <td>0.6.0</td>
-      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
-      <td>2021-02-26 12:00:30.884797</td>
-      <td>AValBasePMD</td>
+      <td>5d026f4756f03f9cb797de5a8f0c3c6d2b349ccb</td>
+      <td>2021-03-25 11:27:59.453717</td>
+      <td>AValRopRPMD</td>
       <td>M5</td>
-      <td>BASE</td>
+      <td>ROP</td>
       <td>2035-01-29</td>
       <td>2036-01-29</td>
       <td>33</td>
@@ -952,23 +1030,23 @@ memory usage: 21.6+ KB
       <td>...</td>
       <td>0.377026</td>
       <td>100</td>
-      <td>0.002396</td>
-      <td>5.541476</td>
-      <td>3.749720</td>
-      <td>10.020200</td>
       <td>0.000000</td>
       <td>0.000000</td>
+      <td>214.558780</td>
+      <td>86.782017</td>
+      <td>363.484402</td>
+      <td>467.074761</td>
       <td>2035-03-31</td>
-      <td>0.00</td>
+      <td>379.26</td>
     </tr>
     <tr>
       <th>33</th>
       <td>0.6.0</td>
-      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
-      <td>2021-02-26 12:00:30.884797</td>
-      <td>AValBasePMD</td>
+      <td>5d026f4756f03f9cb797de5a8f0c3c6d2b349ccb</td>
+      <td>2021-03-25 11:27:59.453717</td>
+      <td>AValRopRPMD</td>
       <td>M5</td>
-      <td>BASE</td>
+      <td>ROP</td>
       <td>2036-01-29</td>
       <td>2037-01-29</td>
       <td>34</td>
@@ -976,23 +1054,23 @@ memory usage: 21.6+ KB
       <td>...</td>
       <td>0.366045</td>
       <td>100</td>
-      <td>0.002483</td>
-      <td>3.903249</td>
-      <td>1.839635</td>
-      <td>6.546987</td>
       <td>0.000000</td>
       <td>0.000000</td>
+      <td>214.558780</td>
+      <td>56.701535</td>
+      <td>467.074761</td>
+      <td>575.287050</td>
       <td>2036-03-31</td>
-      <td>0.00</td>
+      <td>483.86</td>
     </tr>
     <tr>
       <th>34</th>
       <td>0.6.0</td>
-      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
-      <td>2021-02-26 12:00:30.884797</td>
-      <td>AValBasePMD</td>
+      <td>5d026f4756f03f9cb797de5a8f0c3c6d2b349ccb</td>
+      <td>2021-03-25 11:27:59.453717</td>
+      <td>AValRopRPMD</td>
       <td>M5</td>
-      <td>BASE</td>
+      <td>ROP</td>
       <td>2037-01-29</td>
       <td>2038-01-29</td>
       <td>35</td>
@@ -1000,18 +1078,18 @@ memory usage: 21.6+ KB
       <td>...</td>
       <td>0.355383</td>
       <td>100</td>
-      <td>0.002558</td>
-      <td>1.718610</td>
-      <td>0.546657</td>
-      <td>3.207779</td>
       <td>0.000000</td>
+      <td>672.000000</td>
+      <td>214.558780</td>
+      <td>27.781635</td>
+      <td>575.287050</td>
       <td>0.000000</td>
       <td>2037-03-31</td>
       <td>0.00</td>
     </tr>
   </tbody>
 </table>
-<p>110 rows × 24 columns</p>
+<p>207 rows × 24 columns</p>
 </div></div></div>
 </div>
 <div class="cell docutils container">
@@ -1053,57 +1131,101 @@ memory usage: 21.6+ KB
     <tr>
       <th>2</th>
       <td>0.6.0</td>
-      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
-      <td>2021-02-26 12:00:30.884797</td>
+      <td>5d026f4756f03f9cb797de5a8f0c3c6d2b349ccb</td>
+      <td>2021-03-25 11:27:59.453717</td>
       <td>AValBasePMD</td>
       <td>M1</td>
       <td>BASE</td>
       <td>2020-03-31</td>
-      <td>29.40</td>
+      <td>29.45</td>
     </tr>
     <tr>
       <th>2</th>
       <td>0.6.0</td>
-      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
-      <td>2021-02-26 12:00:30.884797</td>
+      <td>5d026f4756f03f9cb797de5a8f0c3c6d2b349ccb</td>
+      <td>2021-03-25 11:27:59.453717</td>
+      <td>AValRopRPMD</td>
+      <td>M1</td>
+      <td>ROP</td>
+      <td>2020-03-31</td>
+      <td>174.05</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.6.0</td>
+      <td>5d026f4756f03f9cb797de5a8f0c3c6d2b349ccb</td>
+      <td>2021-03-25 11:27:59.453717</td>
       <td>AValBasePMD</td>
       <td>M2</td>
       <td>BASE</td>
       <td>2020-03-31</td>
-      <td>26.80</td>
+      <td>26.68</td>
     </tr>
     <tr>
       <th>12</th>
       <td>0.6.0</td>
-      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
-      <td>2021-02-26 12:00:30.884797</td>
+      <td>5d026f4756f03f9cb797de5a8f0c3c6d2b349ccb</td>
+      <td>2021-03-25 11:27:59.453717</td>
       <td>AValBasePMD</td>
       <td>M3</td>
       <td>BASE</td>
       <td>2020-03-31</td>
-      <td>188.82</td>
+      <td>188.23</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>0.6.0</td>
+      <td>5d026f4756f03f9cb797de5a8f0c3c6d2b349ccb</td>
+      <td>2021-03-25 11:27:59.453717</td>
+      <td>AValRopRPMD</td>
+      <td>M3</td>
+      <td>ROP</td>
+      <td>2020-03-31</td>
+      <td>339.68</td>
     </tr>
     <tr>
       <th>10</th>
       <td>0.6.0</td>
-      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
-      <td>2021-02-26 12:00:30.884797</td>
+      <td>5d026f4756f03f9cb797de5a8f0c3c6d2b349ccb</td>
+      <td>2021-03-25 11:27:59.453717</td>
       <td>AValBasePMD</td>
       <td>M4</td>
       <td>BASE</td>
       <td>2020-03-31</td>
-      <td>77.35</td>
+      <td>77.36</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>0.6.0</td>
+      <td>5d026f4756f03f9cb797de5a8f0c3c6d2b349ccb</td>
+      <td>2021-03-25 11:27:59.453717</td>
+      <td>AValRopRPMD</td>
+      <td>M4</td>
+      <td>ROP</td>
+      <td>2020-03-31</td>
+      <td>0.00</td>
     </tr>
     <tr>
       <th>17</th>
       <td>0.6.0</td>
-      <td>330b332911b3f1ba02127bf804b8663d42b0628c</td>
-      <td>2021-02-26 12:00:30.884797</td>
+      <td>5d026f4756f03f9cb797de5a8f0c3c6d2b349ccb</td>
+      <td>2021-03-25 11:27:59.453717</td>
       <td>AValBasePMD</td>
       <td>M5</td>
       <td>BASE</td>
       <td>2020-03-31</td>
       <td>0.00</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>0.6.0</td>
+      <td>5d026f4756f03f9cb797de5a8f0c3c6d2b349ccb</td>
+      <td>2021-03-25 11:27:59.453717</td>
+      <td>AValRopRPMD</td>
+      <td>M5</td>
+      <td>ROP</td>
+      <td>2020-03-31</td>
+      <td>277.58</td>
     </tr>
   </tbody>
 </table>
@@ -1116,10 +1238,7 @@ memory usage: 21.6+ KB
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[Error(key=&quot;({&#39;policy_id&#39;: &#39;M1&#39;, &#39;coverage_id&#39;: &#39;ROP&#39;},)&quot;, error_type=&#39;TypeError&#39;, error_value=&#39;(&quot;__init__() got an unexpected keyword argument \&#39;rop_future_claims_start_dt\&#39;&quot;,)&#39;, error_stacktrace=&#39;[\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/jigs.py&quot;, line 84, in wrapper\\n    ret = self.model(**model_kwargs).run()\\n\&#39;]&#39;),
- Error(key=&quot;({&#39;policy_id&#39;: &#39;M3&#39;, &#39;coverage_id&#39;: &#39;ROP&#39;},)&quot;, error_type=&#39;TypeError&#39;, error_value=&#39;(&quot;__init__() got an unexpected keyword argument \&#39;rop_future_claims_start_dt\&#39;&quot;,)&#39;, error_stacktrace=&#39;[\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/jigs.py&quot;, line 84, in wrapper\\n    ret = self.model(**model_kwargs).run()\\n\&#39;]&#39;),
- Error(key=&quot;({&#39;policy_id&#39;: &#39;M4&#39;, &#39;coverage_id&#39;: &#39;ROP&#39;},)&quot;, error_type=&#39;TypeError&#39;, error_value=&#39;(&quot;__init__() got an unexpected keyword argument \&#39;rop_future_claims_start_dt\&#39;&quot;,)&#39;, error_stacktrace=&#39;[\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/jigs.py&quot;, line 84, in wrapper\\n    ret = self.model(**model_kwargs).run()\\n\&#39;]&#39;),
- Error(key=&quot;({&#39;policy_id&#39;: &#39;M5&#39;, &#39;coverage_id&#39;: &#39;ROP&#39;},)&quot;, error_type=&#39;TypeError&#39;, error_value=&#39;(&quot;__init__() got an unexpected keyword argument \&#39;rop_future_claims_start_dt\&#39;&quot;,)&#39;, error_stacktrace=&#39;[\&#39;  File &quot;/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/footings/jigs.py&quot;, line 84, in wrapper\\n    ret = self.model(**model_kwargs).run()\\n\&#39;]&#39;)]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[]
 </pre></div>
 </div>
 </div>
@@ -1128,6 +1247,38 @@ memory usage: 21.6+ KB
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">audit</span><span class="p">(</span><span class="s2">&quot;Audit-ActiveLivesValEMD.xlsx&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/pandas/core/series.py:726: RuntimeWarning: divide by zero encountered in log
+  result = getattr(ufunc, method)(*inputs, **kwargs)
+/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/pandas/core/series.py:726: RuntimeWarning: divide by zero encountered in log
+  result = getattr(ufunc, method)(*inputs, **kwargs)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/pandas/core/series.py:726: RuntimeWarning: divide by zero encountered in log
+  result = getattr(ufunc, method)(*inputs, **kwargs)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/pandas/core/series.py:726: RuntimeWarning: divide by zero encountered in log
+  result = getattr(ufunc, method)(*inputs, **kwargs)
+/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/pandas/core/series.py:726: RuntimeWarning: divide by zero encountered in log
+  result = getattr(ufunc, method)(*inputs, **kwargs)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/pandas/core/series.py:726: RuntimeWarning: divide by zero encountered in log
+  result = getattr(ufunc, method)(*inputs, **kwargs)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/pandas/core/series.py:726: RuntimeWarning: divide by zero encountered in log
+  result = getattr(ufunc, method)(*inputs, **kwargs)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/pandas/core/series.py:726: RuntimeWarning: divide by zero encountered in log
+  result = getattr(ufunc, method)(*inputs, **kwargs)
+/home/runner/work/footings-idi-model/footings-idi-model/.venv/lib/python3.8/site-packages/pandas/core/series.py:726: RuntimeWarning: divide by zero encountered in log
+  result = getattr(ufunc, method)(*inputs, **kwargs)
 </pre></div>
 </div>
 </div>
@@ -1166,7 +1317,7 @@ memory usage: 21.6+ KB
     </div>
 
     
-  <script src="../../_static/js/index.d3f166471bb80abb5163.js"></script>
+  <script src="../../_static/js/index.1e043a052b0af929e4d8.js"></script>
 
 
     <footer class="footer mt-5 mt-md-0">
