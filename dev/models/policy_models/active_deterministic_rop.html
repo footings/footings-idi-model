@@ -7,7 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Active - Deterministic - ROP Rider &#8212; Footings IDI Model 0.6.0 documentation</title>
     
-  <link rel="stylesheet" href="../../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+  <link href="../../_static/css/theme.css" rel="stylesheet" />
+  <link href="../../_static/css/index.f6b7ca918bee2f46fd9abac01cfb07d5.css" rel="stylesheet" />
 
     
   <link rel="stylesheet"
@@ -19,10 +20,6 @@
 
     
       
-  <link rel="stylesheet"
-    href="../../_static/vendor/open-sans_all/1.44.1/index.css">
-  <link rel="stylesheet"
-    href="../../_static/vendor/lato_latin-ext/1.44.1/index.css">
 
     
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -30,7 +27,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
     
-  <link rel="preload" as="script" href="../../_static/js/index.d3f166471bb80abb5163.js">
+  <link rel="preload" as="script" href="../../_static/js/index.1e043a052b0af929e4d8.js">
 
     <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
@@ -47,73 +44,84 @@
   </head>
   <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
     
-    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main">
-<div class="container-xl">
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
 
+
+    
     <a class="navbar-brand" href="../../index.html">
-    
       <p class="title">Footings IDI Model</p>
-    
     </a>
+    
+
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
 
+    
     <div id="navbar-menu" class="col-lg-9 collapse navbar-collapse">
       <ul id="navbar-main-elements" class="navbar-nav mr-auto">
-        
-        
-        <li class="nav-item ">
-            <a class="nav-link" href="../../product_info.html">Product Information</a>
-        </li>
-        
-        <li class="nav-item ">
-            <a class="nav-link" href="../../user_guide.html">User Guide</a>
-        </li>
-        
-        <li class="nav-item ">
-            <a class="nav-link" href="../../extracts.html">Extracts</a>
-        </li>
-        
-        <li class="nav-item active">
-            <a class="nav-link" href="../index.html">Models</a>
-        </li>
-        
-        <li class="nav-item ">
-            <a class="nav-link" href="../../assumptions.html">Assumptions</a>
-        </li>
-        
-        <li class="nav-item ">
-            <a class="nav-link" href="../../outputs.html">Output</a>
-        </li>
-        
-        <li class="nav-item ">
-            <a class="nav-link" href="../../scenarios.html">Scenarios</a>
-        </li>
-        
-        <li class="nav-item ">
-            <a class="nav-link" href="../../changelog.html">Changelog</a>
-        </li>
-        
+        <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../product_info.html">
+  Product Information
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../user_guide.html">
+  User Guide
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../extracts.html">
+  Extracts
+ </a>
+</li>
+
+<li class="toctree-l1 current active nav-item">
+ <a class="reference internal nav-link" href="../index.html">
+  Models
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../assumptions.html">
+  Assumptions
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../outputs.html">
+  Output
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../scenarios.html">
+  Scenarios
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../changelog.html">
+  Changelog
+ </a>
+</li>
+
         
       </ul>
-
 
       <form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
   <i class="icon fas fa-search"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this site..." aria-label="Search this site..." autocomplete="off" >
 </form>
-      
-
-      <ul class="navbar-nav">
-        
-          <li class="nav-item">
-            <a class="nav-link" href="https://github.com/footings/footings-idi-model" target="_blank" rel="noopener">
-              <span><i class="fab fa-github-square"></i></span>
-            </a>
-          </li>
-        
-        
+      <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/footings/footings-idi-model" rel="noopener" target="_blank" title="GitHub">
+            <span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label>
+          </a>
+        </li>
       </ul>
     </div>
 </div>
@@ -123,99 +131,88 @@
     <div class="container-xl">
       <div class="row">
           
-          <div class="col-12 col-md-3 bd-sidebar"><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
-
-    <div class="bd-toc-item active">
-    
-  
-    <ul class="nav bd-sidenav">
-        
-        
-        
-        
-        
-        
-        
-        
-          
             
-                <li class="">
-                    <a href="../extract_models/index.html">Extract Models</a>
-                </li>
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar"><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    <ul class="current nav bd-sidenav">
+ <li class="toctree-l2">
+  <a class="reference internal" href="../extract_models/index.html">
+   Extract Models
+  </a>
+ </li>
+ <li class="toctree-l2 current active">
+  <a class="reference internal" href="index.html">
+   Policy Models
+  </a>
+  <ul class="current">
+   <li class="toctree-l3">
+    <a class="reference internal" href="active_deterministic_base.html">
+     Active - Deterministic - Base
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="active_deterministic_cat.html">
+     Active - Deterministic - CAT Rider
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="active_deterministic_cola.html">
+     Active - Deterministic - COLA Rider
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="active_deterministic_res.html">
+     Active - Deterministic - Residual Rider
+    </a>
+   </li>
+   <li class="toctree-l3 current active">
+    <a class="current reference internal" href="#">
+     Active - Deterministic - ROP Rider
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="active_deterministic_sis.html">
+     Active - Deterministic - SIS Rider
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="active_deterministic_wop.html">
+     Active - Deterministic - WOP Rider
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="disabled_deterministic_base.html">
+     Disabled - Deterministic - Base
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="disabled_deterministic_cat.html">
+     Disabled - Deterministic - CAT Rider
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="disabled_deterministic_cola.html">
+     Disabled - Deterministic - COLA Rider
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="disabled_deterministic_res.html">
+     Disabled - Deterministic - Residual Rider
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="disabled_deterministic_sis.html">
+     Disabled - Deterministic - SIS Rider
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+  </div>
+</nav>
+            </div>
             
-          
-            
-  
-                <li class="active">
-                    <a href="index.html">Policy Models</a>
-                    <ul>
-                    
-                        <li class="">
-                            <a href="active_deterministic_base.html">Active - Deterministic - Base</a>
-                        </li>
-                    
-                        <li class="">
-                            <a href="active_deterministic_cat.html">Active - Deterministic - CAT Rider</a>
-                        </li>
-                    
-                        <li class="">
-                            <a href="active_deterministic_cola.html">Active - Deterministic - COLA Rider</a>
-                        </li>
-                    
-                        <li class="">
-                            <a href="active_deterministic_res.html">Active - Deterministic - Residual Rider</a>
-                        </li>
-                    
-                        <li class="active">
-                            <a href="">Active - Deterministic - ROP Rider</a>
-                        </li>
-                    
-                        <li class="">
-                            <a href="active_deterministic_sis.html">Active - Deterministic - SIS Rider</a>
-                        </li>
-                    
-                        <li class="">
-                            <a href="active_deterministic_wop.html">Active - Deterministic - WOP Rider</a>
-                        </li>
-                    
-                        <li class="">
-                            <a href="disabled_deterministic_base.html">Disabled - Deterministic - Base</a>
-                        </li>
-                    
-                        <li class="">
-                            <a href="disabled_deterministic_cat.html">Disabled - Deterministic - CAT Rider</a>
-                        </li>
-                    
-                        <li class="">
-                            <a href="disabled_deterministic_cola.html">Disabled - Deterministic - COLA Rider</a>
-                        </li>
-                    
-                        <li class="">
-                            <a href="disabled_deterministic_res.html">Disabled - Deterministic - Residual Rider</a>
-                        </li>
-                    
-                        <li class="">
-                            <a href="disabled_deterministic_sis.html">Disabled - Deterministic - SIS Rider</a>
-                        </li>
-                    
-                    </ul>
-                </li>
-            
-          
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-      </ul>
-  
-  </nav>
-          </div>
           
 
           
@@ -226,37 +223,43 @@
 </div>
 
 <nav id="bd-toc-nav">
-    <ul class="nav section-nav flex-column">
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#valuation-model" class="nav-link">Valuation Model</a><ul class="nav section-nav flex-column">
-                
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#documentation" class="nav-link">Documentation</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#usage" class="nav-link">Usage</a>
-        </li>
-    
-            </ul>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#projection-model" class="nav-link">Projection Model</a><ul class="nav section-nav flex-column">
-                
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#id1" class="nav-link">Documentation</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#id2" class="nav-link">Usage</a>
-        </li>
-    
-            </ul>
-        </li>
-    
-    </ul>
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#valuation-model">
+   Valuation Model
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#documentation">
+     Documentation
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#usage">
+     Usage
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#projection-model">
+   Projection Model
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     Documentation
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id2">
+     Usage
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
 </nav>
 
 
@@ -264,6 +267,9 @@
           </div>
           
 
+          
+          
+            
           
           <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
               
@@ -550,8 +556,8 @@ memory usage: 3.1+ KB
     <tr>
       <th>4</th>
       <td>0.6.0</td>
-      <td>440fba5ef2439861d22d0b2289698e849a985c5d</td>
-      <td>2021-03-25 11:13:45.956987</td>
+      <td>f114ffc25e13fa8e4c6cf6c33dfea774f7600d71</td>
+      <td>2021-03-25 11:22:21.600313</td>
       <td>AValRopRPMD</td>
       <td>policy-1</td>
       <td>ROP</td>
@@ -574,8 +580,8 @@ memory usage: 3.1+ KB
     <tr>
       <th>5</th>
       <td>0.6.0</td>
-      <td>440fba5ef2439861d22d0b2289698e849a985c5d</td>
-      <td>2021-03-25 11:13:45.956987</td>
+      <td>f114ffc25e13fa8e4c6cf6c33dfea774f7600d71</td>
+      <td>2021-03-25 11:22:21.600313</td>
       <td>AValRopRPMD</td>
       <td>policy-1</td>
       <td>ROP</td>
@@ -598,8 +604,8 @@ memory usage: 3.1+ KB
     <tr>
       <th>6</th>
       <td>0.6.0</td>
-      <td>440fba5ef2439861d22d0b2289698e849a985c5d</td>
-      <td>2021-03-25 11:13:45.956987</td>
+      <td>f114ffc25e13fa8e4c6cf6c33dfea774f7600d71</td>
+      <td>2021-03-25 11:22:21.600313</td>
       <td>AValRopRPMD</td>
       <td>policy-1</td>
       <td>ROP</td>
@@ -622,8 +628,8 @@ memory usage: 3.1+ KB
     <tr>
       <th>7</th>
       <td>0.6.0</td>
-      <td>440fba5ef2439861d22d0b2289698e849a985c5d</td>
-      <td>2021-03-25 11:13:45.956987</td>
+      <td>f114ffc25e13fa8e4c6cf6c33dfea774f7600d71</td>
+      <td>2021-03-25 11:22:21.600313</td>
       <td>AValRopRPMD</td>
       <td>policy-1</td>
       <td>ROP</td>
@@ -646,8 +652,8 @@ memory usage: 3.1+ KB
     <tr>
       <th>8</th>
       <td>0.6.0</td>
-      <td>440fba5ef2439861d22d0b2289698e849a985c5d</td>
-      <td>2021-03-25 11:13:45.956987</td>
+      <td>f114ffc25e13fa8e4c6cf6c33dfea774f7600d71</td>
+      <td>2021-03-25 11:22:21.600313</td>
       <td>AValRopRPMD</td>
       <td>policy-1</td>
       <td>ROP</td>
@@ -670,8 +676,8 @@ memory usage: 3.1+ KB
     <tr>
       <th>9</th>
       <td>0.6.0</td>
-      <td>440fba5ef2439861d22d0b2289698e849a985c5d</td>
-      <td>2021-03-25 11:13:45.956987</td>
+      <td>f114ffc25e13fa8e4c6cf6c33dfea774f7600d71</td>
+      <td>2021-03-25 11:22:21.600313</td>
       <td>AValRopRPMD</td>
       <td>policy-1</td>
       <td>ROP</td>
@@ -694,8 +700,8 @@ memory usage: 3.1+ KB
     <tr>
       <th>10</th>
       <td>0.6.0</td>
-      <td>440fba5ef2439861d22d0b2289698e849a985c5d</td>
-      <td>2021-03-25 11:13:45.956987</td>
+      <td>f114ffc25e13fa8e4c6cf6c33dfea774f7600d71</td>
+      <td>2021-03-25 11:22:21.600313</td>
       <td>AValRopRPMD</td>
       <td>policy-1</td>
       <td>ROP</td>
@@ -718,8 +724,8 @@ memory usage: 3.1+ KB
     <tr>
       <th>11</th>
       <td>0.6.0</td>
-      <td>440fba5ef2439861d22d0b2289698e849a985c5d</td>
-      <td>2021-03-25 11:13:45.956987</td>
+      <td>f114ffc25e13fa8e4c6cf6c33dfea774f7600d71</td>
+      <td>2021-03-25 11:22:21.600313</td>
       <td>AValRopRPMD</td>
       <td>policy-1</td>
       <td>ROP</td>
@@ -742,8 +748,8 @@ memory usage: 3.1+ KB
     <tr>
       <th>12</th>
       <td>0.6.0</td>
-      <td>440fba5ef2439861d22d0b2289698e849a985c5d</td>
-      <td>2021-03-25 11:13:45.956987</td>
+      <td>f114ffc25e13fa8e4c6cf6c33dfea774f7600d71</td>
+      <td>2021-03-25 11:22:21.600313</td>
       <td>AValRopRPMD</td>
       <td>policy-1</td>
       <td>ROP</td>
@@ -766,8 +772,8 @@ memory usage: 3.1+ KB
     <tr>
       <th>13</th>
       <td>0.6.0</td>
-      <td>440fba5ef2439861d22d0b2289698e849a985c5d</td>
-      <td>2021-03-25 11:13:45.956987</td>
+      <td>f114ffc25e13fa8e4c6cf6c33dfea774f7600d71</td>
+      <td>2021-03-25 11:22:21.600313</td>
       <td>AValRopRPMD</td>
       <td>policy-1</td>
       <td>ROP</td>
@@ -790,8 +796,8 @@ memory usage: 3.1+ KB
     <tr>
       <th>14</th>
       <td>0.6.0</td>
-      <td>440fba5ef2439861d22d0b2289698e849a985c5d</td>
-      <td>2021-03-25 11:13:45.956987</td>
+      <td>f114ffc25e13fa8e4c6cf6c33dfea774f7600d71</td>
+      <td>2021-03-25 11:22:21.600313</td>
       <td>AValRopRPMD</td>
       <td>policy-1</td>
       <td>ROP</td>
@@ -814,8 +820,8 @@ memory usage: 3.1+ KB
     <tr>
       <th>15</th>
       <td>0.6.0</td>
-      <td>440fba5ef2439861d22d0b2289698e849a985c5d</td>
-      <td>2021-03-25 11:13:45.956987</td>
+      <td>f114ffc25e13fa8e4c6cf6c33dfea774f7600d71</td>
+      <td>2021-03-25 11:22:21.600313</td>
       <td>AValRopRPMD</td>
       <td>policy-1</td>
       <td>ROP</td>
@@ -838,8 +844,8 @@ memory usage: 3.1+ KB
     <tr>
       <th>16</th>
       <td>0.6.0</td>
-      <td>440fba5ef2439861d22d0b2289698e849a985c5d</td>
-      <td>2021-03-25 11:13:45.956987</td>
+      <td>f114ffc25e13fa8e4c6cf6c33dfea774f7600d71</td>
+      <td>2021-03-25 11:22:21.600313</td>
       <td>AValRopRPMD</td>
       <td>policy-1</td>
       <td>ROP</td>
@@ -862,8 +868,8 @@ memory usage: 3.1+ KB
     <tr>
       <th>17</th>
       <td>0.6.0</td>
-      <td>440fba5ef2439861d22d0b2289698e849a985c5d</td>
-      <td>2021-03-25 11:13:45.956987</td>
+      <td>f114ffc25e13fa8e4c6cf6c33dfea774f7600d71</td>
+      <td>2021-03-25 11:22:21.600313</td>
       <td>AValRopRPMD</td>
       <td>policy-1</td>
       <td>ROP</td>
@@ -886,8 +892,8 @@ memory usage: 3.1+ KB
     <tr>
       <th>18</th>
       <td>0.6.0</td>
-      <td>440fba5ef2439861d22d0b2289698e849a985c5d</td>
-      <td>2021-03-25 11:13:45.956987</td>
+      <td>f114ffc25e13fa8e4c6cf6c33dfea774f7600d71</td>
+      <td>2021-03-25 11:22:21.600313</td>
       <td>AValRopRPMD</td>
       <td>policy-1</td>
       <td>ROP</td>
@@ -910,8 +916,8 @@ memory usage: 3.1+ KB
     <tr>
       <th>19</th>
       <td>0.6.0</td>
-      <td>440fba5ef2439861d22d0b2289698e849a985c5d</td>
-      <td>2021-03-25 11:13:45.956987</td>
+      <td>f114ffc25e13fa8e4c6cf6c33dfea774f7600d71</td>
+      <td>2021-03-25 11:22:21.600313</td>
       <td>AValRopRPMD</td>
       <td>policy-1</td>
       <td>ROP</td>
@@ -984,7 +990,7 @@ memory usage: 3.1+ KB
     </div>
 
     
-  <script src="../../_static/js/index.d3f166471bb80abb5163.js"></script>
+  <script src="../../_static/js/index.1e043a052b0af929e4d8.js"></script>
 
 
     <footer class="footer mt-5 mt-md-0">
