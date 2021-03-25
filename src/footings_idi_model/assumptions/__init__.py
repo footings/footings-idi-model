@@ -211,7 +211,7 @@ class idi_assumptions:
     @STAT.register(name="Interest Rate - Disabled Lives")
     @GAAP.register(name="Interest Rate - Disabled Lives")
     def interest_rate_dl(incurred_dt):
-        """STAT/GAAP interest rate assigned based on disability incurred year."""
+        """STAT/GAAP disabled life (DL) interest rate assigned based on incurred year."""
         return get_dl_interest_rate(incurred_dt)
 
     @BEST.register(name="Interest Rate - Disabled Lives")
